@@ -188,6 +188,5 @@ namespace CheckLocalizations.Services
                 PlayniteApi.Database.Games.Update(game);
             }
         }
-
     }
 }

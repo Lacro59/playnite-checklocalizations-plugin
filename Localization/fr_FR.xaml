@@ -6,7 +6,7 @@
     MainView
     
     -->
-    <sys:String x:Key="LOCCheckLocalizations">Check Localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizations">Vérifier la localisation</sys:String>
 
     <!--  
     CheckLocalizationsSettingsView
