@@ -20,6 +20,7 @@ namespace CheckLocalizations
 
         public bool EnableIntegrationButton { get; set; } = false;
         public bool EnableIntegrationButtonDetails { get; set; } = false;
+        public bool EnableIntegrationButtonJustIcon { get; set; } = true;
 
         public bool EnableIntegrationInCustomTheme { get; set; } = false;
 

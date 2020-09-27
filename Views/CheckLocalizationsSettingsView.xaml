@@ -83,17 +83,40 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="35"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
 
-                <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding EnableIntegrationButton}" Name="CheckL_IntegrationInButton" Click="Checkbox_Click" VerticalAlignment="Center">
+                <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding EnableIntegrationButton}" 
+                          Name="CheckL_IntegrationInButton" 
+                          Click="Checkbox_Click" VerticalAlignment="Center">
                     <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationButton}" />
                 </CheckBox>
-                <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding EnableIntegrationButtonDetails}" Name="CheckL_IntegrationInButtonDetails" Click="Checkbox_Click" VerticalAlignment="Center">
-                    <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationButtonDetails}" />
-                </CheckBox>
 
-                <CheckBox Grid.Row="1" Grid.ColumnSpan="3" IsChecked="{Binding EnableIntegrationInCustomTheme}" Margin="0,5,0,0" Name="CheckL_IntegrationInCustomTheme" Click="Checkbox_Click" VerticalAlignment="Center">
+                <GroupBox Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" IsEnabled="{Binding EnableIntegrationButton}"
+                          Header="{DynamicResource LOCCheckLocalizationsIntegrationButtonOptions}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35"/>
+                        </Grid.RowDefinitions>
+
+                        <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding EnableIntegrationButtonJustIcon}" VerticalAlignment="Center">
+                            <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationButtonJustIcon}" />
+                        </CheckBox>
+                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding EnableIntegrationButtonDetails}" VerticalAlignment="Center">
+                            <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationButtonDetails}" />
+                        </CheckBox>
+                    </Grid>
+                </GroupBox>
+                
+                <CheckBox Grid.Row="2" Grid.ColumnSpan="3" IsChecked="{Binding EnableIntegrationInCustomTheme}" Margin="0,5,0,0" 
+                          Name="CheckL_IntegrationInCustomTheme" 
+                          Click="Checkbox_Click" VerticalAlignment="Center">
                     <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationInCustomTheme}" />
                 </CheckBox>
             </Grid>

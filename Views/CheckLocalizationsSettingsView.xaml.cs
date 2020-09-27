@@ -6,7 +6,6 @@ using PluginCommon;
 using PluginCommon.PlayniteResources;
 using PluginCommon.PlayniteResources.API;
 using PluginCommon.PlayniteResources.Common;
-using PluginCommon.PlayniteResources.Common.Extensions;
 using PluginCommon.PlayniteResources.Converters;
 using System;
 using System.Collections.Generic;
@@ -164,20 +163,12 @@ namespace CheckLocalizations.Views
 
             if ((cb.Name == "CheckL_IntegrationInButton") && (bool)cb.IsChecked)
             {
-                CheckL_IntegrationInButtonDetails.IsChecked = false;
                 CheckL_IntegrationInCustomTheme.IsChecked = false;
             }
-            if ((cb.Name == "CheckL_IntegrationInButtonDetails") && (bool)cb.IsChecked)
-            {
-                CheckL_IntegrationInButton.IsChecked = false;
-                CheckL_IntegrationInCustomTheme.IsChecked = false;
-            }
-
 
             if ((cb.Name == "CheckL_IntegrationInCustomTheme") && (bool)cb.IsChecked)
             {
                 CheckL_IntegrationInButton.IsChecked = false;
-                CheckL_IntegrationInButtonDetails.IsChecked = false;
             }
         }
 

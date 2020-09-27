@@ -13,7 +13,6 @@ using PluginCommon;
 using PluginCommon.PlayniteResources;
 using PluginCommon.PlayniteResources.API;
 using PluginCommon.PlayniteResources.Common;
-using PluginCommon.PlayniteResources.Common.Extensions;
 using PluginCommon.PlayniteResources.Converters;
 using CheckLocalizations.Views;
 using CheckLocalizations.Services;
@@ -22,6 +21,7 @@ using Newtonsoft.Json;
 using System.Windows;
 using CheckLocalizations.Models;
 using CheckLocalizations.Views.Interfaces;
+using System.Windows.Media;
 
 namespace CheckLocalizations
 {
@@ -73,16 +73,29 @@ namespace CheckLocalizations
 
         public override IEnumerable<ExtensionFunction> GetFunctions()
         {
-            return new List<ExtensionFunction>
-            {
+            List<ExtensionFunction> listFunctions = new List<ExtensionFunction>();
+
+            listFunctions.Add(
                 new ExtensionFunction(
                     resources.GetString("LOCCheckLocalizations"),
                     () =>
                     {
-                        // Add code to be execute when user invokes this menu entry.
                         new CheckLocalizationsView(gameLocalizations).ShowDialog();
                     })
-            };
+                );
+
+#if DEBUG
+            listFunctions.Add(
+                new ExtensionFunction(
+                    "ThemModifier Test",
+                    () =>
+                    {
+
+                    })
+                );
+#endif
+
+            return listFunctions;
         }
 
         public override void OnGameSelected(GameSelectionEventArgs args)
@@ -184,21 +197,30 @@ namespace CheckLocalizations
 
                             // Auto integration
                             Button bt = new Button();
-                            if (settings.EnableIntegrationButtonDetails)
-                            {
-     
-                                bt = new ClButtonAdvanced((bool)resources.GetResource("Cl_HasNativeSupport"), gameLocalizations);
-                                bt.Name = "PART_ClButton";
-                                bt.Margin = new Thickness(10, 0, 0, 0);
-                                ui.AddButtonInGameSelectedActionBarButtonOrToggleButton(bt);
-                            }
-
                             if (settings.EnableIntegrationButton)
                             {
+                                if (settings.EnableIntegrationButtonDetails)
+                                {
+                                    bt = new ClButtonAdvanced((bool)resources.GetResource("Cl_HasNativeSupport"), gameLocalizations, settings.EnableIntegrationButtonJustIcon);
+                                }
+                                else
+                                {
+                                    if (settings.EnableIntegrationButtonJustIcon)
+                                    {
+                                        bt.FontFamily = new FontFamily(new Uri("pack://application:,,,/CheckLocalizations;component/Resources/"), "./#font");
+                                        bt.Content = TransformIcon.Get("CheckLocalizations");
+                                    }
+                                    else
+                                    {
+                                        bt.Content = resources.GetString("LOCCheckLocalizationsBtAdvancedSupportLanguages");
+                                    }
+
+                                    bt.Click += OnBtGameSelectedActionBarClick;
+                                }
+
                                 bt.Name = "PART_ClButton";
                                 bt.Margin = new Thickness(10, 0, 0, 0);
-                                bt.Content = resources.GetString("LOCCheckLocalizationsBtAdvancedSupportLanguages");
-                                bt.Click += OnBtGameSelectedActionBarClick;
+
                                 ui.AddButtonInGameSelectedActionBarButtonOrToggleButton(bt);
                             }
 
@@ -209,10 +231,20 @@ namespace CheckLocalizations
                                 // Create 
                                 Button btCustom = new Button();
                                 btCustom.Name = "PART_ClButtonCustom";
-                                btCustom.Content = resources.GetString("LOCCheckLocalizationsBtAdvancedSupportLanguages");
+
+                                if (settings.EnableIntegrationButtonJustIcon)
+                                {
+                                    btCustom.FontFamily = new FontFamily(new Uri("pack://application:,,,/CheckLocalizations;component/Resources/"), "./#font");
+                                    btCustom.Content = TransformIcon.Get("CheckLocalizations");
+                                }
+                                else
+                                {
+                                    btCustom.Content = resources.GetString("LOCCheckLocalizationsBtAdvancedSupportLanguages");
+                                }
+
                                 btCustom.Click += OnBtGameSelectedActionBarClick;
 
-                                ClButtonAdvanced btCustomAdvanced = new ClButtonAdvanced((bool)resources.GetResource("Cl_HasNativeSupport"), gameLocalizations);
+                                ClButtonAdvanced btCustomAdvanced = new ClButtonAdvanced((bool)resources.GetResource("Cl_HasNativeSupport"), gameLocalizations, settings.EnableIntegrationButtonJustIcon);
                                 btCustomAdvanced.Name = "PART_ClButtonCustomAdvanced";
                                
                                 ui.AddElementInCustomTheme(btCustom, "PART_ClButtonCustom");

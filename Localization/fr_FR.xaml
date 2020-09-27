@@ -15,10 +15,12 @@
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Traitement en cours...</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Etiquette avec les localisations sélectionnées</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationIsNative">Est-ce la langue maternelle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Est-ce une langue maternelle</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsIntegration">Intégration dans l'interface</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationButton">Ajouter un bouton</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonOptions">Options bouton</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonJustIcon">Voir seulement l'icône</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonDetails">Ajouter un bouton avec détails</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsIntegrationInCustomTheme">Intgération dans les thèmes personnalisés (si intégré)</sys:String>
