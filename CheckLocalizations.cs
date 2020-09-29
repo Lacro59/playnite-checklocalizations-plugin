@@ -22,6 +22,7 @@ using System.Windows;
 using CheckLocalizations.Models;
 using CheckLocalizations.Views.Interfaces;
 using System.Windows.Media;
+using System.Threading;
 
 namespace CheckLocalizations
 {
@@ -34,8 +35,10 @@ namespace CheckLocalizations
 
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
-        private Game GameSelected { get; set; }
         private readonly IntegrationUI ui = new IntegrationUI();
+        private readonly TaskHelper taskHelper = new TaskHelper();
+
+        private Game GameSelected { get; set; }
         private LocalizationsApi localizationsApi { get; set; }
         private List<GameLocalization> gameLocalizations { get; set; }
 
@@ -167,8 +170,13 @@ namespace CheckLocalizations
                 }
                 else
                 {
+                    taskHelper.Check();
+
+                    CancellationTokenSource tokenSource = new CancellationTokenSource();
+                    CancellationToken ct = tokenSource.Token;
+
                     gameLocalizations = new List<GameLocalization>();
-                    var taskSystem = Task.Run(() =>
+                    var taskIntegration = Task.Run(() =>
                     {
                         gameLocalizations = localizationsApi.GetLocalizations(GameSelected);
 
@@ -188,7 +196,7 @@ namespace CheckLocalizations
                             }
                             resourcesLists.Add(new ResourcesList { Key = "Cl_ListNativeSupport", Value = gameLocalizations });
                         }
-                    })
+                    }, tokenSource.Token)
                     .ContinueWith(antecedent =>
                     {
                         Application.Current.Dispatcher.Invoke(new Action(() => {
@@ -207,7 +215,7 @@ namespace CheckLocalizations
                                 {
                                     if (settings.EnableIntegrationButtonJustIcon)
                                     {
-                                        bt.FontFamily = new FontFamily(new Uri("pack://application:,,,/CheckLocalizations;component/Resources/"), "./#font");
+                                        bt.FontFamily = new FontFamily(new Uri("pack://application:,,,/PluginCommon;component/Resources/"), "./#font");
                                         bt.Content = TransformIcon.Get("CheckLocalizations");
                                     }
                                     else
@@ -221,7 +229,10 @@ namespace CheckLocalizations
                                 bt.Name = "PART_ClButton";
                                 bt.Margin = new Thickness(10, 0, 0, 0);
 
-                                ui.AddButtonInGameSelectedActionBarButtonOrToggleButton(bt);
+                                if (!ct.IsCancellationRequested)
+                                {
+                                    ui.AddButtonInGameSelectedActionBarButtonOrToggleButton(bt);
+                                }
                             }
 
 
@@ -234,7 +245,7 @@ namespace CheckLocalizations
 
                                 if (settings.EnableIntegrationButtonJustIcon)
                                 {
-                                    btCustom.FontFamily = new FontFamily(new Uri("pack://application:,,,/CheckLocalizations;component/Resources/"), "./#font");
+                                    btCustom.FontFamily = new FontFamily(new Uri("pack://application:,,,/PluginCommon;component/Resources/"), "./#font");
                                     btCustom.Content = TransformIcon.Get("CheckLocalizations");
                                 }
                                 else
@@ -246,12 +257,17 @@ namespace CheckLocalizations
 
                                 ClButtonAdvanced btCustomAdvanced = new ClButtonAdvanced((bool)resources.GetResource("Cl_HasNativeSupport"), gameLocalizations, settings.EnableIntegrationButtonJustIcon);
                                 btCustomAdvanced.Name = "PART_ClButtonCustomAdvanced";
-                               
-                                ui.AddElementInCustomTheme(btCustom, "PART_ClButtonCustom");
-                                ui.AddElementInCustomTheme(btCustomAdvanced, "PART_ClButtonCustomAdvanced");
+
+                                if (!ct.IsCancellationRequested)
+                                {
+                                    ui.AddElementInCustomTheme(btCustom, "PART_ClButtonCustom");
+                                    ui.AddElementInCustomTheme(btCustomAdvanced, "PART_ClButtonCustomAdvanced");
+                                }
                             }
                         }));
                     });
+
+                    taskHelper.Add(taskIntegration, tokenSource);
                 }
             }
             catch (Exception ex)

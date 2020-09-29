@@ -8,6 +8,10 @@
              mc:Ignorable="d" Height="40"
              pbeh:LeftClickContextMenuBehavior.Enabled="True">
 
+    <Button.Resources>
+        <FontFamily x:Key="font">pack://application:,,,/PluginCommon;component/Resources/font.ttf#font</FontFamily>
+    </Button.Resources>
+    
     <Button.Style>
         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
             <Setter Property="Background" Value="{DynamicResource ButtonBackgroundBrush}" />
@@ -48,9 +52,9 @@
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Name="OnlyIcon" FontFamily="/CheckLocalizations;component/Resources/#font" />
+        <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Name="OnlyIcon" FontFamily="{StaticResource font}" />
 
-        <TextBlock Grid.Column="0" Name="IndicatorSupport" FontFamily="/CheckLocalizations;component/Resources/#font" Text="" />
+        <TextBlock Grid.Column="0" Name="IndicatorSupport" FontFamily="{StaticResource font}" Text="" />
         <TextBlock Grid.Column="2" Name="IndicatorSupportText" Text="{DynamicResource LOCCheckLocalizationsBtAdvancedSupportNative}" />
     </Grid>
 
