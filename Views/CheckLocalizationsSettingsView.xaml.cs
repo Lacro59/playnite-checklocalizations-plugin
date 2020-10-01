@@ -37,7 +37,8 @@ namespace CheckLocalizations.Views
 
         private LocalizationsApi localizationsApi { get; set; }
 
-        private CancellationTokenSource tokenSource;
+        public static bool WithoutMessage = false;
+        public static CancellationTokenSource tokenSource;
         private CancellationToken ct;
 
 
@@ -256,8 +257,15 @@ namespace CheckLocalizations.Views
             string PluginDirectory = PluginUserDataPath + "\\CheckLocalizations\\";
             if (Directory.Exists(PluginDirectory))
             {
-                Directory.Delete(PluginDirectory, true);
-                Directory.CreateDirectory(PluginDirectory);
+                try
+                {
+                    Directory.Delete(PluginDirectory, true);
+                    Directory.CreateDirectory(PluginDirectory);
+                }
+                catch
+                {
+                    PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCheckLocalizationsErrorRemove"), "CheckLocalizations");
+                }
             }
         }
     }

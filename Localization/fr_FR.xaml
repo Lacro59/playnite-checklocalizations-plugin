@@ -25,6 +25,8 @@
 
     <sys:String x:Key="LOCCheckLocalizationsIntegrationInCustomTheme">Intgération dans les thèmes personnalisés (si intégré)</sys:String>
 
+    <sys:String x:Key="LOCCheckLocalizationsErrorRemove">Impossible de supprimer les données. Merci de réessayer.</sys:String>
+
     <!--  
     CheckLocalizations
     -->
