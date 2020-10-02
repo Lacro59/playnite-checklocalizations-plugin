@@ -1,5 +1,4 @@
 ﻿using CheckLocalizations.Models;
-using Playnite.Controls;
 using PluginCommon;
 using PluginCommon.PlayniteResources;
 using PluginCommon.PlayniteResources.API;
@@ -18,7 +17,7 @@ namespace CheckLocalizations.Views
     /// <summary>
     /// Logique d'interaction pour CheckLocalizationsView.xaml
     /// </summary>
-    public partial class CheckLocalizationsView : WindowBase
+    public partial class CheckLocalizationsView : Window
     {
         public CheckLocalizationsView(List<GameLocalization> gameLocalizations)
         {
