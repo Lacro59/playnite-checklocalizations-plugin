@@ -1,6 +1,10 @@
 ﻿using CheckLocalizations.Models;
 using Playnite.SDK;
 using PluginCommon;
+using PluginCommon.PlayniteResources;
+using PluginCommon.PlayniteResources.API;
+using PluginCommon.PlayniteResources.Common;
+using PluginCommon.PlayniteResources.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,21 +30,47 @@ namespace CheckLocalizations.Views.Interfaces
         private static readonly ILogger logger = LogManager.GetLogger();
         private static IResourceProvider resources = new ResourceProvider();
 
-        string IsOk = "";
-        string IsKo = "";
+        private static readonly string IsOk = "";
+        private static readonly string IsKo = "";
+        private static readonly string IsNone = "";
+
+        private static readonly string OnlyIconIsOk = "";
+        private static readonly string OnlyIconIsKo = "";
+        private static readonly string OnlyIconIsNone = "";
 
 
-        public ClButtonAdvanced(bool SupportNative, List<GameLocalization> gameLocalizations)
+        public ClButtonAdvanced(bool SupportNative, List<GameLocalization> gameLocalizations, bool EnableIntegrationButtonJustIcon)
         {
             InitializeComponent();
+
+            if (EnableIntegrationButtonJustIcon)
+            {
+                OnlyIcon.Visibility = Visibility.Visible;
+                IndicatorSupport.Visibility = Visibility.Collapsed;
+                IndicatorSupportText.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                OnlyIcon.Visibility = Visibility.Collapsed;
+                IndicatorSupport.Visibility = Visibility.Visible;
+                IndicatorSupportText.Visibility = Visibility.Visible;
+            }
 
             if (SupportNative)
             {
                 IndicatorSupport.Text = IsOk;
+                OnlyIcon.Text = OnlyIconIsOk;
             }
             else
             {
                 IndicatorSupport.Text = IsKo;
+                OnlyIcon.Text = OnlyIconIsKo;
+            }
+
+            if (gameLocalizations.Count == 0)
+            {
+                IndicatorSupport.Text = IsNone;
+                OnlyIcon.Text = OnlyIconIsNone;
             }
 
             ListViewLanguages.ItemsSource = gameLocalizations;

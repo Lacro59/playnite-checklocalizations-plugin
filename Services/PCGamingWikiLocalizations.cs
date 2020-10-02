@@ -4,6 +4,10 @@ using CheckLocalizations.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginCommon;
+using PluginCommon.PlayniteResources;
+using PluginCommon.PlayniteResources.API;
+using PluginCommon.PlayniteResources.Common;
+using PluginCommon.PlayniteResources.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +20,11 @@ namespace CheckLocalizations.Services
     public class PCGamingWikiLocalizations
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private IPlayniteAPI PlayniteApi;
+        private readonly IPlayniteAPI PlayniteApi;
 
         private readonly string urlSteamId = "https://pcgamingwiki.com/api/appid.php?appid={0}";
-        private string urlPCGamingWiki = "";
-        private int SteamId = 0;
+        private string urlPCGamingWiki = string.Empty;
+        private readonly int SteamId = 0;
 
         private Game game;
 
@@ -54,7 +58,9 @@ namespace CheckLocalizations.Services
                 }
             }
 
+#if DEBUG
             logger.Debug($"CheckLocalizations - PCGamingWikiLocalizations - {game.Name} - SteamId: {SteamId} - urlPCGamingWiki: {urlPCGamingWiki}");
+#endif
         }
 
         public List<GameLocalization> GetLocalizations()
@@ -79,7 +85,7 @@ namespace CheckLocalizations.Services
                 }
             }
 
-            logger.Warn($"CheckLocalizations - Not find for {game.Name}");
+            logger.Warn($"CheckLocalizations - PCGamingWikiLocalizations - Not find for {game.Name}");
 
             return gameLocalizations;
         }
@@ -93,7 +99,7 @@ namespace CheckLocalizations.Services
                 logger.Debug($"CheckLocalizations - url {url}");
 
                 // Get data & parse
-                string ResultWeb = DonwloadStringData(url).GetAwaiter().GetResult(); ;
+                string ResultWeb = Web.DownloadStringData(url).GetAwaiter().GetResult();
                 HtmlParser parser = new HtmlParser();
                 IHtmlDocument HtmlLocalization = parser.Parse(ResultWeb);
 
@@ -159,40 +165,6 @@ namespace CheckLocalizations.Services
                 default:
                     return SupportStatus.Unknown;
             }
-        }
-
-        private async Task<string> DonwloadStringData(string Url)
-        {
-            string result = "";
-            var client = new HttpClient();
-
-            var request = new HttpRequestMessage()
-            {
-                RequestUri = new Uri(Url),
-                Method = HttpMethod.Get
-            };
-
-            HttpResponseMessage response = client.SendAsync(request).Result;
-            var statusCode = (int)response.StatusCode;
-
-            // We want to handle redirects ourselves so that we can determine the final redirect Location (via header)
-            if (statusCode >= 300 && statusCode <= 399)
-            {
-                var redirectUri = response.Headers.Location;
-                if (!redirectUri.IsAbsoluteUri)
-                {
-                    redirectUri = new Uri(request.RequestUri.GetLeftPart(UriPartial.Authority) + redirectUri);
-                }
-                logger.Debug(string.Format("CheckLocalizations - Redirecting to {0}", redirectUri));
-
-                result = await DonwloadStringData(redirectUri.ToString());
-            }
-            else
-            {
-                result = await response.Content.ReadAsStringAsync();
-            }
-
-            return result;
         }
     }
 }

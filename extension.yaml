@@ -1,6 +1,12 @@
-﻿Name: Check Localizations
+﻿Id: playnite-checklocalizations-plugin
+Name: CheckLocalizations
 Author: Lacro59
-Version: 0.1
+Version: 1.0
 Module: CheckLocalizations.dll
 Type: GenericPlugin
 Icon: icon.png
+Links:
+  - Name: Plugin forum
+    Url: https://playnite.link/forum/thread-384.html
+  - Name: Plugin Github
+    Url: https://github.com/Lacro59/playnite-checklocalizations-plugin

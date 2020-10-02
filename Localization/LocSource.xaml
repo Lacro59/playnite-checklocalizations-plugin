@@ -6,7 +6,7 @@
     MainView
     
     -->
-    <sys:String x:Key="LOCCheckLocalizations">Check Localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizations">Check localizations</sys:String>
 
     <!--  
     CheckLocalizationsSettingsView
@@ -15,13 +15,17 @@
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Treatment in progress...</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected localization(s)</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationIsNative">Is native language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsIntegration">Interface integration</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationButton">Add button</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonOptions">Button options</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonJustIcon">Show icon only</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonDetails">Add button with details</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsIntegrationInCustomTheme">Custom theme integration (if integrated)</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsErrorRemove">Cannot remove data. Please try again.</sys:String>
 
     <!--  
     CheckLocalizations

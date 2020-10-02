@@ -1,4 +1,5 @@
 ﻿using CheckLocalizations.Models;
+using CheckLocalizations.Views;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using System;
@@ -20,6 +21,7 @@ namespace CheckLocalizations
 
         public bool EnableIntegrationButton { get; set; } = false;
         public bool EnableIntegrationButtonDetails { get; set; } = false;
+        public bool EnableIntegrationButtonJustIcon { get; set; } = true;
 
         public bool EnableIntegrationInCustomTheme { get; set; } = false;
 
@@ -89,6 +91,12 @@ namespace CheckLocalizations
         {
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
+
+            if (CheckLocalizationsSettingsView.tokenSource != null)
+            {
+                CheckLocalizationsSettingsView.WithoutMessage = true;
+                CheckLocalizationsSettingsView.tokenSource.Cancel();
+            }
         }
 
         public void EndEdit()

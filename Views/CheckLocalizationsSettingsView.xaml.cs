@@ -3,6 +3,10 @@ using CheckLocalizations.Services;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginCommon;
+using PluginCommon.PlayniteResources;
+using PluginCommon.PlayniteResources.API;
+using PluginCommon.PlayniteResources.Common;
+using PluginCommon.PlayniteResources.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +37,8 @@ namespace CheckLocalizations.Views
 
         private LocalizationsApi localizationsApi { get; set; }
 
-        private CancellationTokenSource tokenSource;
+        public static bool WithoutMessage = false;
+        public static CancellationTokenSource tokenSource;
         private CancellationToken ct;
 
 
@@ -159,20 +164,12 @@ namespace CheckLocalizations.Views
 
             if ((cb.Name == "CheckL_IntegrationInButton") && (bool)cb.IsChecked)
             {
-                CheckL_IntegrationInButtonDetails.IsChecked = false;
                 CheckL_IntegrationInCustomTheme.IsChecked = false;
             }
-            if ((cb.Name == "CheckL_IntegrationInButtonDetails") && (bool)cb.IsChecked)
-            {
-                CheckL_IntegrationInButton.IsChecked = false;
-                CheckL_IntegrationInCustomTheme.IsChecked = false;
-            }
-
 
             if ((cb.Name == "CheckL_IntegrationInCustomTheme") && (bool)cb.IsChecked)
             {
                 CheckL_IntegrationInButton.IsChecked = false;
-                CheckL_IntegrationInButtonDetails.IsChecked = false;
             }
         }
 
@@ -260,8 +257,15 @@ namespace CheckLocalizations.Views
             string PluginDirectory = PluginUserDataPath + "\\CheckLocalizations\\";
             if (Directory.Exists(PluginDirectory))
             {
-                Directory.Delete(PluginDirectory, true);
-                Directory.CreateDirectory(PluginDirectory);
+                try
+                {
+                    Directory.Delete(PluginDirectory, true);
+                    Directory.CreateDirectory(PluginDirectory);
+                }
+                catch
+                {
+                    PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCheckLocalizationsErrorRemove"), "CheckLocalizations");
+                }
             }
         }
     }

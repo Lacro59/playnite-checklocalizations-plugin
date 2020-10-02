@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--  
+    MainView
+    
+    -->
+    <sys:String x:Key="LOCCheckLocalizations">Vérifier la localisation</sys:String>
+
+    <!--  
+    CheckLocalizationsSettingsView
+    -->
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Localisations: trouvée(s) {0} - non trouvée(s) {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Traitement en cours...</sys:String>
+    
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Etiquette avec les localisations sélectionnées</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Est-ce une langue maternelle</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsIntegration">Intégration dans l'interface</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButton">Ajouter un bouton</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonOptions">Options bouton</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonJustIcon">Voir seulement l'icône</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonDetails">Ajouter un bouton avec détails</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationInCustomTheme">Intgération dans les thèmes personnalisés (si intégré)</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsErrorRemove">Impossible de supprimer les données. Merci de réessayer.</sys:String>
+
+    <!--  
+    CheckLocalizations
+    -->
+    
+    <!--  
+    ClButtonAdvanced
+    -->
+
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Langue maternelle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Langue(s) supportée(s)</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">Langue</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Sub</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+
+</ResourceDictionary>
