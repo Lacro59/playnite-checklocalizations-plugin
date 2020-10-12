@@ -44,7 +44,7 @@
     </Button.Style>
 
     <Grid>
-        <TextBlock Grid.Column="0" Name="OnlyIcon" FontFamily="{StaticResource font}" Text="" />
-        <TextBlock Grid.Column="2" Name="IndicatorSupportText" Text="{DynamicResource LOCCheckLocalizationsLanguage}" />
+        <TextBlock Name="OnlyIcon" FontFamily="{StaticResource font}" Text="" />
+        <TextBlock Name="IndicatorSupportText" Text="{DynamicResource LOCCheckLocalizationsLanguage}" />
     </Grid>
 </Button>

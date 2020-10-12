@@ -56,7 +56,7 @@ namespace CheckLocalizations.Services
                 logger.Debug($"CheckLocalizations - IsFirstLoad");
 #endif
                 Thread.Sleep(1000);
-                IsFirstLoad = true;
+                IsFirstLoad = false;
             }
 
             Application.Current.Dispatcher.Invoke(new Action(() =>
