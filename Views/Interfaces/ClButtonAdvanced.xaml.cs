@@ -1,24 +1,11 @@
 ﻿using CheckLocalizations.Models;
 using Playnite.SDK;
 using PluginCommon;
-using PluginCommon.PlayniteResources;
-using PluginCommon.PlayniteResources.API;
-using PluginCommon.PlayniteResources.Common;
-using PluginCommon.PlayniteResources.Converters;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CheckLocalizations.Views.Interfaces
 {
@@ -39,7 +26,7 @@ namespace CheckLocalizations.Views.Interfaces
         private static readonly string OnlyIconIsNone = "";
 
 
-        public ClButtonAdvanced(bool SupportNative, List<GameLocalization> gameLocalizations, bool EnableIntegrationButtonJustIcon)
+        public ClButtonAdvanced(bool EnableIntegrationButtonJustIcon)
         {
             InitializeComponent();
 
@@ -55,7 +42,10 @@ namespace CheckLocalizations.Views.Interfaces
                 IndicatorSupport.Visibility = Visibility.Visible;
                 IndicatorSupportText.Visibility = Visibility.Visible;
             }
+        }
 
+        public void SetGameLocalizations(List<GameLocalization> gameLocalizations, bool SupportNative)
+        {
             if (SupportNative)
             {
                 IndicatorSupport.Text = IsOk;
@@ -72,10 +62,10 @@ namespace CheckLocalizations.Views.Interfaces
                 IndicatorSupport.Text = IsNone;
                 OnlyIcon.Text = OnlyIconIsNone;
             }
-
             ListViewLanguages.ItemsSource = gameLocalizations;
         }
 
+        // Design popup
         private void ListView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             foreach (var ui in Tools.FindVisualChildren<Border>((ContextMenu)((ListView)sender).Parent))

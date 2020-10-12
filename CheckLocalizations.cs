@@ -35,12 +35,10 @@ namespace CheckLocalizations
 
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
-        private readonly IntegrationUI ui = new IntegrationUI();
-        private readonly TaskHelper taskHelper = new TaskHelper();
+        public static Game GameSelected { get; set; }
+        public static CheckLocalizationsUI checkLocalizationsUI;
+        public static List<GameLocalization> gameLocalizations { get; set; } = new List<GameLocalization>();
 
-        private Game GameSelected { get; set; }
-        private LocalizationsApi localizationsApi { get; set; }
-        private List<GameLocalization> gameLocalizations { get; set; }
 
         public CheckLocalizations(IPlayniteAPI api) : base(api)
         {
@@ -58,20 +56,17 @@ namespace CheckLocalizations
             if (settings.EnableCheckVersion)
             {
                 CheckVersion cv = new CheckVersion();
-
                 if (cv.Check("CheckLocalizations", pluginFolder))
                 {
                     cv.ShowNotification(api, "CheckLocalizations - " + resources.GetString("LOCUpdaterWindowTitle"));
                 }
             }
 
-            localizationsApi = new LocalizationsApi(this.GetPluginUserDataPath(), api, settings);
+            // Init ui interagration
+            checkLocalizationsUI = new CheckLocalizationsUI(api, settings, this.GetPluginUserDataPath());
 
             // Custom theme button
-            if (settings.EnableIntegrationInCustomTheme)
-            {
-                EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(OnCustomThemeButtonClick));
-            }
+            EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(checkLocalizationsUI.OnCustomThemeButtonClick));
         }
 
         public override IEnumerable<ExtensionFunction> GetFunctions()
@@ -109,7 +104,11 @@ namespace CheckLocalizations
                 {
                     GameSelected = args.NewValue[0];
 
-                    Integration();
+                    var TaskIntegrationUI = Task.Run(() =>
+                    {
+                        checkLocalizationsUI.AddElements();
+                        checkLocalizationsUI.RefreshElements(GameSelected);
+                    });
                 }
             }
             catch (Exception ex)
@@ -117,167 +116,6 @@ namespace CheckLocalizations
                 Common.LogError(ex, "CheckLocalizations", $"OnGameSelected()");
             }
         }
-
-        private void OnCustomThemeButtonClick(object sender, RoutedEventArgs e)
-        {
-            string ButtonName = "";
-            try
-            {
-                ButtonName = ((Button)sender).Name;
-                if (ButtonName == "PART_ClCustomButton")
-                {
-                    OnBtGameSelectedActionBarClick(sender, e);
-                }
-            }
-            catch (Exception ex)
-            {
-                Common.LogError(ex, "CheckLocalizations", "OnCustomThemeButtonClick() error");
-            }
-        }
-
-        private void OnBtGameSelectedActionBarClick(object sender, RoutedEventArgs e)
-        {
-            new CheckLocalizationsView(gameLocalizations).ShowDialog();
-        }
-
-
-        private void Integration()
-        {
-            try
-            {
-                // Delete
-                logger.Info("CheckLocalizations - Delete");
-                ui.RemoveButtonInGameSelectedActionBarButtonOrToggleButton("PART_ClButton");
-                ui.ClearElementInCustomTheme("PART_ClButtonCustom");
-                ui.ClearElementInCustomTheme("PART_ClButtonCustomAdvanced");
-
-                // Reset resources
-                List<ResourcesList> resourcesLists = new List<ResourcesList>();
-                resourcesLists.Add(new ResourcesList { Key = "Cl_HasData", Value = false });
-                resourcesLists.Add(new ResourcesList { Key = "Cl_HasNativeSupport", Value = false });
-                resourcesLists.Add(new ResourcesList { Key = "Cl_ListNativeSupport", Value = new List<GameLocalization>() });
-                ui.AddResources(resourcesLists);
-
-
-                List<Guid> ListEmulators = new List<Guid>();
-                foreach (var item in PlayniteApi.Database.Emulators)
-                {
-                    ListEmulators.Add(item.Id);
-                }
-                if (GameSelected.PlayAction != null && GameSelected.PlayAction.EmulatorId != null && ListEmulators.Contains(GameSelected.PlayAction.EmulatorId))
-                {
-                    // Emulator
-                }
-                else
-                {
-                    taskHelper.Check();
-
-                    CancellationTokenSource tokenSource = new CancellationTokenSource();
-                    CancellationToken ct = tokenSource.Token;
-
-                    gameLocalizations = new List<GameLocalization>();
-                    var taskIntegration = Task.Run(() =>
-                    {
-                        gameLocalizations = localizationsApi.GetLocalizations(GameSelected);
-
-                        if (gameLocalizations.Count > 0)
-                        {
-                            resourcesLists.Add(new ResourcesList { Key = "Cl_HasData", Value = true });
-                            
-                            foreach (GameLanguage gameLanguage in settings.GameLanguages)
-                            { 
-                                if (gameLanguage.IsNative)
-                                {
-                                    if (gameLocalizations.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) != null)
-                                    {
-                                        resourcesLists.Add(new ResourcesList { Key = "Cl_HasNativeSupport", Value = true });
-                                    }
-                                }
-                            }
-                            resourcesLists.Add(new ResourcesList { Key = "Cl_ListNativeSupport", Value = gameLocalizations });
-                        }
-                    }, tokenSource.Token)
-                    .ContinueWith(antecedent =>
-                    {
-                        Application.Current.Dispatcher.Invoke(new Action(() => {
-
-                            ui.AddResources(resourcesLists);
-
-                            // Auto integration
-                            Button bt = new Button();
-                            if (settings.EnableIntegrationButton)
-                            {
-                                if (settings.EnableIntegrationButtonDetails)
-                                {
-                                    bt = new ClButtonAdvanced((bool)resources.GetResource("Cl_HasNativeSupport"), gameLocalizations, settings.EnableIntegrationButtonJustIcon);
-                                }
-                                else
-                                {
-                                    if (settings.EnableIntegrationButtonJustIcon)
-                                    {
-                                        bt.FontFamily = new FontFamily(new Uri("pack://application:,,,/PluginCommon;component/Resources/"), "./#font");
-                                        bt.Content = TransformIcon.Get("CheckLocalizations");
-                                    }
-                                    else
-                                    {
-                                        bt.Content = resources.GetString("LOCCheckLocalizationsBtAdvancedSupportLanguages");
-                                    }
-
-                                    bt.Click += OnBtGameSelectedActionBarClick;
-                                }
-
-                                bt.Name = "PART_ClButton";
-                                bt.Margin = new Thickness(10, 0, 0, 0);
-
-                                if (!ct.IsCancellationRequested)
-                                {
-                                    ui.AddButtonInGameSelectedActionBarButtonOrToggleButton(bt);
-                                }
-                            }
-
-
-                            // Custom theme
-                            if (settings.EnableIntegrationInCustomTheme)
-                            {
-                                // Create 
-                                Button btCustom = new Button();
-                                btCustom.Name = "PART_ClButtonCustom";
-
-                                if (settings.EnableIntegrationButtonJustIcon)
-                                {
-                                    btCustom.FontFamily = new FontFamily(new Uri("pack://application:,,,/PluginCommon;component/Resources/"), "./#font");
-                                    btCustom.Content = TransformIcon.Get("CheckLocalizations");
-                                }
-                                else
-                                {
-                                    btCustom.Content = resources.GetString("LOCCheckLocalizationsBtAdvancedSupportLanguages");
-                                }
-
-                                btCustom.Click += OnBtGameSelectedActionBarClick;
-
-                                ClButtonAdvanced btCustomAdvanced = new ClButtonAdvanced((bool)resources.GetResource("Cl_HasNativeSupport"), gameLocalizations, settings.EnableIntegrationButtonJustIcon);
-                                btCustomAdvanced.Name = "PART_ClButtonCustomAdvanced";
-
-                                if (!ct.IsCancellationRequested)
-                                {
-                                    ui.AddElementInCustomTheme(btCustom, "PART_ClButtonCustom");
-                                    ui.AddElementInCustomTheme(btCustomAdvanced, "PART_ClButtonCustomAdvanced");
-                                }
-                            }
-                        }));
-                    });
-
-                    taskHelper.Add(taskIntegration, tokenSource);
-                }
-            }
-            catch (Exception ex)
-            {
-                Common.LogError(ex, "CheckLocalizations", $"Impossible integration");
-            }
-        }
-
-
-
 
         public override void OnGameInstalled(Game game)
         {

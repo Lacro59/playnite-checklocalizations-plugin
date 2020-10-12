@@ -61,6 +61,7 @@
     <Compile Include="CheckLocalizationsSettings.cs" />
     <Compile Include="Models\GameLanguage.cs" />
     <Compile Include="Models\GameLocalization.cs" />
+    <Compile Include="Services\CheckLocalizationsUI.cs" />
     <Compile Include="Services\LocalizationsApi.cs" />
     <Compile Include="Services\PCGamingWikiLocalizations.cs" />
     <Compile Include="Views\CheckLocalizationsSettingsView.xaml.cs">
@@ -69,6 +70,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\CheckLocalizationsView.xaml.cs">
       <DependentUpon>CheckLocalizationsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Interfaces\ClButton.xaml.cs">
+      <DependentUpon>ClButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Interfaces\ClButtonAdvanced.xaml.cs">
       <DependentUpon>ClButtonAdvanced.xaml</DependentUpon>
@@ -101,19 +105,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Include="README.md" />
-    <None Include="Resources\PlayniteResources\DerivedStyles\MainWindowStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Resources\PlayniteResources\DerivedStyles\StandardWindowStyle.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Resources\PlayniteResources\DerivedStyles\WindowBarButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </None>
     <Page Include="Views\CheckLocalizationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Interfaces\ClButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

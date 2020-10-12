@@ -104,6 +104,13 @@ namespace CheckLocalizations
             // Code executed when user decides to confirm changes made since BeginEdit was called.
             // This method should save settings made to Option1 and Option2.
             plugin.SavePluginSettings(this);
+
+            CheckLocalizations.checkLocalizationsUI.RemoveElements();
+            var TaskIntegrationUI = Task.Run(() =>
+            {
+                CheckLocalizations.checkLocalizationsUI.AddElements();
+                CheckLocalizations.checkLocalizationsUI.RefreshElements(CheckLocalizations.GameSelected);
+            });
         }
 
         public bool VerifySettings(out List<string> errors)

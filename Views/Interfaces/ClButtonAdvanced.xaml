@@ -55,7 +55,7 @@
         <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Name="OnlyIcon" FontFamily="{StaticResource font}" />
 
         <TextBlock Grid.Column="0" Name="IndicatorSupport" FontFamily="{StaticResource font}" Text="" />
-        <TextBlock Grid.Column="2" Name="IndicatorSupportText" Text="{DynamicResource LOCCheckLocalizationsBtAdvancedSupportNative}" />
+        <TextBlock Grid.Column="2" Name="IndicatorSupportText" Text="{DynamicResource LOCCheckLocalizationsLanguage}" />
     </Grid>
 
     <Button.ContextMenu>
