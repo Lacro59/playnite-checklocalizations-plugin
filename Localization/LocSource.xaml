@@ -6,22 +6,22 @@
     MainView
     
     -->
-    <sys:String x:Key="LOCCheckLocalizations">Check localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
 
     <!--  
     CheckLocalizationsSettingsView
     -->
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Localizations: find {0} - not find {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Treatment in progress...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: find {0} - not find {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Action in progress...</sys:String>
     
-    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected localization(s)</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsIntegration">Interface integration</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButton">Add button</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButton">Add button in game details</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonOptions">Button options</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonJustIcon">Show icon only</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonDetails">Add button with details</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonDetails">With details</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsIntegrationInCustomTheme">Custom theme integration (if integrated)</sys:String>
 

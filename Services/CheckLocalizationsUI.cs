@@ -237,7 +237,9 @@ namespace CheckLocalizations.Services
 
         public void OnBtActionBarClick(object sender, RoutedEventArgs e)
         {
-            new CheckLocalizationsView(CheckLocalizations.gameLocalizations).ShowDialog();
+            var ViewExtension = new CheckLocalizationsView(CheckLocalizations.gameLocalizations);
+            Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(_PlayniteApi, "CheckLocalizations", ViewExtension);
+            windowExtension.ShowDialog();
         }
 
         public void OnCustomThemeButtonClick(object sender, RoutedEventArgs e)

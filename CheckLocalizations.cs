@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using PluginCommon;
@@ -20,9 +19,6 @@ using Playnite.SDK.Events;
 using Newtonsoft.Json;
 using System.Windows;
 using CheckLocalizations.Models;
-using CheckLocalizations.Views.Interfaces;
-using System.Windows.Media;
-using System.Threading;
 
 namespace CheckLocalizations
 {
@@ -78,14 +74,16 @@ namespace CheckLocalizations
                     resources.GetString("LOCCheckLocalizations"),
                     () =>
                     {
-                        new CheckLocalizationsView(gameLocalizations).ShowDialog();
+                        var ViewExtension = new CheckLocalizationsView(gameLocalizations);
+                        Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
+                        windowExtension.ShowDialog();
                     })
                 );
 
 #if DEBUG
             listFunctions.Add(
                 new ExtensionFunction(
-                    "ThemModifier Test",
+                    "CheckLocalizations Test",
                     () =>
                     {
 
