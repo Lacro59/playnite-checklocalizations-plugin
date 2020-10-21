@@ -79,7 +79,7 @@ namespace CheckLocalizations.Services
             }));
         }
 
-        public override void RefreshElements(Game GameSelected)
+        public override void RefreshElements(Game GameSelected, bool Force = false)
         {
             taskHelper.Check();
             CancellationTokenSource tokenSource = new CancellationTokenSource();
@@ -182,7 +182,7 @@ namespace CheckLocalizations.Services
             if (PART_BtActionBar != null)
             {
 #if DEBUG
-                logger.Debug($"CheckLocalizations - PART_BtActionBar allready insert - {BtActionBarParentType}");
+                logger.Debug($"CheckLocalizations - PART_BtActionBar allready insert");
 #endif
                 return;
             }
@@ -264,6 +264,21 @@ namespace CheckLocalizations.Services
         #endregion
 
 
+        #region SpDescription
+        public override void InitialSpDescription()
+        {
+        }
+
+        public override void AddSpDescription()
+        {
+        }
+
+        public override void RefreshSpDescription()
+        {
+        }
+        #endregion  
+
+
         #region CustomElements
         public override void InitialCustomElements()
         {
@@ -292,10 +307,10 @@ namespace CheckLocalizations.Services
             FrameworkElement PART_ClButtonWithJustIconAndDetails = null;
             try
             {
-                PART_ClButtonWithJustIcon = IntegrationUI.SearchElementByName("PART_ClButtonWithJustIcon");
-                PART_ClButtonWithTitle = IntegrationUI.SearchElementByName("PART_ClButtonWithTitle");
-                PART_ClButtonWithTitleAndDetails = IntegrationUI.SearchElementByName("PART_ClButtonWithTitleAndDetails");
-                PART_ClButtonWithJustIconAndDetails = IntegrationUI.SearchElementByName("PART_ClButtonWithJustIconAndDetails");
+                PART_ClButtonWithJustIcon = IntegrationUI.SearchElementByName("PART_ClButtonWithJustIcon", false, true);
+                PART_ClButtonWithTitle = IntegrationUI.SearchElementByName("PART_ClButtonWithTitle", false, true);
+                PART_ClButtonWithTitleAndDetails = IntegrationUI.SearchElementByName("PART_ClButtonWithTitleAndDetails", false, true);
+                PART_ClButtonWithJustIconAndDetails = IntegrationUI.SearchElementByName("PART_ClButtonWithJustIconAndDetails", false, true);
             }
             catch (Exception ex)
             {
