@@ -9,6 +9,7 @@ using PluginCommon.PlayniteResources.Common;
 using PluginCommon.PlayniteResources.Converters;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace CheckLocalizations.Services
     public class LocalizationsApi
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+        private static IResourceProvider resources = new ResourceProvider();
         private IPlayniteAPI PlayniteApi;
 
         private CheckLocalizationsSettings settings;
@@ -34,6 +36,43 @@ namespace CheckLocalizations.Services
             this.PluginUserDataPath = PluginUserDataPath;
             PluginDirectory = PluginUserDataPath + "\\CheckLocalizations\\";
         }
+
+        public void RemoveLocalizations(Game game)
+        {
+            string FileGameData = PluginUserDataPath + "\\CheckLocalizations\\" + game.Id.ToString() + ".json";
+
+            if (File.Exists(FileGameData))
+            {
+                File.Delete(FileGameData);
+
+                var TaskIntegrationUI = Task.Run(() =>
+                {
+                    CheckLocalizations.checkLocalizationsUI.RefreshElements(game);
+                });
+            }
+            else
+            {
+                logger.Warn($"CheckLocalizations - Impossible to remove {game.Name} in {FileGameData}");
+            }
+        }
+
+        public void ClearAllData()
+        {
+            if (Directory.Exists(PluginDirectory))
+            {
+                try
+                {
+                    Directory.Delete(PluginDirectory, true);
+                    Directory.CreateDirectory(PluginDirectory);
+                    PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCheckLocalizationsRemove"), "CheckLocalizations");
+                }
+                catch
+                {
+                    PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCheckLocalizationsErrorRemove"), "CheckLocalizations");
+                }
+            }
+        }
+
 
         public List<GameLocalization> GetLocalizations(Game game, bool CacheOnly = false)
         {
@@ -67,6 +106,7 @@ namespace CheckLocalizations.Services
 
             return gameLocalizations;
         }
+
 
         public void RemoveTag(Game game)
         {
@@ -168,7 +208,7 @@ namespace CheckLocalizations.Services
                             {
                                 if (gameLocalizations.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) != null)
                                 {
-                                    logger.Info($"HowLongToBeat - Add tag [CL] {gameLanguage.DisplayName} for {game.Name}");
+                                    logger.Info($"CheckLocalizations - Add tag [CL] {gameLanguage.DisplayName} for {game.Name}");
                                     tagIds.Add((ClTags.Find(x => x.Name == $"[CL] {gameLanguage.DisplayName}")).Id);
                                 }
                             }
@@ -186,6 +226,115 @@ namespace CheckLocalizations.Services
                 }
                 PlayniteApi.Database.Games.Update(game);
             }
+        }
+
+
+        public void AddAllTagFromMain(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
+        {
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                resources.GetString("LOCCheckLocalizationsAddingAllTag"),
+                true
+            );
+            globalProgressOptions.IsIndeterminate = false;
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+            {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                var db = PlayniteApi.Database.Games.Where(x => x.Hidden == false);
+                activateGlobalProgress.ProgressMaxValue = (double)db.Count();
+
+                string CancelText = string.Empty;
+
+                foreach (Game game in db)
+                {
+                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                    {
+                        CancelText = " canceled";
+                        break;
+                    }
+
+                    AddTag(game, settings.EnableTag, GetLocalizations(game, true));
+                    activateGlobalProgress.CurrentProgressValue++;
+                }
+
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                logger.Info($"CheckLocalizations - Task AddAllTagFromMain(){CancelText} - {String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)}");
+            }, globalProgressOptions);
+        }
+
+        public void RemoveAllTagFromMain(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
+        {
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                resources.GetString("LOCCheckLocalizationsRemovingAllTag"),
+                true
+            );
+            globalProgressOptions.IsIndeterminate = false;
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+            {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                var db = PlayniteApi.Database.Games.Where(x => x.Hidden == false);
+                activateGlobalProgress.ProgressMaxValue = (double)db.Count();
+
+                string CancelText = string.Empty;
+
+                foreach (Game game in db)
+                {
+                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                    {
+                        CancelText = " canceled";
+                        break;
+                    }
+
+                    RemoveTag(game);
+                    activateGlobalProgress.CurrentProgressValue++;
+                }
+
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                logger.Info($"CheckLocalizations - Task RemoveAllTagFromMain(){CancelText} - {String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)}");
+            }, globalProgressOptions);
+        }
+
+        public void GetAllDataFromMain(IPlayniteAPI PlayniteApi, string PluginUserDataPath, CheckLocalizationsSettings settings)
+        {
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                resources.GetString("LOCCheckLocalizationsGettingAllDatas"),
+                true
+            );
+            globalProgressOptions.IsIndeterminate = false;
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+            {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                var db = PlayniteApi.Database.Games.Where(x => x.Hidden == false);
+                activateGlobalProgress.ProgressMaxValue = (double)db.Count();
+
+                string CancelText = string.Empty;
+
+                foreach (Game game in db)
+                {
+                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                    {
+                        CancelText = " canceled";
+                        break;
+                    }
+
+                    GetLocalizations(game);
+                    activateGlobalProgress.CurrentProgressValue++;
+                }
+
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                logger.Info($"CheckLocalizations - Task GetAllDataFromMain(){CancelText} - {String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)}");
+            }, globalProgressOptions);
         }
     }
 }

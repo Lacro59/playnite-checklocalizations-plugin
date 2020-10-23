@@ -65,33 +65,107 @@ namespace CheckLocalizations
             EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(checkLocalizationsUI.OnCustomThemeButtonClick));
         }
 
-        public override IEnumerable<ExtensionFunction> GetFunctions()
+        // To add new game menu items override GetGameMenuItems
+        public override List<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            List<ExtensionFunction> listFunctions = new List<ExtensionFunction>();
+            var gameMenu = args.Games.First();
+            LocalizationsApi localizationsApi = new LocalizationsApi(this.GetPluginUserDataPath(), PlayniteApi, settings);
 
-            listFunctions.Add(
-                new ExtensionFunction(
-                    resources.GetString("LOCCheckLocalizations"),
-                    () =>
+            List<GameMenuItem> gameMenuItems = new List<GameMenuItem>
+            {
+                new GameMenuItem {
+                    MenuSection = resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCheckLocalizationsPluginView"),
+                    Action = (gameMenuItem) =>
                     {
-                        var ViewExtension = new CheckLocalizationsView(gameLocalizations);
+                        var ViewExtension = new CheckLocalizationsView(localizationsApi.GetLocalizations(gameMenu));
                         Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
                         windowExtension.ShowDialog();
-                    })
-                );
+                    }
+                },
+                new GameMenuItem {
+                    MenuSection = resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCheckLocalizationsPluginDelete"),
+                    Action = (gameMenuItem) =>
+                    {
+                        localizationsApi.RemoveLocalizations(gameMenu);
+                    }
+                }
+            };
 
 #if DEBUG
-            listFunctions.Add(
-                new ExtensionFunction(
-                    "CheckLocalizations Test",
-                    () =>
-                    {
-
-                    })
-                );
+            gameMenuItems.Add(new GameMenuItem
+            {
+                MenuSection = resources.GetString("LOCCheckLocalizations"),
+                Description = "Test",
+                Action = (mainMenuItem) => { }
+            });
 #endif
 
-            return listFunctions;
+            return gameMenuItems;
+        }
+
+        // To add new main menu items override GetMainMenuItems
+        public override List<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
+        {
+            string MenuInExtensions = string.Empty;
+            if (settings.MenuInExtensions)
+            {
+                MenuInExtensions = "@";
+            }
+
+            LocalizationsApi localizationsApi = new LocalizationsApi(this.GetPluginUserDataPath(), PlayniteApi, settings);
+
+            List<MainMenuItem> mainMenuItems = new List<MainMenuItem>
+            {
+                new MainMenuItem
+                {
+                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCheckLocalizationsGetAllDatas"),
+                    Action = (mainMenuItem) =>
+                    {
+                        localizationsApi.GetAllDataFromMain(PlayniteApi, this.GetPluginUserDataPath(), settings);
+                    }
+                },
+                new MainMenuItem
+                {
+                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCheckLocalizationsClearAllDatas"),
+                    Action = (mainMenuItem) =>
+                    {
+                        localizationsApi.ClearAllData();
+                    }
+                },
+                new MainMenuItem
+                {
+                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCheckLocalizationsAddAllTag"),
+                    Action = (mainMenuItem) =>
+                    {
+                        localizationsApi.AddAllTagFromMain(PlayniteApi, this.GetPluginUserDataPath());
+                    }
+                },
+                new MainMenuItem
+                {
+                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCheckLocalizationsRemoveAllTag"),
+                    Action = (mainMenuItem) =>
+                    {
+                        localizationsApi.RemoveAllTagFromMain(PlayniteApi, this.GetPluginUserDataPath());
+                    }
+                }
+            };
+
+#if DEBUG
+            mainMenuItems.Add(new MainMenuItem
+            {
+                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                Description = "Test",
+                Action = (mainMenuItem) => { }
+            });
+#endif
+
+            return mainMenuItems;
         }
 
         public override void OnGameSelected(GameSelectionEventArgs args)

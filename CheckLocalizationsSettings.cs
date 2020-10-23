@@ -15,6 +15,7 @@ namespace CheckLocalizations
         private readonly CheckLocalizations plugin;
 
         public bool EnableCheckVersion { get; set; } = true;
+        public bool MenuInExtensions { get; set; } = true;
 
         public bool EnableTag { get; set; } = true;
         public List<GameLanguage> GameLanguages { get; set; } = new List<GameLanguage>();
@@ -48,6 +49,7 @@ namespace CheckLocalizations
             if (savedSettings != null)
             {
                 EnableCheckVersion = savedSettings.EnableCheckVersion;
+                MenuInExtensions = savedSettings.MenuInExtensions;
 
                 EnableTag = savedSettings.EnableTag;
                 GameLanguages = savedSettings.GameLanguages;

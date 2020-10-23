@@ -23,6 +23,10 @@
             <Label Content="{DynamicResource LOCCheckLocalizations}" FontSize="18" />
             <Separator Margin="0,0,0,10" />
 
+            <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding MenuInExtensions}" VerticalAlignment="Center">
+                <Label Content="{DynamicResource LOCCheckLocalizationsMenuInExtensions}" />
+            </CheckBox>
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
