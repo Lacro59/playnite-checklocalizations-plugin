@@ -17,15 +17,15 @@
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Etiquette avec les localisations sélectionnées</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Est-ce une langue maternelle</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegration">Intégration dans l'interface</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButton">Ajouter un bouton</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonOptions">Options bouton</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonJustIcon">Voir seulement l'icône</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonDetails">Ajouter un bouton avec détails</sys:String>
+    <sys:String x:Key="LOCCommonIntegration">Intégration dans l'interface</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButton">Ajouter un bouton</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButtonOptions">Options bouton</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButtonOnlyIcon">Voir seulement l'icône</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButtonDetails">Ajouter un bouton avec détails</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationInCustomTheme">Intgération dans les thèmes personnalisés (si intégré)</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationInCustomTheme">Intgération dans les thèmes personnalisés (si intégré)</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsErrorRemove">Impossible de supprimer les données. Merci de réessayer.</sys:String>
+    <sys:String x:Key="LOCCommonDataErrorRemove">Impossible de supprimer les données. Merci de réessayer.</sys:String>
 
     <!--  
     CheckLocalizations

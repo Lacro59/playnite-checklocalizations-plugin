@@ -64,11 +64,11 @@ namespace CheckLocalizations.Services
                 {
                     Directory.Delete(PluginDirectory, true);
                     Directory.CreateDirectory(PluginDirectory);
-                    PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCheckLocalizationsRemove"), "CheckLocalizations");
+                    PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
                 }
                 catch
                 {
-                    PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCheckLocalizationsErrorRemove"), "CheckLocalizations");
+                    PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
                 }
             }
         }
@@ -232,7 +232,7 @@ namespace CheckLocalizations.Services
         public void AddAllTagFromMain(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
         {
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                resources.GetString("LOCCheckLocalizationsAddingAllTag"),
+                resources.GetString("LOCCommonAddingAllTag"),
                 true
             );
             globalProgressOptions.IsIndeterminate = false;
@@ -268,7 +268,7 @@ namespace CheckLocalizations.Services
         public void RemoveAllTagFromMain(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
         {
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                resources.GetString("LOCCheckLocalizationsRemovingAllTag"),
+                resources.GetString("LOCCommonRemovingAllTag"),
                 true
             );
             globalProgressOptions.IsIndeterminate = false;
@@ -304,7 +304,7 @@ namespace CheckLocalizations.Services
         public void GetAllDataFromMain(IPlayniteAPI PlayniteApi, string PluginUserDataPath, CheckLocalizationsSettings settings)
         {
             GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                resources.GetString("LOCCheckLocalizationsGettingAllDatas"),
+                resources.GetString("LOCCommonGettingAllDatas"),
                 true
             );
             globalProgressOptions.IsIndeterminate = false;

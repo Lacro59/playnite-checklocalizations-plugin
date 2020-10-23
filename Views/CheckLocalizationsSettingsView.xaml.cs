@@ -264,7 +264,7 @@ namespace CheckLocalizations.Views
                 }
                 catch
                 {
-                    PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCheckLocalizationsErrorRemove"), "CheckLocalizations");
+                    PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
                 }
             }
         }

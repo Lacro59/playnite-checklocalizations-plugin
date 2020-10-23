@@ -75,7 +75,7 @@ namespace CheckLocalizations
             {
                 new GameMenuItem {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCheckLocalizationsPluginView"),
+                    Description = resources.GetString("LOCCheckLocalizationsGameMenuPluginView"),
                     Action = (gameMenuItem) =>
                     {
                         var ViewExtension = new CheckLocalizationsView(localizationsApi.GetLocalizations(gameMenu));
@@ -85,7 +85,7 @@ namespace CheckLocalizations
                 },
                 new GameMenuItem {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCheckLocalizationsPluginDelete"),
+                    Description = resources.GetString("LOCCommonDeleteGameData"),
                     Action = (gameMenuItem) =>
                     {
                         localizationsApi.RemoveLocalizations(gameMenu);
@@ -121,7 +121,7 @@ namespace CheckLocalizations
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCheckLocalizationsGetAllDatas"),
+                    Description = resources.GetString("LOCCommonGetAllDatas"),
                     Action = (mainMenuItem) =>
                     {
                         localizationsApi.GetAllDataFromMain(PlayniteApi, this.GetPluginUserDataPath(), settings);
@@ -130,7 +130,7 @@ namespace CheckLocalizations
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCheckLocalizationsClearAllDatas"),
+                    Description = resources.GetString("LOCCommonClearAllDatas"),
                     Action = (mainMenuItem) =>
                     {
                         localizationsApi.ClearAllData();
@@ -139,7 +139,7 @@ namespace CheckLocalizations
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCheckLocalizationsAddAllTag"),
+                    Description = resources.GetString("LOCCommonAddAllTags"),
                     Action = (mainMenuItem) =>
                     {
                         localizationsApi.AddAllTagFromMain(PlayniteApi, this.GetPluginUserDataPath());
@@ -148,7 +148,7 @@ namespace CheckLocalizations
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCheckLocalizationsRemoveAllTag"),
+                    Description = resources.GetString("LOCCommonRemoveAllTags"),
                     Action = (mainMenuItem) =>
                     {
                         localizationsApi.RemoveAllTagFromMain(PlayniteApi, this.GetPluginUserDataPath());

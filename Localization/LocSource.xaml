@@ -3,41 +3,19 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!-- MainView -->
+
     <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
-
-    <sys:String x:Key="LOCCheckLocalizationsPluginView">Check localizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsPluginDelete">Delete data</sys:String>
-
-    <sys:String x:Key="LOCCheckLocalizationsRemove">Data is removed.</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsErrorRemove">Cannot remove data. Please try again.</sys:String>
-
-    <sys:String x:Key="LOCCheckLocalizationsAddAllTag">Add tag for games in database</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGetAllDatas">Get data for all games in database</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsClearAllDatas">Clear data for all games in database</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGettingAllDatas">Getting data for all games in database</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAddingAllTag">Adding tag for all games in database</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsRemoveAllTag">Remove tag for all games in database</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsRemovingAllTag">Removing tag for all games in database</sys:String>
+    
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
-    <sys:String x:Key="LOCCheckLocalizationsMenuInExtensions">Plugin menus in extensions menu *</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: find {0} - not find {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Action in progress...</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
-    
-    <sys:String x:Key="LOCCheckLocalizationsIntegration">Interface integration</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButton">Add button in game details</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonOptions">Button options</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonJustIcon">Show icon only</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationButtonDetails">With details</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationInCustomTheme">Custom theme integration (if integrated)</sys:String>
-
-    <!-- CheckLocalizations -->
-    
     <!-- ClButtonAdvanced -->
 
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
