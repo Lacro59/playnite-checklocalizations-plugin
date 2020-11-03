@@ -18,12 +18,26 @@ namespace CheckLocalizations.Services
     {
         private readonly CheckLocalizationsSettings _Settings;
 
+        public override string _PluginUserDataPath { get; set; } = string.Empty;
+
+        public override bool IsFirstLoad { get; set; } = true;
+
+        public override string BtActionBarName { get; set; } = string.Empty;
+        public override FrameworkElement PART_BtActionBar { get; set; }
+
+        public override string SpDescriptionName { get; set; } = string.Empty;
+        public override FrameworkElement PART_SpDescription { get; set; }
+
+        public override List<CustomElement> ListCustomElements { get; set; } = new List<CustomElement>();
+
         private LocalizationsApi localizationsApi { get; set; }
 
 
         public CheckLocalizationsUI(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings Settings, string PluginUserDataPath) : base(PlayniteApi, PluginUserDataPath)
         {
             _Settings = Settings;
+            _PluginUserDataPath = PluginUserDataPath;
+
             BtActionBarName = "PART_ClButton";
             localizationsApi = new LocalizationsApi(PluginUserDataPath, PlayniteApi, Settings);
         }
@@ -59,7 +73,7 @@ namespace CheckLocalizations.Services
                 IsFirstLoad = false;
             }
 
-            Application.Current.Dispatcher.Invoke(new Action(() =>
+            Application.Current.Dispatcher.BeginInvoke((Action)delegate
             {
                 if (_Settings.EnableIntegrationButton)
                 {
@@ -76,12 +90,11 @@ namespace CheckLocalizations.Services
 #endif
                     AddCustomElements();
                 }
-            }));
+            });
         }
 
         public override void RefreshElements(Game GameSelected, bool Force = false)
         {
-            taskHelper.Check();
             CancellationTokenSource tokenSource = new CancellationTokenSource();
             CancellationToken ct = tokenSource.Token;
 
@@ -128,7 +141,7 @@ namespace CheckLocalizations.Services
                         {
                             ui.AddResources(resourcesLists);
 
-                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            Application.Current.Dispatcher.BeginInvoke((Action)delegate
                             {
                                 if (_Settings.EnableIntegrationButton)
                                 {
@@ -145,7 +158,7 @@ namespace CheckLocalizations.Services
 #endif
                                     RefreshCustomElements();
                                 }
-                            }));
+                            });
                         }
                     }
                     else
@@ -166,13 +179,13 @@ namespace CheckLocalizations.Services
         #region BtActionBar
         public override void InitialBtActionBar()
         {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
+            Application.Current.Dispatcher.BeginInvoke((Action)delegate
             {
                 if (PART_BtActionBar != null)
                 {
                     PART_BtActionBar.Visibility = Visibility.Collapsed;
                 }
-            }));
+            });
         }
 
         public override void AddBtActionBar()
@@ -282,13 +295,13 @@ namespace CheckLocalizations.Services
         #region CustomElements
         public override void InitialCustomElements()
         {
-            Application.Current.Dispatcher.Invoke(new Action(() =>
+            Application.Current.Dispatcher.BeginInvoke((Action)delegate
             {
                 foreach (CustomElement customElement in ListCustomElements)
                 {
                     customElement.Element.Visibility = Visibility.Collapsed;
                 }
-            }));
+            });
         }
 
         public override void AddCustomElements()

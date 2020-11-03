@@ -104,10 +104,11 @@ namespace CheckLocalizations.Views
             }, tokenSource.Token)
             .ContinueWith(antecedent =>
             {
-                Application.Current.Dispatcher.Invoke(new Action(() => {
+                Application.Current.Dispatcher.BeginInvoke((Action)delegate
+                { 
                     DataLoad.Visibility = Visibility.Collapsed;
                     spSettings.Visibility = Visibility.Visible;
-                }));
+                });
             });
         }
 
@@ -151,10 +152,11 @@ namespace CheckLocalizations.Views
             }, tokenSource.Token)
             .ContinueWith(antecedent =>
             {
-                Application.Current.Dispatcher.Invoke(new Action(() => {
+                Application.Current.Dispatcher.BeginInvoke((Action)delegate
+                { 
                     DataLoad.Visibility = Visibility.Collapsed;
                     spSettings.Visibility = Visibility.Visible;
-                }));
+                });
             });
         }
 
@@ -218,7 +220,8 @@ namespace CheckLocalizations.Views
                 {
                     var gameLocalisations = localizationsApi.GetLocalizations(game);
 
-                    Application.Current.Dispatcher.Invoke(new Action(() => {
+                    Application.Current.Dispatcher.BeginInvoke((Action)delegate
+                    { 
                         if (gameLocalisations.Count > 0)
                         {
                             CountFind += 1;
@@ -230,7 +233,7 @@ namespace CheckLocalizations.Views
 
                         pbDataLoad.Value += 1;
                         tbDataLoad.Text = string.Format(resources.GetString("LOCCheckLocalizationsProgressBar"), CountFind, CountNotFind);
-                    }));
+                    });
 
                     if (ct.IsCancellationRequested)
                     {
@@ -240,10 +243,11 @@ namespace CheckLocalizations.Views
             }, tokenSource.Token)
             .ContinueWith(antecedent =>
             {
-                Application.Current.Dispatcher.Invoke(new Action(() => {
+                Application.Current.Dispatcher.BeginInvoke((Action)delegate
+                { 
                     DataLoad.Visibility = Visibility.Collapsed;
                     spSettings.Visibility = Visibility.Visible;
-                }));
+                });
             });
         }
 

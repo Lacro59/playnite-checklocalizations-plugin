@@ -176,8 +176,10 @@ namespace CheckLocalizations
                 {
                     GameSelected = args.NewValue[0];
 
+                    //PlayniteUiHelper.ResetToggle();
                     var TaskIntegrationUI = Task.Run(() =>
                     {
+                        checkLocalizationsUI.taskHelper.Check();
                         checkLocalizationsUI.AddElements();
                         checkLocalizationsUI.RefreshElements(GameSelected);
                     });
