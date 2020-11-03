@@ -98,7 +98,8 @@ namespace CheckLocalizations.Services
             CancellationTokenSource tokenSource = new CancellationTokenSource();
             CancellationToken ct = tokenSource.Token;
 
-            Task TaskRefreshBtActionBar = Task.Run(() => {
+            Task TaskRefreshBtActionBar = Task.Run(() => 
+            {
                 try
                 {
                     Initial();
@@ -170,7 +171,7 @@ namespace CheckLocalizations.Services
                 {
                     Common.LogError(ex, "CheckLocalizations", $"Error on TaskRefreshBtActionBar()");
                 }
-            });
+            }, ct);
 
             taskHelper.Add(TaskRefreshBtActionBar, tokenSource);
         }
