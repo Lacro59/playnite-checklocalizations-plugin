@@ -1,39 +1,21 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-    <!--  
-    MainView
-    
-    -->
-    <sys:String x:Key="LOCCheckLocalizations">Vérifier la localisation</sys:String>
+    <!-- MainView -->
 
-    <!--  
-    CheckLocalizationsSettingsView
-    -->
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Localisations: trouvée(s) {0} - non trouvée(s) {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Traitement en cours...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
     
-    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Etiquette avec les localisations sélectionnées</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Vérifier les localisations</sys:String>
+
+    <!-- CheckLocalizationsSettingsView -->
+    
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Langues du jeu: trouvé(s) {0} - non trouvé(s) {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Action en cours...</sys:String>
+    
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Etiquettes avec les langue(s) sélectionnée(s)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Est-ce une langue maternelle</sys:String>
 
-    <sys:String x:Key="LOCCommonIntegration">Intégration dans l'interface</sys:String>
-    <sys:String x:Key="LOCCommonIntegrationButton">Ajouter un bouton</sys:String>
-    <sys:String x:Key="LOCCommonIntegrationButtonOptions">Options bouton</sys:String>
-    <sys:String x:Key="LOCCommonIntegrationButtonOnlyIcon">Voir seulement l'icône</sys:String>
-    <sys:String x:Key="LOCCommonIntegrationButtonDetails">Ajouter un bouton avec détails</sys:String>
-
-    <sys:String x:Key="LOCCommonIntegrationInCustomTheme">Intgération dans les thèmes personnalisés (si intégré)</sys:String>
-
-    <sys:String x:Key="LOCCommonDataErrorRemove">Impossible de supprimer les données. Merci de réessayer.</sys:String>
-
-    <!--  
-    CheckLocalizations
-    -->
-    
-    <!--  
-    ClButtonAdvanced
-    -->
+    <!-- ClButtonAdvanced -->
 
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Langue maternelle</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Langue(s) supportée(s)</sys:String>

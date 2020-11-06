@@ -23,7 +23,7 @@
     <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Sub</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
 
 </ResourceDictionary>
