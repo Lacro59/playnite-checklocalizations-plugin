@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CheckLocalizations.Services
@@ -105,7 +106,7 @@ namespace CheckLocalizations.Services
 
                 foreach (var row in HtmlLocalization.QuerySelectorAll("tr.table-l10n-body-row"))
                 {
-                    string Language = row.QuerySelector("th").InnerHtml;
+                    string Language = Regex.Replace(row.QuerySelector("th").InnerHtml, "<.+?>(.*)<.+?>", "$1");
                     SupportStatus Ui = SupportStatus.Unknown;
                     SupportStatus Audio = SupportStatus.Unknown;
                     SupportStatus Sub = SupportStatus.Unknown;

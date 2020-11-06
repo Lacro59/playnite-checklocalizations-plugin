@@ -85,7 +85,7 @@ namespace CheckLocalizations
                 },
                 new GameMenuItem {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonDeleteGameData"),
+                    Description = resources.GetString("LOCCommonRefreshGameData"),
                     Action = (gameMenuItem) =>
                     {
                         localizationsApi.RemoveLocalizations(gameMenu);
