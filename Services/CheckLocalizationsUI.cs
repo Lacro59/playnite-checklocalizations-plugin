@@ -45,52 +45,58 @@ namespace CheckLocalizations.Services
 
         public override void Initial()
         {
-            if (_Settings.EnableIntegrationButton)
-            {
-#if DEBUG
-                logger.Debug($"CheckLocalizations - InitialBtActionBar()");
-#endif
-                InitialBtActionBar();
-            }
-
-            if (_Settings.EnableIntegrationInCustomTheme)
-            {
-#if DEBUG
-                logger.Debug($"CheckLocalizations - InitialCustomElements()");
-#endif
-                InitialCustomElements();
-            }
-        }
-
-        public override void AddElements()
-        {
-            if (IsFirstLoad)
-            {
-#if DEBUG
-                logger.Debug($"CheckLocalizations - IsFirstLoad");
-#endif
-                Thread.Sleep(1000);
-                IsFirstLoad = false;
-            }
-
-            Application.Current.Dispatcher.BeginInvoke((Action)delegate
+            if (_PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
                 if (_Settings.EnableIntegrationButton)
                 {
 #if DEBUG
-                    logger.Debug($"CheckLocalizations - AddBtActionBar()");
+                logger.Debug($"CheckLocalizations - InitialBtActionBar()");
 #endif
-                    AddBtActionBar();
+                    InitialBtActionBar();
                 }
 
                 if (_Settings.EnableIntegrationInCustomTheme)
                 {
 #if DEBUG
+                logger.Debug($"CheckLocalizations - InitialCustomElements()");
+#endif
+                    InitialCustomElements();
+                }
+            }
+        }
+
+        public override void AddElements()
+        {
+            if (_PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
+            {
+                if (IsFirstLoad)
+                {
+#if DEBUG
+                logger.Debug($"CheckLocalizations - IsFirstLoad");
+#endif
+                    Thread.Sleep(1000);
+                    IsFirstLoad = false;
+                }
+
+                Application.Current.Dispatcher.BeginInvoke((Action)delegate
+                {
+                    if (_Settings.EnableIntegrationButton)
+                    {
+#if DEBUG
+                    logger.Debug($"CheckLocalizations - AddBtActionBar()");
+#endif
+                    AddBtActionBar();
+                    }
+
+                    if (_Settings.EnableIntegrationInCustomTheme)
+                    {
+#if DEBUG
                     logger.Debug($"CheckLocalizations - AddCustomElements()");
 #endif
                     AddCustomElements();
-                }
-            });
+                    }
+                });
+            }
         }
 
         public override void RefreshElements(Game GameSelected, bool Force = false)
@@ -138,7 +144,7 @@ namespace CheckLocalizations.Services
                         }
 
                         // If not cancel, show
-                        if (!ct.IsCancellationRequested)
+                        if (!ct.IsCancellationRequested && _PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
                         {
                             ui.AddResources(resourcesLists);
 
