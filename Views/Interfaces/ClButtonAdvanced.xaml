@@ -63,7 +63,7 @@
             <ListView IsVisibleChanged="ListView_IsVisibleChanged" Name="ListViewLanguages" Margin="0,5">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Language}" Width="150">
+                        <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150">
                             <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}"></GridViewColumnHeader>
                         </GridViewColumn>
 

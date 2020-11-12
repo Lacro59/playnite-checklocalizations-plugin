@@ -31,6 +31,8 @@ namespace CheckLocalizations
 
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
+        public static List<GameLanguage> GameLanguages = new List<GameLanguage>();
+
         public static Game GameSelected { get; set; }
         public static CheckLocalizationsUI checkLocalizationsUI;
         public static List<GameLocalization> gameLocalizations { get; set; } = new List<GameLocalization>();
@@ -39,6 +41,8 @@ namespace CheckLocalizations
         public CheckLocalizations(IPlayniteAPI api) : base(api)
         {
             settings = new CheckLocalizationsSettings(this);
+
+            GameLanguages = settings.GameLanguages;
 
             // Get plugin's location 
             string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);

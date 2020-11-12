@@ -10,7 +10,7 @@
     <ListView Name="ListViewLanguages" Margin="10,10">
         <ListView.View>
             <GridView>
-                <GridViewColumn DisplayMemberBinding="{Binding Language}" Width="auto">
+                <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150">
                     <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}"></GridViewColumnHeader>
                 </GridViewColumn>
 

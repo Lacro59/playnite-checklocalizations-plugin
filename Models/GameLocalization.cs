@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Playnite.SDK;
+using PluginCommon;
 using System;
 using System.IO;
 using System.Reflection;
@@ -46,6 +48,25 @@ namespace CheckLocalizations.Models
             get
             {
                 return GetImage(Sub);
+            }
+        }
+
+
+        [JsonIgnore]
+        public string DisplayName
+        {
+            get
+            {
+                var gameLanguage = CheckLocalizations.GameLanguages.Find(x => x.Name.ToLower() == Language.ToLower());
+
+                if (gameLanguage == null)
+                {
+                    return Language;
+                }
+                else
+                {
+                    return gameLanguage.DisplayName;
+                }
             }
         }
 
