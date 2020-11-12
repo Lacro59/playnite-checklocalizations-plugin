@@ -21,25 +21,39 @@ namespace CheckLocalizations.Services
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private static IResourceProvider resources = new ResourceProvider();
-        private IPlayniteAPI PlayniteApi;
+        private IPlayniteAPI _PlayniteApi;
 
-        private CheckLocalizationsSettings settings;
+        private CheckLocalizationsSettings _settings;
 
-        private string PluginUserDataPath { get; set; }
+        private string _PluginUserDataPath { get; set; }
+
         private string PluginDirectory { get; set; }
+        private string PluginDirectoryManual { get; set; }
 
 
         public LocalizationsApi(string PluginUserDataPath, IPlayniteAPI PlayniteApi, CheckLocalizationsSettings settings)
         {
-            this.settings = settings;
-            this.PlayniteApi = PlayniteApi;
-            this.PluginUserDataPath = PluginUserDataPath;
-            PluginDirectory = PluginUserDataPath + "\\CheckLocalizations\\";
+            _settings = settings;
+            _PlayniteApi = PlayniteApi;
+            _PluginUserDataPath = PluginUserDataPath;
+
+            PluginDirectory = Path.Combine(_PluginUserDataPath, "CheckLocalizations");
+            if (!Directory.Exists(PluginDirectory))
+            {
+                Directory.CreateDirectory(PluginDirectory);
+            }
+
+            PluginDirectoryManual = Path.Combine(_PluginUserDataPath, "CheckLocalizationsManual");
+            if (!Directory.Exists(PluginDirectoryManual))
+            {
+                Directory.CreateDirectory(PluginDirectoryManual);
+            }
         }
+
 
         public void RemoveLocalizations(Game game)
         {
-            string FileGameData = PluginUserDataPath + "\\CheckLocalizations\\" + game.Id.ToString() + ".json";
+            string FileGameData = Path.Combine(PluginDirectory, game.Id.ToString() + ".json");
 
             if (File.Exists(FileGameData))
             {
@@ -56,6 +70,26 @@ namespace CheckLocalizations.Services
             }
         }
 
+        public void RemoveLocalizationsManual(Game game)
+        {
+            string FileGameData = Path.Combine(PluginDirectoryManual, game.Id.ToString() + ".json");
+
+            if (File.Exists(FileGameData))
+            {
+                File.Delete(FileGameData);
+
+                var TaskIntegrationUI = Task.Run(() =>
+                {
+                    CheckLocalizations.checkLocalizationsUI.RefreshElements(game);
+                });
+            }
+            else
+            {
+                logger.Warn($"CheckLocalizations - Impossible to remove {game.Name} in {FileGameData}");
+            }
+        }
+
+
         public void ClearAllData()
         {
             if (Directory.Exists(PluginDirectory))
@@ -64,17 +98,17 @@ namespace CheckLocalizations.Services
                 {
                     Directory.Delete(PluginDirectory, true);
                     Directory.CreateDirectory(PluginDirectory);
-                    PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
+                    _PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
                 }
                 catch
                 {
-                    PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
+                    _PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
                 }
             }
         }
 
 
-        public List<GameLocalization> GetLocalizations(Game game, bool CacheOnly = false)
+        public List<GameLocalization> GetLocalizations(Game game, bool CacheOnly = false, bool WithoutManual = false)
         {
             List<GameLocalization> gameLocalizations = new List<GameLocalization>();
 
@@ -84,27 +118,68 @@ namespace CheckLocalizations.Services
             }
 
             // Get cache
-            string FileGameLocalizationss = PluginDirectory + "\\" + game.Id.ToString() + ".json";
-            if (File.Exists(FileGameLocalizationss))
+            string FileGameLocalizations = Path.Combine(PluginDirectory, game.Id.ToString() + ".json");
+            if (File.Exists(FileGameLocalizations))
             {
-                logger.Info($"CheckLocalizations - Find from cache for {game.Name}");
-                return JsonConvert.DeserializeObject<List<GameLocalization>>(File.ReadAllText(FileGameLocalizationss));
+#if DEBUG
+                logger.Debug($"CheckLocalizations - Find from cache for {game.Name}");
+#endif
+                gameLocalizations = JsonConvert.DeserializeObject<List<GameLocalization>>(File.ReadAllText(FileGameLocalizations));
             }
 
             // Get datas
             if (!CacheOnly)
             {
-                PCGamingWikiLocalizations pCGamingWikiLocalizations = new PCGamingWikiLocalizations(game, PluginUserDataPath, PlayniteApi);
+                PCGamingWikiLocalizations pCGamingWikiLocalizations = new PCGamingWikiLocalizations(game, _PluginUserDataPath, _PlayniteApi);
                 gameLocalizations = pCGamingWikiLocalizations.GetLocalizations();
 
                 // Save datas
-                File.WriteAllText(FileGameLocalizationss, JsonConvert.SerializeObject(gameLocalizations));
+                File.WriteAllText(FileGameLocalizations, JsonConvert.SerializeObject(gameLocalizations));
             }
 
-            AddTag(game, settings.EnableTag, gameLocalizations);
+            // Get manual
+            if (!WithoutManual)
+            {
+                gameLocalizations = gameLocalizations.Concat(GetLocalizationsManual(game)).ToList();
+            }
 
+            AddTag(game, _settings.EnableTag, gameLocalizations);
 
             return gameLocalizations;
+        }
+
+        public List<GameLocalization> GetLocalizationsManual(Game game)
+        {
+            List<GameLocalization> gameLocalizations = new List<GameLocalization>();
+
+            if (!Directory.Exists(PluginDirectoryManual))
+            {
+                Directory.CreateDirectory(PluginDirectoryManual);
+            }
+
+            // Get cache
+            string FileGameLocalizations = Path.Combine(PluginDirectoryManual, game.Id.ToString() + ".json");
+            if (File.Exists(FileGameLocalizations))
+            {
+                return JsonConvert.DeserializeObject<List<GameLocalization>>(File.ReadAllText(FileGameLocalizations));
+            }
+
+            return gameLocalizations;
+        }
+
+
+        public void SaveLocalizationsManual(List<GameLocalization> gameLocalizationsManual, Game game)
+        {
+            // Save datas
+            string FileGameLocalizations = Path.Combine(PluginDirectoryManual, game.Id.ToString() + ".json");
+            try
+            {
+                File.WriteAllText(FileGameLocalizations, JsonConvert.SerializeObject(gameLocalizationsManual));
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, "CheckLocalizations", $"Error on SaveLocalizationsManual()");
+            }
         }
 
 
@@ -112,7 +187,7 @@ namespace CheckLocalizations.Services
         {
             // Tags id
             List<Tag> ClTags = new List<Tag>();
-            foreach (Tag tag in PlayniteApi.Database.Tags)
+            foreach (Tag tag in _PlayniteApi.Database.Tags)
             {
                 if (tag.Name.IndexOf("[CL]") > -1)
                 {
@@ -120,17 +195,17 @@ namespace CheckLocalizations.Services
                 }
             }
             // Add missing tags in database
-            if (ClTags.Count < settings.GameLanguages.Count)
+            if (ClTags.Count < _settings.GameLanguages.Count)
             {
-                foreach (GameLanguage gameLanguage in settings.GameLanguages)
+                foreach (GameLanguage gameLanguage in _settings.GameLanguages)
                 {
                     if (ClTags.Find(x => x.Name == $"[CL] {gameLanguage.DisplayName}") == null)
                     {
-                        PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
+                        _PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
                     }
                 }
 
-                foreach (Tag tag in PlayniteApi.Database.Tags)
+                foreach (Tag tag in _PlayniteApi.Database.Tags)
                 {
                     if (tag.Name.IndexOf("[CL]") > -1)
                     {
@@ -153,7 +228,7 @@ namespace CheckLocalizations.Services
         {
             // Tags id
             List<Tag> ClTags = new List<Tag>();
-            foreach (Tag tag in PlayniteApi.Database.Tags)
+            foreach (Tag tag in _PlayniteApi.Database.Tags)
             {
                 if (tag.Name.IndexOf("[CL]") > -1)
                 {
@@ -161,17 +236,17 @@ namespace CheckLocalizations.Services
                 }
             }
             // Add missing tags in database
-            if (ClTags.Count < settings.GameLanguages.Count)
+            if (ClTags.Count < _settings.GameLanguages.Count)
             {
-                foreach(GameLanguage gameLanguage in settings.GameLanguages)
+                foreach(GameLanguage gameLanguage in _settings.GameLanguages)
                 {
                     if (ClTags.Find(x => x.Name == $"[CL] {gameLanguage.DisplayName}") == null)
                     {
-                        PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
+                        _PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
                     }
                 }
 
-                foreach (Tag tag in PlayniteApi.Database.Tags)
+                foreach (Tag tag in _PlayniteApi.Database.Tags)
                 {
                     if (tag.Name.IndexOf("[CL]") > -1)
                     {
@@ -202,7 +277,7 @@ namespace CheckLocalizations.Services
                 {
                     try
                     {
-                        foreach (GameLanguage gameLanguage in settings.GameLanguages)
+                        foreach (GameLanguage gameLanguage in _settings.GameLanguages)
                         {
                             if (gameLanguage.IsTag)
                             {
@@ -224,7 +299,7 @@ namespace CheckLocalizations.Services
                 {
                     game.TagIds = tagIds;
                 }
-                PlayniteApi.Database.Games.Update(game);
+                _PlayniteApi.Database.Games.Update(game);
             }
         }
 
@@ -255,7 +330,7 @@ namespace CheckLocalizations.Services
                         break;
                     }
 
-                    AddTag(game, settings.EnableTag, GetLocalizations(game, true));
+                    AddTag(game, _settings.EnableTag, GetLocalizations(game, true));
                     activateGlobalProgress.CurrentProgressValue++;
                 }
 

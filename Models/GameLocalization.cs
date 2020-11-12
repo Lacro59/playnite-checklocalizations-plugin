@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Playnite.SDK;
-using PluginCommon;
 using System;
 using System.IO;
 using System.Reflection;

@@ -64,6 +64,9 @@
     <Compile Include="Services\CheckLocalizationsUI.cs" />
     <Compile Include="Services\LocalizationsApi.cs" />
     <Compile Include="Services\PCGamingWikiLocalizations.cs" />
+    <Compile Include="Views\CheckLocalizationsEditManual.xaml.cs">
+      <DependentUpon>CheckLocalizationsEditManual.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CheckLocalizationsSettingsView.xaml.cs">
       <DependentUpon>CheckLocalizationsSettingsView.xaml</DependentUpon>
     </Compile>
@@ -140,6 +143,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Include="Views\CheckLocalizationsEditManual.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CheckLocalizationsSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

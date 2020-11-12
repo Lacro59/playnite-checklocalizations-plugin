@@ -14,7 +14,7 @@
                     <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}"></GridViewColumnHeader>
                 </GridViewColumn>
 
-                <GridViewColumn Width="50">
+                <GridViewColumn Width="70">
                     <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsUi}"></GridViewColumnHeader>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
@@ -23,7 +23,7 @@
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
 
-                <GridViewColumn Width="50">
+                <GridViewColumn Width="70">
                     <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsAudio}"></GridViewColumnHeader>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
@@ -32,7 +32,7 @@
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
 
-                <GridViewColumn Width="50">
+                <GridViewColumn Width="70">
                     <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsSub}"></GridViewColumnHeader>
                     <GridViewColumn.CellTemplate>
                         <DataTemplate>
@@ -41,7 +41,7 @@
                     </GridViewColumn.CellTemplate>
                 </GridViewColumn>
 
-                <GridViewColumn DisplayMemberBinding="{Binding Notes}" Width="260">
+                <GridViewColumn DisplayMemberBinding="{Binding Notes}" Width="200">
                     <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsNotes}"></GridViewColumnHeader>
                 </GridViewColumn>
             </GridView>

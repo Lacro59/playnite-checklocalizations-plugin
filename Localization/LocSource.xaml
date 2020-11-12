@@ -6,7 +6,12 @@
     <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
 
+    <!-- CheckLocalizationsEditManual -->
+
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Add a new language supported</sys:String>
+    
     <!-- CheckLocalizationsSettingsView -->
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: find {0} - not find {1}</sys:String>

@@ -20,6 +20,7 @@ namespace CheckLocalizations.Views
         {
             InitializeComponent();
 
+            gameLocalizations.Sort((x, y) => x.Language.CompareTo(y.Language));
             ListViewLanguages.ItemsSource = gameLocalizations;
 
             DataContext = this;

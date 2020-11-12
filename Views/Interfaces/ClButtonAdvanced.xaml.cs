@@ -62,6 +62,7 @@ namespace CheckLocalizations.Views.Interfaces
                 IndicatorSupport.Text = IsNone;
                 OnlyIcon.Text = OnlyIconIsNone;
             }
+            gameLocalizations.Sort((x, y) => x.Language.CompareTo(y.Language));
             ListViewLanguages.ItemsSource = gameLocalizations;
         }
 

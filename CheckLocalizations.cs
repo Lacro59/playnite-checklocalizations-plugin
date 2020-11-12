@@ -32,6 +32,7 @@ namespace CheckLocalizations
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
         public static List<GameLanguage> GameLanguages = new List<GameLanguage>();
+        public static LocalizationsApi localizationsApi;
 
         public static Game GameSelected { get; set; }
         public static CheckLocalizationsUI checkLocalizationsUI;
@@ -43,6 +44,7 @@ namespace CheckLocalizations
             settings = new CheckLocalizationsSettings(this);
 
             GameLanguages = settings.GameLanguages;
+            localizationsApi = new LocalizationsApi(this.GetPluginUserDataPath(), api, settings);
 
             // Get plugin's location 
             string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -72,8 +74,7 @@ namespace CheckLocalizations
         // To add new game menu items override GetGameMenuItems
         public override List<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            var gameMenu = args.Games.First();
-            LocalizationsApi localizationsApi = new LocalizationsApi(this.GetPluginUserDataPath(), PlayniteApi, settings);
+            var gameMenu = args.Games.First();   
 
             List<GameMenuItem> gameMenuItems = new List<GameMenuItem>
             {
@@ -94,6 +95,18 @@ namespace CheckLocalizations
                     {
                         localizationsApi.RemoveLocalizations(gameMenu);
                     }
+                },
+
+                new GameMenuItem
+                {
+                    MenuSection = resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCheckLocalizationsGameMenuAddLanguage"),
+                    Action = (mainMenuItem) =>
+                    {
+                        var ViewExtension = new CheckLocalizationsEditManual(localizationsApi.GetLocalizations(gameMenu, true, true), localizationsApi.GetLocalizationsManual(gameMenu), gameMenu);
+                        Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
+                        windowExtension.ShowDialog();
+                    }
                 }
             };
 
@@ -102,7 +115,9 @@ namespace CheckLocalizations
             {
                 MenuSection = resources.GetString("LOCCheckLocalizations"),
                 Description = "Test",
-                Action = (mainMenuItem) => { }
+                Action = (mainMenuItem) => 
+                {
+                }
             });
 #endif
 
@@ -117,8 +132,6 @@ namespace CheckLocalizations
             {
                 MenuInExtensions = "@";
             }
-
-            LocalizationsApi localizationsApi = new LocalizationsApi(this.GetPluginUserDataPath(), PlayniteApi, settings);
 
             List<MainMenuItem> mainMenuItems = new List<MainMenuItem>
             {
