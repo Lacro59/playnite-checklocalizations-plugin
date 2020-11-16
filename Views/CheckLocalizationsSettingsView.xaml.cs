@@ -54,7 +54,7 @@ namespace CheckLocalizations.Views
 
             DataLoad.Visibility = Visibility.Collapsed;
 
-            lbGameLanguages.ItemsSource = settings.GameLanguages.OrderBy(x => x.DisplayName).ToList();
+            lbGameLanguages.ItemsSource = settings.GameLanguages.OrderBy(x => x.Name).ToList();
 
             DataContext = this;
         }

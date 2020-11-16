@@ -80,7 +80,55 @@ namespace CheckLocalizations
                     new GameLanguage { DisplayName = "Čeština", Name = "Czech", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Magyar", Name = "Hungarian", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Türkçe", Name = "Turkish", IsTag = false, IsNative = false },
+
+                    new GameLanguage { DisplayName = "عربى", Name = "Arabic", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Català", Name = "Catalan", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "dansk", Name = "Danish", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Ελληνικά", Name = "Greek", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Eesti", Name = "Estonian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "فارسی", Name = "Persian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Suomi", Name = "Finnish", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Hrvatski", Name = "Croatian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Magyar", Name = "Hungarian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Bahasa Indonesia", Name = "Indonesian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Lietuvių", Name = "Lithuanian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Nederlands", Name = "Dutch", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Norsk", Name = "Norwegian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Polski", Name = "Polish", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Português", Name = "Portuguese", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Română", Name = "Romanian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Slovenčina", Name = "Slovenian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Српски", Name = "Serbian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Svenska", Name = "Swedish", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Українська", Name = "Ukrainian", IsTag = false, IsNative = false }
                 };
+            }
+
+            if (GameLanguages.Count == 16)
+            {
+                GameLanguages.AddRange(new List<GameLanguage>()
+                {
+                    new GameLanguage { DisplayName = "عربى", Name = "Arabic", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Català", Name = "Catalan", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "dansk", Name = "Danish", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Ελληνικά", Name = "Greek", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Eesti", Name = "Estonian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "فارسی", Name = "Persian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Suomi", Name = "Finnish", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Hrvatski", Name = "Croatian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Magyar", Name = "Hungarian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Bahasa Indonesia", Name = "Indonesian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Lietuvių", Name = "Lithuanian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Nederlands", Name = "Dutch", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Norsk", Name = "Norwegian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Polski", Name = "Polish", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Português", Name = "Portuguese", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Română", Name = "Romanian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Slovenčina", Name = "Slovenian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Српски", Name = "Serbian", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Svenska", Name = "Swedish", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Українська", Name = "Ukrainian", IsTag = false, IsNative = false }
+                });
             }
         }
 
