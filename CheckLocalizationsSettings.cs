@@ -110,8 +110,8 @@ namespace CheckLocalizations
             CheckLocalizations.checkLocalizationsUI.RemoveElements();
             var TaskIntegrationUI = Task.Run(() =>
             {
-                CheckLocalizations.checkLocalizationsUI.AddElements();
-                CheckLocalizations.checkLocalizationsUI.RefreshElements(CheckLocalizations.GameSelected);
+                var dispatcherOp = CheckLocalizations.checkLocalizationsUI.AddElements();
+                dispatcherOp.Completed += (s, e) => { CheckLocalizations.checkLocalizationsUI.RefreshElements(CheckLocalizations.GameSelected); };
             });
         }
 

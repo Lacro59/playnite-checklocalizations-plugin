@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace CheckLocalizations.Services
 {
@@ -65,7 +66,7 @@ namespace CheckLocalizations.Services
             }
         }
 
-        public override void AddElements()
+        public override DispatcherOperation AddElements()
         {
             if (_PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
             {
@@ -74,11 +75,11 @@ namespace CheckLocalizations.Services
 #if DEBUG
                 logger.Debug($"CheckLocalizations - IsFirstLoad");
 #endif
-                    Thread.Sleep(1000);
+                    Thread.Sleep(3000);
                     IsFirstLoad = false;
                 }
 
-                Application.Current.Dispatcher.BeginInvoke((Action)delegate
+                return Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
                 {
                     if (_Settings.EnableIntegrationButton)
                     {
@@ -95,8 +96,10 @@ namespace CheckLocalizations.Services
 #endif
                     AddCustomElements();
                     }
-                });
+                }));
             }
+
+            return null;
         }
 
         public override void RefreshElements(Game GameSelected, bool Force = false)
