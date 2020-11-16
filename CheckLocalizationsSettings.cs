@@ -24,6 +24,9 @@ namespace CheckLocalizations
         public bool EnableIntegrationButtonDetails { get; set; } = false;
         public bool EnableIntegrationButtonJustIcon { get; set; } = true;
 
+        public bool EnableIntegrationInDescription { get; set; } = false;
+        public bool IntegrationShowTitle { get; set; } = true;
+        public bool IntegrationTopGameDetails { get; set; } = true;
         public bool EnableIntegrationInCustomTheme { get; set; } = false;
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
@@ -57,6 +60,9 @@ namespace CheckLocalizations
                 EnableIntegrationButton = savedSettings.EnableIntegrationButton;
                 EnableIntegrationButtonDetails = savedSettings.EnableIntegrationButtonDetails;
 
+                EnableIntegrationInDescription = savedSettings.EnableIntegrationInDescription;
+                IntegrationShowTitle = savedSettings.IntegrationShowTitle;
+                IntegrationTopGameDetails = savedSettings.IntegrationTopGameDetails;
                 EnableIntegrationInCustomTheme = savedSettings.EnableIntegrationInCustomTheme;
             }
 

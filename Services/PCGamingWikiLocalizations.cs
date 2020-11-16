@@ -127,7 +127,7 @@ namespace CheckLocalizations.Services
                                 Sub = GetSupportStatus(td.QuerySelector("div").GetAttribute("title"));
                                 break;
                             case 4:
-                                Notes = td.InnerHtml;
+                                Notes = Regex.Replace(td.InnerHtml, "<.+?>(.*)<.+?>", "$1");
                                 break;
                         }
                         i++;

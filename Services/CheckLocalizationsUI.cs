@@ -40,6 +40,8 @@ namespace CheckLocalizations.Services
             _PluginUserDataPath = PluginUserDataPath;
 
             BtActionBarName = "PART_ClButton";
+            SpDescriptionName = "PART_ClDescriptionIntegration";
+
             localizationsApi = new LocalizationsApi(PluginUserDataPath, PlayniteApi, Settings);
         }
 
@@ -54,6 +56,14 @@ namespace CheckLocalizations.Services
                 logger.Debug($"CheckLocalizations - InitialBtActionBar()");
 #endif
                     InitialBtActionBar();
+                }
+
+                if (_Settings.EnableIntegrationInDescription)
+                {
+#if DEBUG
+                    logger.Debug($"CheckLocalizations - InitialSpDescription()");
+#endif
+                    InitialSpDescription();
                 }
 
                 if (_Settings.EnableIntegrationInCustomTheme)
@@ -87,6 +97,14 @@ namespace CheckLocalizations.Services
                     logger.Debug($"CheckLocalizations - AddBtActionBar()");
 #endif
                     AddBtActionBar();
+                    }
+
+                    if (_Settings.EnableIntegrationInDescription)
+                    {
+#if DEBUG
+                        logger.Debug($"CheckLocalizations - AddSpDescription()");
+#endif
+                        AddSpDescription();
                     }
 
                     if (_Settings.EnableIntegrationInCustomTheme)
@@ -159,6 +177,14 @@ namespace CheckLocalizations.Services
                                     logger.Debug($"CheckLocalizations - RefreshBtActionBar()");
 #endif
                                     RefreshBtActionBar();
+                                }
+
+                                if (_Settings.EnableIntegrationInDescription)
+                                {
+#if DEBUG
+                                    logger.Debug($"CheckLocalizations - RefreshSpDescription()");
+#endif
+                                    RefreshSpDescription();
                                 }
 
                                 if (_Settings.EnableIntegrationInCustomTheme)
@@ -290,14 +316,50 @@ namespace CheckLocalizations.Services
         #region SpDescription
         public override void InitialSpDescription()
         {
+            Application.Current.Dispatcher.BeginInvoke((Action)delegate
+            {
+                if (PART_SpDescription != null)
+                {
+                    PART_SpDescription.Visibility = Visibility.Collapsed;
+                }
+            });
         }
 
         public override void AddSpDescription()
         {
+            if (PART_SpDescription != null)
+            {
+#if DEBUG
+                logger.Debug($"CheckLocalizations - PART_SpDescription allready insert");
+#endif
+                return;
+            }
+
+            try
+            {
+                ClDescriptionIntegration SpDescription = new ClDescriptionIntegration(_Settings.IntegrationShowTitle);
+                SpDescription.Name = SpDescriptionName;
+
+                ui.AddElementInGameSelectedDescription(SpDescription, _Settings.IntegrationTopGameDetails);
+                PART_SpDescription = IntegrationUI.SearchElementByName(SpDescriptionName);
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, "CheckLocalizations", "Error on AddSpDescription()");
+            }
         }
 
         public override void RefreshSpDescription()
         {
+            if (PART_SpDescription != null)
+            {
+                ((ClDescriptionIntegration)PART_SpDescription).SetGameLocalizations(CheckLocalizations.gameLocalizations);
+                PART_SpDescription.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                logger.Warn($"CheckLocalizations - PART_SpDescription is not defined");
+            }
         }
         #endregion  
 
@@ -328,12 +390,16 @@ namespace CheckLocalizations.Services
             FrameworkElement PART_ClButtonWithTitle = null;
             FrameworkElement PART_ClButtonWithTitleAndDetails = null;
             FrameworkElement PART_ClButtonWithJustIconAndDetails = null;
+
+            FrameworkElement PART_ClListLanguages = null;
             try
             {
                 PART_ClButtonWithJustIcon = IntegrationUI.SearchElementByName("PART_ClButtonWithJustIcon", false, true);
                 PART_ClButtonWithTitle = IntegrationUI.SearchElementByName("PART_ClButtonWithTitle", false, true);
                 PART_ClButtonWithTitleAndDetails = IntegrationUI.SearchElementByName("PART_ClButtonWithTitleAndDetails", false, true);
                 PART_ClButtonWithJustIconAndDetails = IntegrationUI.SearchElementByName("PART_ClButtonWithJustIconAndDetails", false, true);
+
+                PART_ClListLanguages = IntegrationUI.SearchElementByName("PART_ClListLanguages", false, true);
             }
             catch (Exception ex)
             {
@@ -397,6 +463,20 @@ namespace CheckLocalizations.Services
                     Common.LogError(ex, "CheckLocalizations", "Error on AddCustomElements()");
                 }
             }
+
+            if (PART_ClListLanguages != null)
+            {
+                PART_ClListLanguages = new ClDescriptionIntegration(false, true);
+                try
+                {
+                    ui.AddElementInCustomTheme(PART_ClListLanguages, "PART_ClListLanguages");
+                    ListCustomElements.Add(new CustomElement { ParentElementName = "PART_ClListLanguages", Element = PART_ClListLanguages });
+                }
+                catch (Exception ex)
+                {
+                    Common.LogError(ex, "CheckLocalizations", "Error on AddCustomElements()");
+                }
+            }
         }
 
         public override void RefreshCustomElements()
@@ -410,6 +490,13 @@ namespace CheckLocalizations.Services
                     ((ClButtonAdvanced)customElement.Element).SetGameLocalizations(
                         CheckLocalizations.gameLocalizations,
                         (bool)resources.GetResource("Cl_HasNativeSupport")
+                    );
+                }
+
+                if (customElement.Element is ClDescriptionIntegration)
+                {
+                    ((ClDescriptionIntegration)customElement.Element).SetGameLocalizations(
+                        CheckLocalizations.gameLocalizations
                     );
                 }
             }

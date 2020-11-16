@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckLocalizations.Views"
              mc:Ignorable="d"  Background="{DynamicResource WindowBackgourndBrush}"            
-             Width="600" Height="250">
+             Width="620" Height="250">
 
     <ListView Name="ListViewLanguages" Margin="10,10">
         <ListView.View>

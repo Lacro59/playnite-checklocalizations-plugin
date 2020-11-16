@@ -79,16 +79,26 @@
 
         <TabItem Header="{DynamicResource LOCCommonIntegration}">
             <StackPanel Margin="0,10,0,0">
+                <CheckBox IsChecked="{Binding EnableIntegrationButton}" 
+                              Name="CheckL_IntegrationInButton"
+                              Click="Checkbox_Click" VerticalAlignment="Center">
+                    <Label Content="{DynamicResource LOCCommonIntegrationButton}" />
+                </CheckBox>
+
+                <CheckBox IsChecked="{Binding EnableIntegrationInDescription}" Name="CheckL_IntegrationInDescription" Margin="0,35,0,0" Click="Checkbox_Click">
+                    <Label Content="{DynamicResource LOCCommonIntegrationInDescription}" />
+                </CheckBox>
+                <CheckBox IsChecked="{Binding IntegrationShowTitle}" Margin="30,5,0,0" IsEnabled="{Binding ElementName=CheckL_IntegrationInDescription, Path=IsChecked}">
+                    <Label Content="{DynamicResource LOCCommonIntegrationShowTitle}" />
+                </CheckBox>
+                <CheckBox IsChecked="{Binding IntegrationTopGameDetails}" Margin="30,5,0,0" IsEnabled="{Binding ElementName=CheckL_IntegrationInDescription, Path=IsChecked}">
+                    <Label Content="{DynamicResource LOCCommonIntegrationTopGameDetails}" />
+                </CheckBox>
+
                 <CheckBox IsChecked="{Binding EnableIntegrationInCustomTheme}"
                               Name="CheckL_IntegrationInCustomTheme" 
                               Click="Checkbox_Click" VerticalAlignment="Center">
                     <Label Content="{DynamicResource LOCCommonIntegrationInCustomTheme}" />
-                </CheckBox>
-                
-                <CheckBox IsChecked="{Binding EnableIntegrationButton}" 
-                              Name="CheckL_IntegrationInButton" Margin="0,10,0,0"
-                              Click="Checkbox_Click" VerticalAlignment="Center">
-                    <Label Content="{DynamicResource LOCCommonIntegrationButton}" />
                 </CheckBox>
 
                 <GroupBox IsEnabled="{Binding EnableIntegrationButton}" Margin="0,10,0,0"

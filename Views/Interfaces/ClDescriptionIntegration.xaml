@@ -1,0 +1,54 @@
+﻿<StackPanel x:Class="CheckLocalizations.Views.Interfaces.ClDescriptionIntegration"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CheckLocalizations.Views.Interfaces"
+             mc:Ignorable="d">
+    
+    <TextBlock Name="PART_Title" Text="{DynamicResource  LOCCheckLocalizations}" Margin="0,15,0,5" Style="{DynamicResource BaseTextBlockStyle}" />
+    <Separator Name="PART_Separator" Background="{DynamicResource PanelSeparatorBrush}" />
+
+    <StackPanel Name="PART_ClList" DockPanel.Dock="Bottom" Margin="0, 5, 0, 5">
+        <ListView Name="PART_ListViewLanguages" Loaded="PART_ListViewLanguages_Loaded" Height="130">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}"></GridViewColumnHeader>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="70">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsUi}"></GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding UiIcon}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="70">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsAudio}"></GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding AudioIcon}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="70">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsSub}"></GridViewColumnHeader>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding SubIcon}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Notes}" Width="100">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsNotes}"></GridViewColumnHeader>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </StackPanel>
+</StackPanel>

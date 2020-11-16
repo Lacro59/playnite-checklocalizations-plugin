@@ -169,9 +169,15 @@ namespace CheckLocalizations.Views
                 CheckL_IntegrationInCustomTheme.IsChecked = false;
             }
 
+            if ((cb.Name == "CheckL_IntegrationInDescription") && (bool)cb.IsChecked)
+            {
+                CheckL_IntegrationInCustomTheme.IsChecked = false;
+            }
+
             if ((cb.Name == "CheckL_IntegrationInCustomTheme") && (bool)cb.IsChecked)
             {
                 CheckL_IntegrationInButton.IsChecked = false;
+                CheckL_IntegrationInDescription.IsChecked = false;
             }
         }
 

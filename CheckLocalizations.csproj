@@ -79,6 +79,9 @@
     <Compile Include="Views\Interfaces\ClButtonAdvanced.xaml.cs">
       <DependentUpon>ClButtonAdvanced.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Interfaces\ClDescriptionIntegration.xaml.cs">
+      <DependentUpon>ClDescriptionIntegration.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="extension.yaml">
@@ -160,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Interfaces\ClButtonAdvanced.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Interfaces\ClDescriptionIntegration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
