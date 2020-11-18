@@ -31,26 +31,30 @@ namespace CheckLocalizations
 
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
+
+
+        public static LocalizationsDatabase PluginDatabase { get; set; }
         public static List<GameLanguage> GameLanguages = new List<GameLanguage>();
-        public static LocalizationsApi localizationsApi;
 
         public static Game GameSelected { get; set; }
         public static CheckLocalizationsUI checkLocalizationsUI;
-        public static List<GameLocalization> gameLocalizations { get; set; } = new List<GameLocalization>();
-
+        public static List<Models.Localization> gameLocalizations { get; set; } = new List<Models.Localization>();
 
         public CheckLocalizations(IPlayniteAPI api) : base(api)
         {
             settings = new CheckLocalizationsSettings(this);
 
+            // Loading plugin database
+            PluginDatabase = new LocalizationsDatabase(PlayniteApi, settings, this.GetPluginUserDataPath());
+            PluginDatabase.InitializeDatabase();
+
             GameLanguages = settings.GameLanguages;
-            localizationsApi = new LocalizationsApi(this.GetPluginUserDataPath(), api, settings);
 
             // Get plugin's location 
             string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             // Add plugin localization in application ressource.
-            PluginCommon.Localization.SetPluginLanguage(pluginFolder, api.ApplicationSettings.Language);
+            PluginCommon.PluginLocalization.SetPluginLanguage(pluginFolder, api.ApplicationSettings.Language);
             // Add common in application ressource.
             PluginCommon.Common.Load(pluginFolder);
 
@@ -83,7 +87,7 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCheckLocalizationsGameMenuPluginView"),
                     Action = (gameMenuItem) =>
                     {
-                        var ViewExtension = new CheckLocalizationsView(localizationsApi.GetLocalizations(gameMenu));
+                        var ViewExtension = new CheckLocalizationsView(PluginDatabase.Get(gameMenu.Id));
                         Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
                         windowExtension.ShowDialog();
                     }
@@ -93,7 +97,11 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonRefreshGameData"),
                     Action = (gameMenuItem) =>
                     {
-                        localizationsApi.RemoveLocalizations(gameMenu);
+                        PluginDatabase.Remove(gameMenu.Id);
+                        var TaskIntegrationUI = Task.Run(() =>
+                        {
+                            checkLocalizationsUI.RefreshElements(gameMenu);
+                        });
                     }
                 },
 
@@ -103,7 +111,7 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCheckLocalizationsGameMenuAddLanguage"),
                     Action = (mainMenuItem) =>
                     {
-                        var ViewExtension = new CheckLocalizationsEditManual(localizationsApi.GetLocalizations(gameMenu, true, true), localizationsApi.GetLocalizationsManual(gameMenu), gameMenu);
+                        var ViewExtension = new CheckLocalizationsEditManual(gameMenu);
                         Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
                         windowExtension.ShowDialog();
                     }
@@ -141,7 +149,7 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonGetAllDatas"),
                     Action = (mainMenuItem) =>
                     {
-                        localizationsApi.GetAllDataFromMain(PlayniteApi, this.GetPluginUserDataPath(), settings);
+                        PluginDatabase.GetAllDataFromMain();
                     }
                 },
                 new MainMenuItem
@@ -150,7 +158,14 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonClearAllDatas"),
                     Action = (mainMenuItem) =>
                     {
-                        localizationsApi.ClearAllData();
+                        if (PluginDatabase.ClearDatabase())
+                        {
+                            PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
+                        }
+                        else
+                        {
+                            PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
+                        }
                     }
                 },
                 new MainMenuItem
@@ -159,7 +174,7 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonAddAllTags"),
                     Action = (mainMenuItem) =>
                     {
-                        localizationsApi.AddAllTagFromMain(PlayniteApi, this.GetPluginUserDataPath());
+                        PluginDatabase.AddAllTagFromMain();
                     }
                 },
                 new MainMenuItem
@@ -168,7 +183,7 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonRemoveAllTags"),
                     Action = (mainMenuItem) =>
                     {
-                        localizationsApi.RemoveAllTagFromMain(PlayniteApi, this.GetPluginUserDataPath());
+                        PluginDatabase.RemoveAllTagFromMain();
                     }
                 }
             };
@@ -178,7 +193,9 @@ namespace CheckLocalizations
             {
                 MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
                 Description = "Test",
-                Action = (mainMenuItem) => { }
+                Action = (mainMenuItem) => 
+                {
+                }
             });
 #endif
 
@@ -256,7 +273,7 @@ namespace CheckLocalizations
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            return new CheckLocalizationsSettingsView(this.GetPluginUserDataPath(), PlayniteApi, settings);
+            return new CheckLocalizationsSettingsView(PlayniteApi, settings, this.GetPluginUserDataPath());
         }
     }
 }

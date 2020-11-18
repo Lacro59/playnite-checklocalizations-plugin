@@ -44,7 +44,7 @@ namespace CheckLocalizations.Views.Interfaces
             }
         }
 
-        public void SetGameLocalizations(List<GameLocalization> gameLocalizations, bool SupportNative)
+        public void SetGameLocalizations(List<Models.Localization> gameLocalizations, bool SupportNative)
         {
             if (SupportNative)
             {

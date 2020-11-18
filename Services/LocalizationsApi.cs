@@ -1,12 +1,9 @@
-﻿using CheckLocalizations.Models;
+﻿using CheckLocalizations.Clients;
+using CheckLocalizations.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginCommon;
-using PluginCommon.PlayniteResources;
-using PluginCommon.PlayniteResources.API;
-using PluginCommon.PlayniteResources.Common;
-using PluginCommon.PlayniteResources.Converters;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,159 +24,39 @@ namespace CheckLocalizations.Services
 
         private string _PluginUserDataPath { get; set; }
 
-        private string PluginDirectory { get; set; }
-        private string PluginDirectoryManual { get; set; }
 
 
-        public LocalizationsApi(string PluginUserDataPath, IPlayniteAPI PlayniteApi, CheckLocalizationsSettings settings)
+        public LocalizationsApi(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings settings, string PluginUserDataPath)
         {
             _settings = settings;
             _PlayniteApi = PlayniteApi;
             _PluginUserDataPath = PluginUserDataPath;
-
-            PluginDirectory = Path.Combine(_PluginUserDataPath, "CheckLocalizations");
-            if (!Directory.Exists(PluginDirectory))
-            {
-                Directory.CreateDirectory(PluginDirectory);
-            }
-
-            PluginDirectoryManual = Path.Combine(_PluginUserDataPath, "CheckLocalizationsManual");
-            if (!Directory.Exists(PluginDirectoryManual))
-            {
-                Directory.CreateDirectory(PluginDirectoryManual);
-            }
         }
 
 
-        public void RemoveLocalizations(Game game)
+        public GameLocalizations GetLocalizations(Guid Id)
         {
-            string FileGameData = Path.Combine(PluginDirectory, game.Id.ToString() + ".json");
-
-            if (File.Exists(FileGameData))
-            {
-                File.Delete(FileGameData);
-
-                var TaskIntegrationUI = Task.Run(() =>
-                {
-                    CheckLocalizations.checkLocalizationsUI.RefreshElements(game);
-                });
-            }
-            else
-            {
-                logger.Warn($"CheckLocalizations - Impossible to remove {game.Name} in {FileGameData}");
-            }
+            return GetLocalizations(_PlayniteApi.Database.Games.Get(Id));
         }
 
-        public void RemoveLocalizationsManual(Game game)
+        public GameLocalizations GetLocalizations(Game game)
         {
-            string FileGameData = Path.Combine(PluginDirectoryManual, game.Id.ToString() + ".json");
+            PCGamingWikiLocalizations pCGamingWikiLocalizations = new PCGamingWikiLocalizations(game, _PluginUserDataPath, _PlayniteApi);
+            List<Localization> Localizations = pCGamingWikiLocalizations.GetLocalizations();
 
-            if (File.Exists(FileGameData))
+            GameLocalizations gameLocalizations = new GameLocalizations
             {
-                File.Delete(FileGameData);
+                Id = game.Id,
+                Name = game.Name,
+                Hidden = game.Hidden,
+                Icon = game.Icon,
+                CoverImage = game.CoverImage,
+                Data = Localizations
+            };
 
-                var TaskIntegrationUI = Task.Run(() =>
-                {
-                    CheckLocalizations.checkLocalizationsUI.RefreshElements(game);
-                });
-            }
-            else
-            {
-                logger.Warn($"CheckLocalizations - Impossible to remove {game.Name} in {FileGameData}");
-            }
-        }
-
-
-        public void ClearAllData()
-        {
-            if (Directory.Exists(PluginDirectory))
-            {
-                try
-                {
-                    Directory.Delete(PluginDirectory, true);
-                    Directory.CreateDirectory(PluginDirectory);
-                    _PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
-                }
-                catch
-                {
-                    _PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
-                }
-            }
-        }
-
-
-        public List<GameLocalization> GetLocalizations(Game game, bool CacheOnly = false, bool WithoutManual = false)
-        {
-            List<GameLocalization> gameLocalizations = new List<GameLocalization>();
-
-            if (!Directory.Exists(PluginDirectory))
-            {
-                Directory.CreateDirectory(PluginDirectory);
-            }
-
-            // Get cache
-            string FileGameLocalizations = Path.Combine(PluginDirectory, game.Id.ToString() + ".json");
-            if (File.Exists(FileGameLocalizations))
-            {
-#if DEBUG
-                logger.Debug($"CheckLocalizations - Find from cache for {game.Name}");
-#endif
-                gameLocalizations = JsonConvert.DeserializeObject<List<GameLocalization>>(File.ReadAllText(FileGameLocalizations));
-            }
-
-            // Get datas
-            if (!CacheOnly)
-            {
-                PCGamingWikiLocalizations pCGamingWikiLocalizations = new PCGamingWikiLocalizations(game, _PluginUserDataPath, _PlayniteApi);
-                gameLocalizations = pCGamingWikiLocalizations.GetLocalizations();
-
-                // Save datas
-                File.WriteAllText(FileGameLocalizations, JsonConvert.SerializeObject(gameLocalizations));
-            }
-
-            // Get manual
-            if (!WithoutManual)
-            {
-                gameLocalizations = gameLocalizations.Concat(GetLocalizationsManual(game)).ToList();
-            }
-
-            AddTag(game, _settings.EnableTag, gameLocalizations);
+            AddTag(game, _settings.EnableTag, Localizations);
 
             return gameLocalizations;
-        }
-
-        public List<GameLocalization> GetLocalizationsManual(Game game)
-        {
-            List<GameLocalization> gameLocalizations = new List<GameLocalization>();
-
-            if (!Directory.Exists(PluginDirectoryManual))
-            {
-                Directory.CreateDirectory(PluginDirectoryManual);
-            }
-
-            // Get cache
-            string FileGameLocalizations = Path.Combine(PluginDirectoryManual, game.Id.ToString() + ".json");
-            if (File.Exists(FileGameLocalizations))
-            {
-                return JsonConvert.DeserializeObject<List<GameLocalization>>(File.ReadAllText(FileGameLocalizations));
-            }
-
-            return gameLocalizations;
-        }
-
-
-        public void SaveLocalizationsManual(List<GameLocalization> gameLocalizationsManual, Game game)
-        {
-            // Save datas
-            string FileGameLocalizations = Path.Combine(PluginDirectoryManual, game.Id.ToString() + ".json");
-            try
-            {
-                File.WriteAllText(FileGameLocalizations, JsonConvert.SerializeObject(gameLocalizationsManual));
-            }
-            catch (Exception ex)
-            {
-                Common.LogError(ex, "CheckLocalizations", $"Error on SaveLocalizationsManual()");
-            }
         }
 
 
@@ -224,7 +101,7 @@ namespace CheckLocalizations.Services
             }
         }
 
-        private void AddTag(Game game, bool EnableTag, List<GameLocalization> gameLocalizations)
+        private void AddTag(Game game, bool EnableTag, List<Models.Localization> gameLocalizations)
         {
             // Tags id
             List<Tag> ClTags = new List<Tag>();
@@ -330,7 +207,7 @@ namespace CheckLocalizations.Services
                         break;
                     }
 
-                    AddTag(game, _settings.EnableTag, GetLocalizations(game, true));
+                    AddTag(game, _settings.EnableTag, CheckLocalizations.PluginDatabase.Get(game).Data);
                     activateGlobalProgress.CurrentProgressValue++;
                 }
 
@@ -373,42 +250,6 @@ namespace CheckLocalizations.Services
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
                 logger.Info($"CheckLocalizations - Task RemoveAllTagFromMain(){CancelText} - {String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)}");
-            }, globalProgressOptions);
-        }
-
-        public void GetAllDataFromMain(IPlayniteAPI PlayniteApi, string PluginUserDataPath, CheckLocalizationsSettings settings)
-        {
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                resources.GetString("LOCCommonGettingAllDatas"),
-                true
-            );
-            globalProgressOptions.IsIndeterminate = false;
-
-            PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
-            {
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
-
-                var db = PlayniteApi.Database.Games.Where(x => x.Hidden == false);
-                activateGlobalProgress.ProgressMaxValue = (double)db.Count();
-
-                string CancelText = string.Empty;
-
-                foreach (Game game in db)
-                {
-                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                    {
-                        CancelText = " canceled";
-                        break;
-                    }
-
-                    GetLocalizations(game);
-                    activateGlobalProgress.CurrentProgressValue++;
-                }
-
-                stopWatch.Stop();
-                TimeSpan ts = stopWatch.Elapsed;
-                logger.Info($"CheckLocalizations - Task GetAllDataFromMain(){CancelText} - {String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)}");
             }, globalProgressOptions);
         }
     }

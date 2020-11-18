@@ -35,20 +35,16 @@ namespace CheckLocalizations.Views
         private CheckLocalizationsSettings settings { get; set; }
         private string PluginUserDataPath { get; set; }
 
-        private LocalizationsApi localizationsApi { get; set; }
-
         public static bool WithoutMessage = false;
         public static CancellationTokenSource tokenSource;
         private CancellationToken ct;
 
 
-        public CheckLocalizationsSettingsView(string PluginUserDataPath, IPlayniteAPI PlayniteApi, CheckLocalizationsSettings settings)
+        public CheckLocalizationsSettingsView(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings settings, string PluginUserDataPath)
         {
             this.PlayniteApi = PlayniteApi;
             this.settings = settings;
             this.PluginUserDataPath = PluginUserDataPath;
-
-            localizationsApi = new LocalizationsApi(PluginUserDataPath, PlayniteApi, settings);
 
             InitializeComponent();
 
@@ -89,7 +85,7 @@ namespace CheckLocalizations.Views
                 {
                     try
                     {
-                        localizationsApi.GetLocalizations(game, true);
+                        CheckLocalizations.PluginDatabase.Get(game);
                     }
                     catch (Exception ex)
                     {
@@ -137,7 +133,7 @@ namespace CheckLocalizations.Views
                 {
                     try
                     {
-                        localizationsApi.RemoveTag(game);
+                        CheckLocalizations.PluginDatabase.RemoveTag(game);
                     }
                     catch (Exception ex)
                     {
@@ -224,11 +220,11 @@ namespace CheckLocalizations.Views
 
                 foreach (Game game in PlayniteApi.Database.Games)
                 {
-                    var gameLocalisations = localizationsApi.GetLocalizations(game);
+                    var gameLocalisations = CheckLocalizations.PluginDatabase.Get(game);
 
                     Application.Current.Dispatcher.BeginInvoke((Action)delegate
                     { 
-                        if (gameLocalisations.Count > 0)
+                        if (gameLocalisations.Data.Count > 0)
                         {
                             CountFind += 1;
                         }

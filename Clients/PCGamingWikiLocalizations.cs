@@ -4,10 +4,6 @@ using CheckLocalizations.Models;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginCommon;
-using PluginCommon.PlayniteResources;
-using PluginCommon.PlayniteResources.API;
-using PluginCommon.PlayniteResources.Common;
-using PluginCommon.PlayniteResources.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace CheckLocalizations.Services
+namespace CheckLocalizations.Clients
 {
     public class PCGamingWikiLocalizations
     {
@@ -64,9 +60,9 @@ namespace CheckLocalizations.Services
 #endif
         }
 
-        public List<GameLocalization> GetLocalizations()
+        public List<Localization> GetLocalizations()
         {
-            List<GameLocalization> gameLocalizations = new List<GameLocalization>();
+            List<Localization> gameLocalizations = new List<Localization>();
 
             // Search data with SteamId (is find) or game url (if defined)
             if (SteamId != 0)
@@ -91,9 +87,9 @@ namespace CheckLocalizations.Services
             return gameLocalizations;
         }
 
-        public List<GameLocalization> GetLocalizations(string url)
+        public List<Localization> GetLocalizations(string url)
         {
-            List<GameLocalization> gameLocalizations = new List<GameLocalization>();
+            List<Localization> gameLocalizations = new List<Localization>();
 
             try
             {
@@ -133,7 +129,7 @@ namespace CheckLocalizations.Services
                         i++;
                     }
 
-                    gameLocalizations.Add(new GameLocalization
+                    gameLocalizations.Add(new Models.Localization
                     {
                         Language = Language,
                         Ui = Ui,

@@ -7,13 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Localization = CheckLocalizations.Models.Localization;
 
 namespace CheckLocalizations.Views.Interfaces
 {
@@ -26,8 +20,7 @@ namespace CheckLocalizations.Views.Interfaces
 
         private bool _withContener;
 
-
-        public ClDescriptionIntegration(bool IntegrationShowTitle, bool withContener = false)
+        public ClDescriptionIntegration(bool IntegrationShowTitle, bool withContener, List<Localization> gameLocalizations)
         {
             InitializeComponent();
 
@@ -39,9 +32,14 @@ namespace CheckLocalizations.Views.Interfaces
                 PART_Separator.Visibility = Visibility.Collapsed;
                 PART_ClList.Margin = new Thickness(0, 0, 0, 0);
             }
+
+
+            PART_ListViewLanguages.DataContext = gameLocalizations;
+            
+            DataContext = this;
         }
 
-        public void SetGameLocalizations(List<GameLocalization> gameLocalizations)
+        public void SetGameLocalizations(List<Localization> gameLocalizations)
         {
             PART_ListViewLanguages.ItemsSource = null;
             gameLocalizations.Sort((x, y) => x.Language.CompareTo(y.Language));

@@ -58,11 +58,14 @@
   <ItemGroup>
     <Compile Include="CheckLocalizations.cs" />
     <Compile Include="CheckLocalizationsSettings.cs" />
+    <Compile Include="Services\LocalizationsDatabase.cs" />
     <Compile Include="Models\GameLanguage.cs" />
-    <Compile Include="Models\GameLocalization.cs" />
+    <Compile Include="Models\GameLocalizations.cs" />
+    <Compile Include="Models\Localization.cs" />
+    <Compile Include="Models\GameLocalizationsCollection.cs" />
     <Compile Include="Services\CheckLocalizationsUI.cs" />
     <Compile Include="Services\LocalizationsApi.cs" />
-    <Compile Include="Services\PCGamingWikiLocalizations.cs" />
+    <Compile Include="Clients\PCGamingWikiLocalizations.cs" />
     <Compile Include="Views\CheckLocalizationsEditManual.xaml.cs">
       <DependentUpon>CheckLocalizationsEditManual.xaml</DependentUpon>
     </Compile>

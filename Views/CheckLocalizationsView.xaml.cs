@@ -1,9 +1,4 @@
 ﻿using CheckLocalizations.Models;
-using PluginCommon;
-using PluginCommon.PlayniteResources;
-using PluginCommon.PlayniteResources.API;
-using PluginCommon.PlayniteResources.Common;
-using PluginCommon.PlayniteResources.Converters;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -16,14 +11,11 @@ namespace CheckLocalizations.Views
     /// </summary>
     public partial class CheckLocalizationsView : UserControl
     {
-        public CheckLocalizationsView(List<GameLocalization> gameLocalizations)
+        public CheckLocalizationsView(GameLocalizations gameLocalizations)
         {
             InitializeComponent();
 
-            gameLocalizations.Sort((x, y) => x.Language.CompareTo(y.Language));
-            ListViewLanguages.ItemsSource = gameLocalizations;
-
-            DataContext = this;
+            ListViewLanguages.ItemsSource = gameLocalizations.Data;
         }
     }
 }

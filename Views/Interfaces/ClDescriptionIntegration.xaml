@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckLocalizations.Views.Interfaces"
              mc:Ignorable="d">
-    
-    <TextBlock Name="PART_Title" Text="{DynamicResource  LOCCheckLocalizations}" Margin="0,15,0,5" Style="{DynamicResource BaseTextBlockStyle}" />
+
+    <TextBlock Name="PART_Title" Text="{Binding tt}" Margin="0,15,0,5" Style="{DynamicResource BaseTextBlockStyle}" />
     <Separator Name="PART_Separator" Background="{DynamicResource PanelSeparatorBrush}" />
 
     <StackPanel Name="PART_ClList" DockPanel.Dock="Bottom" Margin="0, 5, 0, 5">

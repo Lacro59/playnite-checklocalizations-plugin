@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using Playnite.SDK.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Windows.Media.Imaging;
@@ -15,17 +17,17 @@ namespace CheckLocalizations.Models
         Unknown
     }
 
-    public class GameLocalization
+    public class Localization : ObservableObject
     {
         public string Language { get; set; }
         public SupportStatus Ui { get; set; }
         public SupportStatus Audio { get; set; }
         public SupportStatus Sub { get; set; }
         public string Notes { get; set; }
-
+        public bool IsManual { get; set; }
 
         [JsonIgnore]
-        public BitmapImage UiIcon
+        public string UiIcon
         {
             get
             {
@@ -33,7 +35,7 @@ namespace CheckLocalizations.Models
             }
         }
         [JsonIgnore]
-        public BitmapImage AudioIcon
+        public string AudioIcon
         {
             get
             {
@@ -41,14 +43,13 @@ namespace CheckLocalizations.Models
             }
         }
         [JsonIgnore]
-        public BitmapImage SubIcon
+        public string SubIcon
         {
             get
             {
                 return GetImage(Sub);
             }
         }
-
 
         [JsonIgnore]
         public string DisplayName
@@ -69,32 +70,25 @@ namespace CheckLocalizations.Models
         }
 
 
-        private BitmapImage GetImage(SupportStatus supportStatus)
+        private string GetImage(SupportStatus supportStatus)
         {
             string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            BitmapImage iconImage = new BitmapImage();
-            iconImage.BeginInit();
             switch (supportStatus)
             {
                 case SupportStatus.Hackable:
-                    iconImage.UriSource = new Uri($"{pluginFolder}\\Resources\\hackable.png", UriKind.RelativeOrAbsolute);
-                    break;
+                    return $"{pluginFolder}\\Resources\\hackable.png";
                 case SupportStatus.Native:
-                    iconImage.UriSource = new Uri($"{pluginFolder}\\Resources\\native.png", UriKind.RelativeOrAbsolute);
-                    break;
+                    return $"{pluginFolder}\\Resources\\native.png";
                 case SupportStatus.NoNative:
-                    iconImage.UriSource = new Uri($"{pluginFolder}\\Resources\\nonative.png", UriKind.RelativeOrAbsolute);
-                    break;
+                    return $"{pluginFolder}\\Resources\\nonative.png";
                 case SupportStatus.NotApplicable:
-                    iconImage.UriSource = new Uri($"{pluginFolder}\\Resources\\notapplicable.png", UriKind.RelativeOrAbsolute);
-                    break;
+                    return $"{pluginFolder}\\Resources\\notapplicable.png";
                 case SupportStatus.Unknown:
-                    iconImage.UriSource = new Uri($"{pluginFolder}\\Resources\\unknown.png", UriKind.RelativeOrAbsolute);
-                    break;
+                    return $"{pluginFolder}\\Resources\\unknown.png";
             }
-            iconImage.EndInit();
-            return iconImage;
+
+            return string.Empty;
         }
     }
 }
