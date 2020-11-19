@@ -1,11 +1,15 @@
 ﻿using Playnite.SDK;
+using PluginCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Threading;
 using Localization = CheckLocalizations.Models.Localization;
 
 namespace CheckLocalizations.Views.Interfaces
@@ -30,13 +34,29 @@ namespace CheckLocalizations.Views.Interfaces
             {
                 PART_ColNotes.Width = 0;
             }
+
+            CheckLocalizations.PluginDatabase.PropertyChanged += OnPropertyChanged;
         }
 
-        public void SetGameLocalizations(List<Localization> gameLocalizations)
+        protected void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            try
+            {
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
+                {
+                    PART_ListViewLanguages.DataContext = CheckLocalizations.PluginDatabase.GameSelectedData;
+                }));
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, "CheckLocalizations");
+            }
+        }
+
+        public void SetGameLocalizations()
         {
             PART_ListViewLanguages.ItemsSource = null;
-            gameLocalizations.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
-            PART_ListViewLanguages.ItemsSource = gameLocalizations;
+            PART_ListViewLanguages.ItemsSource = CheckLocalizations.PluginDatabase.GameSelectedData.Data;
         }
 
         private void PART_ListViewLanguages_Loaded(object sender, RoutedEventArgs e)

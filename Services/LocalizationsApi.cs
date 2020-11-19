@@ -21,9 +21,9 @@ namespace CheckLocalizations.Services
         private IPlayniteAPI _PlayniteApi;
 
         private CheckLocalizationsSettings _settings;
+        private readonly string _PluginUserDataPath;
 
-        private string _PluginUserDataPath { get; set; }
-
+        private PCGamingWikiLocalizations pCGamingWikiLocalizations;
 
 
         public LocalizationsApi(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings settings, string PluginUserDataPath)
@@ -31,6 +31,8 @@ namespace CheckLocalizations.Services
             _settings = settings;
             _PlayniteApi = PlayniteApi;
             _PluginUserDataPath = PluginUserDataPath;
+
+            pCGamingWikiLocalizations = new PCGamingWikiLocalizations(_PlayniteApi, _PluginUserDataPath);
         }
 
 
@@ -41,8 +43,7 @@ namespace CheckLocalizations.Services
 
         public GameLocalizations GetLocalizations(Game game)
         {
-            PCGamingWikiLocalizations pCGamingWikiLocalizations = new PCGamingWikiLocalizations(game, _PluginUserDataPath, _PlayniteApi);
-            List<Localization> Localizations = pCGamingWikiLocalizations.GetLocalizations();
+            List<Localization> Localizations = pCGamingWikiLocalizations.GetLocalizations(game);
 
             GameLocalizations gameLocalizations = new GameLocalizations
             {
@@ -207,7 +208,7 @@ namespace CheckLocalizations.Services
                         break;
                     }
 
-                    AddTag(game, _settings.EnableTag, CheckLocalizations.PluginDatabase.Get(game).Data);
+                    AddTag(game, _settings.EnableTag, CheckLocalizations.PluginDatabase.Get(game, true).Data);
                     activateGlobalProgress.CurrentProgressValue++;
                 }
 

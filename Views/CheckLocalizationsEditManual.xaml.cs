@@ -26,21 +26,23 @@ namespace CheckLocalizations.Views
         private Game _game;
 
 
-        public CheckLocalizationsEditManual(Game game)
+        public CheckLocalizationsEditManual()
         {
             InitializeComponent();
 
-            _gameLocalizations = CheckLocalizations.PluginDatabase.Get(game);
-            _game = game;
+            _gameLocalizations = CheckLocalizations.PluginDatabase.GameSelectedData;
+            _game = CheckLocalizations.GameSelected;
+
 #if DEBUG
-            logger.Debug($"CheckLocalizations - EditManual - {game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
+            logger.Debug($"CheckLocalizations - EditManual All - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
 #endif
             ListViewLanguages.ItemsSource = _gameLocalizations.Data.Where(x => x.IsManual).ToList();
 #if DEBUG
-            logger.Debug($"CheckLocalizations - EditManual - {game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
+            logger.Debug($"CheckLocalizations - EditManual IsManual only - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
 #endif
             RefreshAvailable();
         }
+
 
         private void RefreshAvailable()
         {
@@ -59,6 +61,7 @@ namespace CheckLocalizations.Views
             PART_LocalizationSelection.ItemsSource = gameLanguageAvailable;
             PART_LocalizationSelection.SelectedIndex = -1;
         }
+
 
         private void BtAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -147,6 +150,7 @@ namespace CheckLocalizations.Views
 
             ((Window)this.Parent).Close();
         }
+
 
         private void PART_LocalizationSelection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -66,8 +66,6 @@ namespace CheckLocalizations.Views.Interfaces
                 IndicatorSupport.Text = IsNone;
                 OnlyIcon.Text = OnlyIconIsNone;
             }
-
-            PART_ListViewLanguages.SetGameLocalizations(gameLocalizations);
         }
 
         // Design popup

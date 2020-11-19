@@ -22,7 +22,7 @@ namespace CheckLocalizations.Views.Interfaces
         private ClListViewLanguages PART_ListViewLanguages;
 
 
-        public ClDescriptionIntegration(bool IntegrationShowTitle, bool withContener, List<Localization> gameLocalizations)
+        public ClDescriptionIntegration(bool IntegrationShowTitle, bool withContener)
         {
             InitializeComponent();
 
@@ -40,11 +40,6 @@ namespace CheckLocalizations.Views.Interfaces
             PART_ClList.Children.Add(PART_ListViewLanguages);
 
             DataContext = this;
-        }
-
-        public void SetGameLocalizations(List<Localization> gameLocalizations)
-        {
-            PART_ListViewLanguages.SetGameLocalizations(gameLocalizations);
         }
 
         private void PART_ClList_Loaded(object sender, RoutedEventArgs e)

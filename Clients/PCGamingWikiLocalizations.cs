@@ -17,19 +17,26 @@ namespace CheckLocalizations.Clients
     public class PCGamingWikiLocalizations
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly IPlayniteAPI PlayniteApi;
+        private readonly IPlayniteAPI _PlayniteApi;
 
+        private readonly string _PluginUserDataPath;
+
+        private SteamApi steamApi;
         private readonly string urlSteamId = "https://pcgamingwiki.com/api/appid.php?appid={0}";
-        private string urlPCGamingWiki = string.Empty;
-        private readonly int SteamId = 0;
-
-        private Game game;
 
 
-        public PCGamingWikiLocalizations(Game game, string PluginUserDataPath, IPlayniteAPI PlayniteApi)
+        public PCGamingWikiLocalizations(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
         {
-            this.PlayniteApi = PlayniteApi;
-            this.game = game;
+            _PlayniteApi = PlayniteApi;
+            _PluginUserDataPath = PluginUserDataPath;
+
+            steamApi = new SteamApi(_PluginUserDataPath);
+        }
+
+        public List<Localization> GetLocalizations(Game game)
+        {
+            string urlPCGamingWiki = string.Empty;
+            int SteamId = 0;
 
             if (game.SourceId != Guid.Parse("00000000-0000-0000-0000-000000000000"))
             {
@@ -40,7 +47,6 @@ namespace CheckLocalizations.Clients
             }
             if (SteamId == 0)
             {
-                SteamApi steamApi = new SteamApi(PluginUserDataPath);
                 SteamId = steamApi.GetSteamId(game.Name);
             }
 
@@ -55,45 +61,39 @@ namespace CheckLocalizations.Clients
                 }
             }
 
-#if DEBUG
-            logger.Debug($"CheckLocalizations - PCGamingWikiLocalizations - {game.Name} - SteamId: {SteamId} - urlPCGamingWiki: {urlPCGamingWiki}");
-#endif
-        }
 
-        public List<Localization> GetLocalizations()
-        {
-            List<Localization> gameLocalizations = new List<Localization>();
+            List<Localization> Localizations = new List<Localization>();
 
-            // Search data with SteamId (is find) or game url (if defined)
             if (SteamId != 0)
             {
-                gameLocalizations = GetLocalizations(string.Format(urlSteamId, SteamId));
-                if (gameLocalizations.Count > 0)
+                Localizations = GetLocalizations(string.Format(urlSteamId, SteamId));
+                if (Localizations.Count > 0)
                 {
-                    return gameLocalizations;
+                    return Localizations;
                 }
             }
             if (!urlPCGamingWiki.IsNullOrEmpty())
             {
-                gameLocalizations = GetLocalizations(urlPCGamingWiki);
-                if (gameLocalizations.Count > 0)
+                Localizations = GetLocalizations(urlPCGamingWiki);
+                if (Localizations.Count > 0)
                 {
-                    return gameLocalizations;
+                    return Localizations;
                 }
             }
 
-            logger.Warn($"CheckLocalizations - PCGamingWikiLocalizations - Not find for {game.Name}");
-
-            return gameLocalizations;
+            logger.Warn($"CheckLocalizations - Not find for {game.Name}");
+            return Localizations;
         }
 
-        public List<Localization> GetLocalizations(string url)
+        private List<Localization> GetLocalizations(string url)
         {
-            List<Localization> gameLocalizations = new List<Localization>();
+            List<Localization> Localizations = new List<Localization>();
 
             try
             {
+#if DEBUG
                 logger.Debug($"CheckLocalizations - url {url}");
+#endif
 
                 // Get data & parse
                 string ResultWeb = Web.DownloadStringData(url).GetAwaiter().GetResult();
@@ -129,7 +129,7 @@ namespace CheckLocalizations.Clients
                         i++;
                     }
 
-                    gameLocalizations.Add(new Models.Localization
+                    Localizations.Add(new Models.Localization
                     {
                         Language = Language,
                         Ui = Ui,
@@ -141,11 +141,12 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "CheckLocalizations", "Error on PCGamingWikiLocalizations.GetLocalizations()");
+                Common.LogError(ex, "CheckLocalizations");
             }
 
-            return gameLocalizations;
+            return Localizations;
         }
+
 
         private SupportStatus GetSupportStatus(string title)
         {

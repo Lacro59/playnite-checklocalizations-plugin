@@ -9,10 +9,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using PluginCommon;
-using PluginCommon.PlayniteResources;
-using PluginCommon.PlayniteResources.API;
-using PluginCommon.PlayniteResources.Common;
-using PluginCommon.PlayniteResources.Converters;
 using CheckLocalizations.Views;
 using CheckLocalizations.Services;
 using Playnite.SDK.Events;
@@ -31,20 +27,17 @@ namespace CheckLocalizations
 
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
-
-
+        public static Game GameSelected { get; set; }
         public static LocalizationsDatabase PluginDatabase { get; set; }
         public static List<GameLanguage> GameLanguages = new List<GameLanguage>();
-
-        public static Game GameSelected { get; set; }
         public static CheckLocalizationsUI checkLocalizationsUI;
-        public static List<Models.Localization> gameLocalizations { get; set; } = new List<Models.Localization>();
+
 
         public CheckLocalizations(IPlayniteAPI api) : base(api)
         {
             settings = new CheckLocalizationsSettings(this);
 
-            // Loading plugin database
+            // Loading plugin database 
             PluginDatabase = new LocalizationsDatabase(PlayniteApi, settings, this.GetPluginUserDataPath());
             PluginDatabase.InitializeDatabase();
 
@@ -75,43 +68,48 @@ namespace CheckLocalizations
             EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(checkLocalizationsUI.OnCustomThemeButtonClick));
         }
 
-        // To add new game menu items override GetGameMenuItems
+
+        // Add new game menu items override GetGameMenuItems
         public override List<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            var gameMenu = args.Games.First();   
+            Game GameMenu = args.Games.First();   
 
             List<GameMenuItem> gameMenuItems = new List<GameMenuItem>
             {
+                // Show list available localizations for the selected game
                 new GameMenuItem {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCheckLocalizationsGameMenuPluginView"),
                     Action = (gameMenuItem) =>
                     {
-                        var ViewExtension = new CheckLocalizationsView(PluginDatabase.Get(gameMenu.Id));
+                        var ViewExtension = new CheckLocalizationsView();
                         Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
                         windowExtension.ShowDialog();
                     }
                 },
+
+                // Delete & download locaizations data for the selected game
                 new GameMenuItem {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCommonRefreshGameData"),
                     Action = (gameMenuItem) =>
                     {
-                        PluginDatabase.Remove(gameMenu.Id);
+                        PluginDatabase.Remove(GameMenu.Id);
                         var TaskIntegrationUI = Task.Run(() =>
                         {
-                            checkLocalizationsUI.RefreshElements(gameMenu);
+                            checkLocalizationsUI.RefreshElements(GameMenu);
                         });
                     }
                 },
 
+                // Open editor view to add a new supported language for the selected game
                 new GameMenuItem
                 {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCheckLocalizationsGameMenuAddLanguage"),
                     Action = (mainMenuItem) =>
                     {
-                        var ViewExtension = new CheckLocalizationsEditManual(gameMenu);
+                        var ViewExtension = new CheckLocalizationsEditManual();
                         Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
                         windowExtension.ShowDialog();
                     }
@@ -132,7 +130,7 @@ namespace CheckLocalizations
             return gameMenuItems;
         }
 
-        // To add new main menu items override GetMainMenuItems
+        // Add new main menu items override GetMainMenuItems
         public override List<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             string MenuInExtensions = string.Empty;
@@ -143,6 +141,7 @@ namespace CheckLocalizations
 
             List<MainMenuItem> mainMenuItems = new List<MainMenuItem>
             {
+                // Download missing localizations data for all game in database
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
@@ -152,6 +151,8 @@ namespace CheckLocalizations
                         PluginDatabase.GetAllDataFromMain();
                     }
                 },
+
+                // Delete all data of plugin
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
@@ -168,6 +169,8 @@ namespace CheckLocalizations
                         }
                     }
                 },
+
+                // Add tag for all game in database if data exists
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
@@ -177,6 +180,8 @@ namespace CheckLocalizations
                         PluginDatabase.AddAllTagFromMain();
                     }
                 },
+
+                // Rmove tag for all game in database
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
@@ -202,6 +207,7 @@ namespace CheckLocalizations
             return mainMenuItems;
         }
 
+
         public override void OnGameSelected(GameSelectionEventArgs args)
         {
             try
@@ -209,62 +215,75 @@ namespace CheckLocalizations
                 if (args.NewValue != null && args.NewValue.Count == 1)
                 {
                     GameSelected = args.NewValue[0];
+#if DEBUG
+                    logger.Debug($"CheckLocalizations - OnGameSelected() - {GameSelected.Name} - {GameSelected.Id.ToString()}");
+#endif
 
-                    //PlayniteUiHelper.ResetToggle();
                     var TaskIntegrationUI = Task.Run(() =>
                     {
                         checkLocalizationsUI.Initial();
                         checkLocalizationsUI.taskHelper.Check();
                         var dispatcherOp = checkLocalizationsUI.AddElements();
-                        dispatcherOp.Completed += (s, e) => { checkLocalizationsUI.RefreshElements(GameSelected); };
+                        dispatcherOp.Completed += (s, e) => { checkLocalizationsUI.RefreshElements(args.NewValue[0]); };
                     });
                 }
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "CheckLocalizations", $"OnGameSelected()");
+                Common.LogError(ex, "CheckLocalizations");
             }
         }
 
+        // Add code to be executed when game is finished installing.
         public override void OnGameInstalled(Game game)
         {
-            // Add code to be executed when game is finished installing.
+
         }
 
+        // Add code to be executed when game is started running.
         public override void OnGameStarted(Game game)
         {
-            // Add code to be executed when game is started running.
+
         }
 
+        // Add code to be executed when game is preparing to be started.
         public override void OnGameStarting(Game game)
         {
-            // Add code to be executed when game is preparing to be started.
+
         }
 
+        // Add code to be executed when game is preparing to be started.
         public override void OnGameStopped(Game game, long elapsedSeconds)
         {
-            // Add code to be executed when game is preparing to be started.
+
         }
 
+        // Add code to be executed when game is uninstalled.
         public override void OnGameUninstalled(Game game)
         {
-            // Add code to be executed when game is uninstalled.
+            
         }
 
+
+        // Add code to be executed when Playnite is initialized.
         public override void OnApplicationStarted()
         {
-            // Add code to be executed when Playnite is initialized.
+
         }
 
+        // Add code to be executed when Playnite is shutting down.
         public override void OnApplicationStopped()
         {
-            // Add code to be executed when Playnite is shutting down.
+
         }
 
+
+        // Add code to be executed when library is updated.
         public override void OnLibraryUpdated()
         {
-            // Add code to be executed when library is updated.
+
         }
+
 
         public override ISettings GetSettings(bool firstRunSettings)
         {

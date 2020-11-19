@@ -11,7 +11,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
-        <ListView Name="PART_ListViewLanguages" Loaded="PART_ListViewLanguages_Loaded">
+        <ListView Name="PART_ListViewLanguages" Loaded="PART_ListViewLanguages_Loaded" ItemsSource="{Binding Data}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150">

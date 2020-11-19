@@ -18,6 +18,21 @@ namespace CheckLocalizations.Services
         private GameLocalizationsCollection db;
         private LocalizationsApi localizationsApi;
 
+        private GameLocalizations _GameSelectedData = new GameLocalizations();
+        public GameLocalizations GameSelectedData
+        {
+            get
+            {
+                return _GameSelectedData;
+            }
+
+            set
+            {
+                _GameSelectedData = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public LocalizationsDatabase(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings PluginSettings, string PluginUserDataPath) : base(PlayniteApi, PluginSettings, PluginUserDataPath)
         {
@@ -27,6 +42,7 @@ namespace CheckLocalizations.Services
 
             localizationsApi = new LocalizationsApi(PlayniteApi, PluginSettings, PluginUserDataPath);
         }
+
 
         protected override bool LoadDatabase()
         {
@@ -42,30 +58,34 @@ namespace CheckLocalizations.Services
         }
 
 
-        public GameLocalizations Get(Guid Id)
+        public GameLocalizations Get(Guid Id, bool OnlyCache = false)
         {
             GameLocalizations gameLocalizations = db.Get(Id);
 #if DEBUG
-            logger.Debug($"CheckLocalizations - Get({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+            logger.Debug($"CheckLocalizations - GetFromDb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
 #endif
-            if (gameLocalizations == null)
+            if (gameLocalizations == null && !OnlyCache)
             {
                 ControlAndCreateDirectory(PluginUserDataPath, "CheckLocalizations");
                 gameLocalizations = localizationsApi.GetLocalizations(Id);
 #if DEBUG
-                logger.Debug($"CheckLocalizations - Get({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+                logger.Debug($"CheckLocalizations - GetFromWeb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
 #endif
                 Add(gameLocalizations);
             }
+            else if (gameLocalizations == null)
+            {
+                gameLocalizations = new GameLocalizations();
+            }
 
-            gameLocalizations.Data.Sort((x, y) => x.Language.CompareTo(y.Language));
+            gameLocalizations.Data.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
 
             return gameLocalizations;
         }
         
-        public GameLocalizations Get(Game game)
+        public GameLocalizations Get(Game game, bool OnlyCache = false)
         {
-            return Get(game.Id);
+            return Get(game.Id, OnlyCache);
         }
 
         public void Add(GameLocalizations itemToAdd)
@@ -130,6 +150,16 @@ namespace CheckLocalizations.Services
             }, globalProgressOptions);
         }
 
+        public override bool ClearDatabase()
+        {
+            if (!base.ClearDatabase())
+            {
+                return false;
+            }
+
+            return LoadDatabase();
+        }
+
 
         public void RemoveTag(Game game)
         {
@@ -145,6 +175,23 @@ namespace CheckLocalizations.Services
         public void RemoveAllTagFromMain()
         {
             localizationsApi.RemoveAllTagFromMain(_PlayniteApi, PluginUserDataPath);
+        }
+
+
+
+        public void SetCurrent(Guid Id)
+        {
+            GameSelectedData = Get(Id);
+        }
+
+        public void SetCurrent(Game game)
+        {
+            GameSelectedData = Get(game.Id);
+        }
+
+        public void SetCurrent(GameLocalizations gameLocalizations)
+        {
+            GameSelectedData = gameLocalizations;
         }
     }
 }

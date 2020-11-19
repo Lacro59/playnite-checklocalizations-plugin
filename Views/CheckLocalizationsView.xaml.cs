@@ -14,13 +14,12 @@ namespace CheckLocalizations.Views
     {
         private ClListViewLanguages PART_ListViewLanguages;
 
-        public CheckLocalizationsView(GameLocalizations gameLocalizations)
+        public CheckLocalizationsView()
         {
             InitializeComponent();
 
             PART_ListViewLanguages = new ClListViewLanguages(true);
-            PART_ListViewLanguages.SetGameLocalizations(gameLocalizations.Data);
-
+            PART_ListViewLanguages.SetGameLocalizations();
             PART_LvContener.Children.Add(PART_ListViewLanguages);
         }
     }
