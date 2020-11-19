@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginCommon.Collections;
-using PluginCommon.PlayniteResources.Database;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -46,6 +45,7 @@ namespace CheckLocalizations.Services
 
         protected override bool LoadDatabase()
         {
+            IsLoaded = false;
             db = new GameLocalizationsCollection(PluginDatabaseDirectory);
 
             db.SetGameInfo<Localization>(_PlayniteApi);
@@ -60,6 +60,7 @@ namespace CheckLocalizations.Services
 
         public GameLocalizations Get(Guid Id, bool OnlyCache = false)
         {
+            GameIsLoaded = false;
             GameLocalizations gameLocalizations = db.Get(Id);
 #if DEBUG
             logger.Debug($"CheckLocalizations - GetFromDb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
@@ -80,6 +81,7 @@ namespace CheckLocalizations.Services
 
             gameLocalizations.Data.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
 
+            GameIsLoaded = true;
             return gameLocalizations;
         }
         

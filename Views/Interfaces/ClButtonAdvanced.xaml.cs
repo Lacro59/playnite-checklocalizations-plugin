@@ -6,6 +6,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace CheckLocalizations.Views.Interfaces
 {
@@ -17,15 +19,18 @@ namespace CheckLocalizations.Views.Interfaces
         private static readonly ILogger logger = LogManager.GetLogger();
         private static IResourceProvider resources = new ResourceProvider();
 
-        private static readonly string IsOk = "";
-        private static readonly string IsKo = "";
-        private static readonly string IsNone = "";
+        private static readonly string IsTextDefault = " ";
+        private static readonly string IsTextOk = "";
+        private static readonly string IsTextKo = "";
+        private static readonly string IsTextNone = "";
 
+        private static readonly string OnlyIconIsDefault = "";
         private static readonly string OnlyIconIsOk = "";
         private static readonly string OnlyIconIsKo = "";
         private static readonly string OnlyIconIsNone = "";
 
         private ClListViewLanguages PART_ListViewLanguages;
+
 
         public ClButtonAdvanced(bool EnableIntegrationButtonJustIcon)
         {
@@ -46,31 +51,52 @@ namespace CheckLocalizations.Views.Interfaces
 
             PART_ListViewLanguages = new ClListViewLanguages(true);
             PART_ContextMenu.Items.Add(PART_ListViewLanguages);
+
+            CheckLocalizations.PluginDatabase.PropertyChanged += OnPropertyChanged;
         }
 
-        public void SetGameLocalizations(List<Models.Localization> gameLocalizations, bool SupportNative)
+        protected void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (SupportNative)
+            try
             {
-                IndicatorSupport.Text = IsOk;
-                OnlyIcon.Text = OnlyIconIsOk;
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
+                {
+                    if (CheckLocalizations.PluginDatabase.GameIsLoaded)
+                    {
+                        if ((bool)resources.GetResource("Cl_HasNativeSupport"))
+                        {
+                            IndicatorSupport.Text = IsTextOk;
+                            OnlyIcon.Text = OnlyIconIsOk;
+                        }
+                        else
+                        {
+                            IndicatorSupport.Text = IsTextKo;
+                            OnlyIcon.Text = OnlyIconIsKo;
+                        }
+                        
+                        if (CheckLocalizations.PluginDatabase.GameSelectedData.Data.Count == 0)
+                        {
+                            IndicatorSupport.Text = IsTextNone;
+                            OnlyIcon.Text = OnlyIconIsNone;
+                        }
+                    }
+                    else
+                    {
+                        IndicatorSupport.Text = IsTextDefault;
+                        OnlyIcon.Text = OnlyIconIsDefault;
+                    }
+                }));
             }
-            else
+            catch (Exception ex)
             {
-                IndicatorSupport.Text = IsKo;
-                OnlyIcon.Text = OnlyIconIsKo;
-            }
-
-            if (gameLocalizations.Count == 0)
-            {
-                IndicatorSupport.Text = IsNone;
-                OnlyIcon.Text = OnlyIconIsNone;
+                Common.LogError(ex, "CheckLocalizations");
             }
         }
 
         // Design popup
         private void PART_ContextMenu_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            /*
             foreach (var ui in Tools.FindVisualChildren<Border>((ContextMenu)(sender)))
             {
                 if (((FrameworkElement)ui).Name == "HoverBorder")
@@ -79,6 +105,7 @@ namespace CheckLocalizations.Views.Interfaces
                     break;
                 }
             }
+            */
         }
     }
 }

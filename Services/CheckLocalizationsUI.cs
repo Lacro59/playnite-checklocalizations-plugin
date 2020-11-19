@@ -33,9 +33,7 @@ namespace CheckLocalizations.Services
 
         public override List<CustomElement> ListCustomElements { get; set; } = new List<CustomElement>();
 
-
-        private GameLocalizations gameLocalizations;
-
+        
         public CheckLocalizationsUI(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings Settings, string PluginUserDataPath) : base(PlayniteApi, PluginUserDataPath)
         {
             _Settings = Settings;
@@ -145,7 +143,7 @@ namespace CheckLocalizations.Services
                     if (!PlayniteTools.IsGameEmulated(_PlayniteApi, GameSelected))
                     {
                         // Load data
-                        gameLocalizations = CheckLocalizations.PluginDatabase.Get(GameSelected);
+                        GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.Get(GameSelected);
 
                         if (gameLocalizations.Data.Count > 0)
                         {
@@ -278,10 +276,7 @@ namespace CheckLocalizations.Services
 
                 if (PART_BtActionBar is ClButtonAdvanced)
                 {
-                    ((ClButtonAdvanced)PART_BtActionBar).SetGameLocalizations(
-                        gameLocalizations.Data,
-                        (bool)resources.GetResource("Cl_HasNativeSupport")
-                    );
+
                 }
             }
             else
@@ -493,10 +488,7 @@ namespace CheckLocalizations.Services
 
                 if (customElement.Element is ClButtonAdvanced)
                 {
-                    ((ClButtonAdvanced)customElement.Element).SetGameLocalizations(
-                        gameLocalizations.Data,
-                        (bool)resources.GetResource("Cl_HasNativeSupport")
-                    );
+
                 }
 
                 if (customElement.Element is ClDescriptionIntegration)
