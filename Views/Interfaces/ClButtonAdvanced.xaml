@@ -59,43 +59,7 @@
     </Grid>
 
     <Button.ContextMenu>
-        <ContextMenu Placement="Bottom">
-            <ListView IsVisibleChanged="ListView_IsVisibleChanged" Name="ListViewLanguages" Margin="0,5">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150">
-                            <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}"></GridViewColumnHeader>
-                        </GridViewColumn>
-
-                        <GridViewColumn Width="70">
-                            <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsUi}"></GridViewColumnHeader>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding UiIcon}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Width="70">
-                            <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsAudio}"></GridViewColumnHeader>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding AudioIcon}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-
-                        <GridViewColumn Width="70">
-                            <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsSub}"></GridViewColumnHeader>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding SubIcon}"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+        <ContextMenu Placement="Bottom" Name="PART_ContextMenu" IsVisibleChanged="PART_ContextMenu_IsVisibleChanged">
         </ContextMenu>
     </Button.ContextMenu>
 </Button>

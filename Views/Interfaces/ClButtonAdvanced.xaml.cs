@@ -25,6 +25,7 @@ namespace CheckLocalizations.Views.Interfaces
         private static readonly string OnlyIconIsKo = "";
         private static readonly string OnlyIconIsNone = "";
 
+        private ClListViewLanguages PART_ListViewLanguages;
 
         public ClButtonAdvanced(bool EnableIntegrationButtonJustIcon)
         {
@@ -42,6 +43,9 @@ namespace CheckLocalizations.Views.Interfaces
                 IndicatorSupport.Visibility = Visibility.Visible;
                 IndicatorSupportText.Visibility = Visibility.Visible;
             }
+
+            PART_ListViewLanguages = new ClListViewLanguages(true);
+            PART_ContextMenu.Items.Add(PART_ListViewLanguages);
         }
 
         public void SetGameLocalizations(List<Models.Localization> gameLocalizations, bool SupportNative)
@@ -62,14 +66,14 @@ namespace CheckLocalizations.Views.Interfaces
                 IndicatorSupport.Text = IsNone;
                 OnlyIcon.Text = OnlyIconIsNone;
             }
-            gameLocalizations.Sort((x, y) => x.Language.CompareTo(y.Language));
-            ListViewLanguages.ItemsSource = gameLocalizations;
+
+            PART_ListViewLanguages.SetGameLocalizations(gameLocalizations);
         }
 
         // Design popup
-        private void ListView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void PART_ContextMenu_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            foreach (var ui in Tools.FindVisualChildren<Border>((ContextMenu)((ListView)sender).Parent))
+            foreach (var ui in Tools.FindVisualChildren<Border>((ContextMenu)(sender)))
             {
                 if (((FrameworkElement)ui).Name == "HoverBorder")
                 {

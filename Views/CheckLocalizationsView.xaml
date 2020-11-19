@@ -7,44 +7,5 @@
              mc:Ignorable="d"  Background="{DynamicResource WindowBackgourndBrush}"            
              Width="620" Height="250">
 
-    <ListView Name="ListViewLanguages" Margin="10,10">
-        <ListView.View>
-            <GridView>
-                <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150">
-                    <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}"></GridViewColumnHeader>
-                </GridViewColumn>
-
-                <GridViewColumn Width="70">
-                    <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsUi}"></GridViewColumnHeader>
-                    <GridViewColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding UiIcon}"/>
-                        </DataTemplate>
-                    </GridViewColumn.CellTemplate>
-                </GridViewColumn>
-
-                <GridViewColumn Width="70">
-                    <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsAudio}"></GridViewColumnHeader>
-                    <GridViewColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding AudioIcon}"/>
-                        </DataTemplate>
-                    </GridViewColumn.CellTemplate>
-                </GridViewColumn>
-
-                <GridViewColumn Width="70">
-                    <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsSub}"></GridViewColumnHeader>
-                    <GridViewColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding SubIcon}"/>
-                        </DataTemplate>
-                    </GridViewColumn.CellTemplate>
-                </GridViewColumn>
-
-                <GridViewColumn DisplayMemberBinding="{Binding Notes}" Width="200">
-                    <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsNotes}"></GridViewColumnHeader>
-                </GridViewColumn>
-            </GridView>
-        </ListView.View>
-    </ListView>
+    <StackPanel Margin="10,10" Name="PART_LvContener"></StackPanel>
 </UserControl>
