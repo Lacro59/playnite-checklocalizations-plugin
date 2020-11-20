@@ -76,10 +76,21 @@ namespace CheckLocalizations.Services
             }
             else if (gameLocalizations == null)
             {
-                gameLocalizations = new GameLocalizations();
+                Game game = _PlayniteApi.Database.Games.Get(Id);
+
+                gameLocalizations = new GameLocalizations
+                {
+                    Id = game.Id,
+                    Name = game.Name,
+                    Hidden = game.Hidden,
+                    Icon = game.Icon,
+                    CoverImage = game.CoverImage,
+                    GenreIds = game.GenreIds,
+                    Genres = game.Genres
+                };
             }
 
-            gameLocalizations.Data.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
+            gameLocalizations.Items.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
 
             GameIsLoaded = true;
             return gameLocalizations;
@@ -104,12 +115,12 @@ namespace CheckLocalizations.Services
         {
             GameLocalizations gameLocalizations = Get(Id);
 
-            if (WithManual && gameLocalizations.Data.Where(x => x.IsManual = true).Count() == 0)
+            if (WithManual && gameLocalizations.Items.Where(x => x.IsManual = true).Count() == 0)
             {
                 return db.Remove(Id);
             }
             
-            gameLocalizations.Data = gameLocalizations.Data.Where(x => x.IsManual = true).ToList();
+            gameLocalizations.Items = gameLocalizations.Items.Where(x => x.IsManual = true).ToList();
             Update(gameLocalizations);
 
             return true;
@@ -178,7 +189,6 @@ namespace CheckLocalizations.Services
         {
             localizationsApi.RemoveAllTagFromMain(_PlayniteApi, PluginUserDataPath);
         }
-
 
 
         public void SetCurrent(Guid Id)

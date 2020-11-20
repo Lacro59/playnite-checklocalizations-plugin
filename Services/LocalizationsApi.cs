@@ -52,7 +52,7 @@ namespace CheckLocalizations.Services
                 Hidden = game.Hidden,
                 Icon = game.Icon,
                 CoverImage = game.CoverImage,
-                Data = Localizations
+                Items = Localizations
             };
 
             AddTag(game, _settings.EnableTag, Localizations);
@@ -208,7 +208,7 @@ namespace CheckLocalizations.Services
                         break;
                     }
 
-                    AddTag(game, _settings.EnableTag, CheckLocalizations.PluginDatabase.Get(game, true).Data);
+                    AddTag(game, _settings.EnableTag, CheckLocalizations.PluginDatabase.Get(game, true).Items);
                     activateGlobalProgress.CurrentProgressValue++;
                 }
 

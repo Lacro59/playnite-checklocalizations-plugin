@@ -224,7 +224,7 @@ namespace CheckLocalizations.Views
 
                     Application.Current.Dispatcher.BeginInvoke((Action)delegate
                     { 
-                        if (gameLocalisations.Data.Count > 0)
+                        if (gameLocalisations.Items.Count > 0)
                         {
                             CountFind += 1;
                         }

@@ -1,4 +1,6 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Models;
+using PluginCommon.Collections;
 using PluginCommon.PlayniteResources.Database;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CheckLocalizations.Models
 {
-    public class GameLocalizationsCollection : ItemCollection<GameLocalizations>
+    public class GameLocalizationsCollection : PluginItemCollection<GameLocalizations>
     {
         public GameLocalizationsCollection(string path, GameDatabaseCollection type = GameDatabaseCollection.Uknown) : base(path, type)
         {

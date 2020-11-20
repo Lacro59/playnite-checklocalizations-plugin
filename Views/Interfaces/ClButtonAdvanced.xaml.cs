@@ -74,7 +74,7 @@ namespace CheckLocalizations.Views.Interfaces
                             OnlyIcon.Text = OnlyIconIsKo;
                         }
                         
-                        if (CheckLocalizations.PluginDatabase.GameSelectedData.Data.Count == 0)
+                        if (CheckLocalizations.PluginDatabase.GameSelectedData.Items.Count == 0)
                         {
                             IndicatorSupport.Text = IsTextNone;
                             OnlyIcon.Text = OnlyIconIsNone;

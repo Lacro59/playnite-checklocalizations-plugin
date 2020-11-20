@@ -27,8 +27,8 @@ namespace CheckLocalizations
 
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
-        public static Game GameSelected { get; set; }
-        public static LocalizationsDatabase PluginDatabase { get; set; }
+        public static Game GameSelected;
+        public static LocalizationsDatabase PluginDatabase;
         public static List<GameLanguage> GameLanguages = new List<GameLanguage>();
         public static CheckLocalizationsUI checkLocalizationsUI;
 

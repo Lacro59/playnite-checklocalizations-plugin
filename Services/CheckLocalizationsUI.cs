@@ -145,7 +145,7 @@ namespace CheckLocalizations.Services
                         // Load data
                         GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.Get(GameSelected);
 
-                        if (gameLocalizations.Data.Count > 0)
+                        if (gameLocalizations.Items.Count > 0)
                         {
                             resourcesLists.Add(new ResourcesList { Key = "Cl_HasData", Value = true });
 
@@ -153,7 +153,7 @@ namespace CheckLocalizations.Services
                             {
                                 if (gameLanguage.IsNative)
                                 {
-                                    if (gameLocalizations.Data.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) != null)
+                                    if (gameLocalizations.Items.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) != null)
                                     {
                                         resourcesLists.Add(new ResourcesList { Key = "Cl_HasNativeSupport", Value = true });
                                     }
@@ -170,38 +170,41 @@ namespace CheckLocalizations.Services
                         logger.Debug($"CheckLocalizations - {GameSelected.Name} - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
 #endif
                         // If not cancel, show
-                        if (!ct.IsCancellationRequested && _PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop && GameSelected.Id == CheckLocalizations.GameSelected.Id)
+                        if (!ct.IsCancellationRequested && GameSelected.Id == CheckLocalizations.GameSelected.Id)
                         {
                             ui.AddResources(resourcesLists);
 
-                            Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
+                            if (_PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
                             {
-                                CheckLocalizations.PluginDatabase.SetCurrent(gameLocalizations);
-
-                                if (_Settings.EnableIntegrationButton)
+                                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
                                 {
+                                    CheckLocalizations.PluginDatabase.SetCurrent(gameLocalizations);
+
+                                    if (_Settings.EnableIntegrationButton)
+                                    {
 #if DEBUG
                                     logger.Debug($"CheckLocalizations - RefreshBtActionBar()");
 #endif
                                     RefreshBtActionBar();
-                                }
+                                    }
 
-                                if (_Settings.EnableIntegrationInDescription)
-                                {
+                                    if (_Settings.EnableIntegrationInDescription)
+                                    {
 #if DEBUG
                                     logger.Debug($"CheckLocalizations - RefreshSpDescription()");
 #endif
                                     RefreshSpDescription();
-                                }
+                                    }
 
-                                if (_Settings.EnableIntegrationInCustomTheme)
-                                {
+                                    if (_Settings.EnableIntegrationInCustomTheme)
+                                    {
 #if DEBUG
                                     logger.Debug($"CheckLocalizations - RefreshCustomElements()");
 #endif
                                     RefreshCustomElements();
-                                }
-                            }));
+                                    }
+                                }));
+                            }
                         }
                     }
                     else

@@ -9,17 +9,17 @@ namespace CheckLocalizations.Models
 {
     public class GameLocalizations : PluginDataBaseGame<Localization>
     {
-        private List<Localization> _Data = new List<Localization>();
-        public override List<Localization> Data
+        private List<Localization> _Items = new List<Localization>();
+        public override List<Localization> Items
         {
             get
             {
-                return _Data;
+                return _Items;
             }
 
             set
             {
-                _Data = value;
+                _Items = value;
                 OnPropertyChanged();
             }
         }

@@ -43,7 +43,8 @@ namespace CheckLocalizations.Views.Interfaces
             {
                 this.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
                 {
-                    PART_ListViewLanguages.DataContext = CheckLocalizations.PluginDatabase.GameSelectedData;
+                    PART_ListViewLanguages.ItemsSource = null;
+                    PART_ListViewLanguages.ItemsSource = CheckLocalizations.PluginDatabase.GameSelectedData.Items;
                 }));
             }
             catch (Exception ex)
@@ -55,7 +56,7 @@ namespace CheckLocalizations.Views.Interfaces
         public void SetGameLocalizations()
         {
             PART_ListViewLanguages.ItemsSource = null;
-            PART_ListViewLanguages.ItemsSource = CheckLocalizations.PluginDatabase.GameSelectedData.Data;
+            PART_ListViewLanguages.ItemsSource = CheckLocalizations.PluginDatabase.GameSelectedData.Items;
         }
 
         private void PART_ListViewLanguages_Loaded(object sender, RoutedEventArgs e)
