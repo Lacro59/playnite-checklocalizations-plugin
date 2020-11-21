@@ -32,10 +32,14 @@ namespace CheckLocalizations
         public static List<GameLanguage> GameLanguages = new List<GameLanguage>();
         public static CheckLocalizationsUI checkLocalizationsUI;
 
+        private OldToNew oldToNew;
 
         public CheckLocalizations(IPlayniteAPI api) : base(api)
         {
             settings = new CheckLocalizationsSettings(this);
+
+            // Old database
+            oldToNew = new OldToNew(this.GetPluginUserDataPath());
 
             // Loading plugin database 
             PluginDatabase = new LocalizationsDatabase(PlayniteApi, settings, this.GetPluginUserDataPath());
@@ -210,6 +214,12 @@ namespace CheckLocalizations
 
         public override void OnGameSelected(GameSelectionEventArgs args)
         {
+            // Old database
+            if (oldToNew.IsOld)
+            {
+                oldToNew.ConvertDB(PlayniteApi);
+            }
+
             try
             {
                 if (args.NewValue != null && args.NewValue.Count == 1)

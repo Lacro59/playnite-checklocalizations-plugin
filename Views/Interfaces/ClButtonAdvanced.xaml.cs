@@ -63,7 +63,7 @@ namespace CheckLocalizations.Views.Interfaces
                 {
                     if (CheckLocalizations.PluginDatabase.GameIsLoaded)
                     {
-                        if ((bool)resources.GetResource("Cl_HasNativeSupport"))
+                        if (resources.GetResource("Cl_HasNativeSupport") != null && (bool)resources.GetResource("Cl_HasNativeSupport"))
                         {
                             IndicatorSupport.Text = IsTextOk;
                             OnlyIcon.Text = OnlyIconIsOk;

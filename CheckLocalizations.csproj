@@ -66,6 +66,7 @@
     <Compile Include="Services\CheckLocalizationsUI.cs" />
     <Compile Include="Services\LocalizationsApi.cs" />
     <Compile Include="Clients\PCGamingWikiLocalizations.cs" />
+    <Compile Include="Services\OldToNew.cs" />
     <Compile Include="Views\CheckLocalizationsEditManual.xaml.cs">
       <DependentUpon>CheckLocalizationsEditManual.xaml</DependentUpon>
     </Compile>
