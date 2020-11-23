@@ -2,35 +2,21 @@
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using PluginCommon;
 using PluginCommon.Collections;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CheckLocalizations.Services
 {
-    public class LocalizationsDatabase : PluginDatabaseObject
+    public class LocalizationsDatabase : PluginDatabaseObject<CheckLocalizationsSettings, GameLocalizationsCollection, GameLocalizations>
     {
-        private GameLocalizationsCollection db;
         private LocalizationsApi localizationsApi;
-
-        private GameLocalizations _GameSelectedData = new GameLocalizations();
-        public GameLocalizations GameSelectedData
-        {
-            get
-            {
-                return _GameSelectedData;
-            }
-
-            set
-            {
-                _GameSelectedData = value;
-                OnPropertyChanged();
-            }
-        }
 
 
         public LocalizationsDatabase(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings PluginSettings, string PluginUserDataPath) : base(PlayniteApi, PluginSettings, PluginUserDataPath)
@@ -46,48 +32,50 @@ namespace CheckLocalizations.Services
         protected override bool LoadDatabase()
         {
             IsLoaded = false;
-            db = new GameLocalizationsCollection(PluginDatabaseDirectory);
+            Database = new GameLocalizationsCollection(PluginDatabaseDirectory);
 
-            db.SetGameInfo<Localization>(_PlayniteApi);
+            Database.SetGameInfo<Localization>(_PlayniteApi);
 #if DEBUG
-            logger.Debug($"{PluginName} - db: {JsonConvert.SerializeObject(db)}");
+            logger.Debug($"{PluginName} - Database: {JsonConvert.SerializeObject(Database)}");
 #endif
+
+            GetPluginTags();
 
             IsLoaded = true;
             return true;
         }
 
 
-        public GameLocalizations Get(Guid Id, bool OnlyCache = false)
+        public override GameLocalizations Get(Guid Id, bool OnlyCache = false)
         {
             GameIsLoaded = false;
-            GameLocalizations gameLocalizations = db.Get(Id);
+            GameLocalizations gameLocalizations = GetOnlyCache(Id);
 #if DEBUG
-            logger.Debug($"CheckLocalizations - GetFromDb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+            logger.Debug($"{PluginName} - GetFromDb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
 #endif
             if (gameLocalizations == null && !OnlyCache)
             {
                 ControlAndCreateDirectory(PluginUserDataPath, "CheckLocalizations");
                 gameLocalizations = localizationsApi.GetLocalizations(Id);
 #if DEBUG
-                logger.Debug($"CheckLocalizations - GetFromWeb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+                logger.Debug($"{PluginName} - GetFromWeb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
 #endif
                 Add(gameLocalizations);
+            }
+            else if (gameLocalizations != null && gameLocalizations.Items.Where(x => x.IsManual == false).Count() == 0 && !OnlyCache)
+            {
+                var dataWeb = localizationsApi.GetLocalizations(Id);
+#if DEBUG
+                logger.Debug($"{PluginName} - GetFromWebOnlyManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(dataWeb)}");
+#endif
+
+                gameLocalizations.Items = gameLocalizations.Items.Concat(dataWeb.Items).ToList();
             }
             else if (gameLocalizations == null)
             {
                 Game game = _PlayniteApi.Database.Games.Get(Id);
 
-                gameLocalizations = new GameLocalizations
-                {
-                    Id = game.Id,
-                    Name = game.Name,
-                    Hidden = game.Hidden,
-                    Icon = game.Icon,
-                    CoverImage = game.CoverImage,
-                    GenreIds = game.GenreIds,
-                    Genres = game.Genres
-                };
+                gameLocalizations = GetDefault(game);
             }
 
             gameLocalizations.Items.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
@@ -96,114 +84,110 @@ namespace CheckLocalizations.Services
             return gameLocalizations;
         }
         
-        public GameLocalizations Get(Game game, bool OnlyCache = false)
+        public bool RemoveWithManual(Guid Id)
         {
-            return Get(game.Id, OnlyCache);
-        }
-
-        public void Add(GameLocalizations itemToAdd)
-        {
-            db.Add(itemToAdd);
-        }
-
-        public void Update(GameLocalizations itemToUpdate)
-        {
-            db.Update(itemToUpdate);
-        }
-
-        public bool Remove(Guid Id, bool WithManual = false)
-        {
-            GameLocalizations gameLocalizations = Get(Id);
-
-            if (WithManual && gameLocalizations.Items.Where(x => x.IsManual = true).Count() == 0)
+            try
             {
-                return db.Remove(Id);
-            }
-            
-            gameLocalizations.Items = gameLocalizations.Items.Where(x => x.IsManual = true).ToList();
-            Update(gameLocalizations);
+                GameLocalizations gameLocalizations = GetOnlyCache(Id);
 
-            return true;
-        }
-
-
-        public void GetAllDataFromMain()
-        {
-            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                resources.GetString("LOCCommonGettingAllDatas"),
-                true
-            );
-            globalProgressOptions.IsIndeterminate = false;
-
-            _PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
-            {
-                Stopwatch stopWatch = new Stopwatch();
-                stopWatch.Start();
-
-                var PlayniteDb = _PlayniteApi.Database.Games.Where(x => x.Hidden == false);
-                activateGlobalProgress.ProgressMaxValue = (double)PlayniteDb.Count();
-
-                string CancelText = string.Empty;
-
-                foreach (Game game in PlayniteDb)
+                if (gameLocalizations.Items.Where(x => x.IsManual).Count() == 0)
                 {
-                    if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                    {
-                        CancelText = " canceled";
-                        break;
-                    }
+                    return Remove(Id);
+                }
+                else
+                {
+                    var ItemsManual = gameLocalizations.Items.Where(x => x.IsManual).ToList();
+                    gameLocalizations.Items = null;
+                    gameLocalizations.Items = ItemsManual;
+#if DEBUG
+                    logger.Debug($"{PluginName} - RemoveWithoutManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+#endif
+                    Update(gameLocalizations);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, PluginName);
+            }
 
-                    Get(game);
-                    activateGlobalProgress.CurrentProgressValue++;
+            return false;
+        }
+
+
+        public override GameLocalizations GetDefault(Game game)
+        {
+            return new GameLocalizations
+            {
+                Id = game.Id,
+                Name = game.Name,
+                Hidden = game.Hidden,
+                Icon = game.Icon,
+                CoverImage = game.CoverImage,
+                GenreIds = game.GenreIds,
+                Genres = game.Genres,
+                Playtime = game.Playtime
+            };
+        }
+
+
+        protected override void GetPluginTags()
+        {
+            // Get tags in playnite database
+            PluginTags = new List<Tag>();
+            foreach (Tag tag in _PlayniteApi.Database.Tags)
+            {
+                if (tag.Name.IndexOf("[CL] ") > -1)
+                {
+                    PluginTags.Add(tag);
+                }
+            }
+
+            // Add missing tags
+            if (PluginTags.Count < PluginSettings.GameLanguages.Count)
+            {
+                foreach (GameLanguage gameLanguage in PluginSettings.GameLanguages)
+                {
+                    if (PluginTags.Find(x => x.Name == $"[CL] {gameLanguage.DisplayName}") == null)
+                    {
+                        _PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
+                    }
                 }
 
-                stopWatch.Stop();
-                TimeSpan ts = stopWatch.Elapsed;
-                logger.Info($"CheckLocalizations - Task GetAllDataFromMain(){CancelText} - {String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)}");
-            }, globalProgressOptions);
-        }
-
-        public override bool ClearDatabase()
-        {
-            if (!base.ClearDatabase())
-            {
-                return false;
+                foreach (Tag tag in _PlayniteApi.Database.Tags)
+                {
+                    if (tag.Name.IndexOf("[CL]") > -1)
+                    {
+                        PluginTags.Add(tag);
+                    }
+                }
             }
-
-            return LoadDatabase();
         }
 
-
-        public void RemoveTag(Game game)
+        public override void AddTag(Game game)
         {
-            localizationsApi.RemoveTag(game);
-        }
+            GameLocalizations gameLocalizations = Get(game, true);
 
+            if (gameLocalizations.HasData)
+            {
+                foreach (GameLanguage gameLanguage in PluginSettings.GameLanguages.FindAll(x => x.IsTag && gameLocalizations.Items.Any(y => x.Name.ToLower() == y.Language.ToLower())))
+                {
+                    Guid TagId = FindGoodPluginTags($"[CL] { gameLanguage.DisplayName}");
+                    if (TagId != null)
+                    {
+                        if (game.TagIds != null)
+                        {
+                            game.TagIds.Add(TagId);
+                        }
+                        else
+                        {
+                            game.TagIds = new List<Guid> { TagId };
+                        }
+                    }
+                }
 
-        public void AddAllTagFromMain()
-        {
-            localizationsApi.AddAllTagFromMain(_PlayniteApi, PluginUserDataPath);
-        }
-
-        public void RemoveAllTagFromMain()
-        {
-            localizationsApi.RemoveAllTagFromMain(_PlayniteApi, PluginUserDataPath);
-        }
-
-
-        public void SetCurrent(Guid Id)
-        {
-            GameSelectedData = Get(Id);
-        }
-
-        public void SetCurrent(Game game)
-        {
-            GameSelectedData = Get(game.Id);
-        }
-
-        public void SetCurrent(GameLocalizations gameLocalizations)
-        {
-            GameSelectedData = gameLocalizations;
+                _PlayniteApi.Database.Games.Update(game);
+            }
         }
     }
 }

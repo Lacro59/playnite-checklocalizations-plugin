@@ -147,12 +147,6 @@ namespace CheckLocalizations
         {
             // Code executed when user decides to cancel any changes made since BeginEdit was called.
             // This method should revert any changes made to Option1 and Option2.
-
-            if (CheckLocalizationsSettingsView.tokenSource != null)
-            {
-                CheckLocalizationsSettingsView.WithoutMessage = true;
-                CheckLocalizationsSettingsView.tokenSource.Cancel();
-            }
         }
 
         public void EndEdit()

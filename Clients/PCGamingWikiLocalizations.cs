@@ -135,7 +135,8 @@ namespace CheckLocalizations.Clients
                         Ui = Ui,
                         Audio = Audio,
                         Sub = Sub,
-                        Notes = Notes
+                        Notes = Notes,
+                        IsManual = false
                     });
                 }
             }

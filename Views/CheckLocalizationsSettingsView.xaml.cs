@@ -3,10 +3,6 @@ using CheckLocalizations.Services;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using PluginCommon;
-using PluginCommon.PlayniteResources;
-using PluginCommon.PlayniteResources.API;
-using PluginCommon.PlayniteResources.Common;
-using PluginCommon.PlayniteResources.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,13 +12,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CheckLocalizations.Views
 {
@@ -35,10 +24,6 @@ namespace CheckLocalizations.Views
         private CheckLocalizationsSettings settings { get; set; }
         private string PluginUserDataPath { get; set; }
 
-        public static bool WithoutMessage = false;
-        public static CancellationTokenSource tokenSource;
-        private CancellationToken ct;
-
 
         public CheckLocalizationsSettingsView(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings settings, string PluginUserDataPath)
         {
@@ -48,16 +33,9 @@ namespace CheckLocalizations.Views
 
             InitializeComponent();
 
-            DataLoad.Visibility = Visibility.Collapsed;
-
             lbGameLanguages.ItemsSource = settings.GameLanguages.OrderBy(x => x.Name).ToList();
 
             DataContext = this;
-        }
-
-        private void ButtonCancelTask_Click(object sender, RoutedEventArgs e)
-        {
-            tokenSource.Cancel();
         }
 
         /// <summary>
@@ -65,95 +43,19 @@ namespace CheckLocalizations.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        private void ButtonAddTag_Click(object sender, RoutedEventArgs e)
         {
-            pbDataLoad.IsIndeterminate = true;
-
-            tbDataLoad.Text = resources.GetString("LOCCheckLocalizationsProgressBarTag");
-
-            DataLoad.Visibility = Visibility.Visible;
-            spSettings.Visibility = Visibility.Hidden;
-
-            tokenSource = new CancellationTokenSource();
-            ct = tokenSource.Token;
-
-            var taskSystem = Task.Run(() =>
-            {
-                ct.ThrowIfCancellationRequested();
-
-                foreach (Game game in PlayniteApi.Database.Games)
-                {
-                    try
-                    {
-                        CheckLocalizations.PluginDatabase.Get(game);
-                    }
-                    catch (Exception ex)
-                    {
-                        Common.LogError(ex, "CheckLocalizations", $"Error on ButtonAdd_Click() with {game.Name}");
-                    }
-
-                    if (ct.IsCancellationRequested)
-                    {
-                        ct.ThrowIfCancellationRequested();
-                    }
-                }
-            }, tokenSource.Token)
-            .ContinueWith(antecedent =>
-            {
-                Application.Current.Dispatcher.BeginInvoke((Action)delegate
-                { 
-                    DataLoad.Visibility = Visibility.Collapsed;
-                    spSettings.Visibility = Visibility.Visible;
-                });
-            });
+            CheckLocalizations.PluginDatabase.AddTagAllGame();
         }
 
         /// <summary>
-        /// Add tag localizations in all games
+        /// Remove tag localizations in all games
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ButtonRemove_Click(object sender, RoutedEventArgs e)
+        private void ButtonRemoveTag_Click(object sender, RoutedEventArgs e)
         {
-            pbDataLoad.IsIndeterminate = true;
-
-            tbDataLoad.Text = resources.GetString("LOCCheckLocalizationsProgressBarTag");
-
-            DataLoad.Visibility = Visibility.Visible;
-            spSettings.Visibility = Visibility.Hidden;
-
-            tokenSource = new CancellationTokenSource();
-            ct = tokenSource.Token;
-
-            var taskSystem = Task.Run(() =>
-            {
-                ct.ThrowIfCancellationRequested();
-
-                foreach (Game game in PlayniteApi.Database.Games)
-                {
-                    try
-                    {
-                        CheckLocalizations.PluginDatabase.RemoveTag(game);
-                    }
-                    catch (Exception ex)
-                    {
-                        Common.LogError(ex, "CheckLocalizations", $"Error on ButtonRemove_Click() with {game.Name}");
-                    }
-
-                    if (ct.IsCancellationRequested)
-                    {
-                        ct.ThrowIfCancellationRequested();
-                    }
-                }
-            }, tokenSource.Token)
-            .ContinueWith(antecedent =>
-            {
-                Application.Current.Dispatcher.BeginInvoke((Action)delegate
-                { 
-                    DataLoad.Visibility = Visibility.Collapsed;
-                    spSettings.Visibility = Visibility.Visible;
-                });
-            });
+            CheckLocalizations.PluginDatabase.RemoveTagAllGame();
         }
 
         private void Checkbox_Click(object sender, RoutedEventArgs e)
@@ -184,73 +86,7 @@ namespace CheckLocalizations.Views
         /// <param name="e"></param>
         private void ButtonCheck_Click(object sender, RoutedEventArgs e)
         {
-            // Clear before
-            try
-            {
-                string PluginDirectory = PluginUserDataPath + "\\CheckLocalizations\\";
-                if (Directory.Exists(PluginDirectory))
-                {
-                    Directory.Delete(PluginDirectory, true);
-                    Directory.CreateDirectory(PluginDirectory);
-                }
-            }
-            catch(Exception ex)
-            {
-                Common.LogError(ex, "CheckLocalization", $"Error on clear directory");
-            }
-
-            pbDataLoad.IsIndeterminate = false;
-            pbDataLoad.Minimum = 0;
-            pbDataLoad.Value = 0;
-            pbDataLoad.Maximum = PlayniteApi.Database.Games.Count;
-
-            int CountFind = 0;
-            int CountNotFind = 0;
-            tbDataLoad.Text = string.Format(resources.GetString("LOCCheckLocalizationsProgressBar"), CountFind, CountNotFind);
-
-            DataLoad.Visibility = Visibility.Visible;
-            spSettings.Visibility = Visibility.Hidden;
-
-            tokenSource = new CancellationTokenSource();
-            ct = tokenSource.Token;
-
-            var taskSystem = Task.Run(() =>
-            {
-                ct.ThrowIfCancellationRequested();
-
-                foreach (Game game in PlayniteApi.Database.Games)
-                {
-                    var gameLocalisations = CheckLocalizations.PluginDatabase.Get(game);
-
-                    Application.Current.Dispatcher.BeginInvoke((Action)delegate
-                    { 
-                        if (gameLocalisations.Items.Count > 0)
-                        {
-                            CountFind += 1;
-                        }
-                        else
-                        {
-                            CountNotFind += 1;
-                        }
-
-                        pbDataLoad.Value += 1;
-                        tbDataLoad.Text = string.Format(resources.GetString("LOCCheckLocalizationsProgressBar"), CountFind, CountNotFind);
-                    });
-
-                    if (ct.IsCancellationRequested)
-                    {
-                        ct.ThrowIfCancellationRequested();
-                    }
-                }
-            }, tokenSource.Token)
-            .ContinueWith(antecedent =>
-            {
-                Application.Current.Dispatcher.BeginInvoke((Action)delegate
-                { 
-                    DataLoad.Visibility = Visibility.Collapsed;
-                    spSettings.Visibility = Visibility.Visible;
-                });
-            });
+            CheckLocalizations.PluginDatabase.GetAllDatas();
         }
 
         /// <summary>
@@ -260,18 +96,13 @@ namespace CheckLocalizations.Views
         /// <param name="e"></param>
         private void ButtonClear_Click(object sender, RoutedEventArgs e)
         {
-            string PluginDirectory = PluginUserDataPath + "\\CheckLocalizations\\";
-            if (Directory.Exists(PluginDirectory))
+            if (CheckLocalizations.PluginDatabase.ClearDatabase())
             {
-                try
-                {
-                    Directory.Delete(PluginDirectory, true);
-                    Directory.CreateDirectory(PluginDirectory);
-                }
-                catch
-                {
-                    PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
-                }
+                PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
+            }
+            else
+            {
+                PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
             }
         }
     }

@@ -33,7 +33,7 @@ namespace CheckLocalizations.Services
 
         public override List<CustomElement> ListCustomElements { get; set; } = new List<CustomElement>();
 
-        
+
         public CheckLocalizationsUI(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings Settings, string PluginUserDataPath) : base(PlayniteApi, PluginUserDataPath)
         {
             _Settings = Settings;
@@ -85,7 +85,10 @@ namespace CheckLocalizations.Services
 #if DEBUG
                     logger.Debug($"CheckLocalizations - IsFirstLoad");
 #endif
-                    Thread.Sleep(2000);
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
+                    {
+                        System.Threading.SpinWait.SpinUntil(() => IntegrationUI.SearchElementByName("PART_HtmlDescription", true) != null, 5000);
+                    })).Wait();
                     IsFirstLoad = false;
                 }
 
@@ -143,6 +146,10 @@ namespace CheckLocalizations.Services
                     if (!PlayniteTools.IsGameEmulated(_PlayniteApi, GameSelected))
                     {
                         // Load data
+                        if (!CheckLocalizations.PluginDatabase.IsLoaded)
+                        {
+                            return;
+                        }
                         GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.Get(GameSelected);
 
                         if (gameLocalizations.Items.Count > 0)
@@ -183,25 +190,25 @@ namespace CheckLocalizations.Services
                                     if (_Settings.EnableIntegrationButton)
                                     {
 #if DEBUG
-                                    logger.Debug($"CheckLocalizations - RefreshBtActionBar()");
+                                        logger.Debug($"CheckLocalizations - RefreshBtActionBar()");
 #endif
-                                    RefreshBtActionBar();
+                                        RefreshBtActionBar();
                                     }
 
                                     if (_Settings.EnableIntegrationInDescription)
                                     {
 #if DEBUG
-                                    logger.Debug($"CheckLocalizations - RefreshSpDescription()");
+                                        logger.Debug($"CheckLocalizations - RefreshSpDescription()");
 #endif
-                                    RefreshSpDescription();
+                                        RefreshSpDescription();
                                     }
 
                                     if (_Settings.EnableIntegrationInCustomTheme)
                                     {
 #if DEBUG
-                                    logger.Debug($"CheckLocalizations - RefreshCustomElements()");
+                                        logger.Debug($"CheckLocalizations - RefreshCustomElements()");
 #endif
-                                    RefreshCustomElements();
+                                        RefreshCustomElements();
                                     }
                                 }));
                             }

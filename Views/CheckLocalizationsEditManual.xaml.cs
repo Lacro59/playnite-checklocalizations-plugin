@@ -38,7 +38,7 @@ namespace CheckLocalizations.Views
 #endif
             ListViewLanguages.ItemsSource = _gameLocalizations.Items.Where(x => x.IsManual).ToList();
 #if DEBUG
-            logger.Debug($"CheckLocalizations - EditManual IsManual only - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
+            logger.Debug($"CheckLocalizations - EditManual IsManual only - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(ListViewLanguages.ItemsSource)}");
 #endif
             RefreshAvailable();
         }
@@ -76,7 +76,8 @@ namespace CheckLocalizations.Views
                 Ui = Ui,
                 Audio = Audio,
                 Sub = Sub,
-                IsManual = true
+                Notes = string.Empty,
+                IsManual = true,
             };
 
             int index = _gameLocalizations.Items.FindIndex(x => x.Language == Language);
@@ -117,18 +118,11 @@ namespace CheckLocalizations.Views
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.Get(_game.Id);
+            GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.GetOnlyCache(_game.Id);
 
             if (gameLocalizations == null)
             {
-                _gameLocalizations = new GameLocalizations
-                {
-                    Id = _game.Id,
-                    Name = _game.Name,
-                    Hidden = _game.Hidden,
-                    Icon = _game.Icon,
-                    CoverImage = _game.CoverImage,
-                };
+                _gameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(_game);
 
 #if DEBUG
                 logger.Debug($"CheckLocalizations - EditManual - Add: {JsonConvert.SerializeObject(_gameLocalizations)}");

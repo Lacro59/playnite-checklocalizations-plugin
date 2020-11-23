@@ -92,15 +92,17 @@ namespace CheckLocalizations
                     }
                 },
 
-                // Delete & download locaizations data for the selected game
+                // Delete & download localizations data for the selected game
                 new GameMenuItem {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCommonRefreshGameData"),
                     Action = (gameMenuItem) =>
                     {
-                        PluginDatabase.Remove(GameMenu.Id);
+                        PluginDatabase.GameSelectedData = new GameLocalizations();
                         var TaskIntegrationUI = Task.Run(() =>
                         {
+                            PluginDatabase.RemoveWithManual(GameMenu.Id);
+                            PluginDatabase.Get(GameMenu.Id, false);
                             checkLocalizationsUI.RefreshElements(GameMenu);
                         });
                     }
@@ -152,7 +154,7 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonGetAllDatas"),
                     Action = (mainMenuItem) =>
                     {
-                        PluginDatabase.GetAllDataFromMain();
+                        PluginDatabase.GetAllDatas();
                     }
                 },
 
@@ -181,7 +183,7 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonAddAllTags"),
                     Action = (mainMenuItem) =>
                     {
-                        PluginDatabase.AddAllTagFromMain();
+                        PluginDatabase.AddTagAllGame();
                     }
                 },
 
@@ -192,7 +194,7 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonRemoveAllTags"),
                     Action = (mainMenuItem) =>
                     {
-                        PluginDatabase.RemoveAllTagFromMain();
+                        PluginDatabase.RemoveTagAllGame();
                     }
                 }
             };
