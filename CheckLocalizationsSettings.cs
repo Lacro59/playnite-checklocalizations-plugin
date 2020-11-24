@@ -161,6 +161,8 @@ namespace CheckLocalizations
                 var dispatcherOp = CheckLocalizations.checkLocalizationsUI.AddElements();
                 dispatcherOp.Completed += (s, e) => { CheckLocalizations.checkLocalizationsUI.RefreshElements(CheckLocalizations.GameSelected); };
             });
+
+            CheckLocalizations.PluginDatabase.PluginSettings = this;
         }
 
         public bool VerifySettings(out List<string> errors)

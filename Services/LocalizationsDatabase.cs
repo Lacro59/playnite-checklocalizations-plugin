@@ -63,14 +63,18 @@ namespace CheckLocalizations.Services
 #endif
                 Add(gameLocalizations);
             }
-            else if (gameLocalizations != null && gameLocalizations.Items.Where(x => x.IsManual == false).Count() == 0 && !OnlyCache)
+            else if (gameLocalizations != null && !OnlyCache
+                && gameLocalizations.Items.Where(x => x.IsManual == true).Count() != 0
+                && gameLocalizations.Items.Where(x => x.IsManual == false).Count() == 0)
             {
                 var dataWeb = localizationsApi.GetLocalizations(Id);
 #if DEBUG
                 logger.Debug($"{PluginName} - GetFromWebOnlyManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(dataWeb)}");
+                logger.Debug($"{PluginName} - IsManualTrue({gameLocalizations.Items.Where(x => x.IsManual == true).Count()}) - IsManualFalse: {gameLocalizations.Items.Where(x => x.IsManual == false).Count()}");
 #endif
-
                 gameLocalizations.Items = gameLocalizations.Items.Concat(dataWeb.Items).ToList();
+
+                Update(gameLocalizations);
             }
             else if (gameLocalizations == null)
             {

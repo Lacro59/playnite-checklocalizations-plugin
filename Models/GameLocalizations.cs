@@ -1,4 +1,5 @@
-﻿using PluginCommon.Collections;
+﻿using Newtonsoft.Json;
+using PluginCommon.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,23 @@ namespace CheckLocalizations.Models
                 _Items = value;
                 OnPropertyChanged();
             }
+        }
+
+        
+        public bool HasNativeSupport()
+        {
+            foreach (GameLanguage gameLanguage in CheckLocalizations.PluginDatabase.PluginSettings.GameLanguages)
+            {
+                if (gameLanguage.IsNative)
+                {
+                    if (Items.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) != null)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

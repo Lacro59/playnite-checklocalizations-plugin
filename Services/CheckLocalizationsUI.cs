@@ -46,34 +46,7 @@ namespace CheckLocalizations.Services
 
         public override void Initial()
         {
-            CheckLocalizations.PluginDatabase.GameSelectedData = new GameLocalizations();
 
-            if (_PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
-            {
-                if (_Settings.EnableIntegrationButton)
-                {
-#if DEBUG
-                    logger.Debug($"CheckLocalizations - InitialBtActionBar()");
-#endif
-                    InitialBtActionBar();
-                }
-
-                if (_Settings.EnableIntegrationInDescription)
-                {
-#if DEBUG
-                    logger.Debug($"CheckLocalizations - InitialSpDescription()");
-#endif
-                    InitialSpDescription();
-                }
-
-                if (_Settings.EnableIntegrationInCustomTheme)
-                {
-#if DEBUG
-                    logger.Debug($"CheckLocalizations - InitialCustomElements()");
-#endif
-                    InitialCustomElements();
-                }
-            }
         }
 
         public override DispatcherOperation AddElements()
@@ -85,14 +58,14 @@ namespace CheckLocalizations.Services
 #if DEBUG
                     logger.Debug($"CheckLocalizations - IsFirstLoad");
 #endif
-                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
+                    Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
                         System.Threading.SpinWait.SpinUntil(() => IntegrationUI.SearchElementByName("PART_HtmlDescription") != null, 5000);
                     })).Wait();
                     IsFirstLoad = false;
                 }
 
-                return Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
+                return Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                 {
                     CheckTypeView();
 
@@ -152,20 +125,11 @@ namespace CheckLocalizations.Services
                         }
                         GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.Get(GameSelected);
 
-                        if (gameLocalizations.Items.Count > 0)
+                        if (gameLocalizations.HasData)
                         {
-                            resourcesLists.Add(new ResourcesList { Key = "Cl_HasData", Value = true });
-
-                            foreach (GameLanguage gameLanguage in _Settings.GameLanguages)
-                            {
-                                if (gameLanguage.IsNative)
-                                {
-                                    if (gameLocalizations.Items.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) != null)
-                                    {
-                                        resourcesLists.Add(new ResourcesList { Key = "Cl_HasNativeSupport", Value = true });
-                                    }
-                                }
-                            }
+                            resourcesLists = new List<ResourcesList>();
+                            resourcesLists.Add(new ResourcesList { Key = "Cl_HasData", Value = gameLocalizations.HasData });
+                            resourcesLists.Add(new ResourcesList { Key = "Cl_HasNativeSupport", Value = gameLocalizations.HasNativeSupport() });
                             resourcesLists.Add(new ResourcesList { Key = "Cl_ListNativeSupport", Value = gameLocalizations });
                         }
                         else
@@ -183,34 +147,7 @@ namespace CheckLocalizations.Services
 
                             if (_PlayniteApi.ApplicationInfo.Mode == ApplicationMode.Desktop)
                             {
-                                Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
-                                {
-                                    CheckLocalizations.PluginDatabase.SetCurrent(gameLocalizations);
-
-                                    if (_Settings.EnableIntegrationButton)
-                                    {
-#if DEBUG
-                                        logger.Debug($"CheckLocalizations - RefreshBtActionBar()");
-#endif
-                                        RefreshBtActionBar();
-                                    }
-
-                                    if (_Settings.EnableIntegrationInDescription)
-                                    {
-#if DEBUG
-                                        logger.Debug($"CheckLocalizations - RefreshSpDescription()");
-#endif
-                                        RefreshSpDescription();
-                                    }
-
-                                    if (_Settings.EnableIntegrationInCustomTheme)
-                                    {
-#if DEBUG
-                                        logger.Debug($"CheckLocalizations - RefreshCustomElements()");
-#endif
-                                        RefreshCustomElements();
-                                    }
-                                }));
+                                CheckLocalizations.PluginDatabase.SetCurrent(gameLocalizations);
                             }
                         }
                     }
@@ -256,11 +193,11 @@ namespace CheckLocalizations.Services
 
             if (_Settings.EnableIntegrationButtonDetails)
             {
-                BtActionBar = new ClButtonAdvanced(_Settings.EnableIntegrationButtonJustIcon);
+                BtActionBar = new ClButtonAdvanced();
             }
             else
             {
-                BtActionBar = new ClButton(_Settings.EnableIntegrationButtonJustIcon);
+                BtActionBar = new ClButton();
                 BtActionBar.Click += OnBtActionBarClick;
             }
 
@@ -349,7 +286,7 @@ namespace CheckLocalizations.Services
 
             try
             {
-                ClDescriptionIntegration SpDescription = new ClDescriptionIntegration(_Settings.IntegrationShowTitle, false);
+                ClDescriptionIntegration SpDescription = new ClDescriptionIntegration(false);
                 SpDescription.Name = SpDescriptionName;
 
                 ui.AddElementInGameSelectedDescription(SpDescription, _Settings.IntegrationTopGameDetails);
@@ -477,7 +414,7 @@ namespace CheckLocalizations.Services
 
             if (PART_ClListLanguages != null)
             {
-                PART_ClListLanguages = new ClDescriptionIntegration(false, true);
+                PART_ClListLanguages = new ClDescriptionIntegration(true);
                 try
                 {
                     ui.AddElementInCustomTheme(PART_ClListLanguages, "PART_ClListLanguages");

@@ -1,12 +1,17 @@
 ﻿using CheckLocalizations.Models;
+using CheckLocalizations.Services;
+using Newtonsoft.Json;
 using Playnite.SDK;
+using PluginCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using Localization = CheckLocalizations.Models.Localization;
 
 namespace CheckLocalizations.Views.Interfaces
@@ -18,11 +23,13 @@ namespace CheckLocalizations.Views.Interfaces
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
+        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+
         private bool _withContener;
         private ClListViewLanguages PART_ListViewLanguages;
 
 
-        public ClDescriptionIntegration(bool IntegrationShowTitle, bool withContener)
+        public ClDescriptionIntegration(bool withContener)
         {
             InitializeComponent();
 
@@ -30,17 +37,44 @@ namespace CheckLocalizations.Views.Interfaces
 
             PART_ListViewLanguages = new ClListViewLanguages(true);
 
-            if (!IntegrationShowTitle)
-            {
-                PART_Title.Visibility = Visibility.Collapsed;
-                PART_Separator.Visibility = Visibility.Collapsed;
-                PART_ClList.Margin = new Thickness(0, 0, 0, 0);
-            }
-
             PART_ClList.Children.Add(PART_ListViewLanguages);
 
-            DataContext = this;
+            PluginDatabase.PropertyChanged += OnPropertyChanged;
         }
+
+
+        protected void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            try
+            {
+#if DEBUG
+                logger.Debug($"ClDescriptionIntegration.OnPropertyChanged({e.PropertyName}): {JsonConvert.SerializeObject(PluginDatabase.GameSelectedData)}");
+#endif
+                if (e.PropertyName == "GameSelectedData" || e.PropertyName == "PluginSettings")
+                {
+                    this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
+                    {
+                        if (PluginDatabase.PluginSettings.IntegrationShowTitle && !PluginDatabase.PluginSettings.EnableIntegrationInCustomTheme)
+                        {
+                            PART_Title.Visibility = Visibility.Visible;
+                            PART_Separator.Visibility = Visibility.Visible;
+                            PART_ClList.Margin = new Thickness(0, 5, 0, 5);
+                        }
+                        else
+                        {
+                            PART_Title.Visibility = Visibility.Collapsed;
+                            PART_Separator.Visibility = Visibility.Collapsed;
+                            PART_ClList.Margin = new Thickness(0, 0, 0, 0);
+                        }
+                    }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, "CheckLocalizations");
+            }
+        }
+
 
         private void PART_ClList_Loaded(object sender, RoutedEventArgs e)
         {

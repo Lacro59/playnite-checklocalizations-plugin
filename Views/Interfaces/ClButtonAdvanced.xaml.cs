@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Threading;
+using CheckLocalizations.Services;
+using Newtonsoft.Json;
 
 namespace CheckLocalizations.Views.Interfaces
 {
@@ -18,6 +20,8 @@ namespace CheckLocalizations.Views.Interfaces
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private static IResourceProvider resources = new ResourceProvider();
+
+        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
 
         private static readonly string IsTextDefault = " ";
         private static readonly string IsTextOk = "";
@@ -31,39 +35,58 @@ namespace CheckLocalizations.Views.Interfaces
 
         private ClListViewLanguages PART_ListViewLanguages;
 
+        bool? _JustIcon = null;
 
-        public ClButtonAdvanced(bool EnableIntegrationButtonJustIcon)
+
+        public ClButtonAdvanced(bool? JustIcon = null)
         {
-            InitializeComponent();
+            _JustIcon = JustIcon;
 
-            if (EnableIntegrationButtonJustIcon)
-            {
-                OnlyIcon.Visibility = Visibility.Visible;
-                IndicatorSupport.Visibility = Visibility.Collapsed;
-                IndicatorSupportText.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                OnlyIcon.Visibility = Visibility.Collapsed;
-                IndicatorSupport.Visibility = Visibility.Visible;
-                IndicatorSupportText.Visibility = Visibility.Visible;
-            }
+            InitializeComponent();
 
             PART_ListViewLanguages = new ClListViewLanguages(true);
             PART_ContextMenu.Items.Add(PART_ListViewLanguages);
 
-            CheckLocalizations.PluginDatabase.PropertyChanged += OnPropertyChanged;
+            PluginDatabase.PropertyChanged += OnPropertyChanged;
         }
+
 
         protected void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             try
             {
-                this.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
+#if DEBUG
+                logger.Debug($"ClButtonAdvanced.OnPropertyChanged({e.PropertyName}): {JsonConvert.SerializeObject(PluginDatabase.GameSelectedData)}");
+#endif
+                if (e.PropertyName == "GameSelectedData" || e.PropertyName == "PluginSettings")
                 {
-                    if (CheckLocalizations.PluginDatabase.GameIsLoaded)
+                    this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
-                        if (resources.GetResource("Cl_HasNativeSupport") != null && (bool)resources.GetResource("Cl_HasNativeSupport"))
+                        bool EnableIntegrationButtonJustIcon;
+                        if (_JustIcon == null)
+                        {
+                            EnableIntegrationButtonJustIcon = PluginDatabase.PluginSettings.EnableIntegrationButtonJustIcon;
+                        }
+                        else
+                        {
+                            EnableIntegrationButtonJustIcon = (bool)_JustIcon;
+                        }
+
+                        if (EnableIntegrationButtonJustIcon)
+                        {
+                            OnlyIcon.Visibility = Visibility.Visible;
+                            IndicatorSupport.Visibility = Visibility.Collapsed;
+                            IndicatorSupportText.Visibility = Visibility.Collapsed;
+                        }
+                        else
+                        {
+                            OnlyIcon.Visibility = Visibility.Collapsed;
+                            IndicatorSupport.Visibility = Visibility.Visible;
+                            IndicatorSupportText.Visibility = Visibility.Visible;
+                        }
+
+
+                        if (PluginDatabase.GameSelectedData.HasNativeSupport())
                         {
                             IndicatorSupport.Text = IsTextOk;
                             OnlyIcon.Text = OnlyIconIsOk;
@@ -73,25 +96,29 @@ namespace CheckLocalizations.Views.Interfaces
                             IndicatorSupport.Text = IsTextKo;
                             OnlyIcon.Text = OnlyIconIsKo;
                         }
-                        
+
                         if (CheckLocalizations.PluginDatabase.GameSelectedData.Items.Count == 0)
                         {
                             IndicatorSupport.Text = IsTextNone;
                             OnlyIcon.Text = OnlyIconIsNone;
                         }
-                    }
-                    else
+                    }));
+                }
+                else
+                {
+                    this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
                         IndicatorSupport.Text = IsTextDefault;
                         OnlyIcon.Text = OnlyIconIsDefault;
-                    }
-                }));
+                    }));
+                }
             }
             catch (Exception ex)
             {
                 Common.LogError(ex, "CheckLocalizations");
             }
         }
+
 
         // Design popup
         private void PART_ContextMenu_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)

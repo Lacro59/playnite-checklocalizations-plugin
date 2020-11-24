@@ -1,4 +1,6 @@
-﻿using Playnite.SDK;
+﻿using CheckLocalizations.Services;
+using Newtonsoft.Json;
+using Playnite.SDK;
 using PluginCommon;
 using System;
 using System.Collections.Generic;
@@ -20,6 +22,8 @@ namespace CheckLocalizations.Views.Interfaces
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
+        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+
         private bool _WithColNotes;
 
 
@@ -29,29 +33,43 @@ namespace CheckLocalizations.Views.Interfaces
 
             InitializeComponent();
 
-            if (!_WithColNotes)
-            {
-                PART_ColNotes.Width = 0;
-            }
-
-            CheckLocalizations.PluginDatabase.PropertyChanged += OnPropertyChanged;
+            PluginDatabase.PropertyChanged += OnPropertyChanged;
         }
+
 
         protected void OnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             try
             {
-                this.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
+#if DEBUG
+                logger.Debug($"ClListViewLanguages.OnPropertyChanged({e.PropertyName}): {JsonConvert.SerializeObject(PluginDatabase.GameSelectedData)}");
+#endif
+                if (e.PropertyName == "GameSelectedData" || e.PropertyName == "PluginSettings")
                 {
-                    PART_ListViewLanguages.ItemsSource = null;
-                    PART_ListViewLanguages.ItemsSource = CheckLocalizations.PluginDatabase.GameSelectedData.Items;
-                }));
+                    this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
+                    {
+                        if (!_WithColNotes)
+                        {
+                            PART_ColNotes.Width = 0;
+                        }
+
+                        PART_ListViewLanguages.ItemsSource = PluginDatabase.GameSelectedData.Items;
+                    }));
+                }
+                else
+                {
+                    this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
+                    {
+                        PART_ListViewLanguages.ItemsSource = null;
+                    }));
+                }
             }
             catch (Exception ex)
             {
                 Common.LogError(ex, "CheckLocalizations");
             }
         }
+
 
         public void SetGameLocalizations()
         {
