@@ -87,7 +87,7 @@ namespace CheckLocalizations.Services
 #endif
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
                     {
-                        System.Threading.SpinWait.SpinUntil(() => IntegrationUI.SearchElementByName("PART_HtmlDescription", true) != null, 5000);
+                        System.Threading.SpinWait.SpinUntil(() => IntegrationUI.SearchElementByName("PART_HtmlDescription") != null, 5000);
                     })).Wait();
                     IsFirstLoad = false;
                 }

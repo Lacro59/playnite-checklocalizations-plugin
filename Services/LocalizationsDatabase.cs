@@ -39,6 +39,7 @@ namespace CheckLocalizations.Services
             logger.Debug($"{PluginName} - Database: {JsonConvert.SerializeObject(Database)}");
 #endif
 
+            GameSelectedData = new GameLocalizations();
             GetPluginTags();
 
             IsLoaded = true;
@@ -74,7 +75,6 @@ namespace CheckLocalizations.Services
             else if (gameLocalizations == null)
             {
                 Game game = _PlayniteApi.Database.Games.Get(Id);
-
                 gameLocalizations = GetDefault(game);
             }
 
@@ -133,34 +133,49 @@ namespace CheckLocalizations.Services
 
         protected override void GetPluginTags()
         {
-            // Get tags in playnite database
-            PluginTags = new List<Tag>();
-            foreach (Tag tag in _PlayniteApi.Database.Tags)
-            {
-                if (tag.Name.IndexOf("[CL] ") > -1)
-                {
-                    PluginTags.Add(tag);
-                }
-            }
+#if DEBUG
+            logger.Debug($"{PluginName} - GetPluginTags()");
+#endif
 
-            // Add missing tags
-            if (PluginTags.Count < PluginSettings.GameLanguages.Count)
+            try
             {
-                foreach (GameLanguage gameLanguage in PluginSettings.GameLanguages)
-                {
-                    if (PluginTags.Find(x => x.Name == $"[CL] {gameLanguage.DisplayName}") == null)
-                    {
-                        _PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
-                    }
-                }
-
+                // Get tags in playnite database
+                PluginTags = new List<Tag>();
                 foreach (Tag tag in _PlayniteApi.Database.Tags)
                 {
-                    if (tag.Name.IndexOf("[CL]") > -1)
+                    if (tag.Name.IndexOf("[CL] ") > -1)
                     {
                         PluginTags.Add(tag);
                     }
                 }
+
+                // Add missing tags
+                if (PluginTags.Count < PluginSettings.GameLanguages.Count)
+                {
+                    foreach (GameLanguage gameLanguage in PluginSettings.GameLanguages)
+                    {
+                        if (PluginTags.Find(x => x.Name == $"[CL] {gameLanguage.DisplayName}") == null)
+                        {
+                            _PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
+                        }
+                    }
+
+                    foreach (Tag tag in _PlayniteApi.Database.Tags)
+                    {
+                        if (tag.Name.IndexOf("[CL] ") > -1)
+                        {
+                            PluginTags.Add(tag);
+                        }
+                    }
+                }
+
+#if DEBUG
+                logger.Debug($"{PluginName} - PluginTags: {JsonConvert.SerializeObject(PluginTags)}");
+#endif
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, PluginName);
             }
         }
 
@@ -170,23 +185,38 @@ namespace CheckLocalizations.Services
 
             if (gameLocalizations.HasData)
             {
-                foreach (GameLanguage gameLanguage in PluginSettings.GameLanguages.FindAll(x => x.IsTag && gameLocalizations.Items.Any(y => x.Name.ToLower() == y.Language.ToLower())))
+                try
                 {
-                    Guid TagId = FindGoodPluginTags($"[CL] { gameLanguage.DisplayName}");
-                    if (TagId != null)
+                    foreach (GameLanguage gameLanguage in PluginSettings.GameLanguages.FindAll(x => x.IsTag && gameLocalizations.Items.Any(y => x.Name.ToLower() == y.Language.ToLower())))
                     {
-                        if (game.TagIds != null)
+                        Guid? TagId = FindGoodPluginTags($"[CL] { gameLanguage.DisplayName}");
+                        if (TagId != null)
                         {
-                            game.TagIds.Add(TagId);
-                        }
-                        else
-                        {
-                            game.TagIds = new List<Guid> { TagId };
+                            if (game.TagIds != null)
+                            {
+                                game.TagIds.Add((Guid)TagId);
+                            }
+                            else
+                            {
+                                game.TagIds = new List<Guid> { (Guid)TagId };
+                            }
                         }
                     }
-                }
 
-                _PlayniteApi.Database.Games.Update(game);
+                    _PlayniteApi.Database.Games.Update(game);
+                }
+                catch (Exception ex)
+                {
+#if DEBUG
+                    Common.LogError(ex, PluginName);
+#endif
+                    logger.Error($"{PluginName} - Tag insert error with {game.Name}");
+                    _PlayniteApi.Notifications.Add(new NotificationMessage(
+                        $"{PluginName}-Tag-Errors",
+                        $"{PluginName}\r\n" + resources.GetString("LOCCommonNotificationTagError"),
+                        NotificationType.Error
+                    ));
+                }
             }
         }
     }
