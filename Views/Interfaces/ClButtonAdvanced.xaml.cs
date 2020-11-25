@@ -44,8 +44,26 @@ namespace CheckLocalizations.Views.Interfaces
 
             InitializeComponent();
 
-            PART_ListViewLanguages = new ClListViewLanguages(true);
+            PART_ListViewLanguages = new ClListViewLanguages(false);
             PART_ContextMenu.Items.Add(PART_ListViewLanguages);
+
+            bool EnableIntegrationButtonJustIcon;
+            if (_JustIcon == null)
+            {
+                EnableIntegrationButtonJustIcon = PluginDatabase.PluginSettings.EnableIntegrationButtonJustIcon;
+            }
+            else
+            {
+                EnableIntegrationButtonJustIcon = (bool)_JustIcon;
+            }
+
+            this.DataContext = new
+            {
+                EnableIntegrationButtonJustIcon = EnableIntegrationButtonJustIcon
+            };
+#if DEBUG
+            logger.Debug($"CheckLocalizations - DataContext: {JsonConvert.SerializeObject(DataContext)}");
+#endif
 
             PluginDatabase.PropertyChanged += OnPropertyChanged;
         }
@@ -62,6 +80,24 @@ namespace CheckLocalizations.Views.Interfaces
                 {
                     this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
+                        if (PluginDatabase.GameSelectedData.HasNativeSupport())
+                        {
+                            PART_ButtonText.Text = IsTextOk;
+                            PART_ButtonIcon.Text = OnlyIconIsOk;
+                        }
+                        else
+                        {
+                            PART_ButtonText.Text = IsTextKo;
+                            PART_ButtonIcon.Text = OnlyIconIsKo;
+                        }
+
+                        if (CheckLocalizations.PluginDatabase.GameSelectedData.Items.Count == 0)
+                        {
+                            PART_ButtonText.Text = IsTextNone;
+                            PART_ButtonIcon.Text = OnlyIconIsNone;
+                        }
+
+
                         bool EnableIntegrationButtonJustIcon;
                         if (_JustIcon == null)
                         {
@@ -72,44 +108,21 @@ namespace CheckLocalizations.Views.Interfaces
                             EnableIntegrationButtonJustIcon = (bool)_JustIcon;
                         }
 
-                        if (EnableIntegrationButtonJustIcon)
+                        this.DataContext = new
                         {
-                            OnlyIcon.Visibility = Visibility.Visible;
-                            IndicatorSupport.Visibility = Visibility.Collapsed;
-                            IndicatorSupportText.Visibility = Visibility.Collapsed;
-                        }
-                        else
-                        {
-                            OnlyIcon.Visibility = Visibility.Collapsed;
-                            IndicatorSupport.Visibility = Visibility.Visible;
-                            IndicatorSupportText.Visibility = Visibility.Visible;
-                        }
-
-
-                        if (PluginDatabase.GameSelectedData.HasNativeSupport())
-                        {
-                            IndicatorSupport.Text = IsTextOk;
-                            OnlyIcon.Text = OnlyIconIsOk;
-                        }
-                        else
-                        {
-                            IndicatorSupport.Text = IsTextKo;
-                            OnlyIcon.Text = OnlyIconIsKo;
-                        }
-
-                        if (CheckLocalizations.PluginDatabase.GameSelectedData.Items.Count == 0)
-                        {
-                            IndicatorSupport.Text = IsTextNone;
-                            OnlyIcon.Text = OnlyIconIsNone;
-                        }
+                            EnableIntegrationButtonJustIcon = EnableIntegrationButtonJustIcon
+                        };
+#if DEBUG
+                        logger.Debug($"CheckLocalizations - DataContext: {JsonConvert.SerializeObject(DataContext)}");
+#endif
                     }));
                 }
                 else
                 {
                     this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
-                        IndicatorSupport.Text = IsTextDefault;
-                        OnlyIcon.Text = OnlyIconIsDefault;
+                        PART_ButtonIcon.Text = IsTextDefault;
+                        PART_ButtonIcon.Text = OnlyIconIsDefault;
                     }));
                 }
             }

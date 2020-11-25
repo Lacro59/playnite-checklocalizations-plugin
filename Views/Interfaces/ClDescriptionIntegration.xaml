@@ -6,8 +6,14 @@
              xmlns:local="clr-namespace:CheckLocalizations.Views.Interfaces"
              mc:Ignorable="d">
 
-    <TextBlock Name="PART_Title" Text="{DynamicResource LOCCheckLocalizations}" Margin="0,15,0,5" Style="{DynamicResource BaseTextBlockStyle}" />
-    <Separator Name="PART_Separator" Background="{DynamicResource PanelSeparatorBrush}" />
+    <StackPanel.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </StackPanel.Resources>
 
-    <StackPanel Name="PART_ClList" DockPanel.Dock="Bottom" Margin="0, 5, 0, 5" Loaded="PART_ClList_Loaded" />
+    <TextBlock Name="PART_Title" Text="{DynamicResource LOCCheckLocalizations}" Margin="0,15,0,5" Style="{DynamicResource BaseTextBlockStyle}" 
+               Visibility="{Binding IntegrationShowTitle, Converter={StaticResource BooleanToVisibilityConverter}}" />
+    <Separator Name="PART_Separator" Background="{DynamicResource PanelSeparatorBrush}" 
+               Visibility="{Binding IntegrationShowTitle, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+    <StackPanel Name="PART_ClList" />
 </StackPanel>

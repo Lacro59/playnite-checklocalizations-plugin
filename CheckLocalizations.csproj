@@ -152,6 +152,10 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\Common.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </None>
     <Page Include="Views\CheckLocalizationsEditManual.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

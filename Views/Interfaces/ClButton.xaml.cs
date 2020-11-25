@@ -28,6 +28,23 @@ namespace CheckLocalizations.Views.Interfaces
 
             InitializeComponent();
 
+
+            bool EnableIntegrationButtonJustIcon;
+            if (_JustIcon == null)
+            {
+                EnableIntegrationButtonJustIcon = PluginDatabase.PluginSettings.EnableIntegrationButtonJustIcon;
+            }
+            else
+            {
+                EnableIntegrationButtonJustIcon = (bool)_JustIcon;
+            }
+
+            this.DataContext = new
+            {
+                EnableIntegrationButtonJustIcon = EnableIntegrationButtonJustIcon
+            };
+
+
             PluginDatabase.PropertyChanged += OnPropertyChanged;
         }
 
@@ -53,16 +70,13 @@ namespace CheckLocalizations.Views.Interfaces
                             EnableIntegrationButtonJustIcon = (bool)_JustIcon;
                         }
 
-                        if (EnableIntegrationButtonJustIcon)
+                        this.DataContext = new
                         {
-                            OnlyIcon.Visibility = Visibility.Visible;
-                            IndicatorSupportText.Visibility = Visibility.Collapsed;
-                        }
-                        else
-                        {
-                            OnlyIcon.Visibility = Visibility.Collapsed;
-                            IndicatorSupportText.Visibility = Visibility.Visible;
-                        }
+                            EnableIntegrationButtonJustIcon = EnableIntegrationButtonJustIcon
+                        };
+#if DEBUG
+                        logger.Debug($"CheckLocalizations - DataContext: {JsonConvert.SerializeObject(DataContext)}");
+#endif
                     }));
                 }
             }

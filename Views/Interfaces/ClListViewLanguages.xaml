@@ -10,7 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <ListView Name="PART_ListViewLanguages" Loaded="PART_ListViewLanguages_Loaded">
             <ListView.View>
                 <GridView>

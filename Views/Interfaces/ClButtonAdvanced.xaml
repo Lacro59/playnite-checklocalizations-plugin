@@ -5,10 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckLocalizations.Views.Interfaces"
              xmlns:pbeh="clr-namespace:PluginCommon.PlayniteResources.Behaviors;assembly=PluginCommon"
-             mc:Ignorable="d" Height="40"
+        xmlns:converters="clr-namespace:PluginCommon.PlayniteResources.Converters;assembly=PluginCommon"
+        mc:Ignorable="d" Height="40"
              pbeh:LeftClickContextMenuBehavior.Enabled="True">
 
     <Button.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
         <FontFamily x:Key="font">pack://application:,,,/PluginCommon;component/Resources/font.ttf#font</FontFamily>
     </Button.Resources>
     
@@ -52,10 +55,16 @@
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="0" Grid.ColumnSpan="3" Name="OnlyIcon" FontFamily="{StaticResource font}" />
+        <TextBlock Name="PART_ButtonIcon" Text="" FontFamily="{StaticResource font}" 
+                   Grid.Column="0" Grid.ColumnSpan="3" 
+                   Visibility="{Binding EnableIntegrationButtonJustIcon, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-        <TextBlock Grid.Column="0" Name="IndicatorSupport" FontFamily="{StaticResource font}" Text="" />
-        <TextBlock Grid.Column="2" Name="IndicatorSupportText" Text="{DynamicResource LOCCheckLocalizationsLanguage}" />
+        <TextBlock Name="PART_ButtonText" Text="{DynamicResource LOCCheckLocalizationsLanguage}"
+                   Grid.Column="0"
+                   Visibility="{Binding EnableIntegrationButtonJustIcon, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
+        <TextBlock Name="PART_IndicatorSupportText" Text="{DynamicResource LOCCheckLocalizationsLanguage}"
+                   Grid.Column="2" 
+                   Visibility="{Binding EnableIntegrationButtonJustIcon, Converter={StaticResource InvertedBooleanToVisibilityConverter}}" />
     </Grid>
 
     <Button.ContextMenu>

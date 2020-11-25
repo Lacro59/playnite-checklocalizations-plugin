@@ -48,11 +48,6 @@ namespace CheckLocalizations.Views.Interfaces
                 {
                     this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
-                        if (!_WithColNotes)
-                        {
-                            PART_ColNotes.Width = 0;
-                        }
-
                         PART_ListViewLanguages.ItemsSource = PluginDatabase.GameSelectedData.Items;
                     }));
                 }
@@ -73,37 +68,36 @@ namespace CheckLocalizations.Views.Interfaces
 
         public void SetGameLocalizations()
         {
-            PART_ListViewLanguages.ItemsSource = null;
             PART_ListViewLanguages.ItemsSource = CheckLocalizations.PluginDatabase.GameSelectedData.Items;
         }
 
+
         private void PART_ListViewLanguages_Loaded(object sender, RoutedEventArgs e)
         {
-            // Define height & width
-            var parent = ((FrameworkElement)((FrameworkElement)((FrameworkElement)((FrameworkElement)sender).Parent).Parent).Parent);
+            IntegrationUI.SetControlSize(PART_GridContener);
 
-            if (!double.IsNaN(parent.ActualHeight))
+            if (_WithColNotes)
             {
-                PART_GridContener.Height = parent.ActualHeight;
-            }
-
-            if (!double.IsNaN(parent.Width))
-            {
-                PART_GridContener.Width = parent.ActualWidth;
-            }
-
 #if DEBUG
-            logger.Debug($"CheckLocalizations - PART_ListViewLanguages_Loaded() - parent.name: {parent.Name} - parent.Height: {parent.Height} - parent.Width: {parent.Width}");
+                logger.Debug($"CheckLocalizations - PART_ListViewLanguages.ActualWidth: {PART_ListViewLanguages.ActualWidth}");
 #endif
-
-            if (!double.IsNaN(PART_ListViewLanguages.ActualWidth) && _WithColNotes)
-            {
-                double Width = PART_ListViewLanguages.ActualWidth - 150 - 70 - 70 - 70 - 30;
-
-                if (Width > 0)
+                if (!double.IsNaN(PART_ListViewLanguages.ActualWidth))
                 {
-                    PART_ColNotes.Width = Width;
+                    double Width = PART_ListViewLanguages.ActualWidth - 150 - 70 - 70 - 70 - 30;
+
+                    if (Width > 0)
+                    {
+                        PART_ColNotes.Width = Width;
+                    }
                 }
+                else
+                {
+                    PART_ColNotes.Width = 100;
+                }
+            }
+            else
+            {
+                PART_ColNotes.Width = 0;
             }
         }
     }

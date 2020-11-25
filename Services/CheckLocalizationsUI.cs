@@ -414,7 +414,7 @@ namespace CheckLocalizations.Services
 
             if (PART_ClListLanguages != null)
             {
-                PART_ClListLanguages = new ClDescriptionIntegration(true);
+                PART_ClListLanguages = new ClListViewLanguages(true);
                 try
                 {
                     ui.AddElementInCustomTheme(PART_ClListLanguages, "PART_ClListLanguages");
@@ -438,7 +438,7 @@ namespace CheckLocalizations.Services
 
                 }
 
-                if (customElement.Element is ClDescriptionIntegration)
+                if (customElement.Element is ClListViewLanguages)
                 {
 
                 }

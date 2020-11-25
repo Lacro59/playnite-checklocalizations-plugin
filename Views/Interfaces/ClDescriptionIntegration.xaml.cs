@@ -54,49 +54,35 @@ namespace CheckLocalizations.Views.Interfaces
                 {
                     this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
-                        if (PluginDatabase.PluginSettings.IntegrationShowTitle && !PluginDatabase.PluginSettings.EnableIntegrationInCustomTheme)
+                        if (PluginDatabase.PluginSettings.IntegrationShowTitle)
                         {
-                            PART_Title.Visibility = Visibility.Visible;
-                            PART_Separator.Visibility = Visibility.Visible;
                             PART_ClList.Margin = new Thickness(0, 5, 0, 5);
                         }
                         else
                         {
-                            PART_Title.Visibility = Visibility.Collapsed;
-                            PART_Separator.Visibility = Visibility.Collapsed;
-                            PART_ClList.Margin = new Thickness(0, 0, 0, 0);
+                            if (!PluginDatabase.PluginSettings.IntegrationTopGameDetails)
+                            {
+                                PART_ClList.Margin = new Thickness(0, 15, 0, 0);
+                            }
+                            else
+                            {
+                                PART_ClList.Margin = new Thickness(0, 0, 0, 0);
+                            }
                         }
+
+                        this.DataContext = new
+                        {
+                            IntegrationShowTitle = PluginDatabase.PluginSettings.IntegrationShowTitle
+                        };
+#if DEBUG
+                        logger.Debug($"CheckLocalizations - DataContext: {JsonConvert.SerializeObject(DataContext)}");
+#endif
                     }));
                 }
             }
             catch (Exception ex)
             {
                 Common.LogError(ex, "CheckLocalizations");
-            }
-        }
-
-
-        private void PART_ClList_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Define height & width
-            var parent = ((FrameworkElement)((FrameworkElement)sender).Parent);
-            if (_withContener)
-            {
-                parent = ((FrameworkElement)((FrameworkElement)((FrameworkElement)sender).Parent).Parent);
-            }
-
-#if DEBUG
-            logger.Debug($"CheckLocalizations - PART_ClList_Loaded({_withContener}) - parent.name: {parent.Name} - parent.Height: {parent.Height} - parent.Width: {parent.Width}");
-#endif
-
-            if (!double.IsNaN(parent.Height))
-            {
-                PART_ListViewLanguages.Height = parent.Height;
-            }
-
-            if (!double.IsNaN(parent.Width))
-            {
-                PART_ListViewLanguages.Width = parent.Width;
             }
         }
     }
