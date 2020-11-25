@@ -36,7 +36,6 @@ namespace CheckLocalizations.Views.Interfaces
             _withContener = withContener;
 
             PART_ListViewLanguages = new ClListViewLanguages(true);
-
             PART_ClList.Children.Add(PART_ListViewLanguages);
 
             PluginDatabase.PropertyChanged += OnPropertyChanged;

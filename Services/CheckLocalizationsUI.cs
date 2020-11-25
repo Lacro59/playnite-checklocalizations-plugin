@@ -169,13 +169,7 @@ namespace CheckLocalizations.Services
         #region BtActionBar
         public override void InitialBtActionBar()
         {
-            Application.Current.Dispatcher.BeginInvoke((Action)delegate
-            {
-                if (PART_BtActionBar != null)
-                {
-                    PART_BtActionBar.Visibility = Visibility.Visible;
-                }
-            });
+
         }
 
         public override void AddBtActionBar()
@@ -217,19 +211,7 @@ namespace CheckLocalizations.Services
 
         public override void RefreshBtActionBar()
         {
-            if (PART_BtActionBar != null)
-            {
-                PART_BtActionBar.Visibility = Visibility.Visible;
 
-                if (PART_BtActionBar is ClButtonAdvanced)
-                {
-
-                }
-            }
-            else
-            {
-                logger.Warn($"CheckLocalizations - PART_BtActionBar is not defined");
-            }
         }
 
 
@@ -265,13 +247,7 @@ namespace CheckLocalizations.Services
         #region SpDescription
         public override void InitialSpDescription()
         {
-            Application.Current.Dispatcher.BeginInvoke((Action)delegate
-            {
-                if (PART_SpDescription != null)
-                {
-                    PART_SpDescription.Visibility = Visibility.Visible;
-                }
-            });
+
         }
 
         public override void AddSpDescription()
@@ -300,14 +276,7 @@ namespace CheckLocalizations.Services
 
         public override void RefreshSpDescription()
         {
-            if (PART_SpDescription != null)
-            {
-                PART_SpDescription.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                logger.Warn($"CheckLocalizations - PART_SpDescription is not defined");
-            }
+
         }
         #endregion  
 
@@ -315,13 +284,7 @@ namespace CheckLocalizations.Services
         #region CustomElements
         public override void InitialCustomElements()
         {
-            Application.Current.Dispatcher.BeginInvoke((Action)delegate
-            {
-                foreach (CustomElement customElement in ListCustomElements)
-                {
-                    customElement.Element.Visibility = Visibility.Visible;
-                }
-            });
+
         }
 
         public override void AddCustomElements()
@@ -429,20 +392,7 @@ namespace CheckLocalizations.Services
 
         public override void RefreshCustomElements()
         {
-            foreach (CustomElement customElement in ListCustomElements)
-            {
-                customElement.Element.Visibility = Visibility.Visible;
 
-                if (customElement.Element is ClButtonAdvanced)
-                {
-
-                }
-
-                if (customElement.Element is ClListViewLanguages)
-                {
-
-                }
-            }
         }
         #endregion
     }
