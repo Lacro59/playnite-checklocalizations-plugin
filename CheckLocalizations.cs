@@ -102,7 +102,6 @@ namespace CheckLocalizations
                         var TaskIntegrationUI = Task.Run(() =>
                         {
                             PluginDatabase.RemoveWithManual(GameMenu.Id);
-                            PluginDatabase.Get(GameMenu.Id, false);
                             checkLocalizationsUI.RefreshElements(GameMenu);
                         });
                     }
@@ -187,7 +186,7 @@ namespace CheckLocalizations
                     }
                 },
 
-                // Rmove tag for all game in database
+                // Remove tag for all game in database
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),

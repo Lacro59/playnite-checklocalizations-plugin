@@ -35,6 +35,7 @@ namespace CheckLocalizations.Services
             Database = new GameLocalizationsCollection(PluginDatabaseDirectory);
 
             Database.SetGameInfo<Localization>(_PlayniteApi);
+
 #if DEBUG
             logger.Debug($"{PluginName} - Database: {JsonConvert.SerializeObject(Database)}");
 #endif
@@ -58,10 +59,11 @@ namespace CheckLocalizations.Services
             {
                 ControlAndCreateDirectory(PluginUserDataPath, "CheckLocalizations");
                 gameLocalizations = localizationsApi.GetLocalizations(Id);
+                Add(gameLocalizations);
+
 #if DEBUG
                 logger.Debug($"{PluginName} - GetFromWeb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
 #endif
-                Add(gameLocalizations);
             }
             else if (gameLocalizations != null && !OnlyCache
                 && gameLocalizations.Items.Where(x => x.IsManual == true).Count() != 0
@@ -125,12 +127,14 @@ namespace CheckLocalizations.Services
             {
                 Id = game.Id,
                 Name = game.Name,
+                SourceId = game.SourceId,
                 Hidden = game.Hidden,
                 Icon = game.Icon,
                 CoverImage = game.CoverImage,
                 GenreIds = game.GenreIds,
                 Genres = game.Genres,
-                Playtime = game.Playtime
+                Playtime = game.Playtime,
+                LastActivity = game.LastActivity
             };
         }
 

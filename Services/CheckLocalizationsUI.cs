@@ -20,7 +20,8 @@ namespace CheckLocalizations.Services
 {
     public class CheckLocalizationsUI : PlayniteUiHelper
     {
-        private readonly CheckLocalizationsSettings _Settings;
+        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+
         public override string _PluginUserDataPath { get; set; } = string.Empty;
 
         public override bool IsFirstLoad { get; set; } = true;
@@ -34,9 +35,8 @@ namespace CheckLocalizations.Services
         public override List<CustomElement> ListCustomElements { get; set; } = new List<CustomElement>();
 
 
-        public CheckLocalizationsUI(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings Settings, string PluginUserDataPath) : base(PlayniteApi, PluginUserDataPath)
+        public CheckLocalizationsUI(IPlayniteAPI PlayniteApi, string PluginUserDataPath) : base(PlayniteApi, PluginUserDataPath)
         {
-            _Settings = Settings;
             _PluginUserDataPath = PluginUserDataPath;
 
             BtActionBarName = "PART_ClButton";
@@ -69,7 +69,7 @@ namespace CheckLocalizations.Services
                 {
                     CheckTypeView();
 
-                    if (_Settings.EnableIntegrationButton)
+                    if (PluginDatabase.PluginSettings.EnableIntegrationButton)
                     {
 #if DEBUG
                         logger.Debug($"CheckLocalizations - AddBtActionBar()");
@@ -77,7 +77,7 @@ namespace CheckLocalizations.Services
                         AddBtActionBar();
                     }
 
-                    if (_Settings.EnableIntegrationInDescription)
+                    if (PluginDatabase.PluginSettings.EnableIntegrationInDescription)
                     {
 #if DEBUG
                         logger.Debug($"CheckLocalizations - AddSpDescription()");
@@ -85,7 +85,7 @@ namespace CheckLocalizations.Services
                         AddSpDescription();
                     }
 
-                    if (_Settings.EnableIntegrationInCustomTheme)
+                    if (PluginDatabase.PluginSettings.EnableIntegrationInCustomTheme)
                     {
 #if DEBUG
                         logger.Debug($"CheckLocalizations - AddCustomElements()");
@@ -185,7 +185,7 @@ namespace CheckLocalizations.Services
 
             Button BtActionBar = new Button();
 
-            if (_Settings.EnableIntegrationButtonDetails)
+            if (PluginDatabase.PluginSettings.EnableIntegrationButtonDetails)
             {
                 BtActionBar = new ClButtonAdvanced();
             }
@@ -224,7 +224,7 @@ namespace CheckLocalizations.Services
 
         public void OnCustomThemeButtonClick(object sender, RoutedEventArgs e)
         {
-            if (_Settings.EnableIntegrationInCustomTheme)
+            if (PluginDatabase.PluginSettings.EnableIntegrationInCustomTheme)
             {
                 string ButtonName = string.Empty;
                 try
@@ -265,7 +265,7 @@ namespace CheckLocalizations.Services
                 ClDescriptionIntegration SpDescription = new ClDescriptionIntegration(false);
                 SpDescription.Name = SpDescriptionName;
 
-                ui.AddElementInGameSelectedDescription(SpDescription, _Settings.IntegrationTopGameDetails);
+                ui.AddElementInGameSelectedDescription(SpDescription, PluginDatabase.PluginSettings.IntegrationTopGameDetails);
                 PART_SpDescription = IntegrationUI.SearchElementByName(SpDescriptionName);
             }
             catch (Exception ex)
