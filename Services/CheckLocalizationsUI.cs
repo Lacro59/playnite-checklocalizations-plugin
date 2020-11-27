@@ -205,7 +205,7 @@ namespace CheckLocalizations.Services
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "CheckLocalizations", "Error on AddBtActionBar()");
+                Common.LogError(ex, "CheckLocalizations");
             }
         }
 
@@ -237,7 +237,7 @@ namespace CheckLocalizations.Services
                 }
                 catch (Exception ex)
                 {
-                    Common.LogError(ex, "CheckLocalizations", "OnCustomThemeButtonClick() error");
+                    Common.LogError(ex, "CheckLocalizations");
                 }
             }
         }
@@ -270,7 +270,7 @@ namespace CheckLocalizations.Services
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "CheckLocalizations", "Error on AddSpDescription()");
+                Common.LogError(ex, "CheckLocalizations");
             }
         }
 
@@ -328,7 +328,7 @@ namespace CheckLocalizations.Services
                 }
                 catch (Exception ex)
                 {
-                    Common.LogError(ex, "CheckLocalizations", "Error on AddCustomElements()");
+                    Common.LogError(ex, "CheckLocalizations");
                 }
             }
 
@@ -343,7 +343,7 @@ namespace CheckLocalizations.Services
                 }
                 catch (Exception ex)
                 {
-                    Common.LogError(ex, "CheckLocalizations", "Error on AddCustomElements()");
+                    Common.LogError(ex, "CheckLocalizations");
                 }
             }
 
@@ -357,7 +357,7 @@ namespace CheckLocalizations.Services
                 }
                 catch (Exception ex)
                 {
-                    Common.LogError(ex, "CheckLocalizations", "Error on AddCustomElements()");
+                    Common.LogError(ex, "CheckLocalizations");
                 }
             }
 
@@ -371,7 +371,7 @@ namespace CheckLocalizations.Services
                 }
                 catch (Exception ex)
                 {
-                    Common.LogError(ex, "CheckLocalizations", "Error on AddCustomElements()");
+                    Common.LogError(ex, "CheckLocalizations");
                 }
             }
 
@@ -385,7 +385,7 @@ namespace CheckLocalizations.Services
                 }
                 catch (Exception ex)
                 {
-                    Common.LogError(ex, "CheckLocalizations", "Error on AddCustomElements()");
+                    Common.LogError(ex, "CheckLocalizations");
                 }
             }
         }

@@ -20,15 +20,13 @@ namespace CheckLocalizations.Services
         private static IResourceProvider resources = new ResourceProvider();
         private IPlayniteAPI _PlayniteApi;
 
-        private CheckLocalizationsSettings _settings;
         private readonly string _PluginUserDataPath;
 
         private PCGamingWikiLocalizations pCGamingWikiLocalizations;
 
 
-        public LocalizationsApi(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings settings, string PluginUserDataPath)
+        public LocalizationsApi(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
         {
-            _settings = settings;
             _PlayniteApi = PlayniteApi;
             _PluginUserDataPath = PluginUserDataPath;
 

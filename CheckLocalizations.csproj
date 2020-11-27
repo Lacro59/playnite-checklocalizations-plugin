@@ -41,6 +41,7 @@
     </Reference>
     <Reference Include="Playnite.SDK, Version=5.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\PlayniteSDK.5.5.0\lib\net462\Playnite.SDK.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -58,7 +59,6 @@
   <ItemGroup>
     <Compile Include="CheckLocalizations.cs" />
     <Compile Include="CheckLocalizationsSettings.cs" />
-    <Compile Include="Services\CheckLocalizationsDatabase.cs" />
     <Compile Include="Services\LocalizationsDatabase.cs" />
     <Compile Include="Models\GameLanguage.cs" />
     <Compile Include="Models\GameLocalizations.cs" />

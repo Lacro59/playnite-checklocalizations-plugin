@@ -25,7 +25,11 @@ namespace CheckLocalizations.Models
             }
         }
 
-        
+
+        /// <summary>
+        /// Indicates whether one of the languages ​​is the native language
+        /// </summary>
+        /// <returns></returns>
         public bool HasNativeSupport()
         {
             foreach (GameLanguage gameLanguage in CheckLocalizations.PluginDatabase.PluginSettings.GameLanguages)

@@ -25,7 +25,7 @@ namespace CheckLocalizations.Services
 
             ControlAndCreateDirectory(PluginUserDataPath, "CheckLocalizations");
 
-            localizationsApi = new LocalizationsApi(PlayniteApi, PluginSettings, PluginUserDataPath);
+            localizationsApi = new LocalizationsApi(PlayniteApi, PluginUserDataPath);
         }
 
 
@@ -82,6 +82,7 @@ namespace CheckLocalizations.Services
             {
                 Game game = _PlayniteApi.Database.Games.Get(Id);
                 gameLocalizations = GetDefault(game);
+                Add(gameLocalizations);
             }
 
             gameLocalizations.Items.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
@@ -118,24 +119,6 @@ namespace CheckLocalizations.Services
             }
 
             return false;
-        }
-
-
-        public override GameLocalizations GetDefault(Game game)
-        {
-            return new GameLocalizations
-            {
-                Id = game.Id,
-                Name = game.Name,
-                SourceId = game.SourceId,
-                Hidden = game.Hidden,
-                Icon = game.Icon,
-                CoverImage = game.CoverImage,
-                GenreIds = game.GenreIds,
-                Genres = game.Genres,
-                Playtime = game.Playtime,
-                LastActivity = game.LastActivity
-            };
         }
 
 
