@@ -34,6 +34,7 @@ namespace CheckLocalizations
 
         private OldToNew oldToNew;
 
+
         public CheckLocalizations(IPlayniteAPI api) : base(api)
         {
             settings = new CheckLocalizationsSettings(this);
@@ -66,7 +67,7 @@ namespace CheckLocalizations
             }
 
             // Init ui interagration
-            checkLocalizationsUI = new CheckLocalizationsUI(api, settings, this.GetPluginUserDataPath());
+            checkLocalizationsUI = new CheckLocalizationsUI(api, this.GetPluginUserDataPath());
 
             // Custom theme button
             EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(checkLocalizationsUI.OnCustomThemeButtonClick));
