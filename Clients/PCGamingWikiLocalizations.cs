@@ -7,6 +7,7 @@ using PluginCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,6 +24,7 @@ namespace CheckLocalizations.Clients
 
         private SteamApi steamApi;
         private readonly string urlSteamId = "https://pcgamingwiki.com/api/appid.php?appid={0}";
+        private string UrlPCGamingWikiSearch { get; set; } = @"https://pcgamingwiki.com/w/index.php?search=";
 
 
         public PCGamingWikiLocalizations(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
@@ -32,6 +34,81 @@ namespace CheckLocalizations.Clients
 
             steamApi = new SteamApi(_PluginUserDataPath);
         }
+
+
+        private string FindGoodUrl(Game game, int SteamId = 0)
+        {
+            string url = string.Empty;
+            string WebResponse = string.Empty;
+
+
+            url = string.Empty;
+            if (SteamId != 0)
+            {
+                url = string.Format(urlSteamId, SteamId);
+
+                WebResponse = Web.DownloadStringData(url).GetAwaiter().GetResult();
+                if (!WebResponse.ToLower().Contains("search results"))
+                {
+                    return url;
+                }
+            }
+
+
+            url = string.Empty;
+            if (game.Links != null)
+            {
+                foreach (Link link in game.Links)
+                {
+                    if (link.Url.ToLower().Contains("pcgamingwiki"))
+                    {
+                        url = link.Url;
+
+                        if (url.Contains(UrlPCGamingWikiSearch))
+                        {
+                            url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(url.Replace(UrlPCGamingWikiSearch, string.Empty));
+                        }
+                        if (url.Contains(@"http://pcgamingwiki.com/w/index.php?search="))
+                        {
+                            url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(url.Replace(@"http://pcgamingwiki.com/w/index.php?search=", string.Empty));
+                        }
+                    }
+                }
+
+                if (!url.IsNullOrEmpty())
+                {
+                    WebResponse = Web.DownloadStringData(url).GetAwaiter().GetResult();
+                    if (!WebResponse.ToLower().Contains("search results"))
+                    {
+                        return url;
+                    }
+                }
+            }
+
+
+            url = string.Empty;
+            url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(game.Name) + $"+%28{((DateTime)game.ReleaseDate).ToString("yyyy")}%29";
+
+            WebResponse = Web.DownloadStringData(url).GetAwaiter().GetResult();
+            if (!WebResponse.ToLower().Contains("search results"))
+            {
+                return url;
+            }
+
+
+            url = string.Empty;
+            url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(game.Name);
+
+            WebResponse = Web.DownloadStringData(url).GetAwaiter().GetResult();
+            if (!WebResponse.ToLower().Contains("search results"))
+            {
+                return url;
+            }
+
+
+            return string.Empty;
+        }
+
 
         public List<Localization> GetLocalizations(Game game)
         {
@@ -50,17 +127,7 @@ namespace CheckLocalizations.Clients
                 SteamId = steamApi.GetSteamId(game.Name);
             }
 
-            if (game.Links != null)
-            {
-                foreach (Link link in game.Links)
-                {
-                    if (link.Url.ToLower().Contains("pcgamingwiki"))
-                    {
-                        urlPCGamingWiki = link.Url;
-                    }
-                }
-            }
-
+            urlPCGamingWiki = FindGoodUrl(game, SteamId);
 
             List<Localization> Localizations = new List<Localization>();
 
