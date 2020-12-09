@@ -71,7 +71,37 @@ namespace CheckLocalizations
 
             // Custom theme button
             EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(checkLocalizationsUI.OnCustomThemeButtonClick));
+
+            // Add event fullScreen
+            if (api.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
+            {
+                EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(BtFullScreen_ClickEvent));
+            }
         }
+
+
+        #region Custom event
+        private void BtFullScreen_ClickEvent(object sender, System.EventArgs e)
+        {
+            try
+            {
+                if (((Button)sender).Name == "PART_ButtonDetails")
+                {
+                    var TaskIntegrationUI = Task.Run(() =>
+                    {
+                        checkLocalizationsUI.Initial();
+                        checkLocalizationsUI.taskHelper.Check();
+                        var dispatcherOp = checkLocalizationsUI.AddElementsFS();
+                        dispatcherOp.Completed += (s, ev) => { checkLocalizationsUI.RefreshElements(GameSelected); };
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, "SuccessStory");
+            }
+        }
+        #endregion
 
 
         // Add new game menu items override GetGameMenuItems
@@ -236,7 +266,10 @@ namespace CheckLocalizations
                         checkLocalizationsUI.Initial();
                         checkLocalizationsUI.taskHelper.Check();
                         var dispatcherOp = checkLocalizationsUI.AddElements();
-                        dispatcherOp.Completed += (s, e) => { checkLocalizationsUI.RefreshElements(args.NewValue[0]); };
+                        if (dispatcherOp != null)
+                        {
+                            dispatcherOp.Completed += (s, e) => { checkLocalizationsUI.RefreshElements(args.NewValue[0]); };
+                        }
                     });
                 }
             }
