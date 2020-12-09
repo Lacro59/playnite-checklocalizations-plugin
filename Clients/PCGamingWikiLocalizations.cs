@@ -86,8 +86,11 @@ namespace CheckLocalizations.Clients
             }
 
 
+            string Name = Regex.Replace(game.Name, @"([ ]demo\b)", string.Empty, RegexOptions.IgnoreCase);
+            Name = Regex.Replace(Name, @"(demo[ ])", string.Empty, RegexOptions.IgnoreCase);
+
             url = string.Empty;
-            url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(game.Name) + $"+%28{((DateTime)game.ReleaseDate).ToString("yyyy")}%29";
+            url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(Name);
 
             WebResponse = Web.DownloadStringData(url).GetAwaiter().GetResult();
             if (!WebResponse.ToLower().Contains("search results"))
@@ -195,6 +198,11 @@ namespace CheckLocalizations.Clients
                         }
                         i++;
                     }
+
+
+                    Notes = Regex.Replace(Notes, "(</[^>]*>)", string.Empty);
+                    Notes = Regex.Replace(Notes, "(<[^>]*>)", string.Empty);
+
 
                     Localizations.Add(new Models.Localization
                     {

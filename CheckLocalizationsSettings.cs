@@ -100,7 +100,6 @@ namespace CheckLocalizations
                     new GameLanguage { DisplayName = "Lietuvių", Name = "Lithuanian", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Nederlands", Name = "Dutch", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Norsk", Name = "Norwegian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Polski", Name = "Polish", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Português", Name = "Portuguese", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Română", Name = "Romanian", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Slovenčina", Name = "Slovenian", IsTag = false, IsNative = false },
