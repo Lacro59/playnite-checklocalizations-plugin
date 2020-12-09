@@ -33,6 +33,8 @@ namespace CheckLocalizations.Views.Interfaces
 
             InitializeComponent();
 
+            PART_ListViewLanguages.PreviewMouseWheel += Tools.HandlePreviewMouseWheel;
+
             PluginDatabase.PropertyChanged += OnPropertyChanged;
         }
 

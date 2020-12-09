@@ -98,7 +98,7 @@ namespace CheckLocalizations
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "SuccessStory");
+                Common.LogError(ex, "CheckLocalizations");
             }
         }
         #endregion
