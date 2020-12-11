@@ -43,9 +43,6 @@ namespace CheckLocalizations.Views.Interfaces
         {
             try
             {
-#if DEBUG
-                logger.Debug($"ClListViewLanguages.OnPropertyChanged({e.PropertyName}): {JsonConvert.SerializeObject(PluginDatabase.GameSelectedData)}");
-#endif
                 if (e.PropertyName == "GameSelectedData" || e.PropertyName == "PluginSettings")
                 {
                     this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate

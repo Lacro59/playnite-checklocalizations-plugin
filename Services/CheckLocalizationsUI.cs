@@ -140,7 +140,7 @@ namespace CheckLocalizations.Services
                             resourcesLists = new List<ResourcesList>();
                             resourcesLists.Add(new ResourcesList { Key = "Cl_HasData", Value = gameLocalizations.HasData });
                             resourcesLists.Add(new ResourcesList { Key = "Cl_HasNativeSupport", Value = gameLocalizations.HasNativeSupport() });
-                            resourcesLists.Add(new ResourcesList { Key = "Cl_ListNativeSupport", Value = gameLocalizations });
+                            resourcesLists.Add(new ResourcesList { Key = "Cl_ListNativeSupport", Value = gameLocalizations.Items });
                         }
                         else
                         {
