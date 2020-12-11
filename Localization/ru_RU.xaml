@@ -4,14 +4,19 @@
     <!-- MainView -->
 
     <sys:String x:Key="LOCCheckLocalizations">Проверка локализации</sys:String>
-    
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Проверить локализацию</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Редактировать язык</sys:String>
+
+    <!-- CheckLocalizationsEditManual -->
+
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Добавить новый поддерживаемый язык</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
-    
+
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Игровой язык: {0} - не найден {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Выполнение...</sys:String>
-    
+
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Метка с выбранными языками</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Язык</sys:String>
 

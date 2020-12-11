@@ -3,15 +3,20 @@
 
     <!-- MainView -->
 
-    <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
-    
+    <sys:String x:Key="LOCCheckLocalizations">Verificar localizaciones</sys:String>
+
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Comprobar localizaciones</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Editar manualmente un idioma soportado</sys:String>
+
+    <!-- CheckLocalizationsEditManual -->
+
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Añadir un nuevo idioma soportado</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
-    
+
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Idiomas del juego: encontrar {0} - no encontrar {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Acción en progreso...</sys:String>
-    
+
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Etiqueta con idioma(s) seleccionados</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Es un idioma nativo</sys:String>
 

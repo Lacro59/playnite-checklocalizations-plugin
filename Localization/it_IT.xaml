@@ -4,14 +4,19 @@
     <!-- MainView -->
 
     <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
-    
+
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Controlla localizzazioni</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Modifica manualmente una lingua supportata</sys:String>
+
+    <!-- CheckLocalizationsEditManual -->
+
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Aggiungi una nuova lingua supportata</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
-    
+
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Lingue di gioco: trova {0} - non trova {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Azione in corso...</sys:String>
-    
+
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Etichetta con lingua(e) selezionata(e)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">È una lingua nativa</sys:String>
 
@@ -23,7 +28,7 @@
     <sys:String x:Key="LOCCheckLocalizationsLanguage">Lingua</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsSub">Sub</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Sottotitoli</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsNotes">Note</sys:String>
 
 </ResourceDictionary>
