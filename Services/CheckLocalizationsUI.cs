@@ -271,7 +271,7 @@ namespace CheckLocalizations.Services
                 ClDescriptionIntegration SpDescription = new ClDescriptionIntegration(false);
                 SpDescription.Name = SpDescriptionName;
 
-                ui.AddElementInGameSelectedDescription(SpDescription, PluginDatabase.PluginSettings.IntegrationTopGameDetails);
+                ui.AddElementInGameSelectedDescription(SpDescription, PluginDatabase.PluginSettings.IntegrationTopGameDetails, PluginDatabase.PluginSettings.IntegrationShowTitle);
                 PART_SpDescription = IntegrationUI.SearchElementByName(SpDescriptionName);
             }
             catch (Exception ex)
