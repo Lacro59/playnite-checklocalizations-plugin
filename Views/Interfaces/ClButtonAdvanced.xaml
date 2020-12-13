@@ -1,13 +1,13 @@
 ﻿<Button x:Class="CheckLocalizations.Views.Interfaces.ClButtonAdvanced"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CheckLocalizations.Views.Interfaces"
-             xmlns:pbeh="clr-namespace:PluginCommon.PlayniteResources.Behaviors;assembly=PluginCommon"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:CheckLocalizations.Views.Interfaces"
+        xmlns:pbeh="clr-namespace:PluginCommon.PlayniteResources.Behaviors;assembly=PluginCommon"
         xmlns:converters="clr-namespace:PluginCommon.PlayniteResources.Converters;assembly=PluginCommon"
         mc:Ignorable="d" Height="40"
-             pbeh:LeftClickContextMenuBehavior.Enabled="True">
+        pbeh:LeftClickContextMenuBehavior.Enabled="True">
 
     <Button.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />

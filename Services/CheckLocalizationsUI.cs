@@ -144,12 +144,9 @@ namespace CheckLocalizations.Services
                         }
                         else
                         {
-                            logger.Info($"CheckLocalizations - No data find for {GameSelected.Name}");
+                            logger.Warn($"CheckLocalizations - No data find for {GameSelected.Name}");
                         }
 
-#if DEBUG
-                        logger.Debug($"CheckLocalizations - {GameSelected.Name} - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
-#endif
                         // If not cancel, show
                         if (!ct.IsCancellationRequested && GameSelected.Id == CheckLocalizations.GameSelected.Id)
                         {
@@ -206,7 +203,6 @@ namespace CheckLocalizations.Services
             }
 
             BtActionBar.Name = BtActionBarName;
-            BtActionBar.Margin = new Thickness(10, 0, 0, 0);
 
             try
             {

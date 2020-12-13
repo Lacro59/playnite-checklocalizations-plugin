@@ -54,25 +54,11 @@ namespace CheckLocalizations.Views.Interfaces
                         {
                             PART_ClList.Margin = new Thickness(0, 5, 0, 5);
                         }
-                        else
-                        {
-                            if (!PluginDatabase.PluginSettings.IntegrationTopGameDetails)
-                            {
-                                PART_ClList.Margin = new Thickness(0, 15, 0, 0);
-                            }
-                            else
-                            {
-                                PART_ClList.Margin = new Thickness(0, 0, 0, 0);
-                            }
-                        }
 
                         this.DataContext = new
                         {
                             IntegrationShowTitle = PluginDatabase.PluginSettings.IntegrationShowTitle
                         };
-#if DEBUG
-                        logger.Debug($"CheckLocalizations - DataContext: {JsonConvert.SerializeObject(DataContext)}");
-#endif
                     }));
                 }
             }

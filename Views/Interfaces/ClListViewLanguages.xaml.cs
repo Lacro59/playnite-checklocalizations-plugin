@@ -45,7 +45,7 @@ namespace CheckLocalizations.Views.Interfaces
             {
                 if (e.PropertyName == "GameSelectedData" || e.PropertyName == "PluginSettings")
                 {
-                    this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
+                    this.Dispatcher.BeginInvoke(DispatcherPriority.Background, new ThreadStart(delegate
                     {
                         PART_ListViewLanguages.ItemsSource = PluginDatabase.GameSelectedData.Items;
                     }));

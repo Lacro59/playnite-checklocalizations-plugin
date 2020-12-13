@@ -109,9 +109,6 @@ namespace CheckLocalizations.Views.Interfaces
                         {
                             EnableIntegrationButtonJustIcon = EnableIntegrationButtonJustIcon
                         };
-#if DEBUG
-                        logger.Debug($"CheckLocalizations - DataContext: {JsonConvert.SerializeObject(DataContext)}");
-#endif
                     }));
                 }
                 else

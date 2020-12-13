@@ -210,7 +210,7 @@ namespace CheckLocalizations.Clients
                         Ui = Ui,
                         Audio = Audio,
                         Sub = Sub,
-                        Notes = Notes,
+                        Notes = WebUtility.HtmlDecode(Notes),
                         IsManual = false
                     });
                 }
