@@ -92,7 +92,6 @@ namespace CheckLocalizations
                     new GameLanguage { DisplayName = "Čeština", Name = "Czech", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Magyar", Name = "Hungarian", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Türkçe", Name = "Turkish", IsTag = false, IsNative = false },
-
                     new GameLanguage { DisplayName = "عربى", Name = "Arabic", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Català", Name = "Catalan", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "dansk", Name = "Danish", IsTag = false, IsNative = false },

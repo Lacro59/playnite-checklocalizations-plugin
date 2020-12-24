@@ -97,6 +97,12 @@ namespace CheckLocalizations.Services
             {
                 GameLocalizations gameLocalizations = GetOnlyCache(Id);
 
+                if (gameLocalizations.Items == null)
+                {
+                    gameLocalizations.Items = new List<Localization>();
+                }
+
+
                 if (gameLocalizations.Items.Where(x => x.IsManual).Count() == 0)
                 {
                     return Remove(Id);
