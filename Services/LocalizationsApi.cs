@@ -23,6 +23,7 @@ namespace CheckLocalizations.Services
         private readonly string _PluginUserDataPath;
 
         private PCGamingWikiLocalizations pCGamingWikiLocalizations;
+        private SteamLocalizations steamLocalizations;
 
 
         public LocalizationsApi(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
@@ -31,6 +32,7 @@ namespace CheckLocalizations.Services
             _PluginUserDataPath = PluginUserDataPath;
 
             pCGamingWikiLocalizations = new PCGamingWikiLocalizations(_PlayniteApi, _PluginUserDataPath);
+            steamLocalizations = new SteamLocalizations(_PlayniteApi, _PluginUserDataPath);
         }
 
 
@@ -42,6 +44,13 @@ namespace CheckLocalizations.Services
         public GameLocalizations GetLocalizations(Game game)
         {
             List<Localization> Localizations = pCGamingWikiLocalizations.GetLocalizations(game);
+            if (Localizations.Count == 0)
+            {
+                Localizations = steamLocalizations.GetLocalizations(game);
+#if DEBUG
+                logger.Debug($"CheckLocalizations - Used Steam for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
+#endif
+            }
 
             GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(game);
             gameLocalizations.Items = Localizations;

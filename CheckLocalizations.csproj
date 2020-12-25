@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="CheckLocalizations.cs" />
     <Compile Include="CheckLocalizationsSettings.cs" />
+    <Compile Include="Clients\SteamLocalizations.cs" />
     <Compile Include="Services\LocalizationsDatabase.cs" />
     <Compile Include="Models\GameLanguage.cs" />
     <Compile Include="Models\GameLocalizations.cs" />
