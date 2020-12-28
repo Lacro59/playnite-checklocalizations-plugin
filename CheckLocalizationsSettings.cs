@@ -20,6 +20,9 @@ namespace CheckLocalizations
         public bool EnableTag { get; set; } = true;
         public List<GameLanguage> GameLanguages { get; set; }
 
+        public bool UiStyleSteam { get; set; } = false;
+        public bool UiStylePcGamingWiki { get; set; } = true;
+
         public bool EnableIntegrationButton { get; set; } = false;
         public bool EnableIntegrationButtonDetails { get; set; } = false;
         public bool EnableIntegrationButtonJustIcon { get; set; } = true;
@@ -59,6 +62,9 @@ namespace CheckLocalizations
 
                 EnableTag = savedSettings.EnableTag;
                 GameLanguages = savedSettings.GameLanguages;
+
+                UiStyleSteam = savedSettings.UiStyleSteam;
+                UiStylePcGamingWiki = savedSettings.UiStylePcGamingWiki;
 
                 EnableIntegrationButton = savedSettings.EnableIntegrationButton;
                 EnableIntegrationButtonDetails = savedSettings.EnableIntegrationButtonDetails;

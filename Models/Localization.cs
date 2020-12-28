@@ -68,6 +68,30 @@ namespace CheckLocalizations.Models
             }
         }
 
+        [JsonIgnore]
+        public bool IsOkUi
+        {
+            get
+            {
+                return (Ui == SupportStatus.Native || Ui == SupportStatus.Hackable);
+            }
+        }
+        [JsonIgnore]
+        public bool IsOkAudio
+        {
+            get
+            {
+                return (Audio == SupportStatus.Native || Audio == SupportStatus.Hackable);
+            }
+        }
+        [JsonIgnore]
+        public bool IsOkSub
+        {
+            get
+            {
+                return (Sub == SupportStatus.Native || Sub == SupportStatus.Hackable);
+            }
+        }
 
         private string GetImage(SupportStatus supportStatus)
         {
@@ -88,6 +112,24 @@ namespace CheckLocalizations.Models
             }
 
             return string.Empty;
+        }
+
+
+        [JsonIgnore]
+        public bool UiStylePcGamingWiki
+        {
+            get
+            {
+                return CheckLocalizations.PluginDatabase.PluginSettings.UiStylePcGamingWiki;
+            }
+        }
+        [JsonIgnore]
+        public bool UiStyleSteam
+        {
+            get
+            {
+                return CheckLocalizations.PluginDatabase.PluginSettings.UiStyleSteam;
+            }
         }
     }
 }

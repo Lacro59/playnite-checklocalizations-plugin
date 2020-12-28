@@ -5,6 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" Background="{DynamicResource WindowBackgourndBrush}">
 
+    <UserControl.Resources>
+        <FontFamily x:Key="font">pack://application:,,,/CommonControls;component/Resources/font.ttf#font</FontFamily>
+    </UserControl.Resources>
+    
     <TabControl Margin="20">
         <TabItem Header="{DynamicResource LOCCheckLocalizations}">
             <StackPanel Name="spSettings" Margin="0,10,0,0">
@@ -87,31 +91,60 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="10"/>
                         <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
-                    <CheckBox Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="{DynamicResource LOCCheckLocalizationsStyleUI}" />
+                        <CheckBox Grid.Column="1" HorizontalAlignment="Center"  Name="rbSteam" VerticalAlignment="Center"
+                                     IsChecked="{Binding UiStyleSteam}" Click="RbSteam_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="Steam" Margin="5,0,0,0" />
+                                <Label FontFamily="{StaticResource font}" Content="" Margin="10,0,0,0" />
+                            </StackPanel>
+                        </CheckBox>
+                        <CheckBox Grid.Column="2" HorizontalAlignment="Center" Name="rbPcGamingWiki" VerticalAlignment="Center"
+                                     IsChecked="{Binding UiStylePcGamingWiki}" Click="RbPcGamingWiki_Click">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="PcGamingWiki" Margin="5,0,0,0" />
+                                <Image Name="imgNative" Source="/Resources/native.png" Margin="10,0,0,0" Height="20" />
+                                <Image Name="imgNoNative" Source="/Resources/nonative.png" Margin="5,0,0,0" Height="20" />
+                                <Image Name="imgNotApplicable" Source="/Resources/notapplicable.png" Margin="5,0,0,0" Height="20" />
+                                <Image Name="imgUnknown" Source="/Resources/unknown.png" Margin="5,0,0,0" Height="20" />
+                            </StackPanel>
+                        </CheckBox>
+                    </Grid>
+
+                    <CheckBox Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"
                               Name="CheckL_IntegrationInCustomTheme" 
                               Click="Checkbox_Click">
                         <Label Content="{DynamicResource LOCCommonIntegrationInCustomTheme}" />
                     </CheckBox>
 
                     <CheckBox IsChecked="{Binding EnableIntegrationButton}" 
-                              Grid.Column="0" Grid.Row="2" 
+                              Grid.Column="0" Grid.Row="4" 
                               Name="CheckL_IntegrationInButton"
                               Click="Checkbox_Click" VerticalAlignment="Center">
                         <Label Content="{DynamicResource LOCCommonIntegrationButton}" />
                     </CheckBox>
 
                     <CheckBox IsChecked="{Binding EnableIntegrationInDescription}" 
-                              Grid.Column="0" Grid.Row="4"  VerticalAlignment="Center"
+                              Grid.Column="0" Grid.Row="6" VerticalAlignment="Center"
                               Name="CheckL_IntegrationInDescription" Click="Checkbox_Click">
                         <Label Content="{DynamicResource LOCCommonIntegrationInDescription}" />
                     </CheckBox>
                 </Grid>
 
 
-                <GroupBox IsEnabled="{Binding EnableIntegrationButton}"  Margin="0,10,0,0"
+                <GroupBox IsEnabled="{Binding EnableIntegrationButton}" Margin="0,10,0,0"
                           Header="{DynamicResource LOCCommonIntegrationButtonOptions}">
                     <Grid>
                         <Grid.ColumnDefinitions>

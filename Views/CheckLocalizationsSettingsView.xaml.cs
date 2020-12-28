@@ -7,11 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace CheckLocalizations.Views
 {
@@ -35,7 +37,12 @@ namespace CheckLocalizations.Views
 
             lbGameLanguages.ItemsSource = settings.GameLanguages.OrderBy(x => x.Name).ToList();
 
-            DataContext = this;
+            string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            imgNative.Source = new BitmapImage(new Uri($"{pluginFolder}\\Resources\\native.png"));
+            imgNoNative.Source = new BitmapImage(new Uri($"{pluginFolder}\\Resources\\nonative.png"));
+            imgNotApplicable.Source = new BitmapImage(new Uri($"{pluginFolder}\\Resources\\notapplicable.png"));
+            imgUnknown.Source = new BitmapImage(new Uri($"{pluginFolder}\\Resources\\unknown.png"));
         }
 
         /// <summary>
@@ -104,6 +111,17 @@ namespace CheckLocalizations.Views
             {
                 PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
             }
+        }
+
+
+        private void RbSteam_Click(object sender, RoutedEventArgs e)
+        {
+            rbPcGamingWiki.IsChecked = !rbSteam.IsChecked;
+        }
+
+        private void RbPcGamingWiki_Click(object sender, RoutedEventArgs e)
+        {
+            rbSteam.IsChecked = !rbPcGamingWiki.IsChecked;
         }
     }
 }

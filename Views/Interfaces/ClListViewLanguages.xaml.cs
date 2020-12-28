@@ -67,7 +67,7 @@ namespace CheckLocalizations.Views.Interfaces
 
         public void SetGameLocalizations()
         {
-            PART_ListViewLanguages.ItemsSource = CheckLocalizations.PluginDatabase.GameSelectedData.Items;
+            PART_ListViewLanguages.ItemsSource = PluginDatabase.GameSelectedData.Items;
         }
 
 
