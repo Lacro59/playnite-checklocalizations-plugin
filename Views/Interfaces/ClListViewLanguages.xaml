@@ -8,7 +8,6 @@
 
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <FontFamily x:Key="font">pack://application:,,,/CommonControls;component/Resources/font.ttf#font</FontFamily>
     </UserControl.Resources>
     
     <Grid Name="PART_GridContener" Height="130">
@@ -31,7 +30,7 @@
                                     <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" 
                                            Visibility="{Binding UiStylePcGamingWiki, Converter={StaticResource BooleanToVisibilityConverter}}"
                                            Source="{Binding UiIcon, IsAsync=True}"/>
-                                    <Label FontFamily="{StaticResource font}" Content="" FontSize="24" HorizontalAlignment="Center">
+                                    <Label FontFamily="{DynamicResource CommonFont}" Content="" FontSize="24" HorizontalAlignment="Center">
                                         <Label.Style>
                                             <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
                                                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -72,7 +71,7 @@
                                     <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" 
                                            Visibility="{Binding UiStylePcGamingWiki, Converter={StaticResource BooleanToVisibilityConverter}}"
                                            Source="{Binding AudioIcon, IsAsync=True}" />
-                                    <Label FontFamily="{StaticResource font}" Content="" FontSize="24" HorizontalAlignment="Center">
+                                    <Label FontFamily="{DynamicResource CommonFont}" Content="" FontSize="24" HorizontalAlignment="Center">
                                         <Label.Style>
                                             <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
                                                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
@@ -113,7 +112,7 @@
                                     <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" 
                                            Visibility="{Binding UiStylePcGamingWiki, Converter={StaticResource BooleanToVisibilityConverter}}"
                                            Source="{Binding SubIcon, IsAsync=True}" />
-                                    <Label FontFamily="{StaticResource font}" Content="" FontSize="24" HorizontalAlignment="Center">
+                                    <Label FontFamily="{DynamicResource CommonFont}" Content="" FontSize="24" HorizontalAlignment="Center">
                                         <Label.Style>
                                             <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
                                                 <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />

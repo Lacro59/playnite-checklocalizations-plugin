@@ -1,6 +1,5 @@
 ﻿using CheckLocalizations.Models;
 using Playnite.SDK;
-using PluginCommon;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Windows.Threading;
 using System.Threading;
 using CheckLocalizations.Services;
 using Newtonsoft.Json;
+using CommonShared;
 
 namespace CheckLocalizations.Views.Interfaces
 {

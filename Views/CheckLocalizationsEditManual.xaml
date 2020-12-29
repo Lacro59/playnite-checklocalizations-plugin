@@ -4,12 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckLocalizations.Views"
-             xmlns:plugincommon="clr-namespace:PluginCommon;assembly=CommonControls"
+             xmlns:commonshared="clr-namespace:CommonShared"
              mc:Ignorable="d" Background="{DynamicResource WindowBackgourndBrush}"            
              Width="620" Height="350">
 
     <UserControl.Resources>
-        <plugincommon:IndexConverter x:Key="IndexConverter"/>
+        <commonshared:IndexConverter x:Key="IndexConverter"/>
     </UserControl.Resources>
 
     <Grid>

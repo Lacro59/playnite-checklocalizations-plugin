@@ -2,7 +2,6 @@
 using CheckLocalizations.Services;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using PluginCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;

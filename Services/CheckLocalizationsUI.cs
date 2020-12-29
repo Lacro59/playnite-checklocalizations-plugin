@@ -1,10 +1,10 @@
 ﻿using CheckLocalizations.Models;
 using CheckLocalizations.Views;
 using CheckLocalizations.Views.Interfaces;
+using CommonShared;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using PluginCommon;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -148,7 +148,7 @@ namespace CheckLocalizations.Services
                         }
 
                         // If not cancel, show
-                        if (!ct.IsCancellationRequested && GameSelected.Id == CheckLocalizations.GameSelected.Id)
+                        if (!ct.IsCancellationRequested && GameSelected.Id == LocalizationsDatabase.GameSelected.Id)
                         {
                             ui.AddResources(resourcesLists);
 

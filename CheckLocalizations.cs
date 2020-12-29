@@ -8,13 +8,13 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using PluginCommon;
 using CheckLocalizations.Views;
 using CheckLocalizations.Services;
 using Playnite.SDK.Events;
 using Newtonsoft.Json;
 using System.Windows;
 using CheckLocalizations.Models;
+using CommonShared;
 
 namespace CheckLocalizations
 {
@@ -27,7 +27,6 @@ namespace CheckLocalizations
 
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
-        public static Game GameSelected;
         public static LocalizationsDatabase PluginDatabase;
         public static List<GameLanguage> GameLanguages = new List<GameLanguage>();
         public static CheckLocalizationsUI checkLocalizationsUI;
@@ -52,10 +51,10 @@ namespace CheckLocalizations
             string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
             // Add plugin localization in application ressource.
-            PluginCommon.PluginLocalization.SetPluginLanguage(pluginFolder, api.ApplicationSettings.Language);
+            PluginLocalization.SetPluginLanguage(pluginFolder, api.ApplicationSettings.Language);
             // Add common in application ressource.
-            PluginCommon.Common.Load(pluginFolder);
-            PluginCommon.Common.SetEvent(PlayniteApi);
+            Common.Load(pluginFolder);
+            Common.SetEvent(PlayniteApi);
 
             // Check version
             if (settings.EnableCheckVersion)
@@ -93,7 +92,7 @@ namespace CheckLocalizations
                         checkLocalizationsUI.Initial();
                         checkLocalizationsUI.taskHelper.Check();
                         var dispatcherOp = checkLocalizationsUI.AddElementsFS();
-                        dispatcherOp.Completed += (s, ev) => { checkLocalizationsUI.RefreshElements(GameSelected); };
+                        dispatcherOp.Completed += (s, ev) => { checkLocalizationsUI.RefreshElements(LocalizationsDatabase.GameSelected); };
                     });
                 }
             }
@@ -257,10 +256,7 @@ namespace CheckLocalizations
             {
                 if (args.NewValue != null && args.NewValue.Count == 1)
                 {
-                    GameSelected = args.NewValue[0];
-#if DEBUG
-                    logger.Debug($"CheckLocalizations - OnGameSelected() - {GameSelected.Name} - {GameSelected.Id.ToString()}");
-#endif
+                    LocalizationsDatabase.GameSelected = args.NewValue[0];
 
                     var TaskIntegrationUI = Task.Run(() =>
                     {

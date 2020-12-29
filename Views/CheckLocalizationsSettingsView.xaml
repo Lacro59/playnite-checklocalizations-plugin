@@ -5,10 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" Background="{DynamicResource WindowBackgourndBrush}">
 
-    <UserControl.Resources>
-        <FontFamily x:Key="font">pack://application:,,,/CommonControls;component/Resources/font.ttf#font</FontFamily>
-    </UserControl.Resources>
-    
     <TabControl Margin="20">
         <TabItem Header="{DynamicResource LOCCheckLocalizations}">
             <StackPanel Name="spSettings" Margin="0,10,0,0">
@@ -108,7 +104,7 @@
                                      IsChecked="{Binding UiStyleSteam}" Click="RbSteam_Click">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="Steam" Margin="5,0,0,0" />
-                                <Label FontFamily="{StaticResource font}" Content="" Margin="10,0,0,0" />
+                                <Label FontFamily="{DynamicResource CommonFont}" Content="" Margin="10,0,0,0" />
                             </StackPanel>
                         </CheckBox>
                         <CheckBox Grid.Column="2" HorizontalAlignment="Center" Name="rbPcGamingWiki" VerticalAlignment="Center"

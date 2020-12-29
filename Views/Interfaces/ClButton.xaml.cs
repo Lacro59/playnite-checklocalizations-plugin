@@ -1,7 +1,7 @@
 ﻿using CheckLocalizations.Services;
+using CommonShared;
 using Newtonsoft.Json;
 using Playnite.SDK;
-using PluginCommon;
 using System;
 using System.Threading;
 using System.Windows;

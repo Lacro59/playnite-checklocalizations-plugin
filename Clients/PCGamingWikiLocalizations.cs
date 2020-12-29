@@ -1,9 +1,9 @@
 ﻿using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 using CheckLocalizations.Models;
+using CommonShared;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using PluginCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;

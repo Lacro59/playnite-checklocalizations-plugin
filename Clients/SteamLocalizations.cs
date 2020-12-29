@@ -1,9 +1,9 @@
 ﻿using CheckLocalizations.Models;
 using CommonPlaynite.PluginLibrary.SteamLibrary.SteamShared;
+using CommonShared;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using PluginCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;

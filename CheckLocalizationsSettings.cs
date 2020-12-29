@@ -1,4 +1,5 @@
 ﻿using CheckLocalizations.Models;
+using CheckLocalizations.Services;
 using CheckLocalizations.Views;
 using Newtonsoft.Json;
 using Playnite.SDK;
@@ -169,7 +170,7 @@ namespace CheckLocalizations
             var TaskIntegrationUI = Task.Run(() =>
             {
                 var dispatcherOp = CheckLocalizations.checkLocalizationsUI.AddElements();
-                dispatcherOp.Completed += (s, e) => { CheckLocalizations.checkLocalizationsUI.RefreshElements(CheckLocalizations.GameSelected); };
+                dispatcherOp.Completed += (s, e) => { CheckLocalizations.checkLocalizationsUI.RefreshElements(LocalizationsDatabase.GameSelected); };
             });
 
             CheckLocalizations.PluginDatabase.PluginSettings = this;

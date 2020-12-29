@@ -1,4 +1,5 @@
 ﻿using CheckLocalizations.Models;
+using CheckLocalizations.Services;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -31,7 +32,7 @@ namespace CheckLocalizations.Views
             InitializeComponent();
 
             _gameLocalizations = CheckLocalizations.PluginDatabase.GameSelectedData;
-            _game = CheckLocalizations.GameSelected;
+            _game = LocalizationsDatabase.GameSelected;
 
 #if DEBUG
             logger.Debug($"CheckLocalizations - EditManual All - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
@@ -139,7 +140,7 @@ namespace CheckLocalizations.Views
 
             var TaskIntegrationUI = Task.Run(() =>
             {
-                CheckLocalizations.checkLocalizationsUI.RefreshElements(CheckLocalizations.GameSelected);
+                CheckLocalizations.checkLocalizationsUI.RefreshElements(LocalizationsDatabase.GameSelected);
             });
 
             ((Window)this.Parent).Close();
