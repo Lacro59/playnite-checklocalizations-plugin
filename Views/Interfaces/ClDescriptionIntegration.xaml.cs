@@ -1,6 +1,6 @@
 ﻿using CheckLocalizations.Models;
 using CheckLocalizations.Services;
-using CommonShared;
+using CommonPluginsShared;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using System;

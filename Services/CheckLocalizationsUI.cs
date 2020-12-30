@@ -1,7 +1,7 @@
 ﻿using CheckLocalizations.Models;
 using CheckLocalizations.Views;
 using CheckLocalizations.Views.Interfaces;
-using CommonShared;
+using CommonPluginsShared;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;

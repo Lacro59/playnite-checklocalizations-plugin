@@ -1,5 +1,5 @@
 ﻿using CheckLocalizations.Models;
-using CommonShared;
+using CommonPluginsShared;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Playnite.SDK;

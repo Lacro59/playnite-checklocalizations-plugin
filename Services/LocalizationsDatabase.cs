@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using CommonShared.Collections;
+using CommonPluginsShared.Collections;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using CommonShared;
+using CommonPluginsShared;
 
 namespace CheckLocalizations.Services
 {

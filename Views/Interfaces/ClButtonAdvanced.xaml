@@ -4,8 +4,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:CheckLocalizations.Views.Interfaces"
-        xmlns:converters="clr-namespace:CommonPlaynite.Converters;assembly=CommonPlaynite"
-        xmlns:pbeh="clr-namespace:CommonPlaynite.Behaviors;assembly=CommonPlaynite"
+        xmlns:converters="clr-namespace:CommonPluginsPlaynite.Converters;assembly=CommonPluginsPlaynite"
+        xmlns:pbeh="clr-namespace:CommonPluginsPlaynite.Behaviors;assembly=CommonPluginsPlaynite"
         mc:Ignorable="d" Height="40"
         pbeh:LeftClickContextMenuBehavior.Enabled="True">
 

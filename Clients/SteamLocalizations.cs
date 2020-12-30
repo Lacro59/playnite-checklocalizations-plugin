@@ -1,6 +1,6 @@
 ﻿using CheckLocalizations.Models;
-using CommonPlaynite.PluginLibrary.SteamLibrary.SteamShared;
-using CommonShared;
+using CommonPluginsPlaynite.PluginLibrary.SteamLibrary.SteamShared;
+using CommonPluginsShared;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;

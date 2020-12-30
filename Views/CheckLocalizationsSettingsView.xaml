@@ -19,10 +19,10 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="35"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="35" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
                     <CheckBox Grid.Row="0" Name="cbTag" IsChecked="{Binding EnableTag}" Grid.Column="0" VerticalAlignment="Center">
@@ -30,8 +30,8 @@
                     </CheckBox>
 
                     <StackPanel  Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="{DynamicResource LOCAddTitle}" Margin="0,0,10,0" IsEnabled="{Binding EnableTag}" VerticalAlignment="Center" Click="ButtonAddTag_Click"/>
-                        <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding EnableTag}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click"/>
+                        <Button Content="{DynamicResource LOCAddTitle}" Margin="0,0,10,0" IsEnabled="{Binding EnableTag}" VerticalAlignment="Center" Click="ButtonAddTag_Click" />
+                        <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding EnableTag}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click" />
                     </StackPanel>
 
                     <ListBox Margin="0,5" ItemsSource="{Binding GameLanguages}"
@@ -71,7 +71,7 @@
                         <Button Grid.Column="2" Content="{DynamicResource LOCUpdateAll}" Click="ButtonCheck_Click" 
                                 Width="150" VerticalAlignment="Center" />
                         <Button Grid.Column="4" Content="{DynamicResource LOCClearAll}" Click="ButtonClear_Click" 
-                                Width="150" VerticalAlignment="Center"/>
+                                Width="150" VerticalAlignment="Center" />
                     </Grid>
                 </Grid>
             </StackPanel>
@@ -84,12 +84,12 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="10"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0" Grid.Column="0">
@@ -149,7 +149,7 @@
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="35"/>
+                            <RowDefinition Height="35" />
                         </Grid.RowDefinitions>
 
                         <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding EnableIntegrationButtonJustIcon}" VerticalAlignment="Center">
@@ -183,7 +183,7 @@
                                                     </TextBlock>
                                                 </Border>
                                                 <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" DockPanel.Dock="Top"
-                                                                 Margin="{TemplateBinding Padding}"/>
+                                                                 Margin="{TemplateBinding Padding}" />
                                             </DockPanel>
                                         </Border>
                                     </ControlTemplate>
@@ -204,9 +204,9 @@
 
                     <Grid Margin="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30" />

@@ -9,7 +9,7 @@ using System.Windows.Threading;
 using System.Threading;
 using CheckLocalizations.Services;
 using Newtonsoft.Json;
-using CommonShared;
+using CommonPluginsShared;
 
 namespace CheckLocalizations.Views.Interfaces
 {

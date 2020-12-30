@@ -29,7 +29,7 @@
                                 <Grid>
                                     <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" 
                                            Visibility="{Binding UiStylePcGamingWiki, Converter={StaticResource BooleanToVisibilityConverter}}"
-                                           Source="{Binding UiIcon, IsAsync=True}"/>
+                                           Source="{Binding UiIcon, IsAsync=True}" />
                                     <Label FontFamily="{DynamicResource CommonFont}" Content="" FontSize="24" HorizontalAlignment="Center">
                                         <Label.Style>
                                             <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
@@ -45,14 +45,14 @@
                                                         </ControlTemplate>
                                                     </Setter.Value>
                                                 </Setter>
-                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Setter Property="Visibility" Value="Collapsed" />
                                                 <Style.Triggers>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition Binding="{Binding UiStyleSteam}" Value="True" />
                                                             <Condition Binding="{Binding IsOkUi}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Setter Property="Visibility" Value="Visible" />
                                                     </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -86,14 +86,14 @@
                                                         </ControlTemplate>
                                                     </Setter.Value>
                                                 </Setter>
-                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Setter Property="Visibility" Value="Collapsed" />
                                                 <Style.Triggers>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition Binding="{Binding UiStyleSteam}" Value="True" />
                                                             <Condition Binding="{Binding IsOkAudio}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Setter Property="Visibility" Value="Visible" />
                                                     </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>
@@ -127,14 +127,14 @@
                                                         </ControlTemplate>
                                                     </Setter.Value>
                                                 </Setter>
-                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Setter Property="Visibility" Value="Collapsed" />
                                                 <Style.Triggers>
                                                     <MultiDataTrigger>
                                                         <MultiDataTrigger.Conditions>
                                                             <Condition Binding="{Binding UiStyleSteam}" Value="True" />
                                                             <Condition Binding="{Binding IsOkSub}" Value="True" />
                                                         </MultiDataTrigger.Conditions>
-                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                        <Setter Property="Visibility" Value="Visible" />
                                                     </MultiDataTrigger>
                                                 </Style.Triggers>
                                             </Style>

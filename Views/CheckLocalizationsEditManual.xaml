@@ -4,17 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckLocalizations.Views"
-             xmlns:commonshared="clr-namespace:CommonShared"
+             xmlns:commonpluginsshared="clr-namespace:CommonPluginsShared"
              mc:Ignorable="d" Background="{DynamicResource WindowBackgourndBrush}"            
              Width="620" Height="350">
 
     <UserControl.Resources>
-        <commonshared:IndexConverter x:Key="IndexConverter"/>
+        <commonpluginsshared:IndexConverter x:Key="IndexConverter" />
     </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
@@ -73,7 +73,7 @@
                         <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsUi}"></GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding UiIcon}"/>
+                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding UiIcon}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -82,7 +82,7 @@
                         <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsAudio}"></GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding AudioIcon}"/>
+                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding AudioIcon}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -91,7 +91,7 @@
                         <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsSub}"></GridViewColumnHeader>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding SubIcon}"/>
+                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" Source="{Binding SubIcon}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

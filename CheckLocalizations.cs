@@ -14,7 +14,7 @@ using Playnite.SDK.Events;
 using Newtonsoft.Json;
 using System.Windows;
 using CheckLocalizations.Models;
-using CommonShared;
+using CommonPluginsShared;
 
 namespace CheckLocalizations
 {
