@@ -58,6 +58,11 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Abstractions, Version=2.1.0.227, Culture=neutral, PublicKeyToken=96bf224d23c43e59, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.Abstractions.2.1.0.227\lib\net40\System.IO.Abstractions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Management" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -273,15 +278,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="playnite-plugincommon\CommonPluginsControls\CommonPluginsControls.csproj">
-      <Project>{9acfa07b-718c-4546-ac27-a9fce42f61f7}</Project>
-      <Name>CommonPluginsControls</Name>
-    </ProjectReference>
-    <ProjectReference Include="playnite-plugincommon\CommonPluginsPlaynite\CommonPluginsPlaynite.csproj">
-      <Project>{a4c600fb-92f5-4fd6-ad6b-0c0e0cf2ec81}</Project>
-      <Name>CommonPluginsPlaynite</Name>
+    <ProjectReference Include="playnite-plugincommon\CommonPluginsResources\CommonPluginsResources.csproj">
+      <Project>{4effe926-9c64-4750-a399-f344710edc09}</Project>
+      <Name>CommonPluginsResources</Name>
     </ProjectReference>
   </ItemGroup>
+  <Import Project="playnite-plugincommon\CommonPlayniteShared\CommonPlayniteShared.projitems" Label="Shared" />
   <Import Project="playnite-plugincommon\CommonPluginsShared\CommonPluginsShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
