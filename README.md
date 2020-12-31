@@ -1,5 +1,5 @@
 # playnite-checklocalizations-plugin
-Generic plugin for [Playnite](https://playnite).
+Generic plugin for [Playnite](https://playnite.link).  
 This plugin shows the available game localizations in Playnite. 
 
 More information here: https://playnite.link/forum/thread-384.html
