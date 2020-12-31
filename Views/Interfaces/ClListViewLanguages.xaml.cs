@@ -99,5 +99,15 @@ namespace CheckLocalizations.Views.Interfaces
                 PART_ColNotes.Width = 0;
             }
         }
+
+        private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GridViewColumnHeader_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
