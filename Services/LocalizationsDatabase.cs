@@ -36,10 +36,6 @@ namespace CheckLocalizations.Services
 
             Database.SetGameInfo<Localization>(_PlayniteApi);
 
-#if DEBUG
-            logger.Debug($"{PluginName} - Database: {JsonConvert.SerializeObject(Database)}");
-#endif
-
             GameSelectedData = new GameLocalizations();
             GetPluginTags();
 
@@ -53,7 +49,7 @@ namespace CheckLocalizations.Services
             GameIsLoaded = false;
             GameLocalizations gameLocalizations = GetOnlyCache(Id);
 #if DEBUG
-            logger.Debug($"{PluginName} - GetFromDb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+            logger.Debug($"{PluginName} [Ignored] - GetFromDb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
 #endif
             if (gameLocalizations == null && !OnlyCache)
             {
@@ -62,7 +58,7 @@ namespace CheckLocalizations.Services
                 Add(gameLocalizations);
 
 #if DEBUG
-                logger.Debug($"{PluginName} - GetFromWeb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+                logger.Debug($"{PluginName} [Ignored] - GetFromWeb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
 #endif
             }
             else if (gameLocalizations != null && !OnlyCache
@@ -73,8 +69,8 @@ namespace CheckLocalizations.Services
                 {
                     var dataWeb = localizationsApi.GetLocalizations(Id);
 #if DEBUG
-                    logger.Debug($"{PluginName} - GetFromWebOnlyManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(dataWeb)}");
-                    logger.Debug($"{PluginName} - IsManualTrue({gameLocalizations.Items.Where(x => x.IsManual == true).Count()}) - IsManualFalse: {gameLocalizations.Items.Where(x => x.IsManual == false).Count()}");
+                    logger.Debug($"{PluginName} [Ignored] - GetFromWebOnlyManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(dataWeb)}");
+                    logger.Debug($"{PluginName} [Ignored] - IsManualTrue({gameLocalizations.Items.Where(x => x.IsManual == true).Count()}) - IsManualFalse: {gameLocalizations.Items.Where(x => x.IsManual == false).Count()}");
 #endif
                     gameLocalizations.Items = gameLocalizations.Items.Concat(dataWeb.Items).ToList();
                     gameLocalizations.HasChecked = true;
@@ -118,7 +114,7 @@ namespace CheckLocalizations.Services
                     gameLocalizations.Items = ItemsManual;
                     gameLocalizations.HasChecked = false;
 #if DEBUG
-                    logger.Debug($"{PluginName} - RemoveWithoutManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+                    logger.Debug($"{PluginName} [Ignored] - RemoveWithoutManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
 #endif
                     Update(gameLocalizations);
                     return true;
@@ -136,9 +132,8 @@ namespace CheckLocalizations.Services
         protected override void GetPluginTags()
         {
 #if DEBUG
-            logger.Debug($"{PluginName} - GetPluginTags()");
+            logger.Debug($"{PluginName} [Ignored] - GetPluginTags()");
 #endif
-
             try
             {
                 // Get tags in playnite database
@@ -170,9 +165,8 @@ namespace CheckLocalizations.Services
                         }
                     }
                 }
-
 #if DEBUG
-                logger.Debug($"{PluginName} - PluginTags: {JsonConvert.SerializeObject(PluginTags)}");
+                logger.Debug($"{PluginName} [Ignored] - PluginTags: {JsonConvert.SerializeObject(PluginTags)}");
 #endif
             }
             catch (Exception ex)
@@ -210,7 +204,7 @@ namespace CheckLocalizations.Services
                 catch (Exception ex)
                 {
 #if DEBUG
-                    Common.LogError(ex, PluginName);
+                    Common.LogError(ex, PluginName + " [Ignored]");
 #endif
                     logger.Error($"{PluginName} - Tag insert error with {game.Name}");
                     _PlayniteApi.Notifications.Add(new NotificationMessage(

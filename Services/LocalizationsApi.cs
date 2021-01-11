@@ -47,7 +47,7 @@ namespace CheckLocalizations.Services
             {
                 Localizations = steamLocalizations.GetLocalizations(game);
 #if DEBUG
-                logger.Debug($"CheckLocalizations - Used Steam for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
+                logger.Debug($"CheckLocalizations [Ignored] - Used Steam for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
 #endif
             }
 

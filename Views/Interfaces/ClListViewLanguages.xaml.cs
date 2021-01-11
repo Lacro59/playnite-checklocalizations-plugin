@@ -78,11 +78,11 @@ namespace CheckLocalizations.Views.Interfaces
             if (_WithColNotes)
             {
 #if DEBUG
-                logger.Debug($"CheckLocalizations - PART_ListViewLanguages.ActualWidth: {PART_ListViewLanguages.ActualWidth}");
+                logger.Debug($"CheckLocalizations [Ignored] - PART_ListViewLanguages.ActualWidth: {PART_ListViewLanguages.ActualWidth}");
 #endif
                 if (!double.IsNaN(PART_ListViewLanguages.ActualWidth))
                 {
-                    double Width = PART_ListViewLanguages.ActualWidth - 150 - 70 - 70 - 70 - 30;
+                    double Width = PART_ListViewLanguages.ActualWidth - 150 - 70 - 70 - 70 - 30 - 25;
 
                     if (Width > 0)
                     {

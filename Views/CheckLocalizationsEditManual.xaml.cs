@@ -35,11 +35,11 @@ namespace CheckLocalizations.Views
             _game = LocalizationsDatabase.GameSelected;
 
 #if DEBUG
-            logger.Debug($"CheckLocalizations - EditManual All - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
+            logger.Debug($"CheckLocalizations [Ignored] - EditManual All - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
 #endif
             ListViewLanguages.ItemsSource = _gameLocalizations.Items.Where(x => x.IsManual).ToList();
 #if DEBUG
-            logger.Debug($"CheckLocalizations - EditManual IsManual only - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(ListViewLanguages.ItemsSource)}");
+            logger.Debug($"CheckLocalizations [Ignored] - EditManual IsManual only - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(ListViewLanguages.ItemsSource)}");
 #endif
             RefreshAvailable();
         }
@@ -86,14 +86,14 @@ namespace CheckLocalizations.Views
             {
                 _gameLocalizations.Items[index] = localization;
 #if DEBUG
-                logger.Debug($"CheckLocalizations - BtAdd_Click({index}) - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
+                logger.Debug($"CheckLocalizations [Ignored] - BtAdd_Click({index}) - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
 #endif
             }
             else
             {
                 _gameLocalizations.Items.Add(localization);
 #if DEBUG
-                logger.Debug($"CheckLocalizations - BtAdd_Click({index}) - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
+                logger.Debug($"CheckLocalizations [Ignored] - BtAdd_Click({index}) - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
 #endif
             }
 
@@ -126,14 +126,14 @@ namespace CheckLocalizations.Views
                 _gameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(_game);
 
 #if DEBUG
-                logger.Debug($"CheckLocalizations - EditManual - Add: {JsonConvert.SerializeObject(_gameLocalizations)}");
+                logger.Debug($"CheckLocalizations [Ignored] - EditManual - Add: {JsonConvert.SerializeObject(_gameLocalizations)}");
 #endif
                 CheckLocalizations.PluginDatabase.Add(_gameLocalizations);
             }
             else
             {
 #if DEBUG
-                logger.Debug($"CheckLocalizations - EditManual - Update: {JsonConvert.SerializeObject(_gameLocalizations)}");
+                logger.Debug($"CheckLocalizations [Ignored] - EditManual - Update: {JsonConvert.SerializeObject(_gameLocalizations)}");
 #endif
                 CheckLocalizations.PluginDatabase.Update(_gameLocalizations);
             }

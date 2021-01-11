@@ -66,7 +66,7 @@ namespace CheckLocalizations.Services
                 if (IsFirstLoad)
                 {
 #if DEBUG
-                    logger.Debug($"CheckLocalizations - IsFirstLoad");
+                    logger.Debug($"CheckLocalizations [Ignored] - IsFirstLoad");
 #endif
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
@@ -82,7 +82,7 @@ namespace CheckLocalizations.Services
                     if (PluginDatabase.PluginSettings.EnableIntegrationButton)
                     {
 #if DEBUG
-                        logger.Debug($"CheckLocalizations - AddBtActionBar()");
+                        logger.Debug($"CheckLocalizations [Ignored] - AddBtActionBar()");
 #endif
                         AddBtActionBar();
                     }
@@ -90,7 +90,7 @@ namespace CheckLocalizations.Services
                     if (PluginDatabase.PluginSettings.EnableIntegrationInDescription)
                     {
 #if DEBUG
-                        logger.Debug($"CheckLocalizations - AddSpDescription()");
+                        logger.Debug($"CheckLocalizations [Ignored] - AddSpDescription()");
 #endif
                         AddSpDescription();
                     }
@@ -98,7 +98,7 @@ namespace CheckLocalizations.Services
                     if (PluginDatabase.PluginSettings.EnableIntegrationInCustomTheme)
                     {
 #if DEBUG
-                        logger.Debug($"CheckLocalizations - AddCustomElements()");
+                        logger.Debug($"CheckLocalizations [Ignored] - AddCustomElements()");
 #endif
                         AddCustomElements();
                     }
@@ -184,7 +184,7 @@ namespace CheckLocalizations.Services
             if (PART_BtActionBar != null)
             {
 #if DEBUG
-                logger.Debug($"CheckLocalizations - PART_BtActionBar allready insert");
+                logger.Debug($"CheckLocalizations [Ignored] - PART_BtActionBar allready insert");
 #endif
                 return;
             }
@@ -261,7 +261,7 @@ namespace CheckLocalizations.Services
             if (PART_SpDescription != null)
             {
 #if DEBUG
-                logger.Debug($"CheckLocalizations - PART_SpDescription allready insert");
+                logger.Debug($"CheckLocalizations [Ignored] - PART_SpDescription allready insert");
 #endif
                 return;
             }
@@ -298,7 +298,7 @@ namespace CheckLocalizations.Services
             if (ListCustomElements.Count > 0)
             {
 #if DEBUG
-                logger.Debug($"CheckLocalizations - CustomElements allready insert - {ListCustomElements.Count}");
+                logger.Debug($"CheckLocalizations [Ignored] - CustomElements allready insert - {ListCustomElements.Count}");
 #endif
                 return;
             }
@@ -412,7 +412,7 @@ namespace CheckLocalizations.Services
                 if (IsFirstLoad)
                 {
 #if DEBUG
-                    logger.Debug($"CheckLocalizations - IsFirstLoad");
+                    logger.Debug($"CheckLocalizations [Ignored] - IsFirstLoad");
 #endif
                     Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
@@ -426,7 +426,7 @@ namespace CheckLocalizations.Services
                     if (PluginDatabase.PluginSettings.EnableIntegrationFS)
                     {
 #if DEBUG
-                        logger.Debug($"CheckLocalizations - AddBtInfoBarFS()");
+                        logger.Debug($"CheckLocalizations [Ignored] - AddBtInfoBarFS()");
 #endif
                         AddSpInfoBarFS();
                         AddSpInfoBarFS();

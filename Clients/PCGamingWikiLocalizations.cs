@@ -162,7 +162,7 @@ namespace CheckLocalizations.Clients
             try
             {
 #if DEBUG
-                logger.Debug($"CheckLocalizations - url {url}");
+                logger.Debug($"CheckLocalizations [Ignored] - url {url}");
 #endif
 
                 // Get data & parse
