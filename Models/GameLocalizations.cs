@@ -25,6 +25,7 @@ namespace CheckLocalizations.Models
             }
         }
 
+        public bool HasChecked { get; set; }
 
         /// <summary>
         /// Indicates whether one of the languages ​​is the native language
