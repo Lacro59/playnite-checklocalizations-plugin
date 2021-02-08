@@ -14,12 +14,12 @@ using CommonPluginsShared;
 
 namespace CheckLocalizations.Services
 {
-    public class LocalizationsDatabase : PluginDatabaseObject<CheckLocalizationsSettings, GameLocalizationsCollection, GameLocalizations>
+    public class LocalizationsDatabase : PluginDatabaseObject<CheckLocalizationsSettingsViewModel, GameLocalizationsCollection, GameLocalizations>
     {
         private LocalizationsApi localizationsApi;
 
 
-        public LocalizationsDatabase(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings PluginSettings, string PluginUserDataPath) : base(PlayniteApi, PluginSettings, PluginUserDataPath)
+        public LocalizationsDatabase(IPlayniteAPI PlayniteApi, CheckLocalizationsSettingsViewModel PluginSettings, string PluginUserDataPath) : base(PlayniteApi, PluginSettings, PluginUserDataPath)
         {
             PluginName = "CheckLocalizations";
 
@@ -147,9 +147,9 @@ namespace CheckLocalizations.Services
                 }
 
                 // Add missing tags
-                if (PluginTags.Count < PluginSettings.GameLanguages.Count)
+                if (PluginTags.Count < PluginSettings.Settings.GameLanguages.Count)
                 {
-                    foreach (GameLanguage gameLanguage in PluginSettings.GameLanguages)
+                    foreach (GameLanguage gameLanguage in PluginSettings.Settings.GameLanguages)
                     {
                         if (PluginTags.Find(x => x.Name == $"[CL] {gameLanguage.DisplayName}") == null)
                         {
@@ -183,7 +183,7 @@ namespace CheckLocalizations.Services
             {
                 try
                 {
-                    foreach (GameLanguage gameLanguage in PluginSettings.GameLanguages.FindAll(x => x.IsTag && gameLocalizations.Items.Any(y => x.Name.ToLower() == y.Language.ToLower())))
+                    foreach (GameLanguage gameLanguage in PluginSettings.Settings.GameLanguages.FindAll(x => x.IsTag && gameLocalizations.Items.Any(y => x.Name.ToLower() == y.Language.ToLower())))
                     {
                         Guid? TagId = FindGoodPluginTags($"[CL] { gameLanguage.DisplayName}");
                         if (TagId != null)

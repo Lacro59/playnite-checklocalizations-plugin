@@ -50,14 +50,14 @@ namespace CheckLocalizations.Views.Interfaces
                 {
                     this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                     {
-                        if (PluginDatabase.PluginSettings.IntegrationShowTitle)
+                        if (PluginDatabase.PluginSettings.Settings.IntegrationShowTitle)
                         {
                             PART_ClList.Margin = new Thickness(0, 5, 0, 5);
                         }
 
                         this.DataContext = new
                         {
-                            IntegrationShowTitle = PluginDatabase.PluginSettings.IntegrationShowTitle
+                            IntegrationShowTitle = PluginDatabase.PluginSettings.Settings.IntegrationShowTitle
                         };
                     }));
                 }

@@ -79,7 +79,7 @@ namespace CheckLocalizations.Services
                 {
                     CheckTypeView();
 
-                    if (PluginDatabase.PluginSettings.EnableIntegrationButton)
+                    if (PluginDatabase.PluginSettings.Settings.EnableIntegrationButton)
                     {
 #if DEBUG
                         logger.Debug($"CheckLocalizations [Ignored] - AddBtActionBar()");
@@ -87,7 +87,7 @@ namespace CheckLocalizations.Services
                         AddBtActionBar();
                     }
 
-                    if (PluginDatabase.PluginSettings.EnableIntegrationInDescription)
+                    if (PluginDatabase.PluginSettings.Settings.EnableIntegrationInDescription)
                     {
 #if DEBUG
                         logger.Debug($"CheckLocalizations [Ignored] - AddSpDescription()");
@@ -95,7 +95,7 @@ namespace CheckLocalizations.Services
                         AddSpDescription();
                     }
 
-                    if (PluginDatabase.PluginSettings.EnableIntegrationInCustomTheme)
+                    if (PluginDatabase.PluginSettings.Settings.EnableIntegrationInCustomTheme)
                     {
 #if DEBUG
                         logger.Debug($"CheckLocalizations [Ignored] - AddCustomElements()");
@@ -192,7 +192,7 @@ namespace CheckLocalizations.Services
 
             Button BtActionBar = new Button();
 
-            if (PluginDatabase.PluginSettings.EnableIntegrationButtonDetails)
+            if (PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonDetails)
             {
                 BtActionBar = new ClButtonAdvanced();
             }
@@ -230,7 +230,7 @@ namespace CheckLocalizations.Services
 
         public void OnCustomThemeButtonClick(object sender, RoutedEventArgs e)
         {
-            if (PluginDatabase.PluginSettings.EnableIntegrationInCustomTheme)
+            if (PluginDatabase.PluginSettings.Settings.EnableIntegrationInCustomTheme)
             {
                 string ButtonName = string.Empty;
                 try
@@ -271,7 +271,7 @@ namespace CheckLocalizations.Services
                 ClDescriptionIntegration SpDescription = new ClDescriptionIntegration(false);
                 SpDescription.Name = SpDescriptionName;
 
-                ui.AddElementInGameSelectedDescription(SpDescription, PluginDatabase.PluginSettings.IntegrationTopGameDetails, PluginDatabase.PluginSettings.IntegrationShowTitle);
+                ui.AddElementInGameSelectedDescription(SpDescription, PluginDatabase.PluginSettings.Settings.IntegrationTopGameDetails, PluginDatabase.PluginSettings.Settings.IntegrationShowTitle);
                 PART_SpDescription = IntegrationUI.SearchElementByName(SpDescriptionName);
             }
             catch (Exception ex)
@@ -423,7 +423,7 @@ namespace CheckLocalizations.Services
 
                 return Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
                 {
-                    if (PluginDatabase.PluginSettings.EnableIntegrationFS)
+                    if (PluginDatabase.PluginSettings.Settings.EnableIntegrationFS)
                     {
 #if DEBUG
                         logger.Debug($"CheckLocalizations [Ignored] - AddBtInfoBarFS()");

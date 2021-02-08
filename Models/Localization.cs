@@ -120,7 +120,7 @@ namespace CheckLocalizations.Models
         {
             get
             {
-                return CheckLocalizations.PluginDatabase.PluginSettings.UiStylePcGamingWiki;
+                return CheckLocalizations.PluginDatabase.PluginSettings.Settings.UiStylePcGamingWiki;
             }
         }
         [JsonIgnore]
@@ -128,7 +128,7 @@ namespace CheckLocalizations.Models
         {
             get
             {
-                return CheckLocalizations.PluginDatabase.PluginSettings.UiStyleSteam;
+                return CheckLocalizations.PluginDatabase.PluginSettings.Settings.UiStyleSteam;
             }
         }
     }

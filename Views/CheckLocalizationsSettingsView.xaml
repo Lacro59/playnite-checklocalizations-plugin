@@ -8,7 +8,7 @@
     <TabControl Margin="20">
         <TabItem Header="{DynamicResource LOCCheckLocalizations}">
             <StackPanel Name="spSettings" Margin="0,10,0,0">
-                <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding MenuInExtensions}" VerticalAlignment="Center">
+                <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.MenuInExtensions}" VerticalAlignment="Center">
                     <Label Content="{DynamicResource LOCCommonMenuInExtensions}" />
                 </CheckBox>
 
@@ -25,16 +25,16 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <CheckBox Grid.Row="0" Name="cbTag" IsChecked="{Binding EnableTag}" Grid.Column="0" VerticalAlignment="Center">
+                    <CheckBox Grid.Row="0" Name="cbTag" IsChecked="{Binding Settings.EnableTag}" Grid.Column="0" VerticalAlignment="Center">
                         <Label Content="{DynamicResource LOCCheckLocalizationAddTagDescription}" />
                     </CheckBox>
 
                     <StackPanel  Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="{DynamicResource LOCAddTitle}" Margin="0,0,10,0" IsEnabled="{Binding EnableTag}" VerticalAlignment="Center" Click="ButtonAddTag_Click" />
-                        <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding EnableTag}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click" />
+                        <Button Content="{DynamicResource LOCAddTitle}" Margin="0,0,10,0" IsEnabled="{Binding Settings.EnableTag}" VerticalAlignment="Center" Click="ButtonAddTag_Click" />
+                        <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding Settings.EnableTag}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click" />
                     </StackPanel>
 
-                    <ListBox Margin="0,5" ItemsSource="{Binding GameLanguages}"
+                    <ListBox Margin="0,5" ItemsSource="{Binding Settings.GameLanguages}"
                                      Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" MinHeight="150" MaxHeight="300"
                                      IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}" Name="lbGameLanguages">
                         <ListBox.ItemTemplate>
@@ -101,14 +101,14 @@
 
                         <Label Content="{DynamicResource LOCCheckLocalizationsStyleUI}" />
                         <CheckBox Grid.Column="1" HorizontalAlignment="Center"  Name="rbSteam" VerticalAlignment="Center"
-                                     IsChecked="{Binding UiStyleSteam}" Click="RbSteam_Click">
+                                     IsChecked="{Binding Settings.UiStyleSteam}" Click="RbSteam_Click">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="Steam" Margin="5,0,0,0" />
                                 <Label FontFamily="{DynamicResource CommonFont}" Content="" Margin="10,0,0,0" />
                             </StackPanel>
                         </CheckBox>
                         <CheckBox Grid.Column="2" HorizontalAlignment="Center" Name="rbPcGamingWiki" VerticalAlignment="Center"
-                                     IsChecked="{Binding UiStylePcGamingWiki}" Click="RbPcGamingWiki_Click">
+                                     IsChecked="{Binding Settings.UiStylePcGamingWiki}" Click="RbPcGamingWiki_Click">
                             <StackPanel Orientation="Horizontal">
                                 <Label Content="PcGamingWiki" Margin="5,0,0,0" />
                                 <Image Name="imgNative" Source="/Resources/native.png" Margin="10,0,0,0" Height="20" />
@@ -125,14 +125,14 @@
                         <Label Content="{DynamicResource LOCCommonIntegrationInCustomTheme}" />
                     </CheckBox>
 
-                    <CheckBox IsChecked="{Binding EnableIntegrationButton}" 
+                    <CheckBox IsChecked="{Binding Settings.EnableIntegrationButton}" 
                               Grid.Column="0" Grid.Row="4" 
                               Name="CheckL_IntegrationInButton"
                               Click="Checkbox_Click" VerticalAlignment="Center">
                         <Label Content="{DynamicResource LOCCommonIntegrationButton}" />
                     </CheckBox>
 
-                    <CheckBox IsChecked="{Binding EnableIntegrationInDescription}" 
+                    <CheckBox IsChecked="{Binding Settings.EnableIntegrationInDescription}" 
                               Grid.Column="0" Grid.Row="6" VerticalAlignment="Center"
                               Name="CheckL_IntegrationInDescription" Click="Checkbox_Click">
                         <Label Content="{DynamicResource LOCCommonIntegrationInDescription}" />
@@ -140,7 +140,7 @@
                 </Grid>
 
 
-                <GroupBox IsEnabled="{Binding EnableIntegrationButton}" Margin="0,10,0,0"
+                <GroupBox IsEnabled="{Binding Settings.EnableIntegrationButton}" Margin="0,10,0,0"
                           Header="{DynamicResource LOCCommonIntegrationButtonOptions}">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -152,10 +152,10 @@
                             <RowDefinition Height="35" />
                         </Grid.RowDefinitions>
 
-                        <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding EnableIntegrationButtonJustIcon}" VerticalAlignment="Center">
+                        <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationButtonJustIcon}" VerticalAlignment="Center">
                             <Label Content="{DynamicResource LOCCommonIntegrationButtonOnlyIcon}" />
                         </CheckBox>
-                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding EnableIntegrationButtonDetails}" VerticalAlignment="Center">
+                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationButtonDetails}" VerticalAlignment="Center">
                             <Label Content="{DynamicResource LOCCommonIntegrationButtonDetails}" />
                         </CheckBox>
                     </Grid>
@@ -212,10 +212,10 @@
                             <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
 
-                        <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding IntegrationShowTitle}" IsEnabled="{Binding ElementName=Ga_IntegrationInDescription, Path=IsChecked}" VerticalAlignment="Center">
+                        <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.IntegrationShowTitle}" IsEnabled="{Binding ElementName=Ga_IntegrationInDescription, Path=IsChecked}" VerticalAlignment="Center">
                             <Label Content="{DynamicResource LOCCommonIntegrationShowTitle}" />
                         </CheckBox>
-                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding IntegrationTopGameDetails}" IsEnabled="{Binding ElementName=Ga_IntegrationInDescription, Path=IsChecked}" VerticalAlignment="Center">
+                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding Settings.IntegrationTopGameDetails}" IsEnabled="{Binding ElementName=Ga_IntegrationInDescription, Path=IsChecked}" VerticalAlignment="Center">
                             <Label Content="{DynamicResource LOCCommonIntegrationTopGameDetails}" />
                         </CheckBox>
                     </Grid>

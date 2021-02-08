@@ -50,7 +50,7 @@ namespace CheckLocalizations.Views.Interfaces
             bool EnableIntegrationButtonJustIcon;
             if (_JustIcon == null)
             {
-                EnableIntegrationButtonJustIcon = PluginDatabase.PluginSettings.EnableIntegrationButtonJustIcon;
+                EnableIntegrationButtonJustIcon = PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonJustIcon;
             }
             else
             {
@@ -98,7 +98,7 @@ namespace CheckLocalizations.Views.Interfaces
                         bool EnableIntegrationButtonJustIcon;
                         if (_JustIcon == null)
                         {
-                            EnableIntegrationButtonJustIcon = PluginDatabase.PluginSettings.EnableIntegrationButtonJustIcon;
+                            EnableIntegrationButtonJustIcon = PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonJustIcon;
                         }
                         else
                         {

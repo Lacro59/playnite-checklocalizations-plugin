@@ -23,9 +23,10 @@ namespace CheckLocalizations
         private static readonly ILogger logger = LogManager.GetLogger();
         private static IResourceProvider resources = new ResourceProvider();
 
-        private CheckLocalizationsSettings settings { get; set; }
+        private CheckLocalizationsSettingsViewModel settings { get; set; }
 
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
+
 
         public static LocalizationsDatabase PluginDatabase;
         public static List<GameLanguage> GameLanguages = new List<GameLanguage>();
@@ -36,7 +37,7 @@ namespace CheckLocalizations
 
         public CheckLocalizations(IPlayniteAPI api) : base(api)
         {
-            settings = new CheckLocalizationsSettings(this);
+            settings = new CheckLocalizationsSettingsViewModel(this);
 
             // Old database
             oldToNew = new OldToNew(this.GetPluginUserDataPath());
@@ -45,7 +46,7 @@ namespace CheckLocalizations
             PluginDatabase = new LocalizationsDatabase(PlayniteApi, settings, this.GetPluginUserDataPath());
             PluginDatabase.InitializeDatabase();
 
-            GameLanguages = settings.GameLanguages;
+            GameLanguages = settings.Settings.GameLanguages;
 
             // Get plugin's location 
             string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -57,7 +58,7 @@ namespace CheckLocalizations
             Common.SetEvent(PlayniteApi);
 
             // Check version
-            if (settings.EnableCheckVersion)
+            if (settings.Settings.EnableCheckVersion)
             {
                 CheckVersion cv = new CheckVersion();
                 cv.Check("CheckLocalizations", pluginFolder, api);
@@ -167,7 +168,7 @@ namespace CheckLocalizations
         public override List<MainMenuItem> GetMainMenuItems(GetMainMenuItemsArgs args)
         {
             string MenuInExtensions = string.Empty;
-            if (settings.MenuInExtensions)
+            if (settings.Settings.MenuInExtensions)
             {
                 MenuInExtensions = "@";
             }
@@ -331,7 +332,7 @@ namespace CheckLocalizations
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            return new CheckLocalizationsSettingsView(PlayniteApi, settings, this.GetPluginUserDataPath());
+            return new CheckLocalizationsSettingsView(PlayniteApi, settings.Settings, this.GetPluginUserDataPath());
         }
     }
 }

@@ -33,7 +33,7 @@ namespace CheckLocalizations.Models
         /// <returns></returns>
         public bool HasNativeSupport()
         {
-            foreach (GameLanguage gameLanguage in CheckLocalizations.PluginDatabase.PluginSettings.GameLanguages)
+            foreach (GameLanguage gameLanguage in CheckLocalizations.PluginDatabase.PluginSettings.Settings.GameLanguages)
             {
                 if (gameLanguage.IsNative)
                 {
