@@ -48,6 +48,15 @@ namespace CheckLocalizations
             {
                 EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(BtFullScreen_ClickEvent));
             }
+
+
+
+            AddCustomElementSupport(new AddCustomElementSupportArgs
+            {
+                ElementList = new List<string> { "TestUserControl", "TestUserControl2" },
+                SourceName = "CheckLocalizations",
+                SettingsRoot = $"{nameof(PluginSettings)}.{nameof(PluginSettings.Settings)}"
+            });
         }
 
 
@@ -73,6 +82,19 @@ namespace CheckLocalizations
             }
         }
         #endregion
+
+
+
+        public override Control GetGameViewControl(GetGameViewControlArgs args)
+        {
+            if (args.Name == "TestUserControl")
+            {
+                //return new SuccessStoryAchievementsList(false, PlayniteApi);
+            }
+
+            return null;
+        }
+
 
 
         // Add new game menu items override GetGameMenuItems
@@ -227,7 +249,21 @@ namespace CheckLocalizations
             {
                 if (args.NewValue != null && args.NewValue.Count == 1)
                 {
-                    LocalizationsDatabase.GameSelected = args.NewValue[0];
+                    Game GameSelected = args.NewValue[0];
+
+                    GameLocalizations gameLocalizations = PluginDatabase.Get(GameSelected, true);
+
+                    PluginSettings.Settings.TestString = GameSelected.Name;
+
+                    PluginSettings.Settings.HasData = gameLocalizations.HasData;
+                    PluginSettings.Settings.HasNativeSupport = gameLocalizations.HasNativeSupport();
+                    PluginSettings.Settings.ListNativeSupport = gameLocalizations.Items;
+
+
+
+                    // Old system
+                    /*
+                    LocalizationsDatabase.GameSelected = GameSelected;
 
                     var TaskIntegrationUI = Task.Run(() =>
                     {
@@ -236,9 +272,10 @@ namespace CheckLocalizations
                         var dispatcherOp = checkLocalizationsUI.AddElements();
                         if (dispatcherOp != null)
                         {
-                            dispatcherOp.Completed += (s, e) => { checkLocalizationsUI.RefreshElements(args.NewValue[0]); };
+                            dispatcherOp.Completed += (s, e) => { checkLocalizationsUI.RefreshElements(GameSelected); };
                         }
                     });
+                    */
                 }
             }
             catch (Exception ex)

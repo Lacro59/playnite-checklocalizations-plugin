@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace CheckLocalizations
 {
-    public class CheckLocalizationsSettings
+    public class CheckLocalizationsSettings : ObservableObject
     {
-        #region settings variables
+        #region Settings variables
         public bool MenuInExtensions { get; set; } = true;
 
         public bool EnableTag { get; set; } = false;
@@ -36,8 +36,55 @@ namespace CheckLocalizations
 
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
+        #region Variables exposed
         [DontSerialize]
-        public bool OptionThatWontBeSaved { get; set; } = false;
+        private string _TestString { get; set; } = string.Empty;
+        public string TestString
+        {
+            get => _TestString;
+            set
+            {
+                _TestString = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        [DontSerialize]
+        private bool _HasData { get; set; } = false;
+        public bool HasData
+        {
+            get => _HasData;
+            set
+            {
+                _HasData = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private bool _HasNativeSupport { get; set; } = false;
+        public bool HasNativeSupport
+        {
+            get => _HasNativeSupport;
+            set
+            {
+                _HasNativeSupport = value;
+                OnPropertyChanged();
+            }
+        }
+
+        [DontSerialize]
+        private List<Models.Localization> _ListNativeSupport { get; set; } = new List<Models.Localization>();
+        public List<Models.Localization> ListNativeSupport
+        {
+            get => _ListNativeSupport;
+            set
+            {
+                _ListNativeSupport = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion  
     }
 
 
@@ -46,16 +93,17 @@ namespace CheckLocalizations
         private readonly CheckLocalizations Plugin;
         private CheckLocalizationsSettings EditingClone { get; set; }
 
-        private CheckLocalizationsSettings settings;
+        private CheckLocalizationsSettings _Settings;
         public CheckLocalizationsSettings Settings
         {
-            get => settings;
+            get => _Settings;
             set
             {
-                settings = value;
+                _Settings = value;
                 OnPropertyChanged();
             }
         }
+
 
         public CheckLocalizationsSettingsViewModel(CheckLocalizations plugin)
         {
@@ -72,8 +120,7 @@ namespace CheckLocalizations
             }
             else
             {
-                Settings = new CheckLocalizationsSettings();
-                
+                Settings = new CheckLocalizationsSettings();                
                 Settings.GameLanguages = new List<GameLanguage>()
                 {
                     new GameLanguage { DisplayName = "English", Name = "English", IsTag = false, IsNative = false },
