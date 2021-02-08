@@ -55,7 +55,7 @@ namespace CheckLocalizations.Models
         {
             get
             {
-                var gameLanguage = CheckLocalizations.GameLanguages.Find(x => x.Name.ToLower() == Language.ToLower());
+                var gameLanguage = CheckLocalizations.PluginDatabase.PluginSettings.Settings.GameLanguages.Find(x => x.Name.ToLower() == Language.ToLower());
 
                 if (gameLanguage == null)
                 {

@@ -48,7 +48,7 @@ namespace CheckLocalizations.Views
         private void RefreshAvailable()
         {
             gameLanguageAvailable = new List<GameLanguage>();
-            foreach (GameLanguage gameLanguage in CheckLocalizations.GameLanguages)
+            foreach (GameLanguage gameLanguage in CheckLocalizations.PluginDatabase.PluginSettings.Settings.GameLanguages)
             {
                 if (_gameLocalizations.Items.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) == null)
                 {

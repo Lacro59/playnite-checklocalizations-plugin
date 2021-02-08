@@ -19,27 +19,21 @@ namespace CheckLocalizations.Services
         private LocalizationsApi localizationsApi;
 
 
-        public LocalizationsDatabase(IPlayniteAPI PlayniteApi, CheckLocalizationsSettingsViewModel PluginSettings, string PluginUserDataPath) : base(PlayniteApi, PluginSettings, PluginUserDataPath)
+        public LocalizationsDatabase(IPlayniteAPI PlayniteApi, CheckLocalizationsSettingsViewModel PluginSettings, string PluginUserDataPath) : base(PlayniteApi, PluginSettings, "CheckLocalizations", PluginUserDataPath)
         {
-            PluginName = "CheckLocalizations";
-
-            ControlAndCreateDirectory(PluginUserDataPath, "CheckLocalizations");
-
             localizationsApi = new LocalizationsApi(PlayniteApi, PluginUserDataPath);
         }
 
 
         protected override bool LoadDatabase()
         {
-            IsLoaded = false;
-            Database = new GameLocalizationsCollection(PluginDatabaseDirectory);
+            Database = new GameLocalizationsCollection(Paths.PluginDatabasePath);
 
-            Database.SetGameInfo<Localization>(_PlayniteApi);
+            Database.SetGameInfo<Localization>(PlayniteApi);
 
             GameSelectedData = new GameLocalizations();
             GetPluginTags();
 
-            IsLoaded = true;
             return true;
         }
 
@@ -53,7 +47,6 @@ namespace CheckLocalizations.Services
 #endif
             if (gameLocalizations == null && !OnlyCache)
             {
-                ControlAndCreateDirectory(PluginUserDataPath, "CheckLocalizations");
                 gameLocalizations = localizationsApi.GetLocalizations(Id);
                 Add(gameLocalizations);
 
@@ -80,7 +73,7 @@ namespace CheckLocalizations.Services
             }
             else if (gameLocalizations == null)
             {
-                Game game = _PlayniteApi.Database.Games.Get(Id);
+                Game game = PlayniteApi.Database.Games.Get(Id);
                 gameLocalizations = GetDefault(game);
                 Add(gameLocalizations);
             }
@@ -138,7 +131,7 @@ namespace CheckLocalizations.Services
             {
                 // Get tags in playnite database
                 PluginTags = new List<Tag>();
-                foreach (Tag tag in _PlayniteApi.Database.Tags)
+                foreach (Tag tag in PlayniteApi.Database.Tags)
                 {
                     if (tag.Name.IndexOf("[CL] ") > -1)
                     {
@@ -153,11 +146,11 @@ namespace CheckLocalizations.Services
                     {
                         if (PluginTags.Find(x => x.Name == $"[CL] {gameLanguage.DisplayName}") == null)
                         {
-                            _PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
+                            PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
                         }
                     }
 
-                    foreach (Tag tag in _PlayniteApi.Database.Tags)
+                    foreach (Tag tag in PlayniteApi.Database.Tags)
                     {
                         if (tag.Name.IndexOf("[CL] ") > -1)
                         {
@@ -199,7 +192,7 @@ namespace CheckLocalizations.Services
                         }
                     }
 
-                    _PlayniteApi.Database.Games.Update(game);
+                    PlayniteApi.Database.Games.Update(game);
                 }
                 catch (Exception ex)
                 {
@@ -207,7 +200,7 @@ namespace CheckLocalizations.Services
                     Common.LogError(ex, PluginName + " [Ignored]");
 #endif
                     logger.Error($"{PluginName} - Tag insert error with {game.Name}");
-                    _PlayniteApi.Notifications.Add(new NotificationMessage(
+                    PlayniteApi.Notifications.Add(new NotificationMessage(
                         $"{PluginName}-Tag-Errors",
                         $"{PluginName}\r\n" + resources.GetString("LOCCommonNotificationTagError"),
                         NotificationType.Error
