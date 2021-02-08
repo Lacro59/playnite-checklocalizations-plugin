@@ -18,8 +18,8 @@ namespace CheckLocalizations
         public bool EnableCheckVersion { get; set; } = true;
         public bool MenuInExtensions { get; set; } = true;
 
-        public bool EnableTag { get; set; } = true;
-        public List<GameLanguage> GameLanguages { get; set; }
+        public bool EnableTag { get; set; } = false;
+        public List<GameLanguage> GameLanguages { get; set; } = new List<GameLanguage>();
 
         public bool UiStyleSteam { get; set; } = false;
         public bool UiStylePcGamingWiki { get; set; } = true;
