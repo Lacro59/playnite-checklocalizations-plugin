@@ -60,10 +60,7 @@ namespace CheckLocalizations
             if (settings.EnableCheckVersion)
             {
                 CheckVersion cv = new CheckVersion();
-                if (cv.Check("CheckLocalizations", pluginFolder))
-                {
-                    cv.ShowNotification(api, "CheckLocalizations - " + resources.GetString("LOCUpdaterWindowTitle"));
-                }
+                cv.Check("CheckLocalizations", pluginFolder, api);
             }
 
             // Init ui interagration
