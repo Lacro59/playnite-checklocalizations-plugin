@@ -13,7 +13,6 @@ namespace CheckLocalizations
     public class CheckLocalizationsSettings
     {
         #region settings variables
-        public bool EnableCheckVersion { get; set; } = true;
         public bool MenuInExtensions { get; set; } = true;
 
         public bool EnableTag { get; set; } = false;

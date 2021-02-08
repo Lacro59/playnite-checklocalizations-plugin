@@ -1,4 +1,5 @@
 ﻿using Playnite.SDK;
+using Playnite.SDK.Events;
 using Playnite.SDK.Models;
 using Playnite.SDK.Plugins;
 using System;
@@ -10,8 +11,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using CheckLocalizations.Views;
 using CheckLocalizations.Services;
-using Playnite.SDK.Events;
-using Newtonsoft.Json;
 using System.Windows;
 using CheckLocalizations.Models;
 using CommonPluginsShared;
@@ -51,18 +50,9 @@ namespace CheckLocalizations
             // Get plugin's location 
             string pluginFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            // Add plugin localization in application ressource.
-            PluginLocalization.SetPluginLanguage(pluginFolder, api.ApplicationSettings.Language);
-            // Add common in application ressource.
-            Common.Load(pluginFolder);
+            // Set the common resourses & event
+            Common.Load(pluginFolder, api.ApplicationSettings.Language);
             Common.SetEvent(PlayniteApi);
-
-            // Check version
-            if (settings.Settings.EnableCheckVersion)
-            {
-                CheckVersion cv = new CheckVersion();
-                cv.Check("CheckLocalizations", pluginFolder, api);
-            }
 
             // Init ui interagration
             checkLocalizationsUI = new CheckLocalizationsUI(api, this.GetPluginUserDataPath());
