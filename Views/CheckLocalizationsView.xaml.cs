@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Controls;
 using CheckLocalizations.Controls;
+using CheckLocalizations.Services;
 
 namespace CheckLocalizations.Views
 {
@@ -12,6 +13,9 @@ namespace CheckLocalizations.Views
     /// </summary>
     public partial class CheckLocalizationsView : UserControl
     {
+        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+
+
         public CheckLocalizationsView()
         {
             InitializeComponent();
@@ -19,7 +23,7 @@ namespace CheckLocalizations.Views
             CheckLocListLanguages PART_ListViewLanguages = new CheckLocListLanguages();
             PART_ListViewLanguages.WithColNotes = true;
             PART_ListViewLanguages.IgnoreSettings = true;
-            PART_ListViewLanguages.GameContext = CheckLocalizations.PluginDatabase.GameContext;
+            PART_ListViewLanguages.GameContext = PluginDatabase.GameContext;
             PART_Contener.Children.Add(PART_ListViewLanguages);
         }
     }

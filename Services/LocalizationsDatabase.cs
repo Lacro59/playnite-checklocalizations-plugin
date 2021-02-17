@@ -35,7 +35,6 @@ namespace CheckLocalizations.Services
 
         public override GameLocalizations Get(Guid Id, bool OnlyCache = false)
         {
-            GameIsLoaded = false;
             GameLocalizations gameLocalizations = GetOnlyCache(Id);
 #if DEBUG
             logger.Debug($"{PluginName} [Ignored] - GetFromDb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
@@ -75,7 +74,6 @@ namespace CheckLocalizations.Services
 
             gameLocalizations.Items.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
 
-            GameIsLoaded = true;
             return gameLocalizations;
         }
 
@@ -86,19 +84,28 @@ namespace CheckLocalizations.Services
 
         public override void Refresh(Guid Id)
         {
-            var loadedItem = Get(Id, true);
-            var webItem = GetWeb(Id);
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                $"{PluginName} - {resources.GetString("LOCCommonProcessing")}",
+                false
+            );
+            globalProgressOptions.IsIndeterminate = true;
 
-            // Add manual items
-            foreach(var item in loadedItem.Items.FindAll(x => x.IsManual))
+            PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
             {
-                webItem.Items.Add(item);
-            }
+                var loadedItem = Get(Id, true);
+                var webItem = GetWeb(Id);
 
-            if (!ReferenceEquals(loadedItem, webItem))
-            {
-                Update(webItem);
-            }
+                // Add manual items
+                foreach (var item in loadedItem.Items.FindAll(x => x.IsManual))
+                {
+                    webItem.Items.Add(item);
+                }
+
+                if (!ReferenceEquals(loadedItem, webItem))
+                {
+                    Update(webItem);
+                }
+            }, globalProgressOptions);
         }
 
 

@@ -78,7 +78,7 @@ namespace CheckLocalizations.Controls
             };
             
             // Publish changes for the currently displayed game
-            GameContextChanged(null, PluginDatabase.GameContext);
+            GameContextChanged(null, GameContext);
         }
 
         // When game is changed
