@@ -57,7 +57,7 @@ namespace CheckLocalizations.Controls
 
         #region OnPropertyChange
         // When settings is updated
-        private void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        public override void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             // ContextMenu or Show Window
             PART_ContextMenu.Items.Clear();
@@ -79,33 +79,6 @@ namespace CheckLocalizations.Controls
             
             // Publish changes for the currently displayed game
             GameContextChanged(null, PluginDatabase.GameContext);
-        }
-
-        // When plugin database is updated
-        private void Database_ItemUpdated(object sender, ItemUpdatedEventArgs<GameLocalizations> e)
-        {
-            this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
-            {
-                // Publish changes for the currently displayed game if updated
-                Guid Id = e.UpdatedItems.Find(x => x.NewData.Id == PluginDatabase.GameContext.Id).NewData.Id;
-                if (Id != null)
-                {
-                    Game newContext = PluginDatabase.PlayniteApi.Database.Games.Get(Id);
-                    GameContextChanged(null, newContext);
-                }
-            }));
-        }
-
-        // When game is updated
-        private void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
-        {
-            // Publish changes for the currently displayed game if updated
-            Game newContext = e.UpdatedItems.Find(x => x.NewData.Id == PluginDatabase.GameContext.Id).NewData;
-            if (newContext != null)
-            {
-                PluginDatabase.GameContext = newContext;
-                GameContextChanged(null, newContext);
-            }
         }
 
         // When game is changed
@@ -168,7 +141,7 @@ namespace CheckLocalizations.Controls
                 PART_ContextMenu.Visibility = Visibility.Visible;
                 if (PART_ListViewLanguages != null)
                 {
-                    PART_ListViewLanguages.GameContext = PluginDatabase.GameContext;
+                    PART_ListViewLanguages.GameContext = GameContext;
                 }
             }
 
