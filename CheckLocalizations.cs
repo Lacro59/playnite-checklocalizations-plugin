@@ -174,7 +174,7 @@ namespace CheckLocalizations
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonGetAllDatas"),
+                    Description = resources.GetString("LOCCommonSelectData"),
                     Action = (mainMenuItem) =>
                     {
                         PluginDatabase.GetSelectDatas();

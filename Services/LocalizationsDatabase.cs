@@ -17,12 +17,14 @@ namespace CheckLocalizations.Services
     public class LocalizationsDatabase : PluginDatabaseObject<CheckLocalizationsSettingsViewModel, GameLocalizationsCollection, GameLocalizations>
     {
         private LocalizationsApi localizationsApi;
+        private bool IsGetWeb = false;
 
 
         public LocalizationsDatabase(IPlayniteAPI PlayniteApi, CheckLocalizationsSettingsViewModel PluginSettings, string PluginUserDataPath) : base(PlayniteApi, PluginSettings, "CheckLocalizations", PluginUserDataPath)
         {
-            localizationsApi = new LocalizationsApi(PlayniteApi, PluginUserDataPath);
+
         }
+        
 
         protected override bool LoadDatabase()
         {
@@ -54,7 +56,7 @@ namespace CheckLocalizations.Services
             {
                 if (!gameLocalizations.HasChecked)
                 {
-                    var dataWeb = localizationsApi.GetLocalizations(Id);
+                    var dataWeb = GetWeb(Id);
 #if DEBUG
                     logger.Debug($"{PluginName} [Ignored] - GetFromWebOnlyManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(dataWeb)}");
                     logger.Debug($"{PluginName} [Ignored] - IsManualTrue({gameLocalizations.Items.Where(x => x.IsManual == true).Count()}) - IsManualFalse: {gameLocalizations.Items.Where(x => x.IsManual == false).Count()}");
@@ -79,8 +81,32 @@ namespace CheckLocalizations.Services
 
         public override GameLocalizations GetWeb(Guid Id)
         {
-            return localizationsApi.GetLocalizations(Id);
+            IsGetWeb = true;
+
+            if (localizationsApi == null)
+            {
+                localizationsApi = new LocalizationsApi(PlayniteApi, Paths.PluginUserDataPath);
+            }
+
+            var data = localizationsApi.GetLocalizations(Id);
+
+            Task.Run(() =>
+            {
+                Thread.Sleep(2000);
+
+                if (!IsGetWeb)
+                {
+                    localizationsApi.Dispose();
+                    localizationsApi = null;
+                    GC.Collect();
+                }
+            });
+
+            IsGetWeb = false;
+
+            return data;
         }
+
 
         public override void Refresh(Guid Id)
         {

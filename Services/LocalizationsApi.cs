@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CheckLocalizations.Services
 {
-    public class LocalizationsApi
+    public class LocalizationsApi : IDisposable
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private static IResourceProvider resources = new ResourceProvider();
@@ -55,6 +55,13 @@ namespace CheckLocalizations.Services
             gameLocalizations.Items = Localizations;
 
             return gameLocalizations;
+        }
+
+
+        public void Dispose()
+        {
+            pCGamingWikiLocalizations = null;
+            steamLocalizations = null;
         }
     }
 }
