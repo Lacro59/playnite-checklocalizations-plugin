@@ -3,17 +3,23 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" d:DesignWidth="600"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
              Background="{DynamicResource WindowBackgourndBrush}">
 
     <TabControl Margin="20">
         <TabItem Header="{DynamicResource LOCCheckLocalizations}">
-            <StackPanel Name="spSettings" Margin="0,10,0,0">
-                <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.MenuInExtensions}" VerticalAlignment="Center">
+            <Grid Name="spSettings" Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <CheckBox Grid.Row="0" IsChecked="{Binding Settings.MenuInExtensions}" VerticalAlignment="Center">
                     <Label Content="{DynamicResource LOCCommonMenuInExtensions}" />
                 </CheckBox>
 
-                <Grid>
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
@@ -22,7 +28,6 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="35" />
                         <RowDefinition Height="auto" />
-                        <RowDefinition Height="35" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -35,29 +40,38 @@
                         <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding Settings.EnableTag}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click" />
                     </StackPanel>
 
-                    <ListBox Margin="0,5" ItemsSource="{Binding Settings.GameLanguages}"
+                    <ListView Margin="0,5" ItemsSource="{Binding Settings.GameLanguages}"
                                      Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" MinHeight="150" MaxHeight="300"
-                                     IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}" Name="lbGameLanguages">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Margin="0,5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="10" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                                     Name="lbGameLanguages">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="{DynamicResource LOCNameLabel}" Width="150" DisplayMemberBinding="{Binding Name}" />
+                                
+                                <GridViewColumn Header="{DynamicResource LOCNameLabel}" Width="150" DisplayMemberBinding="{Binding DisplayName}" />
 
-                                    <CheckBox Grid.Column="0" IsChecked="{Binding IsTag}" VerticalAlignment="Center">
-                                        <Label Content="{Binding DisplayName}" />
-                                    </CheckBox>
+                                <GridViewColumn Header="{DynamicResource LOCTagLabel}" Width="50">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsTag}" 
+                                                      VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                      IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}">
+                                            </CheckBox>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
 
-                                    <CheckBox Grid.Column="2" IsChecked="{Binding IsNative}" VerticalAlignment="Center" HorizontalAlignment="Right">
-                                        <Label Content="{DynamicResource LOCCheckLocalizationIsNative}" />
-                                    </CheckBox>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
+                                <GridViewColumn Header="{DynamicResource LOCCheckLocalizationIsNative}" Width="150">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsNative}"
+                                                      VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            </CheckBox>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
                     <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3">
                         <Grid.ColumnDefinitions>
@@ -67,15 +81,20 @@
                             <ColumnDefinition Width="10" />
                             <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Column="0" Text="{DynamicResource LOCCommonDatabase}" VerticalAlignment="Center" />
+                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{DynamicResource LOCCommonDatabase}" 
+                                   VerticalAlignment="Center" />
                         <Button Grid.Column="2" Content="{DynamicResource LOCUpdateAll}" Click="ButtonCheck_Click" 
-                                Width="150" VerticalAlignment="Center" />
+                                 Grid.Row="1" Width="150" VerticalAlignment="Center" />
                         <Button Grid.Column="4" Content="{DynamicResource LOCClearAll}" Click="ButtonClear_Click" 
-                                Width="150" VerticalAlignment="Center" />
+                                 Grid.Row="1" Width="150" VerticalAlignment="Center" />
                     </Grid>
                 </Grid>
-            </StackPanel>
+            </Grid>
         </TabItem>
 
         <TabItem Header="{DynamicResource LOCCommonIntegration}">
