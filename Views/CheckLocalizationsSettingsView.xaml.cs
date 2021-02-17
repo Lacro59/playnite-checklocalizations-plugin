@@ -64,26 +64,6 @@ namespace CheckLocalizations.Views
             CheckLocalizations.PluginDatabase.RemoveTagAllGame();
         }
 
-        private void Checkbox_Click(object sender, RoutedEventArgs e)
-        {
-            CheckBox cb = (CheckBox)sender;
-
-            if ((cb.Name == "CheckL_IntegrationInButton") && (bool)cb.IsChecked)
-            {
-                CheckL_IntegrationInCustomTheme.IsChecked = false;
-            }
-
-            if ((cb.Name == "CheckL_IntegrationInDescription") && (bool)cb.IsChecked)
-            {
-                CheckL_IntegrationInCustomTheme.IsChecked = false;
-            }
-
-            if ((cb.Name == "CheckL_IntegrationInCustomTheme") && (bool)cb.IsChecked)
-            {
-                CheckL_IntegrationInButton.IsChecked = false;
-                CheckL_IntegrationInDescription.IsChecked = false;
-            }
-        }
 
         /// <summary>
         /// Get all games localizations

@@ -18,11 +18,42 @@ namespace CheckLocalizations
         public bool EnableTag { get; set; } = false;
         public List<GameLanguage> GameLanguages { get; set; } = new List<GameLanguage>();
 
+
         public bool UiStyleSteam { get; set; } = false;
         public bool UiStylePcGamingWiki { get; set; } = true;
 
-        public bool EnableIntegrationButton { get; set; } = false;
+
+        private bool _EnableIntegrationButton { get; set; } = false;
+        public bool EnableIntegrationButton
+        {
+            get => _EnableIntegrationButton;
+            set
+            {
+                _EnableIntegrationButton = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool EnableIntegrationButtonDetails { get; set; } = false;
+        public bool EnableIntegrationButtonContextMenu { get; set; } = false;
+
+
+        private bool _EnableIntegrationListLanguages { get; set; } = false;
+        public bool EnableIntegrationListLanguages
+        {
+            get => _EnableIntegrationListLanguages;
+            set
+            {
+                _EnableIntegrationListLanguages = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool EnableIntegrationListLanguagesWithColNote { get; set; } = false;
+        public bool EnableIntegrationListLanguagesVisibleEmpty { get; set; } = false;
+
+
+
         public bool EnableIntegrationButtonJustIcon { get; set; } = true;
 
         public bool EnableIntegrationInDescription { get; set; } = false;
@@ -33,22 +64,9 @@ namespace CheckLocalizations
         public bool EnableIntegrationFS { get; set; } = false;
         #endregion
 
-
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         #region Variables exposed
-        [DontSerialize]
-        private string _TestString { get; set; } = string.Empty;
-        public string TestString
-        {
-            get => _TestString;
-            set
-            {
-                _TestString = value;
-                OnPropertyChanged();
-            }
-        }
-        
         [DontSerialize]
         private bool _HasData { get; set; } = false;
         public bool HasData
@@ -180,19 +198,8 @@ namespace CheckLocalizations
         public void EndEdit()
         {
             Plugin.SavePluginSettings(Settings);
-
-
-            CheckLocalizations.checkLocalizationsUI.RemoveElements();
-            var TaskIntegrationUI = Task.Run(() =>
-            {
-                var dispatcherOp = CheckLocalizations.checkLocalizationsUI.AddElements();
-                dispatcherOp.Completed += (s, e) => 
-                {
-                    CheckLocalizations.checkLocalizationsUI.RefreshElements(LocalizationsDatabase.GameSelected);
-                };
-            });
-
             CheckLocalizations.PluginDatabase.PluginSettings = this;
+            this.OnPropertyChanged();
         }
 
         // Code execute when user decides to confirm changes made since BeginEdit was called.

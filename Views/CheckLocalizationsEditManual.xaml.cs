@@ -21,26 +21,23 @@ namespace CheckLocalizations.Views
     {
         private static readonly ILogger logger = LogManager.GetLogger();
 
+        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+
         private List<GameLanguage> gameLanguageAvailable = new List<GameLanguage>();
         private GameLocalizations _gameLocalizations;
 
         private Game _game;
 
 
-        public CheckLocalizationsEditManual()
+        public CheckLocalizationsEditManual(Game game)
         {
             InitializeComponent();
 
-            _gameLocalizations = CheckLocalizations.PluginDatabase.GameSelectedData;
-            _game = LocalizationsDatabase.GameSelected;
+            _gameLocalizations = PluginDatabase.Get(game);
+            _game = PluginDatabase.GameContext;
 
-#if DEBUG
-            logger.Debug($"CheckLocalizations [Ignored] - EditManual All - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
-#endif
             ListViewLanguages.ItemsSource = _gameLocalizations.Items.Where(x => x.IsManual).ToList();
-#if DEBUG
-            logger.Debug($"CheckLocalizations [Ignored] - EditManual IsManual only - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(ListViewLanguages.ItemsSource)}");
-#endif
+
             RefreshAvailable();
         }
 
@@ -85,16 +82,10 @@ namespace CheckLocalizations.Views
             if (index > -1)
             {
                 _gameLocalizations.Items[index] = localization;
-#if DEBUG
-                logger.Debug($"CheckLocalizations [Ignored] - BtAdd_Click({index}) - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
-#endif
             }
             else
             {
                 _gameLocalizations.Items.Add(localization);
-#if DEBUG
-                logger.Debug($"CheckLocalizations [Ignored] - BtAdd_Click({index}) - {_game.Name} - _gameLocalizations: {JsonConvert.SerializeObject(_gameLocalizations)}");
-#endif
             }
 
             _gameLocalizations.Items.Sort((x, y) => x.Language.CompareTo(y.Language));
@@ -119,29 +110,17 @@ namespace CheckLocalizations.Views
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.GetOnlyCache(_game.Id);
+            GameLocalizations gameLocalizations = PluginDatabase.GetOnlyCache(_game.Id);
 
             if (gameLocalizations == null)
             {
                 _gameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(_game);
-
-#if DEBUG
-                logger.Debug($"CheckLocalizations [Ignored] - EditManual - Add: {JsonConvert.SerializeObject(_gameLocalizations)}");
-#endif
-                CheckLocalizations.PluginDatabase.Add(_gameLocalizations);
+                PluginDatabase.Add(_gameLocalizations);
             }
             else
             {
-#if DEBUG
-                logger.Debug($"CheckLocalizations [Ignored] - EditManual - Update: {JsonConvert.SerializeObject(_gameLocalizations)}");
-#endif
-                CheckLocalizations.PluginDatabase.Update(_gameLocalizations);
+                PluginDatabase.Update(_gameLocalizations);
             }
-
-            var TaskIntegrationUI = Task.Run(() =>
-            {
-                CheckLocalizations.checkLocalizationsUI.RefreshElements(LocalizationsDatabase.GameSelected);
-            });
 
             ((Window)this.Parent).Close();
         }

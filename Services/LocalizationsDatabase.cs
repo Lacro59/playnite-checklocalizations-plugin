@@ -24,16 +24,11 @@ namespace CheckLocalizations.Services
             localizationsApi = new LocalizationsApi(PlayniteApi, PluginUserDataPath);
         }
 
-
         protected override bool LoadDatabase()
         {
             Database = new GameLocalizationsCollection(Paths.PluginDatabasePath);
-
             Database.SetGameInfo<Localization>(PlayniteApi);
-
-            GameSelectedData = new GameLocalizations();
             GetPluginTags();
-
             return true;
         }
 
@@ -47,7 +42,7 @@ namespace CheckLocalizations.Services
 #endif
             if (gameLocalizations == null && !OnlyCache)
             {
-                gameLocalizations = localizationsApi.GetLocalizations(Id);
+                gameLocalizations = GetWeb(Id);
                 Add(gameLocalizations);
 
 #if DEBUG
@@ -83,7 +78,30 @@ namespace CheckLocalizations.Services
             GameIsLoaded = true;
             return gameLocalizations;
         }
-        
+
+        public override GameLocalizations GetWeb(Guid Id)
+        {
+            return localizationsApi.GetLocalizations(Id);
+        }
+
+        public override void Refresh(Guid Id)
+        {
+            var loadedItem = Get(Id, true);
+            var webItem = GetWeb(Id);
+
+            // Add manual items
+            foreach(var item in loadedItem.Items.FindAll(x => x.IsManual))
+            {
+                webItem.Items.Add(item);
+            }
+
+            if (!ReferenceEquals(loadedItem, webItem))
+            {
+                Update(webItem);
+            }
+        }
+
+
         public bool RemoveWithManual(Guid Id)
         {
             try
@@ -207,6 +225,16 @@ namespace CheckLocalizations.Services
                     ));
                 }
             }
+        }
+
+
+        public override void SetThemesResources(Game game)
+        {
+            GameLocalizations gameLocalizations = Get(game, true);
+
+            PluginSettings.Settings.HasData = gameLocalizations.HasData;
+            PluginSettings.Settings.HasNativeSupport = gameLocalizations.HasNativeSupport();
+            PluginSettings.Settings.ListNativeSupport = gameLocalizations.Items;
         }
     }
 }

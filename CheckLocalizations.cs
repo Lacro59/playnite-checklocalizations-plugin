@@ -15,6 +15,9 @@ using System.Windows;
 using CheckLocalizations.Models;
 using CommonPluginsShared;
 using CommonPluginsShared.PlayniteExtended;
+using System.Windows.Media;
+using System.Diagnostics;
+using CheckLocalizations.Controls;
 
 namespace CheckLocalizations
 {
@@ -25,9 +28,6 @@ namespace CheckLocalizations
 
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
-
-        public static CheckLocalizationsUI checkLocalizationsUI;
-
         private OldToNew oldToNew;
 
 
@@ -36,24 +36,13 @@ namespace CheckLocalizations
             // Old database
             oldToNew = new OldToNew(this.GetPluginUserDataPath());
 
-
-            // Init ui interagration
-            checkLocalizationsUI = new CheckLocalizationsUI(api, this.GetPluginUserDataPath());
-
             // Custom theme button
-            EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(checkLocalizationsUI.OnCustomThemeButtonClick));
+            EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(OnCustomThemeButtonClick));
 
-            // Add event fullScreen
-            if (api.ApplicationInfo.Mode == ApplicationMode.Fullscreen)
-            {
-                EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(BtFullScreen_ClickEvent));
-            }
-
-
-
+            // Custom elements integration
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "TestUserControl", "TestUserControl2" },
+                ElementList = new List<string> { "CheckLocButton", "CheckLocListLanguages" },
                 SourceName = "CheckLocalizations",
                 SettingsRoot = $"{nameof(PluginSettings)}.{nameof(PluginSettings.Settings)}"
             });
@@ -61,19 +50,17 @@ namespace CheckLocalizations
 
 
         #region Custom event
-        private void BtFullScreen_ClickEvent(object sender, System.EventArgs e)
+        public void OnCustomThemeButtonClick(object sender, RoutedEventArgs e)
         {
+            string ButtonName = string.Empty;
             try
             {
-                if (((Button)sender).Name == "PART_ButtonDetails")
+                ButtonName = ((Button)sender).Name;
+                if (ButtonName == "PART_ClCustomButton")
                 {
-                    var TaskIntegrationUI = Task.Run(() =>
-                    {
-                        checkLocalizationsUI.Initial();
-                        checkLocalizationsUI.taskHelper.Check();
-                        var dispatcherOp = checkLocalizationsUI.AddElementsFS();
-                        dispatcherOp.Completed += (s, ev) => { checkLocalizationsUI.RefreshElements(LocalizationsDatabase.GameSelected); };
-                    });
+                    var ViewExtension = new CheckLocalizationsView();
+                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
+                    windowExtension.ShowDialog();
                 }
             }
             catch (Exception ex)
@@ -84,17 +71,21 @@ namespace CheckLocalizations
         #endregion
 
 
-
+        // List custom controls
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            if (args.Name == "TestUserControl")
+            if (args.Name == "CheckLocButton")
             {
-                //return new SuccessStoryAchievementsList(false, PlayniteApi);
+                return new CheckLocButton();
+            }
+
+            if (args.Name == "CheckLocListLanguages")
+            {
+                return new CheckLocListLanguages();
             }
 
             return null;
         }
-
 
 
         // Add new game menu items override GetGameMenuItems
@@ -122,11 +113,9 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonRefreshGameData"),
                     Action = (gameMenuItem) =>
                     {
-                        PluginDatabase.GameSelectedData = new GameLocalizations();
                         var TaskIntegrationUI = Task.Run(() =>
                         {
-                            PluginDatabase.RemoveWithManual(GameMenu.Id);
-                            checkLocalizationsUI.RefreshElements(GameMenu);
+                            PluginDatabase.Refresh(GameMenu.Id);
                         });
                     }
                 },
@@ -138,7 +127,7 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCheckLocalizationsGameMenuAddLanguage"),
                     Action = (mainMenuItem) =>
                     {
-                        var ViewExtension = new CheckLocalizationsEditManual();
+                        var ViewExtension = new CheckLocalizationsEditManual(GameMenu);
                         Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
                         windowExtension.ShowDialog();
                     }
@@ -170,7 +159,7 @@ namespace CheckLocalizations
 
             List<MainMenuItem> mainMenuItems = new List<MainMenuItem>
             {
-                // Download missing localizations data for all game in database
+                // Download missing localizations data for all games in database
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
@@ -178,6 +167,17 @@ namespace CheckLocalizations
                     Action = (mainMenuItem) =>
                     {
                         PluginDatabase.GetAllDatas();
+                    }
+                },
+
+                // Download missing localizations data for selected games in database
+                new MainMenuItem
+                {
+                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCommonGetAllDatas"),
+                    Action = (mainMenuItem) =>
+                    {
+                        PluginDatabase.GetSelectDatas();
                     }
                 },
 
@@ -249,33 +249,8 @@ namespace CheckLocalizations
             {
                 if (args.NewValue != null && args.NewValue.Count == 1)
                 {
-                    Game GameSelected = args.NewValue[0];
-
-                    GameLocalizations gameLocalizations = PluginDatabase.Get(GameSelected, true);
-
-                    PluginSettings.Settings.TestString = GameSelected.Name;
-
-                    PluginSettings.Settings.HasData = gameLocalizations.HasData;
-                    PluginSettings.Settings.HasNativeSupport = gameLocalizations.HasNativeSupport();
-                    PluginSettings.Settings.ListNativeSupport = gameLocalizations.Items;
-
-
-
-                    // Old system
-                    /*
-                    LocalizationsDatabase.GameSelected = GameSelected;
-
-                    var TaskIntegrationUI = Task.Run(() =>
-                    {
-                        checkLocalizationsUI.Initial();
-                        checkLocalizationsUI.taskHelper.Check();
-                        var dispatcherOp = checkLocalizationsUI.AddElements();
-                        if (dispatcherOp != null)
-                        {
-                            dispatcherOp.Completed += (s, e) => { checkLocalizationsUI.RefreshElements(GameSelected); };
-                        }
-                    });
-                    */
+                    PluginDatabase.GameContext = args.NewValue[0];
+                    PluginDatabase.SetThemesResources(PluginDatabase.GameContext);
                 }
             }
             catch (Exception ex)

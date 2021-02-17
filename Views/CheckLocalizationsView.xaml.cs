@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using CheckLocalizations.Views.Interfaces;
+using CheckLocalizations.Controls;
 
 namespace CheckLocalizations.Views
 {
@@ -12,15 +12,15 @@ namespace CheckLocalizations.Views
     /// </summary>
     public partial class CheckLocalizationsView : UserControl
     {
-        private ClListViewLanguages PART_ListViewLanguages;
-
         public CheckLocalizationsView()
         {
             InitializeComponent();
 
-            PART_ListViewLanguages = new ClListViewLanguages(true);
-            PART_ListViewLanguages.SetGameLocalizations();
-            PART_LvContener.Children.Add(PART_ListViewLanguages);
+            CheckLocListLanguages PART_ListViewLanguages = new CheckLocListLanguages();
+            PART_ListViewLanguages.WithColNotes = true;
+            PART_ListViewLanguages.IgnoreSettings = true;
+            PART_ListViewLanguages.GameContext = CheckLocalizations.PluginDatabase.GameContext;
+            PART_Contener.Children.Add(PART_ListViewLanguages);
         }
     }
 }
