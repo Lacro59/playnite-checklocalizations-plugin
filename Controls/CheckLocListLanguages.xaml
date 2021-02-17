@@ -5,7 +5,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:local="clr-namespace:CheckLocalizations.Controls"
         mc:Ignorable="d">
 
     <controls:PluginUserControlExtend.Resources>
@@ -15,9 +14,11 @@
     <Grid Name="PART_GridContener" MinHeight="130" MinWidth="450"
           Loaded="PART_GridContener_Loaded"
           SizeChanged="PART_GridContener_SizeChanged">
-        <ListView Name="PART_ListViewLanguages" 
-                  Width="{Binding ElementName=PART_GridContener, Path=ActualWidth}"
-                  Height="{Binding ElementName=PART_GridContener, Path=ActualHeight}">
+
+        <controls:ListViewExtend x:Name="PART_ListViewLanguages" Style="{StaticResource {x:Type ListView}}"
+                                 BubblingScrollEvents="True"
+                                 Width="{Binding ElementName=PART_GridContener, Path=ActualWidth}"
+                                 Height="{Binding ElementName=PART_GridContener, Path=ActualHeight}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150" x:Name="PART_Name">
@@ -156,6 +157,6 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
-        </ListView>
+        </controls:ListViewExtend>
     </Grid>
 </controls:PluginUserControlExtend>
