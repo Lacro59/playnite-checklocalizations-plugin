@@ -141,6 +141,7 @@ namespace CheckLocalizations
                 Description = "Test",
                 Action = (mainMenuItem) => 
                 {
+
                 }
             });
 #endif

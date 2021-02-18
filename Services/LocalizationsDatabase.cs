@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using CommonPluginsShared;
+using System.Windows;
 
 namespace CheckLocalizations.Services
 {
@@ -29,7 +30,7 @@ namespace CheckLocalizations.Services
         protected override bool LoadDatabase()
         {
             Database = new GameLocalizationsCollection(Paths.PluginDatabasePath);
-            Database.SetGameInfo<Localization>(PlayniteApi);
+            Database.SetGameInfo<Models.Localization>(PlayniteApi);
             GetPluginTags();
             return true;
         }
@@ -104,6 +105,19 @@ namespace CheckLocalizations.Services
 
             IsGetWeb = false;
 
+
+            if (PluginSettings.Settings.EnableTagAuto)
+            {
+                Application.Current.Dispatcher.BeginInvoke((Action)delegate
+                {
+                    Game game = PlayniteApi.Database.Games.Get(Id);
+                    RemoveTag(game, true);
+                    AddTag(game, true);
+                    PlayniteApi.Database.Games.Update(game);
+                });
+            }
+
+
             return data;
         }
 
@@ -143,7 +157,7 @@ namespace CheckLocalizations.Services
 
                 if (gameLocalizations.Items == null)
                 {
-                    gameLocalizations.Items = new List<Localization>();
+                    gameLocalizations.Items = new List<Models.Localization>();
                 }
 
 
@@ -219,7 +233,7 @@ namespace CheckLocalizations.Services
             }
         }
 
-        public override void AddTag(Game game)
+        public override void AddTag(Game game, bool noUpdate = false)
         {
             GameLocalizations gameLocalizations = Get(game, true);
 
@@ -234,7 +248,10 @@ namespace CheckLocalizations.Services
                         {
                             if (game.TagIds != null)
                             {
-                                game.TagIds.Add((Guid)TagId);
+                                if (!game.TagIds.Contains((Guid)TagId))
+                                {
+                                    game.TagIds.Add((Guid)TagId);
+                                }
                             }
                             else
                             {
@@ -243,7 +260,10 @@ namespace CheckLocalizations.Services
                         }
                     }
 
-                    PlayniteApi.Database.Games.Update(game);
+                    if (noUpdate)
+                    {
+                        PlayniteApi.Database.Games.Update(game);
+                    }
                 }
                 catch (Exception ex)
                 {
