@@ -56,7 +56,7 @@ namespace CheckLocalizations
             try
             {
                 ButtonName = ((Button)sender).Name;
-                if (ButtonName == "PART_ClCustomButton")
+                if (ButtonName == "PART_CustomCheckLocButton")
                 {
                     var ViewExtension = new CheckLocalizationsView();
                     Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);

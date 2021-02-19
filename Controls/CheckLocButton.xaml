@@ -7,47 +7,19 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
             xmlns:local="clr-namespace:CheckLocalizations.Controls"
             xmlns:pbeh="clr-namespace:CommonPluginsPlaynite.Behaviors"
-            mc:Ignorable="d" d:DesignHeight="40" d:DesignWidth="40">
+            mc:Ignorable="d" d:DesignHeight="40" d:DesignWidth="40" 
+            Loaded="PluginUserControlExtend_Loaded">
 
     <controls:PluginUserControlExtend.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </controls:PluginUserControlExtend.Resources>
 
     <Button Name="PART_CheckLocButton" pbeh:LeftClickContextMenuBehavior.Enabled="True"
-            Click="PART_CheckLocButton_Click">
-        <Button.Style>
-            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
-                <Setter Property="Background" Value="{DynamicResource ButtonBackgroundBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource GlyphBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource NormalBorderBrush}" />
-                <Setter Property="BorderThickness" Value="{DynamicResource ControlBorderThickness}" />
-                <Setter Property="SnapsToDevicePixels" Value="True" />
-                <Setter Property="Padding" Value="10,5,10,5" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border x:Name="Border" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
-                            CornerRadius="{DynamicResource ControlCornerRadius}" Style="{DynamicResource HighlightBorder}">
-                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" />
-                            </Border>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsFocused" Value="True">
-                                    <Setter Property="BorderBrush" Value="{DynamicResource GlyphBrush}" TargetName="Border" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </Button.Style>
-
+            Click="PART_CheckLocButton_Click" Style="{StaticResource {x:Type Button}}"
+            Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Width}"
+            Height="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Height}"
+            VerticalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=VerticalAlignment}"
+            HorizontalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=HorizontalAlignment}">
         <Button.ContextMenu>
             <ContextMenu Placement="Bottom" Name="PART_ContextMenu" Loaded="PART_ContextMenu_Loaded" 
                          IsEnabled="{Binding EnableIntegrationButtonContextMenu}">
@@ -55,7 +27,8 @@
         </Button.ContextMenu>
 
         <Grid>
-            <TextBlock Name="PART_ButtonIcon" Text="" FontFamily="{DynamicResource CommonFont}" />
+            <TextBlock Name="PART_ButtonIcon" Text="" FontFamily="{DynamicResource CommonFont}"
+                       FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" />
         </Grid>
     </Button>
 </controls:PluginUserControlExtend>

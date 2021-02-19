@@ -12,6 +12,10 @@
     </controls:PluginUserControlExtend.Resources>
 
     <Grid Name="PART_GridContener" MinHeight="130" MinWidth="450"
+          Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Width}"
+          Height="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Height}"
+          VerticalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=VerticalAlignment}"
+          HorizontalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=HorizontalAlignment}"
           Loaded="PART_GridContener_Loaded"
           SizeChanged="PART_GridContener_SizeChanged">
 
