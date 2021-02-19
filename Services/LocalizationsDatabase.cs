@@ -32,6 +32,7 @@ namespace CheckLocalizations.Services
             Database = new GameLocalizationsCollection(Paths.PluginDatabasePath);
             Database.SetGameInfo<Models.Localization>(PlayniteApi);
             GetPluginTags();
+
             return true;
         }
 
@@ -39,17 +40,11 @@ namespace CheckLocalizations.Services
         public override GameLocalizations Get(Guid Id, bool OnlyCache = false)
         {
             GameLocalizations gameLocalizations = GetOnlyCache(Id);
-#if DEBUG
-            logger.Debug($"{PluginName} [Ignored] - GetFromDb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
-#endif
+
             if (gameLocalizations == null && !OnlyCache)
             {
                 gameLocalizations = GetWeb(Id);
                 Add(gameLocalizations);
-
-#if DEBUG
-                logger.Debug($"{PluginName} [Ignored] - GetFromWeb({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
-#endif
             }
             else if (gameLocalizations != null && !OnlyCache
                 && gameLocalizations.Items.Where(x => x.IsManual == true).Count() != 0
@@ -58,10 +53,7 @@ namespace CheckLocalizations.Services
                 if (!gameLocalizations.HasChecked)
                 {
                     var dataWeb = GetWeb(Id);
-#if DEBUG
-                    logger.Debug($"{PluginName} [Ignored] - GetFromWebOnlyManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(dataWeb)}");
-                    logger.Debug($"{PluginName} [Ignored] - IsManualTrue({gameLocalizations.Items.Where(x => x.IsManual == true).Count()}) - IsManualFalse: {gameLocalizations.Items.Where(x => x.IsManual == false).Count()}");
-#endif
+
                     gameLocalizations.Items = gameLocalizations.Items.Concat(dataWeb.Items).ToList();
                     gameLocalizations.HasChecked = true;
 
@@ -189,9 +181,6 @@ namespace CheckLocalizations.Services
 
         protected override void GetPluginTags()
         {
-#if DEBUG
-            logger.Debug($"{PluginName} [Ignored] - GetPluginTags()");
-#endif
             try
             {
                 // Get tags in playnite database

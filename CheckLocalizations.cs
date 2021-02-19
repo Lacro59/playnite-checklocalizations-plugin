@@ -88,6 +88,7 @@ namespace CheckLocalizations
         }
 
 
+        #region Menus
         // Add new game menu items override GetGameMenuItems
         public override List<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
@@ -236,8 +237,10 @@ namespace CheckLocalizations
 
             return mainMenuItems;
         }
+        #endregion
 
 
+        #region game event
         public override void OnGameSelected(GameSelectionEventArgs args)
         {
             // Old database
@@ -289,8 +292,10 @@ namespace CheckLocalizations
         {
             
         }
+        #endregion
 
 
+        #region application event
         // Add code to be executed when Playnite is initialized.
         public override void OnApplicationStarted()
         {
@@ -302,6 +307,7 @@ namespace CheckLocalizations
         {
 
         }
+        #endregion
 
 
         // Add code to be executed when library is updated.
@@ -311,6 +317,7 @@ namespace CheckLocalizations
         }
 
 
+        #region settings
         public override ISettings GetSettings(bool firstRunSettings)
         {
             return PluginSettings;
@@ -320,5 +327,6 @@ namespace CheckLocalizations
         {
             return new CheckLocalizationsSettingsView(PlayniteApi, PluginSettings.Settings, this.GetPluginUserDataPath());
         }
+        #endregion
     }
 }
