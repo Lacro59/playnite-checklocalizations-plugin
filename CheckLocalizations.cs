@@ -23,9 +23,6 @@ namespace CheckLocalizations
 {
     public class CheckLocalizations : PluginExtended<CheckLocalizationsSettingsViewModel, LocalizationsDatabase>
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private static IResourceProvider resources = new ResourceProvider();
-
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
         private OldToNew oldToNew;
@@ -240,7 +237,7 @@ namespace CheckLocalizations
         #endregion
 
 
-        #region game event
+        #region Game event
         public override void OnGameSelected(GameSelectionEventArgs args)
         {
             // Old database
@@ -295,7 +292,7 @@ namespace CheckLocalizations
         #endregion
 
 
-        #region application event
+        #region Application event
         // Add code to be executed when Playnite is initialized.
         public override void OnApplicationStarted()
         {
@@ -317,7 +314,7 @@ namespace CheckLocalizations
         }
 
 
-        #region settings
+        #region Settings
         public override ISettings GetSettings(bool firstRunSettings)
         {
             return PluginSettings;
