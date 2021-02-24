@@ -127,15 +127,18 @@ namespace CheckLocalizations.Services
                 var loadedItem = Get(Id, true);
                 var webItem = GetWeb(Id);
 
-                // Add manual items
-                foreach (var item in loadedItem.Items.FindAll(x => x.IsManual))
+                if (webItem != null)
                 {
-                    webItem.Items.Add(item);
-                }
+                    // Add manual items
+                    foreach (var item in loadedItem.Items.FindAll(x => x.IsManual))
+                    {
+                        webItem.Items.Add(item);
+                    }
 
-                if (!ReferenceEquals(loadedItem, webItem))
-                {
-                    Update(webItem);
+                    if (!ReferenceEquals(loadedItem, webItem))
+                    {
+                        Update(webItem);
+                    }
                 }
             }, globalProgressOptions);
         }
