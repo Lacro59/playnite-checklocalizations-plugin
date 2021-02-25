@@ -67,6 +67,7 @@ namespace CheckLocalizations.Controls
                 PART_ListViewLanguages = new CheckLocListLanguages();
                 PART_ListViewLanguages.WithColNotes = false;
                 PART_ListViewLanguages.IgnoreSettings = true;
+                PART_ListViewLanguages.Width = 450;
                 PART_ContextMenu.Items.Add(PART_ListViewLanguages);
             }
 

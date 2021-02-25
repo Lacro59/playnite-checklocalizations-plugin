@@ -11,7 +11,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </controls:PluginUserControlExtend.Resources>
 
-    <Grid Name="PART_GridContener" MinHeight="130" MinWidth="450"
+    <Grid Name="PART_GridContener" MinHeight="130" MinWidth="150"
           Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Width}"
           Height="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Height}"
           VerticalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=VerticalAlignment}"
