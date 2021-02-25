@@ -5,10 +5,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        mc:Ignorable="d" d:DesignHeight="40" d:DesignWidth="40">
-    
-    <Grid>
+        mc:Ignorable="d">
+
+    <Grid Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Width}"
+          Height="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Height}"
+          VerticalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=VerticalAlignment}"
+          HorizontalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=HorizontalAlignment}">
         <TextBlock Name="PART_Icon" Text="" FontFamily="{DynamicResource CommonFont}"
-                       FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" />
+                   Style="{DynamicResource BaseTextBlockStyle}"  
+                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" />
     </Grid>
 </controls:PluginUserControlExtend>
