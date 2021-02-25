@@ -158,54 +158,25 @@ namespace CheckLocalizations
 
             List<MainMenuItem> mainMenuItems = new List<MainMenuItem>
             {
-                // Download missing localizations data for all games in database
-                new MainMenuItem
-                {
-                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonGetAllDatas"),
-                    Action = (mainMenuItem) =>
-                    {
-                        PluginDatabase.GetAllDatas();
-                    }
-                },
-
                 // Download missing localizations data for selected games in database
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonSelectData"),
+                    Description = resources.GetString("LOCCommonDownloadPluginData"),
                     Action = (mainMenuItem) =>
                     {
-                        PluginDatabase.GetSelectDatas();
+                        PluginDatabase.GetSelectData();
                     }
                 },
 
-                // Delete all data of plugin
+                // Add tag for selected game in database if data exists
                 new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonClearAllDatas"),
+                    Description = resources.GetString("LOCCommonAddTPlugin"),
                     Action = (mainMenuItem) =>
                     {
-                        if (PluginDatabase.ClearDatabase())
-                        {
-                            PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
-                        }
-                        else
-                        {
-                            PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
-                        }
-                    }
-                },
-
-                // Add tag for all game in database if data exists
-                new MainMenuItem
-                {
-                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonAddAllTags"),
-                    Action = (mainMenuItem) =>
-                    {
-                        PluginDatabase.AddTagAllGame();
+                        PluginDatabase.AddTagSelectData();
                     }
                 },
 
@@ -217,6 +188,24 @@ namespace CheckLocalizations
                     Action = (mainMenuItem) =>
                     {
                         PluginDatabase.RemoveTagAllGame();
+                    }
+                },
+
+                // Delete all data of plugin
+                new MainMenuItem
+                {
+                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCommonDeletePluginData"),
+                    Action = (mainMenuItem) =>
+                    {
+                        if (PluginDatabase.ClearDatabase())
+                        {
+                            PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
+                        }
+                        else
+                        {
+                            PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
+                        }
                     }
                 }
             };
