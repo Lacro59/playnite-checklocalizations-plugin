@@ -24,6 +24,17 @@ namespace CheckLocalizations
         public bool UiStylePcGamingWiki { get; set; } = true;
 
 
+        private bool _EnableIntegrationViewItem { get; set; } = false;
+        public bool EnableIntegrationViewItem
+        {
+            get => _EnableIntegrationViewItem;
+            set
+            {
+                _EnableIntegrationViewItem = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _EnableIntegrationButton { get; set; } = false;
         public bool EnableIntegrationButton
         {

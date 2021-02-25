@@ -1,0 +1,14 @@
+﻿<controls:PluginUserControlExtend
+        xmlns:controls="clr-namespace:CommonPluginsShared.Controls" 
+        x:Class="CheckLocalizations.Controls.CheckLocViewItem"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        mc:Ignorable="d" d:DesignHeight="40" d:DesignWidth="40">
+    
+    <Grid>
+        <TextBlock Name="PART_Icon" Text="" FontFamily="{DynamicResource CommonFont}"
+                       FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" />
+    </Grid>
+</controls:PluginUserControlExtend>

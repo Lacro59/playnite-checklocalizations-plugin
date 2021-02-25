@@ -95,6 +95,9 @@
     <Compile Include="Controls\CheckLocListLanguages.xaml.cs">
       <DependentUpon>CheckLocListLanguages.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\CheckLocViewItem.xaml.cs">
+      <DependentUpon>CheckLocViewItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="playnite-plugincommon\CommonPluginsControls\Views\OptionsDownloadData.xaml.cs">
       <DependentUpon>OptionsDownloadData.xaml</DependentUpon>
     </Compile>
@@ -229,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CheckLocListLanguages.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CheckLocViewItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -39,7 +39,7 @@ namespace CheckLocalizations
             // Custom elements integration
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "CheckLocButton", "CheckLocListLanguages" },
+                ElementList = new List<string> { "CheckLocButton", "CheckLocListLanguages", "CheckLocViewItem" },
                 SourceName = "CheckLocalizations",
                 SettingsRoot = $"{nameof(PluginSettings)}.{nameof(PluginSettings.Settings)}"
             });
@@ -79,6 +79,11 @@ namespace CheckLocalizations
             if (args.Name == "CheckLocListLanguages")
             {
                 return new CheckLocListLanguages();
+            }
+
+            if (args.Name == "CheckLocViewItem")
+            {
+                return new CheckLocViewItem();
             }
 
             return null;
