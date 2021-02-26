@@ -166,16 +166,16 @@ namespace CheckLocalizations.Services
                     gameLocalizations.Items = null;
                     gameLocalizations.Items = ItemsManual;
                     gameLocalizations.HasChecked = false;
-#if DEBUG
-                    logger.Debug($"{PluginName} [Ignored] - RemoveWithoutManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
-#endif
+
+                    Common.LogDebug(true, $"RemoveWithoutManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+
                     Update(gameLocalizations);
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, PluginName);
+                Common.LogError(ex, false);
             }
 
             return false;
@@ -215,13 +215,12 @@ namespace CheckLocalizations.Services
                         }
                     }
                 }
-#if DEBUG
-                logger.Debug($"{PluginName} [Ignored] - PluginTags: {JsonConvert.SerializeObject(PluginTags)}");
-#endif
+
+                Common.LogDebug(true, $"PluginTags: {JsonConvert.SerializeObject(PluginTags)}");
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, PluginName);
+                Common.LogError(ex, false);
             }
         }
 
@@ -259,10 +258,9 @@ namespace CheckLocalizations.Services
                 }
                 catch (Exception ex)
                 {
-#if DEBUG
-                    Common.LogError(ex, PluginName + " [Ignored]");
-#endif
-                    logger.Error($"{PluginName} - Tag insert error with {game.Name}");
+                    Common.LogError(ex, true);
+                    logger.Error($"Tag insert error with {game.Name}");
+
                     PlayniteApi.Notifications.Add(new NotificationMessage(
                         $"{PluginName}-Tag-Errors",
                         $"{PluginName}\r\n" + resources.GetString("LOCCommonNotificationTagError"),

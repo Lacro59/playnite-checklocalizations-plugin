@@ -151,7 +151,7 @@ namespace CheckLocalizations.Clients
                 }
             }
 
-            logger.Warn($"CheckLocalizations - Not find for {game.Name}");
+            logger.Warn($"Not find for {game.Name}");
             return Localizations;
         }
 
@@ -161,9 +161,7 @@ namespace CheckLocalizations.Clients
 
             try
             {
-#if DEBUG
-                logger.Debug($"CheckLocalizations [Ignored] - url {url}");
-#endif
+                Common.LogDebug(true, $"url {url}");
 
                 // Get data & parse
                 string ResultWeb = Web.DownloadStringData(url).GetAwaiter().GetResult();
@@ -217,7 +215,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "CheckLocalizations");
+                Common.LogError(ex, false);
             }
 
             return Localizations;

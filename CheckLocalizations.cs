@@ -28,7 +28,7 @@ namespace CheckLocalizations
         private OldToNew oldToNew;
 
 
-        public CheckLocalizations(IPlayniteAPI api) : base(api, true)
+        public CheckLocalizations(IPlayniteAPI api) : base(api)
         {
             // Old database
             oldToNew = new OldToNew(this.GetPluginUserDataPath());
@@ -62,7 +62,7 @@ namespace CheckLocalizations
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "CheckLocalizations");
+                Common.LogError(ex, false);
             }
         }
         #endregion
@@ -250,7 +250,7 @@ namespace CheckLocalizations
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "CheckLocalizations");
+                Common.LogError(ex, false);
             }
         }
 

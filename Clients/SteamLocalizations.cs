@@ -88,12 +88,12 @@ namespace CheckLocalizations.Clients
                 }
                 else
                 {
-                    logger.Warn($"CheckLocalizations - No SteamId find for {game.Name}");
+                    logger.Warn($"No SteamId find for {game.Name}");
                 }
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "CheckLocalizations");
+                Common.LogError(ex, false);
             }
 
             return Localizations;
@@ -110,7 +110,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, "CheckLocalizations", $"Failed to download {url}");
+                Common.LogError(ex, false, $"Failed to download {url}");
                 return string.Empty;
             }
         }

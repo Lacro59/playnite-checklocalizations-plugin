@@ -1,5 +1,6 @@
 ﻿using CheckLocalizations.Clients;
 using CheckLocalizations.Models;
+using CommonPluginsShared;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -46,9 +47,8 @@ namespace CheckLocalizations.Services
             if (Localizations.Count == 0)
             {
                 Localizations = steamLocalizations.GetLocalizations(game);
-#if DEBUG
-                logger.Debug($"CheckLocalizations [Ignored] - Used Steam for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
-#endif
+
+                Common.LogDebug(true, $"Used Steam for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
             }
 
             GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(game);

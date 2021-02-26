@@ -49,7 +49,7 @@ namespace CheckLocalizations.Services
 
         public void LoadOldDB()
         {
-            logger.Info($"CheckLocalizations - LoadOldDB()");
+            logger.Info($"LoadOldDB()");
 
             Parallel.ForEach(Directory.EnumerateFiles(PathActivityDB, "*.json"), (objectFile) =>
             {
@@ -59,9 +59,8 @@ namespace CheckLocalizations.Services
                 {
                     var JsonStringData = File.ReadAllText(objectFile);
 
-#if DEBUG
-                    logger.Debug(objectFile.Replace(PathActivityDB, "").Replace(".json", "").Replace("\\", ""));
-#endif
+                    Common.LogDebug(true, objectFile.Replace(PathActivityDB, "").Replace(".json", "").Replace("\\", ""));
+
                     Guid gameId = Guid.Parse(objectFile.Replace(PathActivityDB, "").Replace(".json", "").Replace("\\", ""));
 
 
@@ -81,11 +80,11 @@ namespace CheckLocalizations.Services
                 }
                 catch (Exception ex)
                 {
-                    Common.LogError(ex, "CheckLocalizations", $"Failed to load item from {objectFile} or {objectFileManual}");
+                    Common.LogError(ex, false, $"Failed to load item from {objectFile} or {objectFileManual}");
                 }
             });
 
-            logger.Info($"CheckLocalizations - Find {Items.Count} & {ItemsManual.Count} items");
+            logger.Info($"Find {Items.Count} & {ItemsManual.Count} items");
         }
 
         public void ConvertDB(IPlayniteAPI PlayniteApi)
@@ -101,7 +100,7 @@ namespace CheckLocalizations.Services
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-                logger.Info($"CheckLocalizations - ConvertDB()");
+                logger.Info($"ConvertDB()");
 
                 int Converted = 0;
 
@@ -150,20 +149,20 @@ namespace CheckLocalizations.Services
                         }
                         else
                         {
-                            logger.Warn($"CheckLocalizations - Game is deleted - {item.Key.ToString()}");
+                            logger.Warn($"Game is deleted - {item.Key.ToString()}");
                         }
                     }
                     catch (Exception ex)
                     {
-                        Common.LogError(ex, "CheckLocalizations", $"Failed to load ConvertDB from {item.Key.ToString()}");
+                        Common.LogError(ex, false, $"Failed to load ConvertDB from {item.Key.ToString()}");
                     }
                 }
 
-                logger.Info($"CheckLocalizations - Converted {Converted} / {Items.Count}");
+                logger.Info($"Converted {Converted} / {Items.Count}");
 
                 stopWatch.Stop();
                 TimeSpan ts = stopWatch.Elapsed;
-                logger.Info($"CheckLocalizations - Migration - {String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)}");
+                logger.Info($"Migration - {String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)}");
             }, globalProgressOptions);
 
             IsOld = false;
