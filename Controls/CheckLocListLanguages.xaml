@@ -16,9 +16,7 @@
 
     <Grid Name="PART_GridContener" Loaded="PART_GridContener_Loaded" SizeChanged="PART_GridContener_SizeChanged">
         <controls:ListViewExtend x:Name="PART_ListViewLanguages" Style="{StaticResource {x:Type ListView}}"
-                                 BubblingScrollEvents="True"
-                                 Width="{Binding ElementName=PART_GridContener, Path=ActualWidth}"
-                                 Height="{Binding ElementName=PART_GridContener, Path=ActualHeight}">
+                                 BubblingScrollEvents="True" HeightStretch="True" WidthStretch="True">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150" x:Name="PART_Name">
