@@ -10,6 +10,6 @@
     <Grid>
         <TextBlock Name="PART_Icon" Text="" FontFamily="{DynamicResource CommonFont}"
                    Style="{DynamicResource BaseTextBlockStyle}"  
-                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" />
+                   FontSize="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=FontSize}" />
     </Grid>
 </controls:PluginUserControlExtend>
