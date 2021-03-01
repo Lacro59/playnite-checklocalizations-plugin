@@ -7,10 +7,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         mc:Ignorable="d">
 
-    <Grid Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Width}"
-          Height="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Height}"
-          VerticalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=VerticalAlignment}"
-          HorizontalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=HorizontalAlignment}">
+    <Grid>
         <TextBlock Name="PART_Icon" Text="" FontFamily="{DynamicResource CommonFont}"
                    Style="{DynamicResource BaseTextBlockStyle}"  
                    FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" />
