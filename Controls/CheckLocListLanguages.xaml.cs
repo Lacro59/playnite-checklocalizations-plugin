@@ -33,11 +33,13 @@ namespace CheckLocalizations.Controls
         private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
 
 
+        #region Property
         public static readonly DependencyProperty WithColNotesProperty;
         public bool? WithColNotes { get; set; }
 
         public static readonly DependencyProperty IgnoreSettingsProperty;
         public bool IgnoreSettings { get; set; }
+        #endregion
 
 
         public CheckLocListLanguages()
@@ -56,12 +58,22 @@ namespace CheckLocalizations.Controls
         #region OnPropertyChange
         // When settings is updated
         public override void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
+        { 
             // Apply settings
-            this.DataContext = new
+            if (IgnoreSettings)
             {
-                
-            };
+                this.DataContext = new
+                {
+                    ListLanguagesHeight = double.NaN,
+                };
+            }
+            else
+            {
+                this.DataContext = new
+                {
+                    PluginDatabase.PluginSettings.Settings.ListLanguagesHeight
+                };
+            }
 
             PART_GridContener_SizeChanged(null, null);
 
@@ -79,12 +91,12 @@ namespace CheckLocalizations.Controls
             else
             {
                 MustDisplay = PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguages;
-            }
 
-            // When control is not used
-            if (!IgnoreSettings && !PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguages)
-            {
-                return;
+                // When control is not used
+                if (!PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguages)
+                {
+                    return;
+                }
             }
 
             if (newContext != null)
@@ -95,7 +107,7 @@ namespace CheckLocalizations.Controls
                 PART_ListViewLanguages.ItemsSource = gameLocalization.Items;
 
 
-                if (!IgnoreSettings && !PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguagesVisibleEmpty)
+                if (!IgnoreSettings && !PluginDatabase.PluginSettings.Settings.ListLanguagesVisibleEmpty)
                 {
                     MustDisplay = gameLocalization.HasData;
                 }
@@ -104,7 +116,7 @@ namespace CheckLocalizations.Controls
             {
                 if (!IgnoreSettings)
                 {
-                    MustDisplay = PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguagesVisibleEmpty;
+                    MustDisplay = PluginDatabase.PluginSettings.Settings.ListLanguagesVisibleEmpty;
                 }
             }
         }
@@ -125,7 +137,7 @@ namespace CheckLocalizations.Controls
             }
             else
             {
-                WithColNotes = PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguagesWithColNote;
+                WithColNotes = PluginDatabase.PluginSettings.Settings.ListLanguagesWithColNote;
             }
 
             if (WithColNotes)

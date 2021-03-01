@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
+             xmlns:playnitecontrols="clr-namespace:CommonPluginsControls.PlayniteControls"
+             mc:Ignorable="d" d:DesignWidth="600"
              Background="{DynamicResource WindowBackgourndBrush}">
 
     <TabControl Margin="20">
@@ -147,29 +148,27 @@
                 <Label Content="{DynamicResource LOCCommonControlsAvailable}" Margin="0,30,0,0" />
                 <Separator Margin="0,0,0,10" />
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="10" />
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
-                    <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationButton}" 
+                    <CheckBox Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationButton}" 
                               VerticalAlignment="Center" Name="PART_IntegrationButton">
                         <Label Content="{DynamicResource LOCCommonControlsPluginButtonShow}" />
                     </CheckBox>
-                    <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationListLanguages}" 
-                              VerticalAlignment="Center" Name="PART_IntegrationListLanguages">
-                        <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationListLanguages}" />
-                    </CheckBox>
 
-                    <CheckBox Grid.Column="0" Grid.Row="2" IsChecked="{Binding Settings.EnableIntegrationViewItem}" 
+                    <CheckBox Grid.Row="2" IsChecked="{Binding Settings.EnableIntegrationViewItem}" 
                               VerticalAlignment="Center" Name="PART_IntegrationViewItem">
                         <Label Content="{DynamicResource LOCCommonControlsPluginViewItemShow}" />
+                    </CheckBox>
+
+                    <CheckBox Grid.Row="4" IsChecked="{Binding Settings.EnableIntegrationListLanguages}" 
+                              VerticalAlignment="Center" Name="PART_IntegrationListLanguages">
+                        <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationListLanguages}" />
                     </CheckBox>
                 </Grid>
 
@@ -208,15 +207,22 @@
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
                         </Grid.RowDefinitions>
 
-                        <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationListLanguagesWithColNote}" 
-                                  VerticalAlignment="Center">
-                            <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationListLanguagesWithColNote}" />
-                        </CheckBox>
-                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationListLanguagesVisibleEmpty}" 
+                        <DockPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+                            <Label DockPanel.Dock="Left" Content="{DynamicResource LOCHeight}" />
+                            <playnitecontrols:NumericBox DockPanel.Dock="Right" Width="40"
+                                                         LongValue="{Binding Settings.ListLanguagesHeight}" />
+                        </DockPanel>
+                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding Settings.ListLanguagesVisibleEmpty}" 
                                   VerticalAlignment="Center">
                             <Label Content="{DynamicResource LOCCommonControlsVisibleNoData}" />
+                        </CheckBox>
+
+                        <CheckBox Grid.Column="0" Grid.Row="1" IsChecked="{Binding Settings.ListLanguagesWithColNote}" 
+                                  VerticalAlignment="Center">
+                            <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationListLanguagesWithColNote}" />
                         </CheckBox>
                     </Grid>
                 </GroupBox>

@@ -1,24 +1,16 @@
 ﻿<controls:PluginUserControlExtend
-            xmlns:controls="clr-namespace:CommonPluginsShared.Controls"
-            x:Class="CheckLocalizations.Controls.CheckLocButton"
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-            xmlns:local="clr-namespace:CheckLocalizations.Controls"
-            xmlns:pbeh="clr-namespace:CommonPluginsPlaynite.Behaviors"
-            mc:Ignorable="d" d:DesignHeight="40" d:DesignWidth="40">
-
-    <controls:PluginUserControlExtend.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </controls:PluginUserControlExtend.Resources>
+        xmlns:controls="clr-namespace:CommonPluginsShared.Controls"
+        x:Class="CheckLocalizations.Controls.CheckLocButton"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:CheckLocalizations.Controls"
+        xmlns:pbeh="clr-namespace:CommonPluginsPlaynite.Behaviors"
+        mc:Ignorable="d" d:DesignHeight="40" d:DesignWidth="40">
 
     <Button Name="PART_CheckLocButton" pbeh:LeftClickContextMenuBehavior.Enabled="True"
-            Click="PART_CheckLocButton_Click" Style="{StaticResource {x:Type Button}}"
-            Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Width}"
-            Height="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Height}"
-            VerticalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=VerticalAlignment}"
-            HorizontalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=HorizontalAlignment}">
+            Click="PART_CheckLocButton_Click" Style="{StaticResource {x:Type Button}}">
         <Button.ContextMenu>
             <ContextMenu Placement="Bottom" Name="PART_ContextMenu" Loaded="PART_ContextMenu_Loaded" 
                          IsEnabled="{Binding EnableIntegrationButtonContextMenu}">
@@ -27,7 +19,7 @@
 
         <Grid>
             <TextBlock Name="PART_ButtonIcon" Text="" FontFamily="{DynamicResource CommonFont}"
-                       FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" />
+                       FontSize="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=FontSize}" />
         </Grid>
     </Button>
 </controls:PluginUserControlExtend>

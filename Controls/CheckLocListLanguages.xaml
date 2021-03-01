@@ -5,20 +5,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        mc:Ignorable="d">
+        mc:Ignorable="d" 
+        MinHeight="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MinHeight}"
+        Height="{Binding ListLanguagesHeight}"
+        MaxHeight="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MaxHeight}">
 
     <controls:PluginUserControlExtend.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </controls:PluginUserControlExtend.Resources>
 
-    <Grid Name="PART_GridContener" MinHeight="130" MinWidth="150"
-          Width="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Width}"
-          Height="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Height}"
-          VerticalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=VerticalAlignment}"
-          HorizontalAlignment="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=HorizontalAlignment}"
-          Loaded="PART_GridContener_Loaded"
-          SizeChanged="PART_GridContener_SizeChanged">
-
+    <Grid Name="PART_GridContener" Loaded="PART_GridContener_Loaded" SizeChanged="PART_GridContener_SizeChanged">
         <controls:ListViewExtend x:Name="PART_ListViewLanguages" Style="{StaticResource {x:Type ListView}}"
                                  BubblingScrollEvents="True"
                                  Width="{Binding ElementName=PART_GridContener, Path=ActualWidth}"

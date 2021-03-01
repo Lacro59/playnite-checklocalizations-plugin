@@ -68,6 +68,12 @@ namespace CheckLocalizations
         #endregion
 
 
+        #region Theme integration
+        public override List<TopPanelItem> GetTopPanelItems()
+        {
+            return null;
+        }
+
         // List custom controls
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
@@ -88,6 +94,7 @@ namespace CheckLocalizations
 
             return null;
         }
+        #endregion
 
 
         #region Menus
