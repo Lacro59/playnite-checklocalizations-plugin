@@ -16,17 +16,19 @@
 
     <Grid Name="PART_GridContener" Loaded="PART_GridContener_Loaded" SizeChanged="PART_GridContener_SizeChanged">
         <controls:ListViewExtend x:Name="PART_ListViewLanguages" Style="{StaticResource {x:Type ListView}}"
+                                 SortingEnable="True" SortingDefaultDataName="DisplayName" SortingSortDirection="Descending"
                                  BubblingScrollEvents="True" HeightStretch="True" WidthStretch="True">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150" x:Name="PART_Name">
-                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}" 
-                                              IsHitTestVisible="False" />
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}" />
                     </GridViewColumn>
 
+                    <GridViewColumn Width="0" DisplayMemberBinding="{Binding Ui}">
+                        <GridViewColumnHeader IsHitTestVisible="False" />
+                    </GridViewColumn>
                     <GridViewColumn Width="80" x:Name="PART_Ui">
-                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsUi}" 
-                                              IsHitTestVisible="False" />
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsUi}" Tag="Ui" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -66,9 +68,11 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
+                    <GridViewColumn Width="0" DisplayMemberBinding="{Binding Audio}">
+                        <GridViewColumnHeader IsHitTestVisible="False" />
+                    </GridViewColumn>
                     <GridViewColumn Width="80" x:Name="PART_Audio">
-                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsAudio}" 
-                                              IsHitTestVisible="False" />
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsAudio}" Tag="Audio" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -108,9 +112,11 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
+                    <GridViewColumn Width="0" DisplayMemberBinding="{Binding Sub}">
+                        <GridViewColumnHeader IsHitTestVisible="False" />
+                    </GridViewColumn>
                     <GridViewColumn Width="80" x:Name="PART_Sub">
-                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsSub}" 
-                                              IsHitTestVisible="False" />
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsSub}" Tag="Sub" />
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>

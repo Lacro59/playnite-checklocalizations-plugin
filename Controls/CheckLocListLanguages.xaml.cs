@@ -36,9 +36,6 @@ namespace CheckLocalizations.Controls
         #region Property
         public static readonly DependencyProperty WithColNotesProperty;
         public bool? WithColNotes { get; set; }
-
-        public static readonly DependencyProperty IgnoreSettingsProperty;
-        public bool IgnoreSettings { get; set; }
         #endregion
 
 
