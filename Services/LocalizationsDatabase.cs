@@ -279,5 +279,13 @@ namespace CheckLocalizations.Services
             PluginSettings.Settings.HasNativeSupport = gameLocalizations.HasNativeSupport();
             PluginSettings.Settings.ListNativeSupport = gameLocalizations.Items;
         }
+
+        public override void Games_ItemUpdated(object sender, ItemUpdatedEventArgs<Game> e)
+        {
+            foreach (var GameUpdated in e.UpdatedItems)
+            {
+                Database.SetGameInfo<Models.Localization>(PlayniteApi, GameUpdated.NewData.Id);
+            }
+        }
     }
 }
