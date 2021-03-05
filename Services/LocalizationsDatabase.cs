@@ -238,7 +238,7 @@ namespace CheckLocalizations.Services
                         }
                     }
 
-                    if (noUpdate)
+                    if (!noUpdate)
                     {
                         PlayniteApi.Database.Games.Update(game);
                     }
