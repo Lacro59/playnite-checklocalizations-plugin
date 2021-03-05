@@ -96,20 +96,7 @@ namespace CheckLocalizations.Services
             });
 
             IsGetWeb = false;
-
-
-            if (PluginSettings.Settings.EnableTagAuto)
-            {
-                Application.Current.Dispatcher.BeginInvoke((Action)delegate
-                {
-                    Game game = PlayniteApi.Database.Games.Get(Id);
-                    RemoveTag(game, true);
-                    AddTag(game, true);
-                    PlayniteApi.Database.Games.Update(game);
-                });
-            }
-
-
+            
             return data;
         }
 

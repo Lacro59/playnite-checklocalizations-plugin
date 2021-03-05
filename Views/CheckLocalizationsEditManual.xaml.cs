@@ -122,16 +122,6 @@ namespace CheckLocalizations.Views
                 PluginDatabase.Update(_gameLocalizations);
             }
 
-            if (PluginDatabase.PluginSettings.Settings.EnableTagAuto)
-            {
-                Application.Current.Dispatcher.BeginInvoke((Action)delegate
-                {
-                    PluginDatabase.RemoveTag(_game, true);
-                    PluginDatabase.AddTag(_game, true);
-                    PluginDatabase.PlayniteApi.Database.Games.Update(_game);
-                });
-            }
-
             ((Window)this.Parent).Close();
         }
 

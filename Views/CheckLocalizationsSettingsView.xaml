@@ -30,8 +30,6 @@
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="10" />
                         <RowDefinition Height="auto" />
-                        <RowDefinition Height="10" />
-                        <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
@@ -43,11 +41,6 @@
                         <Button Content="{DynamicResource LOCAddTitle}" Margin="0,0,10,0" IsEnabled="{Binding Settings.EnableTag}" VerticalAlignment="Center" Click="ButtonAddTag_Click" />
                         <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding Settings.EnableTag}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click" />
                     </StackPanel>
-
-                    <CheckBox Grid.Row="2" Grid.ColumnSpan="3" IsChecked="{Binding Settings.EnableTagAuto}" Grid.Column="0" VerticalAlignment="Center"
-                              IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}">
-                        <Label Content="{DynamicResource LOCCommonAddTagAuto}" />
-                    </CheckBox>
 
                     <ListView Margin="0,5" ItemsSource="{Binding Settings.GameLanguages}"
                                      Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" MinHeight="150" MaxHeight="300"

@@ -16,7 +16,6 @@ namespace CheckLocalizations
         public bool MenuInExtensions { get; set; } = true;
 
         public bool EnableTag { get; set; } = false;
-        public bool EnableTagAuto { get; set; } = false;
         public List<GameLanguage> GameLanguages { get; set; } = new List<GameLanguage>();
 
 
