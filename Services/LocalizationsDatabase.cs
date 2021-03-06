@@ -241,6 +241,7 @@ namespace CheckLocalizations.Services
                     if (!noUpdate)
                     {
                         PlayniteApi.Database.Games.Update(game);
+                        game.OnPropertyChanged();
                     }
                 }
                 catch (Exception ex)
