@@ -45,7 +45,17 @@ namespace CheckLocalizations
             }
         }
 
-        public bool EnableIntegrationButtonDetails { get; set; } = false;
+        public bool _EnableIntegrationButtonDetails { get; set; } = false;
+        public bool EnableIntegrationButtonDetails
+        {
+            get => _EnableIntegrationButtonDetails;
+            set
+            {
+                _EnableIntegrationButtonDetails = value;
+                OnPropertyChanged();
+            }
+        }
+
         public bool EnableIntegrationButtonContextMenu { get; set; } = false;
 
 

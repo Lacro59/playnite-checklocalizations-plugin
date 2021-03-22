@@ -30,11 +30,11 @@ namespace CheckLocalizations.Controls
     /// <summary>
     /// Logique d'interaction pour CheckLocButton.xaml
     /// </summary>
-    public partial class CheckLocButton : PluginUserControlExtend
+    public partial class PluginButton : PluginUserControlExtend
     {
         private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
 
-        private CheckLocListLanguages PART_ListViewLanguages;
+        private PluginListLanguages PART_ListViewLanguages;
 
         private readonly string IconDefault = "";
         private readonly string IconOk = "";
@@ -42,7 +42,7 @@ namespace CheckLocalizations.Controls
         private readonly string IconNone = "";
 
 
-        public CheckLocButton()
+        public PluginButton()
         {
             InitializeComponent();
 
@@ -60,12 +60,12 @@ namespace CheckLocalizations.Controls
         // When settings is updated
         public override void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            // ContextMenu or Show Window
+            // ContextMenu or show Window
             PART_ContextMenu.Items.Clear();
             PART_ListViewLanguages = null;
             if (PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonContextMenu)
             {
-                PART_ListViewLanguages = new CheckLocListLanguages();
+                PART_ListViewLanguages = new PluginListLanguages();
                 PART_ListViewLanguages.WithColNotes = false;
                 PART_ListViewLanguages.IgnoreSettings = true;
                 PART_ListViewLanguages.Width = 450;
@@ -123,7 +123,8 @@ namespace CheckLocalizations.Controls
         #endregion
 
 
-        private void PART_CheckLocButton_Click(object sender, RoutedEventArgs e)
+        #region Events
+        private void PART_PluginButton_Click(object sender, RoutedEventArgs e)
         {
             if (!PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonContextMenu)
             {
@@ -156,5 +157,6 @@ namespace CheckLocalizations.Controls
                 }
             }
         }
+        #endregion
     }
 }

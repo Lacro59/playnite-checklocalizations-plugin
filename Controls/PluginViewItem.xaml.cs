@@ -27,7 +27,7 @@ namespace CheckLocalizations.Controls
     /// <summary>
     /// Logique d'interaction pour CheckLocViewItem.xaml
     /// </summary>
-    public partial class CheckLocViewItem : PluginUserControlExtend
+    public partial class PluginViewItem : PluginUserControlExtend
     {
         private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
 
@@ -37,7 +37,7 @@ namespace CheckLocalizations.Controls
         private readonly string IconNone = "";
 
 
-        public CheckLocViewItem()
+        public PluginViewItem()
         {
             InitializeComponent();
 
@@ -53,7 +53,13 @@ namespace CheckLocalizations.Controls
         #region OnPropertyChange
         // When settings is updated
         public override void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
+        {            
+            // Apply settings
+            this.DataContext = new
+            {
+
+            };
+
             // Publish changes for the currently displayed game
             GameContextChanged(null, GameContext);
         }

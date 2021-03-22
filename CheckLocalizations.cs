@@ -39,7 +39,7 @@ namespace CheckLocalizations
             // Custom elements integration
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
-                ElementList = new List<string> { "CheckLocButton", "CheckLocListLanguages", "CheckLocViewItem" },
+                ElementList = new List<string> { "PluginButton", "PluginViewItem", "PluginListLanguages" },
                 SourceName = "CheckLocalizations",
                 SettingsRoot = $"{nameof(PluginSettings)}.{nameof(PluginSettings.Settings)}"
             });
@@ -77,19 +77,19 @@ namespace CheckLocalizations
         // List custom controls
         public override Control GetGameViewControl(GetGameViewControlArgs args)
         {
-            if (args.Name == "CheckLocButton")
+            if (args.Name == "PluginButton")
             {
-                return new CheckLocButton();
+                return new PluginButton();
             }
 
-            if (args.Name == "CheckLocListLanguages")
+            if (args.Name == "PluginViewItem")
             {
-                return new CheckLocListLanguages();
+                return new PluginViewItem();
             }
 
-            if (args.Name == "CheckLocViewItem")
+            if (args.Name == "PluginListLanguages")
             {
-                return new CheckLocViewItem();
+                return new PluginListLanguages();
             }
 
             return null;

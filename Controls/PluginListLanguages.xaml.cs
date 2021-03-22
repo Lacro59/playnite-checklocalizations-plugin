@@ -28,7 +28,7 @@ namespace CheckLocalizations.Controls
     /// <summary>
     /// Logique d'interaction pour CheckLocListLanguages.xaml
     /// </summary>
-    public partial class CheckLocListLanguages : PluginUserControlExtend
+    public partial class PluginListLanguages : PluginUserControlExtend
     {
         private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
 
@@ -39,7 +39,7 @@ namespace CheckLocalizations.Controls
         #endregion
 
 
-        public CheckLocListLanguages()
+        public PluginListLanguages()
         {
             InitializeComponent();
 
@@ -121,6 +121,7 @@ namespace CheckLocalizations.Controls
         #endregion
 
 
+        #region Events
         private void PART_GridContener_Loaded(object sender, RoutedEventArgs e)
         {
             PART_GridContener_SizeChanged(null, null);
@@ -162,5 +163,6 @@ namespace CheckLocalizations.Controls
                 PART_ColNotes.Width = 0;
             }
         }
+        #endregion
     }
 }

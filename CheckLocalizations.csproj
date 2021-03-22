@@ -72,6 +72,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -89,14 +90,14 @@
     <Compile Include="CheckLocalizations.cs" />
     <Compile Include="CheckLocalizationsSettings.cs" />
     <Compile Include="Clients\SteamLocalizations.cs" />
-    <Compile Include="Controls\CheckLocButton.xaml.cs">
-      <DependentUpon>CheckLocButton.xaml</DependentUpon>
+    <Compile Include="Controls\PluginButton.xaml.cs">
+      <DependentUpon>PluginButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CheckLocListLanguages.xaml.cs">
-      <DependentUpon>CheckLocListLanguages.xaml</DependentUpon>
+    <Compile Include="Controls\PluginListLanguages.xaml.cs">
+      <DependentUpon>PluginListLanguages.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CheckLocViewItem.xaml.cs">
-      <DependentUpon>CheckLocViewItem.xaml</DependentUpon>
+    <Compile Include="Controls\PluginViewItem.xaml.cs">
+      <DependentUpon>PluginViewItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="playnite-plugincommon\CommonPluginsControls\PlayniteControls\NumericBox.xaml.cs">
       <DependentUpon>NumericBox.xaml</DependentUpon>
@@ -230,15 +231,15 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Page Include="Controls\CheckLocButton.xaml">
+    <Page Include="Controls\PluginButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CheckLocListLanguages.xaml">
+    <Page Include="Controls\PluginListLanguages.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CheckLocViewItem.xaml">
+    <Page Include="Controls\PluginViewItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
