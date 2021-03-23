@@ -89,30 +89,38 @@ namespace CheckLocalizations.Controls
                 return;
             }
 
+            // Default value
+            string Text = string.Empty;
+
             if (newContext != null)
             {
                 GameLocalizations gameLocalization = PluginDatabase.Get(newContext.Id, true);
 
                 if (gameLocalization.Items.Count == 0)
                 {
-                    PART_Icon.Text = IconNone;
+                    Text = IconNone;
                 }
                 else
                 {
                     if (gameLocalization.HasNativeSupport())
                     {
-                        PART_Icon.Text = IconOk;
+                        Text = IconOk;
                     }
                     else
                     {
-                        PART_Icon.Text = IconKo;
+                        Text = IconKo;
                     }
                 }
             }
             else
             {
-                this.MustDisplay = false;
+                MustDisplay = false;
             }
+
+            this.DataContext = new
+            {
+                Text
+            };
         }
         #endregion
     }

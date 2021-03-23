@@ -8,7 +8,8 @@
         mc:Ignorable="d">
 
     <Grid>
-        <TextBlock Name="PART_Icon" Text="&#xea2c;" FontFamily="{DynamicResource CommonFont}"
+        <TextBlock Text="{Binding Text, Mode=OneWay}" 
+                   FontFamily="{DynamicResource CommonFont}"
                    Foreground="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=Foreground}"
                    FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" />
     </Grid>
