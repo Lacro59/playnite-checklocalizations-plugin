@@ -29,13 +29,11 @@ namespace CheckLocalizations.Services
 
         protected override bool LoadDatabase()
         {
-            IsLoaded = false;
             Database = new GameLocalizationsCollection(Paths.PluginDatabasePath);
             Database.SetGameInfo<Models.Localization>(PlayniteApi);
 
             GetPluginTags();
 
-            IsLoaded = true;
             return true;
         }
 
