@@ -18,7 +18,7 @@
         </Button.ContextMenu>
 
         <Grid>
-            <TextBlock Name="PART_ButtonIcon" Text="&#xea2c;" FontFamily="{DynamicResource CommonFont}"
+            <TextBlock Text="{Binding Text, Mode=OneWay, FallbackValue='&#xea2c;'}" FontFamily="{DynamicResource CommonFont}"
                        FontSize="{Binding RelativeSource={RelativeSource AncestorType=UserControl}, Path=FontSize}" />
         </Grid>
     </Button>

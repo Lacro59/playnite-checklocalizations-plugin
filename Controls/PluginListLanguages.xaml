@@ -16,6 +16,7 @@
 
     <Grid Name="PART_GridContener" Loaded="PART_GridContener_Loaded" SizeChanged="PART_GridContener_SizeChanged">
         <controls:ListViewExtend x:Name="PART_ListViewLanguages" Style="{StaticResource {x:Type ListView}}"
+                                 ItemsSource="{Binding ItemsSource}"
                                  SortingEnable="True" SortingDefaultDataName="DisplayName" SortingSortDirection="Descending"
                                  BubblingScrollEvents="True" HeightStretch="True" WidthStretch="True">
             <ListView.View>

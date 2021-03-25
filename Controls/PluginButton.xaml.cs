@@ -2,6 +2,7 @@
 using CheckLocalizations.Services;
 using CheckLocalizations.Views;
 using CommonPluginsShared;
+using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
 using CommonPluginsShared.Interfaces;
 using Playnite.SDK;
@@ -33,17 +34,44 @@ namespace CheckLocalizations.Controls
     public partial class PluginButton : PluginUserControlExtend
     {
         private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+        internal override IPluginDatabase _PluginDatabase
+        {
+            get
+            {
+                return PluginDatabase;
+            }
+            set
+            {
+                PluginDatabase = (LocalizationsDatabase)_PluginDatabase;
+            }
+        }
+
+        private PluginButtonDataContext ControlDataContext;
+        internal override IDataContext _ControlDataContext
+        {
+            get
+            {
+                return ControlDataContext;
+            }
+            set
+            {
+                ControlDataContext = (PluginButtonDataContext)_ControlDataContext;
+            }
+        }
+
 
         private PluginListLanguages PART_ListViewLanguages;
 
-        private readonly string IconDefault = "";
-        private readonly string IconOk = "";
-        private readonly string IconKo = "";
-        private readonly string IconNone = "";
+        private readonly string IconDefault = "\uea2c";
+        private readonly string IconOk = "\uea32";
+        private readonly string IconKo = "\uea31";
+        private readonly string IconNone = "\uea30";
 
 
         public PluginButton()
         {
+            AlwaysShow = true;
+
             InitializeComponent();
 
             Task.Run(() =>
@@ -65,74 +93,86 @@ namespace CheckLocalizations.Controls
         }
 
 
-        #region OnPropertyChange
-        // When settings is updated
-        public override void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        public override void SetDefaultDataContext()
         {
-            // ContextMenu or show Window
-            PART_ContextMenu.Items.Clear();
-            PART_ListViewLanguages = null;
-            if (PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonContextMenu)
+            ControlDataContext = new PluginButtonDataContext
             {
-                PART_ListViewLanguages = new PluginListLanguages();
-                PART_ListViewLanguages.WithColNotes = false;
-                PART_ListViewLanguages.IgnoreSettings = true;
-                PART_ListViewLanguages.Width = 450;
-                PART_ListViewLanguages.Height = 150;
-                PART_ContextMenu.Items.Add(PART_ListViewLanguages);
-            }
+                IsActivated = PluginDatabase.PluginSettings.Settings.EnableIntegrationButton,
+                DisplayDetails = PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonDetails,
+                ButtonContextMenu = PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonContextMenu,
 
-            // Apply settings
-            this.DataContext = new
-            {
-                PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonDetails,
-                PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonContextMenu
+                Text = string.Empty
             };
-            
-            // Publish changes for the currently displayed game
-            GameContextChanged(null, GameContext);
         }
 
-        // When game is changed
-        public override void GameContextChanged(Game oldContext, Game newContext)
+
+        public override Task<bool> SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
         {
-            if (!PluginDatabase.IsLoaded)
+            return Task.Run(() =>
             {
-                return;
-            }
+                GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
-            MustDisplay = PluginDatabase.PluginSettings.Settings.EnableIntegrationButton;
-
-            // When control is not used
-            if (!PluginDatabase.PluginSettings.Settings.EnableIntegrationButton)
-            {
-                return;
-            }
-
-            if (newContext != null && PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonDetails)
-            {
-                GameLocalizations gameLocalization = PluginDatabase.Get(newContext.Id, true);
-
-                if (gameLocalization.Items.Count == 0)
+                if (ControlDataContext.DisplayDetails)
                 {
-                    PART_ButtonIcon.Text = IconNone;
-                }
-                else
-                {
-                    if (gameLocalization.HasNativeSupport())
+                    if (gameLocalization.Items.Count == 0)
                     {
-                        PART_ButtonIcon.Text = IconOk;
+                        ControlDataContext.Text = IconNone;
                     }
                     else
                     {
-                        PART_ButtonIcon.Text = IconKo;
+                        if (gameLocalization.HasNativeSupport())
+                        {
+                            ControlDataContext.Text = IconOk;
+                        }
+                        else
+                        {
+                            ControlDataContext.Text = IconKo;
+                        }
                     }
                 }
-            }
-            else
+                else
+                {
+                    ControlDataContext.Text = IconDefault;
+                }
+
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
+                {
+                    this.DataContext = ControlDataContext;
+                }));
+
+                return true;
+            });
+        }
+
+
+
+        #region OnPropertyChange
+        // When settings is updated
+        internal override void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (ControlDataContext == null)
             {
-                PART_ButtonIcon.Text = IconDefault;
+                return;
             }
+
+            // ContextMenu or show Window
+            PART_ContextMenu.Items.Clear();
+            PART_ListViewLanguages = null;
+
+            if (ControlDataContext.ButtonContextMenu)
+            {
+                PART_ListViewLanguages = new PluginListLanguages
+                {
+                    WithColNotes = false,
+                    IgnoreSettings = true,
+                    Width = 450,
+                    Height = 150
+                };
+                PART_ContextMenu.Items.Add(PART_ListViewLanguages);
+            }
+            
+            // Publish changes for the currently displayed game
+            GameContextChanged(null, GameContext);
         }
         #endregion
 
@@ -172,5 +212,15 @@ namespace CheckLocalizations.Controls
             }
         }
         #endregion
+    }
+
+
+    public class PluginButtonDataContext : IDataContext
+    {
+        public bool IsActivated { get; set; }
+        public bool DisplayDetails { get; set; }
+        public bool ButtonContextMenu { get; set; }
+
+        public string Text { get; set; }
     }
 }

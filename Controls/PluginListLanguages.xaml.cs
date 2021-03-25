@@ -1,12 +1,15 @@
 ﻿using CheckLocalizations.Models;
 using CheckLocalizations.Services;
 using CommonPluginsShared;
+using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
+using CommonPluginsShared.Interfaces;
 using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -31,9 +34,33 @@ namespace CheckLocalizations.Controls
     public partial class PluginListLanguages : PluginUserControlExtend
     {
         private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+        internal override IPluginDatabase _PluginDatabase
+        {
+            get
+            {
+                return PluginDatabase;
+            }
+            set
+            {
+                PluginDatabase = (LocalizationsDatabase)_PluginDatabase;
+            }
+        }
+
+        private PluginListLanguagesDataContext ControlDataContext;
+        internal override IDataContext _ControlDataContext
+        {
+            get
+            {
+                return ControlDataContext;
+            }
+            set
+            {
+                ControlDataContext = (PluginListLanguagesDataContext)_ControlDataContext;
+            }
+        }
 
 
-        #region Property
+        #region Properties
         public static readonly DependencyProperty WithColNotesProperty;
         public bool? WithColNotes { get; set; }
         #endregion
@@ -41,6 +68,8 @@ namespace CheckLocalizations.Controls
 
         public PluginListLanguages()
         {
+            AlwaysShow = true;
+
             InitializeComponent();
 
             Task.Run(() =>
@@ -62,77 +91,58 @@ namespace CheckLocalizations.Controls
         }
 
 
-        #region OnPropertyChange
-        // When settings is updated
-        public override void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        { 
-            // Apply settings
+        public override void SetDefaultDataContext()
+        {
+            double ListLanguagesHeight = PluginDatabase.PluginSettings.Settings.ListLanguagesHeight;
             if (IgnoreSettings)
             {
-                this.DataContext = new
-                {
-                    ListLanguagesHeight = double.NaN,
-                };
+                ListLanguagesHeight = double.NaN;
             }
-            else
+
+
+            ControlDataContext = new PluginListLanguagesDataContext
             {
-                this.DataContext = new
-                {
-                    PluginDatabase.PluginSettings.Settings.ListLanguagesHeight
-                };
-            }
+                IsActivated = PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguages,
+                ListLanguagesHeight = ListLanguagesHeight,
+                ListLanguagesVisibleEmpty = PluginDatabase.PluginSettings.Settings.ListLanguagesVisibleEmpty,
+
+                ItemsSource = new ObservableCollection<Models.Localization>()
+            };
+
 
             PART_GridContener_SizeChanged(null, null);
-
-            // Publish changes for the currently displayed game
-            GameContextChanged(null, GameContext);
         }
 
-        // When game is changed
-        public override void GameContextChanged(Game oldContext, Game newContext)
+
+        public override Task<bool> SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
         {
-            if (!PluginDatabase.IsLoaded)
+            bool IgnoreSettings = this.IgnoreSettings;
+            bool MustDisplay = this.MustDisplay;
+
+            return Task.Run(() =>
             {
-                return;
-            }
+                GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
-            if (IgnoreSettings)
-            {
-                MustDisplay = true;
-            }
-            else
-            {
-                MustDisplay = PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguages;
+                ControlDataContext.ItemsSource = gameLocalization.Items.ToObservable();
 
-                // When control is not used
-                if (!PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguages)
-                {
-                    return;
-                }
-            }
-
-            if (newContext != null)
-            {
-                GameLocalizations gameLocalization = PluginDatabase.Get(newContext.Id, true);
-
-                PART_ListViewLanguages.ItemsSource = null;
-                PART_ListViewLanguages.ItemsSource = gameLocalization.Items;
-
-
-                if (!IgnoreSettings && !PluginDatabase.PluginSettings.Settings.ListLanguagesVisibleEmpty)
+                if (!IgnoreSettings && !ControlDataContext.ListLanguagesVisibleEmpty)
                 {
                     MustDisplay = gameLocalization.HasData;
                 }
-            }
-            else
-            {
-                if (!IgnoreSettings)
+                else
                 {
-                    MustDisplay = PluginDatabase.PluginSettings.Settings.ListLanguagesVisibleEmpty;
+                    MustDisplay = true;
                 }
-            }
+
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
+                {
+                    this.MustDisplay = MustDisplay;
+                    this.DataContext = ControlDataContext;
+                }));
+
+                return true;
+            });
         }
-        #endregion
 
 
         #region Events
@@ -178,5 +188,15 @@ namespace CheckLocalizations.Controls
             }
         }
         #endregion
+    }
+
+
+    public class PluginListLanguagesDataContext : IDataContext
+    {
+        public bool IsActivated { get; set; }
+        public double ListLanguagesHeight { get; set; }
+        public bool ListLanguagesVisibleEmpty { get; set; }
+
+        public ObservableCollection<Models.Localization> ItemsSource { get; set; }
     }
 }

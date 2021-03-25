@@ -1,6 +1,8 @@
 ﻿using CheckLocalizations.Models;
 using CheckLocalizations.Services;
+using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
+using CommonPluginsShared.Interfaces;
 using Playnite.SDK;
 using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
@@ -30,11 +32,35 @@ namespace CheckLocalizations.Controls
     public partial class PluginViewItem : PluginUserControlExtend
     {
         private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+        internal override IPluginDatabase _PluginDatabase
+        {
+            get
+            {
+                return PluginDatabase;
+            }
+            set
+            {
+                PluginDatabase = (LocalizationsDatabase)_PluginDatabase;
+            }
+        }
 
-        private readonly string IconDefault = "";
-        private readonly string IconOk = "";
-        private readonly string IconKo = "";
-        private readonly string IconNone = "";
+        private PluginViewItemDataContext ControlDataContext;
+        internal override IDataContext _ControlDataContext
+        {
+            get
+            {
+                return ControlDataContext;
+            }
+            set
+            {
+                ControlDataContext = (PluginViewItemDataContext)_ControlDataContext;
+            }
+        }
+
+
+        private readonly string IconOk = "\uea32";
+        private readonly string IconKo = "\uea31";
+        private readonly string IconNone = "\uea30";
 
 
         public PluginViewItem()
@@ -59,69 +85,55 @@ namespace CheckLocalizations.Controls
             });
         }
 
-        #region OnPropertyChange
-        // When settings is updated
-        public override void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {            
-            // Apply settings
-            this.DataContext = new
+
+        public override void SetDefaultDataContext()
+        {
+            ControlDataContext = new PluginViewItemDataContext
             {
+                IsActivated = PluginDatabase.PluginSettings.Settings.EnableIntegrationViewItem,
 
+                Text = string.Empty
             };
-
-            // Publish changes for the currently displayed game
-            GameContextChanged(null, GameContext);
         }
 
-        // When game is changed
-        public override void GameContextChanged(Game oldContext, Game newContext)
+
+        public override Task<bool> SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
         {
-            if (!PluginDatabase.IsLoaded)
+            return Task.Run(() =>
             {
-                return;
-            }
-
-            MustDisplay = PluginDatabase.PluginSettings.Settings.EnableIntegrationViewItem;
-            
-            // When control is not used
-            if (!PluginDatabase.PluginSettings.Settings.EnableIntegrationViewItem)
-            {
-                return;
-            }
-
-            // Default value
-            string Text = string.Empty;
-
-            if (newContext != null)
-            {
-                GameLocalizations gameLocalization = PluginDatabase.Get(newContext.Id, true);
+                GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
                 if (gameLocalization.Items.Count == 0)
                 {
-                    Text = IconNone;
+                    ControlDataContext.Text = IconNone;
                 }
                 else
                 {
                     if (gameLocalization.HasNativeSupport())
                     {
-                        Text = IconOk;
+                        ControlDataContext.Text = IconOk;
                     }
                     else
                     {
-                        Text = IconKo;
+                        ControlDataContext.Text = IconKo;
                     }
                 }
-            }
-            else
-            {
-                MustDisplay = false;
-            }
 
-            this.DataContext = new
-            {
-                Text
-            };
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
+                {
+                    this.DataContext = ControlDataContext;
+                }));
+
+                return true;
+            });
         }
-        #endregion
+    }
+
+
+    public class PluginViewItemDataContext : IDataContext
+    {
+        public bool IsActivated { get; set; }
+
+        public string Text { get; set; }
     }
 }
