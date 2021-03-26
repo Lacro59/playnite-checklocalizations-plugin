@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommonPluginsShared;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace CheckLocalizations.Services
 {
@@ -38,14 +39,14 @@ namespace CheckLocalizations.Services
         }
 
 
-        public override GameLocalizations Get(Guid Id, bool OnlyCache = false)
+        public override GameLocalizations Get(Guid Id, bool OnlyCache = false, bool Force = false)
         {
             GameLocalizations gameLocalizations = GetOnlyCache(Id);
 
-            if (gameLocalizations == null && !OnlyCache)
+            if ((gameLocalizations == null && !OnlyCache) || Force)
             {
                 gameLocalizations = GetWeb(Id);
-                Add(gameLocalizations);
+                AddOrUpdate(gameLocalizations);
             }
             else if (gameLocalizations != null && !OnlyCache
                 && gameLocalizations.Items.Where(x => x.IsManual == true).Count() != 0
@@ -241,8 +242,16 @@ namespace CheckLocalizations.Services
 
                     if (!noUpdate)
                     {
-                        PlayniteApi.Database.Games.Update(game);
-                        game.OnPropertyChanged();
+                        //Application.Current.Dispatcher.BeginInvoke((Action)delegate
+                        //{
+                        //    PlayniteApi.Database.Games.Update(game);
+                        //    game.OnPropertyChanged();
+                        //}).Wait();
+                        Application.Current.Dispatcher?.Invoke(() => 
+                        {
+                            PlayniteApi.Database.Games.Update(game);
+                            game.OnPropertyChanged();
+                        }, DispatcherPriority.Send);
                     }
                 }
                 catch (Exception ex)
