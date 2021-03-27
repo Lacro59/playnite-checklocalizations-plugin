@@ -242,11 +242,6 @@ namespace CheckLocalizations.Services
 
                     if (!noUpdate)
                     {
-                        //Application.Current.Dispatcher.BeginInvoke((Action)delegate
-                        //{
-                        //    PlayniteApi.Database.Games.Update(game);
-                        //    game.OnPropertyChanged();
-                        //}).Wait();
                         Application.Current.Dispatcher?.Invoke(() => 
                         {
                             PlayniteApi.Database.Games.Update(game);

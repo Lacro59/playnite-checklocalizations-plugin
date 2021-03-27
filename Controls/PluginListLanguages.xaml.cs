@@ -123,8 +123,6 @@ namespace CheckLocalizations.Controls
             {
                 GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
-                ControlDataContext.ItemsSource = gameLocalization.Items.ToObservable();
-
                 if (!IgnoreSettings && !ControlDataContext.ListLanguagesVisibleEmpty)
                 {
                     MustDisplay = gameLocalization.HasData;
@@ -132,6 +130,11 @@ namespace CheckLocalizations.Controls
                 else
                 {
                     MustDisplay = true;
+                }
+
+                if (MustDisplay)
+                {
+                    ControlDataContext.ItemsSource = gameLocalization.Items.ToObservable();
                 }
 
                 this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate

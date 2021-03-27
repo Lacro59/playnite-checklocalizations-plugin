@@ -145,7 +145,6 @@ namespace CheckLocalizations.Controls
         }
 
 
-
         #region OnPropertyChange
         // When settings is updated
         internal override void PluginSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
