@@ -138,7 +138,6 @@
                     </Grid>
                 </Grid>
 
-
                 <Label Content="{DynamicResource LOCCommonControlsAvailable}" Margin="0,30,0,0" />
                 <Separator Margin="0,0,0,10" />
                 <Grid>
@@ -150,7 +149,7 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
-                    <Expander Grid.Row="0" VerticalAlignment="Center">
+                    <Expander Grid.Row="0">
                         <Expander.Style>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Type Expander}}">
                                 <Setter Property="Background" Value="Transparent" />
@@ -165,7 +164,7 @@
 
                         <Expander.Content>
                             <Border IsEnabled="{Binding ElementName=PART_IntegrationButton, Path=IsChecked}"
-				                    Margin="5"  Padding="10"
+				                    Margin="5" Padding="10"
 				                    BorderBrush="{DynamicResource PopupBorderBrush}"
 				                    BorderThickness="{DynamicResource PopupBorderThickness}">
                                 <Grid>
@@ -179,12 +178,10 @@
                                             <RowDefinition Height="auto" />
                                         </Grid.RowDefinitions>
 
-                                        <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationButtonDetails}" 
-                                                  VerticalAlignment="Center">
+                                        <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationButtonDetails}">
                                             <Label Content="{DynamicResource LOCCommonIntegrationButtonDetails}" />
                                         </CheckBox>
-                                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationButtonContextMenu}" 
-                                                  VerticalAlignment="Center">
+                                        <CheckBox Grid.Column="2" Grid.Row="0" IsChecked="{Binding Settings.EnableIntegrationButtonContextMenu}">
                                             <Label Content="{DynamicResource LOCCommonControlsPluginButtonShowInContextMenu}" />
                                         </CheckBox>
                                     </Grid>
@@ -193,8 +190,7 @@
                         </Expander.Content>
                     </Expander>
 
-                    <Expander Grid.Row="2" VerticalAlignment="Center" 
-                              AttachedProperties:ExpanderAttachedProperties.HideExpanderArrow="True">
+                    <Expander Grid.Row="2" AttachedProperties:ExpanderAttachedProperties.HideExpanderArrow="True">
                         <Expander.Style>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Type Expander}}">
                                 <Setter Property="Background" Value="Transparent" />
@@ -208,7 +204,7 @@
                         </Expander.Header>
                     </Expander>
 
-                    <Expander Grid.Row="4" VerticalAlignment="Center">
+                    <Expander Grid.Row="4">
                         <Expander.Style>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Type Expander}}">
                                 <Setter Property="Background" Value="Transparent" />
@@ -223,7 +219,7 @@
 
                         <Expander.Content>
                             <Border IsEnabled="{Binding ElementName=PART_IntegrationListLanguages, Path=IsChecked}"
-				                    Margin="5"  Padding="10"
+				                    Margin="5" Padding="10"
 				                    BorderBrush="{DynamicResource PopupBorderBrush}"
 				                    BorderThickness="{DynamicResource PopupBorderThickness}">
                                 <Grid>
@@ -244,12 +240,10 @@
                                                                      LongValue="{Binding Settings.ListLanguagesHeight}" />
                                     </DockPanel>
 
-                                    <CheckBox Grid.Column="0" Grid.Row="2" IsChecked="{Binding Settings.ListLanguagesWithColNote}" 
-                                              VerticalAlignment="Center">
+                                    <CheckBox Grid.Column="0" Grid.Row="2" IsChecked="{Binding Settings.ListLanguagesWithColNote}">
                                         <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationListLanguagesWithColNote}" />
                                     </CheckBox>
-                                    <CheckBox Grid.Column="2" Grid.Row="2" IsChecked="{Binding Settings.ListLanguagesVisibleEmpty}" 
-                                              VerticalAlignment="Center">
+                                    <CheckBox Grid.Column="2" Grid.Row="2" IsChecked="{Binding Settings.ListLanguagesVisibleEmpty}">
                                         <Label Content="{DynamicResource LOCCommonControlsVisibleNoData}" />
                                     </CheckBox>
                                 </Grid>
