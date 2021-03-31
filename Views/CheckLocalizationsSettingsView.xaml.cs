@@ -72,7 +72,7 @@ namespace CheckLocalizations.Views
         /// <param name="e"></param>
         private void ButtonCheck_Click(object sender, RoutedEventArgs e)
         {
-            CheckLocalizations.PluginDatabase.GetAllDatas();
+            CheckLocalizations.PluginDatabase.GetSelectData();
         }
 
         /// <summary>
