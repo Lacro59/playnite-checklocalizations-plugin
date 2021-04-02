@@ -93,16 +93,18 @@ namespace CheckLocalizations.Controls
 
         public override void SetDefaultDataContext()
         {
+            bool IsActivated = PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguages;
             double ListLanguagesHeight = PluginDatabase.PluginSettings.Settings.ListLanguagesHeight;
             if (IgnoreSettings)
             {
+                IsActivated = true;
                 ListLanguagesHeight = double.NaN;
             }
 
 
             ControlDataContext = new PluginListLanguagesDataContext
             {
-                IsActivated = PluginDatabase.PluginSettings.Settings.EnableIntegrationListLanguages,
+                IsActivated = IsActivated,
                 ListLanguagesHeight = ListLanguagesHeight,
                 ListLanguagesVisibleEmpty = PluginDatabase.PluginSettings.Settings.ListLanguagesVisibleEmpty,
 
