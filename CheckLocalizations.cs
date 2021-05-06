@@ -40,6 +40,12 @@ namespace CheckLocalizations
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
                 ElementList = new List<string> { "PluginButton", "PluginViewItem", "PluginListLanguages" },
+                SourceName = "CheckLocalizations"
+            });
+
+            // Settings integration
+            AddSettingsSupport(new AddSettingsSupportArgs
+            {
                 SourceName = "CheckLocalizations",
                 SettingsRoot = $"{nameof(PluginSettings)}.{nameof(PluginSettings.Settings)}"
             });
@@ -106,7 +112,8 @@ namespace CheckLocalizations
             List<GameMenuItem> gameMenuItems = new List<GameMenuItem>
             {
                 // Show list available localizations for the selected game
-                new GameMenuItem {
+                new GameMenuItem
+                {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCheckLocalizationsGameMenuPluginView"),
                     Action = (gameMenuItem) =>
@@ -117,8 +124,15 @@ namespace CheckLocalizations
                     }
                 },
 
+               new GameMenuItem
+               {
+                    MenuSection = resources.GetString("LOCCheckLocalizations"),
+                    Description = "-"
+               },
+
                 // Delete & download localizations data for the selected game
-                new GameMenuItem {
+                new GameMenuItem
+                {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCommonRefreshGameData"),
                     Action = (gameMenuItem) =>
@@ -145,6 +159,11 @@ namespace CheckLocalizations
             };
 
 #if DEBUG
+            gameMenuItems.Add(new GameMenuItem
+            {
+                MenuSection = resources.GetString("LOCCheckLocalizations"),
+                Description = "-"
+            });
             gameMenuItems.Add(new GameMenuItem
             {
                 MenuSection = resources.GetString("LOCCheckLocalizations"),
@@ -181,6 +200,12 @@ namespace CheckLocalizations
                     }
                 },
 
+                new MainMenuItem
+                {
+                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    Description = "-"
+                },
+
                 // Add tag for selected game in database if data exists
                 new MainMenuItem
                 {
@@ -203,6 +228,12 @@ namespace CheckLocalizations
                     }
                 },
 
+                new MainMenuItem
+                {
+                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    Description = "-"
+                },
+
                 // Delete all data of plugin
                 new MainMenuItem
                 {
@@ -223,6 +254,11 @@ namespace CheckLocalizations
             };
 
 #if DEBUG
+            mainMenuItems.Add(new MainMenuItem
+            {
+                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                Description = "-"
+            });
             mainMenuItems.Add(new MainMenuItem
             {
                 MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
