@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CheckLocalizations.Services
@@ -43,11 +44,26 @@ namespace CheckLocalizations.Services
 
         public GameLocalizations GetLocalizations(Game game)
         {
-            List<Localization> Localizations = pCGamingWikiLocalizations.GetLocalizations(game);
-            if (Localizations.Count == 0)
-            {
-                Localizations = steamLocalizations.GetLocalizations(game);
+            Thread.Sleep(1000);
 
+            List<Localization> LocalizationsGamingWiki = new List<Localization>();
+            List<Localization> LocalizationsSteam = new List<Localization>();
+
+            Task[] tasks = new Task[2];
+            tasks[0] = Task.Run(() => { LocalizationsGamingWiki = pCGamingWikiLocalizations.GetLocalizations(game); });
+            tasks[1] = Task.Run(() => { LocalizationsSteam = steamLocalizations.GetLocalizations(game); });
+
+            Task.WaitAll(tasks);
+
+            List<Localization> Localizations = new List<Localization>();
+            if (LocalizationsGamingWiki.Count >= LocalizationsSteam.Count)
+            {
+                Localizations = LocalizationsGamingWiki;
+                Common.LogDebug(true, $"Used PCGamingWikiLocalizations for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
+            }
+            else
+            {
+                Localizations = LocalizationsSteam;
                 Common.LogDebug(true, $"Used Steam for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
             }
 
