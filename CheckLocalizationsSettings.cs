@@ -70,6 +70,18 @@ namespace CheckLocalizations
             }
         }
 
+
+        private bool _EnableIntegrationFlags { get; set; } = false;
+        public bool EnableIntegrationFlags
+        {
+            get => _EnableIntegrationFlags;
+            set
+            {
+                _EnableIntegrationFlags = value;
+                OnPropertyChanged();
+            }
+        }
+
         public double ListLanguagesHeight { get; set; } = 120;
         public bool ListLanguagesWithColNote { get; set; } = false;
         public bool ListLanguagesVisibleEmpty { get; set; } = false;
@@ -176,7 +188,6 @@ namespace CheckLocalizations
                     new GameLanguage { DisplayName = "فارسی", Name = "Persian", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Suomi", Name = "Finnish", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Hrvatski", Name = "Croatian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Magyar", Name = "Hungarian", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Bahasa Indonesia", Name = "Indonesian", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Lietuvių", Name = "Lithuanian", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Nederlands", Name = "Dutch", IsTag = false, IsNative = false },
