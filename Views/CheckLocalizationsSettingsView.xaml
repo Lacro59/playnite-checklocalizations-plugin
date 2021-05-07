@@ -253,7 +253,7 @@
                         </Expander.Content>
                     </Expander>
 
-                    <Expander Grid.Row="6" AttachedProperties:ExpanderAttachedProperties.HideExpanderArrow="True">
+                    <Expander Grid.Row="6">
                         <Expander.Style>
                             <Style TargetType="{x:Type Expander}" BasedOn="{StaticResource {x:Type Expander}}">
                                 <Setter Property="Background" Value="Transparent" />
@@ -265,6 +265,26 @@
                                 <Label Content="{DynamicResource LOCCheckLocalizationsIntegrationFlags}" />
                             </CheckBox>
                         </Expander.Header>
+
+                        <Expander.Content>
+                            <Border IsEnabled="{Binding ElementName=PART_IntegrationFlags, Path=IsChecked}"
+				                    Margin="5" Padding="10"
+				                    BorderBrush="{DynamicResource PopupBorderBrush}"
+				                    BorderThickness="{DynamicResource PopupBorderThickness}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.OnlyDisplaySelectedFlags}">
+                                        <Label Content="{DynamicResource LOCCheckLocalizationsOnlyDisplaySelectedFlags}" />
+                                    </CheckBox>
+                                </Grid>
+                            </Border>
+                        </Expander.Content>
                     </Expander>
                 </Grid>
             </StackPanel>

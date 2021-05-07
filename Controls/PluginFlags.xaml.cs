@@ -55,11 +55,6 @@ namespace CheckLocalizations.Controls
             }
         }
 
-
-        private readonly string IconOk = "\uea32";
-        private readonly string IconKo = "\uea31";
-        private readonly string IconNone = "\uea30";
-
         public PluginFlags()
         {
             InitializeComponent();
@@ -102,7 +97,19 @@ namespace CheckLocalizations.Controls
                 GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
                 ObservableCollection<ItemList> itemLists = new ObservableCollection<ItemList>();
-                itemLists = gameLocalization.Items.Select(x => new ItemList { Name = x.DisplayName, Icon = x.FlagIcon }).ToObservable();
+                if (PluginDatabase.PluginSettings.Settings.OnlyDisplaySelectedFlags)
+                {
+                    var TaggedLanguage = PluginDatabase.PluginSettings.Settings.GameLanguages
+                        .FindAll(x => x.IsTag && gameLocalization.Items.Any(y => x.Name.ToLower() == y.Language.ToLower()));
+
+                    itemLists = gameLocalization.Items
+                        .Where(x => TaggedLanguage.Any(y => x.Language.ToLower() == y.Name.ToLower()))
+                        .Select(x => new ItemList { Name = x.DisplayName, Icon = x.FlagIcon }).ToObservable();
+                }
+                else
+                {
+                    itemLists = gameLocalization.Items.Select(x => new ItemList { Name = x.DisplayName, Icon = x.FlagIcon }).ToObservable();
+                }
 
                 ControlDataContext.CountItems = itemLists.Count;
                 ControlDataContext.ItemsSource = itemLists;

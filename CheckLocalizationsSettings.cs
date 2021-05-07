@@ -82,6 +82,9 @@ namespace CheckLocalizations
             }
         }
 
+        public bool OnlyDisplaySelectedFlags { get; set; } = false;
+
+
         public double ListLanguagesHeight { get; set; } = 120;
         public bool ListLanguagesWithColNote { get; set; } = false;
         public bool ListLanguagesVisibleEmpty { get; set; } = false;
