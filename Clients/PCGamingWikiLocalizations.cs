@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CheckLocalizations.Clients
@@ -26,6 +27,7 @@ namespace CheckLocalizations.Clients
         private SteamApi steamApi;
         private readonly string urlSteamId = "https://pcgamingwiki.com/api/appid.php?appid={0}";
         private string UrlPCGamingWikiSearch { get; set; } = @"https://pcgamingwiki.com/w/index.php?search=";
+        private string UrlPCGamingWiki { get; set; } = @"https://www.pcgamingwiki.com";
 
 
         public PCGamingWikiLocalizations(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
@@ -37,9 +39,40 @@ namespace CheckLocalizations.Clients
         }
 
 
+        private string GetUrlIsOneResult(string WebResponse)
+        {
+            string url = string.Empty;
+
+            try
+            {
+                if (!WebResponse.Contains("There were no results matching the query"))
+                {
+                    HtmlParser parser = new HtmlParser();
+                    IHtmlDocument HtmlDocument = parser.Parse(WebResponse);
+
+                    if (HtmlDocument.QuerySelectorAll("ul.mw-search-results")?.Count() == 2)
+                    {
+                        var TitleMatches = HtmlDocument.QuerySelectorAll("ul.mw-search-results")[0].QuerySelectorAll("li");
+                        if (TitleMatches?.Count() == 1)
+                        {
+                            url = UrlPCGamingWiki + TitleMatches[0].QuerySelector("a").GetAttribute("href");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, false);
+            }
+
+            return url;
+        }
+
+
         private string FindGoodUrl(Game game, int SteamId = 0)
         {
             string url = string.Empty;
+            string urlMatch = string.Empty;
             string WebResponse = string.Empty;
 
 
@@ -48,6 +81,7 @@ namespace CheckLocalizations.Clients
             {
                 url = string.Format(urlSteamId, SteamId);
 
+                Thread.Sleep(1000);
                 WebResponse = Web.DownloadStringData(url).GetAwaiter().GetResult();
                 if (!WebResponse.ToLower().Contains("search results"))
                 {
@@ -65,23 +99,32 @@ namespace CheckLocalizations.Clients
                     {
                         url = link.Url;
 
-                        if (url.Contains(UrlPCGamingWikiSearch))
-                        {
-                            url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(url.Replace(UrlPCGamingWikiSearch, string.Empty));
-                        }
                         if (url.Contains(@"http://pcgamingwiki.com/w/index.php?search="))
                         {
                             url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(url.Replace(@"http://pcgamingwiki.com/w/index.php?search=", string.Empty));
+                        }
+                        if (url.Length == UrlPCGamingWikiSearch.Length)
+                        {
+                            url =  string.Empty;
                         }
                     }
                 }
 
                 if (!url.IsNullOrEmpty())
                 {
+                    Thread.Sleep(1000);
                     WebResponse = Web.DownloadStringData(url).GetAwaiter().GetResult();
                     if (!WebResponse.ToLower().Contains("search results"))
                     {
                         return url;
+                    }
+                    else
+                    {
+                        urlMatch = GetUrlIsOneResult(WebResponse);
+                        if (!urlMatch.IsNullOrEmpty())
+                        {
+                            return urlMatch;
+                        }
                     }
                 }
             }
@@ -89,24 +132,43 @@ namespace CheckLocalizations.Clients
 
             string Name = Regex.Replace(game.Name, @"([ ]demo\b)", string.Empty, RegexOptions.IgnoreCase);
             Name = Regex.Replace(Name, @"(demo[ ])", string.Empty, RegexOptions.IgnoreCase);
+            Name = CommonPluginsShared.PlayniteTools.NormalizeGameName(Name);
 
             url = string.Empty;
             url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(Name);
 
+            Thread.Sleep(1000);
             WebResponse = Web.DownloadStringData(url).GetAwaiter().GetResult();
             if (!WebResponse.ToLower().Contains("search results"))
             {
                 return url;
+            }
+            else
+            {
+                urlMatch = GetUrlIsOneResult(WebResponse);
+                if (!urlMatch.IsNullOrEmpty())
+                {
+                    return urlMatch;
+                }
             }
 
 
             url = string.Empty;
             url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(game.Name);
 
+            Thread.Sleep(1000);
             WebResponse = Web.DownloadStringData(url).GetAwaiter().GetResult();
             if (!WebResponse.ToLower().Contains("search results"))
             {
                 return url;
+            }
+            else
+            {
+                urlMatch = GetUrlIsOneResult(WebResponse);
+                if (!urlMatch.IsNullOrEmpty())
+                {
+                    return urlMatch;
+                }
             }
 
 
@@ -119,7 +181,7 @@ namespace CheckLocalizations.Clients
             string urlPCGamingWiki = string.Empty;
             int SteamId = 0;
 
-            if (game.SourceId != Guid.Parse("00000000-0000-0000-0000-000000000000"))
+            if (game.SourceId != default(Guid))
             {
                 if (game.Source.Name.ToLower() == "steam")
                 {
