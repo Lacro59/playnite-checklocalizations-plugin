@@ -29,6 +29,7 @@ namespace CheckLocalizations.Clients
         private string UrlPCGamingWikiSearch { get; set; } = @"https://pcgamingwiki.com/w/index.php?search=";
         private string UrlPCGamingWiki { get; set; } = @"https://www.pcgamingwiki.com";
 
+        private string urlPCGamingWiki = string.Empty;
 
         public PCGamingWikiLocalizations(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
         {
@@ -67,7 +68,6 @@ namespace CheckLocalizations.Clients
 
             return url;
         }
-
 
         private string FindGoodUrl(Game game, int SteamId = 0)
         {
@@ -176,9 +176,15 @@ namespace CheckLocalizations.Clients
         }
 
 
+        public string GetUrl()
+        {
+            return urlPCGamingWiki;
+        }
+
+
         public List<Localization> GetLocalizations(Game game)
         {
-            string urlPCGamingWiki = string.Empty;
+            urlPCGamingWiki = string.Empty;
             int SteamId = 0;
 
             if (game.SourceId != default(Guid))

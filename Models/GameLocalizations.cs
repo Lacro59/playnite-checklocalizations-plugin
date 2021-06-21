@@ -28,6 +28,8 @@ namespace CheckLocalizations.Models
 
         public bool HasChecked { get; set; }
 
+        public SourceLink SourcesLink { get; set; }
+
         /// <summary>
         /// Indicates whether one of the languages ​​is the native language
         /// </summary>
@@ -47,5 +49,12 @@ namespace CheckLocalizations.Models
 
             return false;
         }
+    }
+
+
+    public class SourceLink
+    {
+        public string Name { get; set; }
+        public string Url { get; set; }
     }
 }

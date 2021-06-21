@@ -21,6 +21,7 @@ namespace CheckLocalizations.Clients
         private readonly string _PluginUserDataPath;
 
         private SteamApi steamApi;
+        private int SteamId;
 
 
         public SteamLocalizations(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
@@ -38,7 +39,7 @@ namespace CheckLocalizations.Clients
 
             try
             {
-                int SteamId = steamApi.GetSteamId(game.Name);
+                SteamId = steamApi.GetSteamId(game.Name);
 
                 if (SteamId != 0)
                 {
@@ -114,6 +115,12 @@ namespace CheckLocalizations.Clients
                 Common.LogError(ex, false, $"Failed to download {url}");
                 return string.Empty;
             }
+        }
+
+
+        public string GetURl()
+        {
+            return $"https://store.steampowered.com/app/{SteamId}/";
         }
     }
 }

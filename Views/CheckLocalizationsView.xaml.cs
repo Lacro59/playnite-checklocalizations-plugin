@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using CheckLocalizations.Controls;
 using CheckLocalizations.Services;
+using System.Windows;
+using System.Diagnostics;
+using System.Windows.Documents;
 
 namespace CheckLocalizations.Views
 {
@@ -25,6 +28,27 @@ namespace CheckLocalizations.Views
             PART_ListViewLanguages.IgnoreSettings = true;
             PART_ListViewLanguages.GameContext = PluginDatabase.GameContext;
             PART_Contener.Children.Add(PART_ListViewLanguages);
+
+
+            GameLocalizations gameLocalizations = PluginDatabase.Get(PluginDatabase.GameContext, true);
+
+            if (gameLocalizations.SourcesLink != null)
+            {
+                PART_SourceLabel.Text = gameLocalizations.SourcesLink.Name;
+                PART_SourceLink.Tag = gameLocalizations.SourcesLink.Url;
+            }
+        }
+
+
+        private void PART_SourceLink_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (((Hyperlink)sender).Tag is string)
+            {
+                if (!((string)((Hyperlink)sender).Tag).IsNullOrEmpty())
+                {
+                    Process.Start((string)((Hyperlink)sender).Tag);
+                }                
+            }
         }
     }
 }

@@ -46,6 +46,8 @@ namespace CheckLocalizations.Services
         {
             Thread.Sleep(1000);
 
+            GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(game);
+
             List<Localization> LocalizationsGamingWiki = new List<Localization>();
             List<Localization> LocalizationsSteam = new List<Localization>();
 
@@ -60,14 +62,17 @@ namespace CheckLocalizations.Services
             {
                 Localizations = LocalizationsGamingWiki;
                 Common.LogDebug(true, $"Used PCGamingWikiLocalizations for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
+
+                gameLocalizations.SourcesLink = new SourceLink { Name = "PCGamingWiki", Url = pCGamingWikiLocalizations.GetUrl() };
             }
             else
             {
                 Localizations = LocalizationsSteam;
                 Common.LogDebug(true, $"Used Steam for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
+
+                gameLocalizations.SourcesLink = new SourceLink { Name = "Steam", Url = pCGamingWikiLocalizations.GetUrl() };
             }
 
-            GameLocalizations gameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(game);
             gameLocalizations.Items = Localizations;
 
             return gameLocalizations;
