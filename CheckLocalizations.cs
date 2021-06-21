@@ -173,11 +173,6 @@ namespace CheckLocalizations
                 gameMenuItems.Add(new GameMenuItem
                 {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
-                    Description = "-"
-                });
-                gameMenuItems.Add(new GameMenuItem
-                {
-                    MenuSection = resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCommonDeleteGameData"),
                     Action = (mainMenuItem) =>
                     {
