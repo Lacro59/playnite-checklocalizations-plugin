@@ -1,6 +1,7 @@
 ﻿using CheckLocalizations.Models;
 using CommonPluginsPlaynite.PluginLibrary.SteamLibrary.SteamShared;
 using CommonPluginsShared;
+using CommonPluginsStores;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -27,7 +28,7 @@ namespace CheckLocalizations.Clients
             _PlayniteApi = PlayniteApi;
             _PluginUserDataPath = PluginUserDataPath;
 
-            steamApi = new SteamApi(_PluginUserDataPath);
+            steamApi = new SteamApi();
         }
 
 
@@ -88,7 +89,7 @@ namespace CheckLocalizations.Clients
                 }
                 else
                 {
-                    logger.Warn($"No SteamId find for {game.Name}");
+                    logger.Warn($"Not find for {game.Name}");
                 }
             }
             catch (Exception ex)

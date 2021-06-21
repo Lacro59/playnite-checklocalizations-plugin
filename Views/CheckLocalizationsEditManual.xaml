@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckLocalizations.Views"
              xmlns:commonpluginsshared="clr-namespace:CommonPluginsShared"
+             xmlns:convertersshared="clr-namespace:CommonPluginsShared.Converters"
              mc:Ignorable="d" Background="{DynamicResource WindowBackgourndBrush}"            
              Width="620" Height="350">
 
     <UserControl.Resources>
-        <commonpluginsshared:IndexConverter x:Key="IndexConverter" />
+        <convertersshared:IndexConverter x:Key="IndexConverter" />
     </UserControl.Resources>
 
     <Grid>

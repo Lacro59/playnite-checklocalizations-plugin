@@ -2,6 +2,7 @@
 using AngleSharp.Parser.Html;
 using CheckLocalizations.Models;
 using CommonPluginsShared;
+using CommonPluginsStores;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -32,7 +33,7 @@ namespace CheckLocalizations.Clients
             _PlayniteApi = PlayniteApi;
             _PluginUserDataPath = PluginUserDataPath;
 
-            steamApi = new SteamApi(_PluginUserDataPath);
+            steamApi = new SteamApi();
         }
 
 

@@ -202,7 +202,7 @@ namespace CheckLocalizations.Controls
                 }
             }
 
-            foreach (var ui in Tools.FindVisualChildren<Border>((ContextMenu)(sender)))
+            foreach (var ui in UI.FindVisualChildren<Border>((ContextMenu)(sender)))
             {
                 if (((FrameworkElement)ui).Name == "HoverBorder")
                 {
