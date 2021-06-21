@@ -112,12 +112,15 @@ namespace CheckLocalizations
         // Add new game menu items override GetGameMenuItems
         public override List<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            Game GameMenu = args.Games.First();   
+            Game GameMenu = args.Games.First();
+            GameLocalizations gameLocalizations = PluginDatabase.Get(GameMenu, true);
 
-            List<GameMenuItem> gameMenuItems = new List<GameMenuItem>
+            List<GameMenuItem> gameMenuItems = new List<GameMenuItem>();
+
+            if (gameLocalizations.HasData)
             {
                 // Show list available localizations for the selected game
-                new GameMenuItem
+                gameMenuItems.Add(new GameMenuItem
                 {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCheckLocalizationsGameMenuPluginView"),
@@ -127,41 +130,61 @@ namespace CheckLocalizations
                         Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
                         windowExtension.ShowDialog();
                     }
-                },
+                });
 
-               new GameMenuItem
-               {
+                gameMenuItems.Add(new GameMenuItem
+                {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
                     Description = "-"
-               },
+                });
+            }
 
-                // Delete & download localizations data for the selected game
-                new GameMenuItem
+
+            // Delete & download localizations data for the selected game
+            gameMenuItems.Add(new GameMenuItem
+            {
+                MenuSection = resources.GetString("LOCCheckLocalizations"),
+                Description = resources.GetString("LOCCommonRefreshGameData"),
+                Action = (gameMenuItem) =>
                 {
-                    MenuSection = resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonRefreshGameData"),
-                    Action = (gameMenuItem) =>
+                    var TaskIntegrationUI = Task.Run(() =>
                     {
-                        var TaskIntegrationUI = Task.Run(() =>
-                        {
-                            PluginDatabase.Refresh(GameMenu.Id);
-                        });
-                    }
-                },
+                        PluginDatabase.Refresh(GameMenu.Id);
+                    });
+                }
+            });
 
-                // Open editor view to add a new supported language for the selected game
-                new GameMenuItem
+            // Open editor view to add a new supported language for the selected game
+            gameMenuItems.Add(new GameMenuItem
+            {
+                MenuSection = resources.GetString("LOCCheckLocalizations"),
+                Description = resources.GetString("LOCCheckLocalizationsGameMenuAddLanguage"),
+                Action = (mainMenuItem) =>
+                {
+                    var ViewExtension = new CheckLocalizationsEditManual(GameMenu);
+                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
+                    windowExtension.ShowDialog();
+                }
+            });
+
+
+            if (gameLocalizations.HasData)
+            {
+                gameMenuItems.Add(new GameMenuItem
                 {
                     MenuSection = resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCheckLocalizationsGameMenuAddLanguage"),
+                    Description = "-"
+                });
+                gameMenuItems.Add(new GameMenuItem
+                {
+                    MenuSection = resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCommonDeleteGameData"),
                     Action = (mainMenuItem) =>
                     {
-                        var ViewExtension = new CheckLocalizationsEditManual(GameMenu);
-                        Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
-                        windowExtension.ShowDialog();
+                        PluginDatabase.Remove(GameMenu);
                     }
-                }
-            };
+                });
+            }
 
 #if DEBUG
             gameMenuItems.Add(new GameMenuItem
@@ -173,7 +196,7 @@ namespace CheckLocalizations
             {
                 MenuSection = resources.GetString("LOCCheckLocalizations"),
                 Description = "Test",
-                Action = (mainMenuItem) => 
+                Action = (mainMenuItem) =>
                 {
 
                 }
