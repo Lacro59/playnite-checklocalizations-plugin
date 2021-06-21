@@ -33,8 +33,6 @@ namespace CheckLocalizations.Services
             Database = new GameLocalizationsCollection(Paths.PluginDatabasePath);
             Database.SetGameInfo<Models.Localization>(PlayniteApi);
 
-            GetPluginTags();
-
             return true;
         }
 
@@ -215,6 +213,7 @@ namespace CheckLocalizations.Services
 
         public override void AddTag(Game game, bool noUpdate = false)
         {
+            GetPluginTags();
             GameLocalizations gameLocalizations = Get(game, true);
 
             if (gameLocalizations.HasData)
