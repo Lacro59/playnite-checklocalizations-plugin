@@ -29,7 +29,9 @@ namespace CheckLocalizations.Clients
         private string UrlPCGamingWikiSearch { get; set; } = @"https://pcgamingwiki.com/w/index.php?search=";
         private string UrlPCGamingWiki { get; set; } = @"https://www.pcgamingwiki.com";
 
+        private string gamePCGamingWiki = string.Empty;
         private string urlPCGamingWiki = string.Empty;
+
 
         public PCGamingWikiLocalizations(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
         {
@@ -181,6 +183,11 @@ namespace CheckLocalizations.Clients
             return urlPCGamingWiki;
         }
 
+        public string GetGameName()
+        {
+            return gamePCGamingWiki;
+        }
+
 
         public List<Localization> GetLocalizations(Game game)
         {
@@ -236,6 +243,10 @@ namespace CheckLocalizations.Clients
                 string ResultWeb = Web.DownloadStringData(url).GetAwaiter().GetResult();
                 HtmlParser parser = new HtmlParser();
                 IHtmlDocument HtmlLocalization = parser.Parse(ResultWeb);
+
+
+                gamePCGamingWiki = HtmlLocalization.QuerySelector("h1.article-title")?.InnerHtml;
+
 
                 foreach (var row in HtmlLocalization.QuerySelectorAll("tr.table-l10n-body-row"))
                 {

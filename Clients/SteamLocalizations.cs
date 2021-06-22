@@ -118,9 +118,14 @@ namespace CheckLocalizations.Clients
         }
 
 
-        public string GetURl()
+        public string GetUrl()
         {
             return $"https://store.steampowered.com/app/{SteamId}/";
+        }
+
+        public string GetGameName()
+        {
+            return steamApi.GetGameName(SteamId);
         }
     }
 }

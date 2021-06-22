@@ -34,7 +34,7 @@ namespace CheckLocalizations.Views
 
             if (gameLocalizations.SourcesLink != null)
             {
-                PART_SourceLabel.Text = gameLocalizations.SourcesLink.Name;
+                PART_SourceLabel.Text = gameLocalizations.SourcesLink.GameName + " (" + gameLocalizations.SourcesLink.Name +")";
                 PART_SourceLink.Tag = gameLocalizations.SourcesLink.Url;
             }
         }

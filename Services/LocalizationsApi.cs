@@ -1,6 +1,7 @@
 ﻿using CheckLocalizations.Clients;
 using CheckLocalizations.Models;
 using CommonPluginsShared;
+using CommonPluginsShared.Models;
 using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
@@ -63,14 +64,14 @@ namespace CheckLocalizations.Services
                 Localizations = LocalizationsGamingWiki;
                 Common.LogDebug(true, $"Used PCGamingWikiLocalizations for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
 
-                gameLocalizations.SourcesLink = new SourceLink { Name = "PCGamingWiki", Url = pCGamingWikiLocalizations.GetUrl() };
+                gameLocalizations.SourcesLink = new SourceLink { Name = "PCGamingWiki", GameName = pCGamingWikiLocalizations.GetGameName(), Url = pCGamingWikiLocalizations.GetUrl() };
             }
             else
             {
                 Localizations = LocalizationsSteam;
                 Common.LogDebug(true, $"Used Steam for {game.Name} - {JsonConvert.SerializeObject(Localizations)}");
 
-                gameLocalizations.SourcesLink = new SourceLink { Name = "Steam", Url = pCGamingWikiLocalizations.GetUrl() };
+                gameLocalizations.SourcesLink = new SourceLink { Name = "Steam", GameName = steamLocalizations.GetGameName(), Url = steamLocalizations.GetUrl() };
             }
 
             gameLocalizations.Items = Localizations;

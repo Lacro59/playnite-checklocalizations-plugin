@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommonPluginsShared.Models;
 
 namespace CheckLocalizations.Models
 {
@@ -49,12 +50,5 @@ namespace CheckLocalizations.Models
 
             return false;
         }
-    }
-
-
-    public class SourceLink
-    {
-        public string Name { get; set; }
-        public string Url { get; set; }
     }
 }
