@@ -1,6 +1,5 @@
 ﻿using CheckLocalizations.Services;
-using Newtonsoft.Json;
-using Playnite.SDK.Models;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
@@ -30,7 +29,7 @@ namespace CheckLocalizations.Models
         public string Notes { get; set; }
         public bool IsManual { get; set; }
 
-        [JsonIgnore]
+        [DontSerialize]
         public string UiIcon
         {
             get
@@ -38,7 +37,7 @@ namespace CheckLocalizations.Models
                 return GetImage(Ui);
             }
         }
-        [JsonIgnore]
+        [DontSerialize]
         public string AudioIcon
         {
             get
@@ -46,7 +45,7 @@ namespace CheckLocalizations.Models
                 return GetImage(Audio);
             }
         }
-        [JsonIgnore]
+        [DontSerialize]
         public string SubIcon
         {
             get
@@ -55,7 +54,7 @@ namespace CheckLocalizations.Models
             }
         }
 
-        [JsonIgnore]
+        [DontSerialize]
         public BitmapImage FlagIcon
         {
             get
@@ -231,7 +230,7 @@ namespace CheckLocalizations.Models
             }
         }
 
-        [JsonIgnore]
+        [DontSerialize]
         public string DisplayName
         {
             get
@@ -249,7 +248,7 @@ namespace CheckLocalizations.Models
             }
         }
 
-        [JsonIgnore]
+        [DontSerialize]
         public bool IsOkUi
         {
             get
@@ -257,7 +256,7 @@ namespace CheckLocalizations.Models
                 return (Ui == SupportStatus.Native || Ui == SupportStatus.Hackable);
             }
         }
-        [JsonIgnore]
+        [DontSerialize]
         public bool IsOkAudio
         {
             get
@@ -265,7 +264,7 @@ namespace CheckLocalizations.Models
                 return (Audio == SupportStatus.Native || Audio == SupportStatus.Hackable);
             }
         }
-        [JsonIgnore]
+        [DontSerialize]
         public bool IsOkSub
         {
             get
@@ -296,7 +295,7 @@ namespace CheckLocalizations.Models
         }
 
 
-        [JsonIgnore]
+        [DontSerialize]
         public bool UiStylePcGamingWiki
         {
             get
@@ -304,7 +303,7 @@ namespace CheckLocalizations.Models
                 return CheckLocalizations.PluginDatabase.PluginSettings.Settings.UiStylePcGamingWiki;
             }
         }
-        [JsonIgnore]
+        [DontSerialize]
         public bool UiStyleSteam
         {
             get

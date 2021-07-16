@@ -1,7 +1,7 @@
 ﻿using CheckLocalizations.Models;
-using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using Playnite.SDK.Data;
 using CommonPluginsShared.Collections;
 using System;
 using System.Collections.Generic;
@@ -154,7 +154,7 @@ namespace CheckLocalizations.Services
                     gameLocalizations.Items = ItemsManual;
                     gameLocalizations.HasChecked = false;
 
-                    Common.LogDebug(true, $"RemoveWithoutManual({Id.ToString()}) - gameLocalizations: {JsonConvert.SerializeObject(gameLocalizations)}");
+                    Common.LogDebug(true, $"RemoveWithoutManual({Id.ToString()}) - gameLocalizations: {Serialization.ToJson(gameLocalizations)}");
 
                     Update(gameLocalizations);
                     return true;
@@ -203,7 +203,7 @@ namespace CheckLocalizations.Services
                     }
                 }
 
-                Common.LogDebug(true, $"PluginTags: {JsonConvert.SerializeObject(PluginTags)}");
+                Common.LogDebug(true, $"PluginTags: {Serialization.ToJson(PluginTags)}");
             }
             catch (Exception ex)
             {

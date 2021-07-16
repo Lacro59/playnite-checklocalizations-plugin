@@ -1,9 +1,7 @@
 ﻿using CheckLocalizations.Models;
 using CommonPluginsShared;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Playnite.SDK;
-using Playnite.SDK.Models;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -64,14 +62,14 @@ namespace CheckLocalizations.Services
                     Guid gameId = Guid.Parse(objectFile.Replace(PathActivityDB, "").Replace(".json", "").Replace("\\", ""));
 
 
-                    List<GameLocalizationOld> CheckLocalizations = JsonConvert.DeserializeObject<List<GameLocalizationOld>>(JsonStringData);
+                    List<GameLocalizationOld> CheckLocalizations = Serialization.FromJson<List<GameLocalizationOld>>(JsonStringData);
                     List<GameLocalizationOld> CheckLocalizationsManual = new List<GameLocalizationOld>();
 
                     objectFileManual = PathActivityManualDB + "\\" + objectFile.Replace(PathActivityDB, "");
                     if (File.Exists(objectFileManual))
                     {
                         var JsonStringDataManual = File.ReadAllText(objectFileManual);
-                        CheckLocalizationsManual = JsonConvert.DeserializeObject<List<GameLocalizationOld>>(JsonStringDataManual);
+                        CheckLocalizationsManual = Serialization.FromJson<List<GameLocalizationOld>>(JsonStringDataManual);
 
                         ItemsManual.TryAdd(gameId, CheckLocalizationsManual);
                     };

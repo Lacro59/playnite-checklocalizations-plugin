@@ -2,9 +2,9 @@
 using CommonPluginsPlaynite.PluginLibrary.SteamLibrary.SteamShared;
 using CommonPluginsShared;
 using CommonPluginsStores;
-using Newtonsoft.Json;
 using Playnite.SDK;
 using Playnite.SDK.Models;
+using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +44,7 @@ namespace CheckLocalizations.Clients
                 if (SteamId != 0)
                 {
                     string data = GetSteamData(SteamId);
-                    var parsedData = JsonConvert.DeserializeObject<Dictionary<string, StoreAppDetailsResult>>(data);
+                    var parsedData = Serialization.FromJson<Dictionary<string, StoreAppDetailsResult>>(data);
 
                     if (parsedData[SteamId.ToString()].data != null)
                     {
