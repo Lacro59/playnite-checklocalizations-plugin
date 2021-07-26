@@ -39,8 +39,8 @@
                     </CheckBox>
 
                     <StackPanel  Grid.Row="0" Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="{DynamicResource LOCAddTitle}" Margin="0,0,10,0" IsEnabled="{Binding Settings.EnableTag}" VerticalAlignment="Center" Click="ButtonAddTag_Click" />
-                        <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding Settings.EnableTag}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click" />
+                        <Button Content="{DynamicResource LOCAddTitle}" Margin="0,0,10,0" IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}" VerticalAlignment="Center" Click="ButtonAddTag_Click" />
+                        <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click" />
                     </StackPanel>
 
                     <ListView Margin="0,5" ItemsSource="{Binding Settings.GameLanguages}"
