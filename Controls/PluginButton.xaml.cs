@@ -157,18 +157,6 @@ namespace CheckLocalizations.Controls
             // ContextMenu or show Window
             PART_ContextMenu.Items.Clear();
             PART_ListViewLanguages = null;
-
-            if (ControlDataContext.ButtonContextMenu)
-            {
-                PART_ListViewLanguages = new PluginListLanguages
-                {
-                    WithColNotes = false,
-                    IgnoreSettings = true,
-                    Width = 450,
-                    Height = 150
-                };
-                PART_ContextMenu.Items.Add(PART_ListViewLanguages);
-            }
             
             // Publish changes for the currently displayed game
             GameContextChanged(null, GameContext);
@@ -195,6 +183,19 @@ namespace CheckLocalizations.Controls
             }
             else
             {
+                if (PART_ContextMenu.Items.Count == 0)
+                {
+                    PART_ListViewLanguages = new PluginListLanguages
+                    {
+                        WithColNotes = false,
+                        IgnoreSettings = true,
+                        Width = 450,
+                        Height = 150
+                    };
+                    PART_ListViewLanguages.Margin = new Thickness(0, 5, 0, 5);
+                    PART_ContextMenu.Items.Add(PART_ListViewLanguages);
+                }
+
                 PART_ContextMenu.Visibility = Visibility.Visible;
                 if (PART_ListViewLanguages != null)
                 {
