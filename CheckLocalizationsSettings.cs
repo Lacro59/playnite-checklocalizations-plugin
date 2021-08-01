@@ -93,8 +93,8 @@ namespace CheckLocalizations
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         #region Variables exposed
-        [DontSerialize]
         private bool _HasData { get; set; } = false;
+        [DontSerialize]
         public bool HasData
         {
             get => _HasData;
@@ -105,8 +105,8 @@ namespace CheckLocalizations
             }
         }
 
-        [DontSerialize]
         private bool _HasNativeSupport { get; set; } = false;
+        [DontSerialize]
         public bool HasNativeSupport
         {
             get => _HasNativeSupport;
@@ -117,8 +117,8 @@ namespace CheckLocalizations
             }
         }
 
-        [DontSerialize]
         private List<Models.Localization> _ListNativeSupport { get; set; } = new List<Models.Localization>();
+        [DontSerialize]
         public List<Models.Localization> ListNativeSupport
         {
             get => _ListNativeSupport;
