@@ -63,8 +63,11 @@ namespace CheckLocalizations.Services
             else if (gameLocalizations == null)
             {
                 Game game = PlayniteApi.Database.Games.Get(Id);
-                gameLocalizations = GetDefault(game);
-                Add(gameLocalizations);
+                if (game != null)
+                {
+                    gameLocalizations = GetDefault(game);
+                    Add(gameLocalizations);
+                }
             }
 
             gameLocalizations.Items.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
@@ -266,6 +269,11 @@ namespace CheckLocalizations.Services
         public override void SetThemesResources(Game game)
         {
             GameLocalizations gameLocalizations = Get(game, true);
+
+            if (gameLocalizations == null)
+            {
+                return;
+            }
 
             PluginSettings.Settings.HasData = gameLocalizations.HasData;
             PluginSettings.Settings.HasNativeSupport = gameLocalizations.HasNativeSupport();
