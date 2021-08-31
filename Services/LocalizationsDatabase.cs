@@ -133,6 +133,38 @@ namespace CheckLocalizations.Services
             }, globalProgressOptions);
         }
 
+        public override void Refresh(List<Guid> Ids)
+        {
+            GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                $"{PluginName} - {resources.GetString("LOCCommonProcessing")}",
+                false
+            );
+            globalProgressOptions.IsIndeterminate = true;
+
+            PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+            {
+                foreach (Guid Id in Ids)
+                {
+                    var loadedItem = Get(Id, true);
+                    var webItem = GetWeb(Id);
+
+                    if (webItem != null)
+                    {
+                        // Add manual items
+                        foreach (var item in loadedItem.Items.FindAll(x => x.IsManual))
+                        {
+                            webItem.Items.Add(item);
+                        }
+
+                        if (!ReferenceEquals(loadedItem, webItem))
+                        {
+                            Update(webItem);
+                        }
+                    }
+                }
+            }, globalProgressOptions);
+        }
+
 
         public bool RemoveWithManual(Guid Id)
         {
@@ -169,6 +201,50 @@ namespace CheckLocalizations.Services
             }
 
             return false;
+        }
+
+        public bool RemoveWithManual(List<Guid> Ids)
+        {
+            foreach (Guid Id in Ids)
+            {
+                try
+                {
+                    GameLocalizations gameLocalizations = GetOnlyCache(Id);
+
+                    if (gameLocalizations == null || !gameLocalizations.HasData)
+                    {
+                        continue;
+                    }
+
+                    if (gameLocalizations.Items == null)
+                    {
+                        gameLocalizations.Items = new List<Models.Localization>();
+                    }
+
+
+                    if (gameLocalizations.Items.Where(x => x.IsManual).Count() == 0)
+                    {
+                        Remove(Id);
+                    }
+                    else
+                    {
+                        var ItemsManual = gameLocalizations.Items.Where(x => x.IsManual).ToList();
+                        gameLocalizations.Items = null;
+                        gameLocalizations.Items = ItemsManual;
+                        gameLocalizations.HasChecked = false;
+
+                        Common.LogDebug(true, $"RemoveWithoutManual({Id.ToString()}) - gameLocalizations: {Serialization.ToJson(gameLocalizations)}");
+
+                        Update(gameLocalizations);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Common.LogError(ex, false);
+                }
+            }
+
+            return true;
         }
 
 

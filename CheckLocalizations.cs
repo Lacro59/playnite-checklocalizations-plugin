@@ -113,6 +113,7 @@ namespace CheckLocalizations
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
             Game GameMenu = args.Games.First();
+            List<Guid> Ids = args.Games.Select(x => x.Id).ToList();
             GameLocalizations gameLocalizations = PluginDatabase.Get(GameMenu, true);
 
             List<GameMenuItem> gameMenuItems = new List<GameMenuItem>();
@@ -149,7 +150,14 @@ namespace CheckLocalizations
                 {
                     var TaskIntegrationUI = Task.Run(() =>
                     {
-                        PluginDatabase.Refresh(GameMenu.Id);
+                        if (Ids.Count == 1)
+                        {
+                            PluginDatabase.Refresh(GameMenu.Id);
+                        }
+                        else
+                        {
+                            PluginDatabase.Refresh(Ids);
+                        }
                     });
                 }
             });
@@ -176,7 +184,14 @@ namespace CheckLocalizations
                     Description = resources.GetString("LOCCommonDeleteGameData"),
                     Action = (mainMenuItem) =>
                     {
-                        PluginDatabase.Remove(GameMenu);
+                        if (Ids.Count == 1)
+                        {
+                            PluginDatabase.RemoveWithManual(GameMenu.Id);
+                        }
+                        else
+                        {
+                            PluginDatabase.RemoveWithManual(Ids);
+                        }
                     }
                 });
             }
