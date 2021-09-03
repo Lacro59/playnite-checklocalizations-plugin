@@ -148,17 +148,14 @@ namespace CheckLocalizations
                 Description = resources.GetString("LOCCommonRefreshGameData"),
                 Action = (gameMenuItem) =>
                 {
-                    var TaskIntegrationUI = Task.Run(() =>
+                    if (Ids.Count == 1)
                     {
-                        if (Ids.Count == 1)
-                        {
-                            PluginDatabase.Refresh(GameMenu.Id);
-                        }
-                        else
-                        {
-                            PluginDatabase.Refresh(Ids);
-                        }
-                    });
+                        PluginDatabase.Refresh(GameMenu.Id);
+                    }
+                    else
+                    {
+                        PluginDatabase.Refresh(Ids);
+                    }
                 }
             });
 
