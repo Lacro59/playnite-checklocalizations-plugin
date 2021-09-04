@@ -1,8 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:Sys="clr-namespace:System;assembly=mscorlib">
-
-    <Sys:Boolean x:Key="Cl_HasData">True</Sys:Boolean>
-    <Sys:Boolean x:Key="Cl_HasNativeSupport">True</Sys:Boolean>
-    <List x:Key="Cl_ListNativeSupport"></List>
-
-</ResourceDictionary>
