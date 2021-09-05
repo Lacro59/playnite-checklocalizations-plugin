@@ -1,0 +1,34 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- MainView -->
+
+    <sys:String x:Key="LOCCheckLocalizations">Verificar localizaciones</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Comprobar localizaciones</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Editar manualmente un idioma soportado</sys:String>
+
+    <!-- CheckLocalizationsEditManual -->
+
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Añadir un nuevo idioma soportado</sys:String>
+
+    <!-- CheckLocalizationsSettingsView -->
+
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Idiomas del juego: encontrar {0} - no encontrar {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Acción en progreso...</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Etiqueta con idioma(s) seleccionados</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Es un idioma nativo</sys:String>
+
+    <!-- ClButtonAdvanced -->
+
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Idioma nativo</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Idiomas soportados</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">Idioma</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Subtítulos</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">Notas</sys:String>
+
+</ResourceDictionary>

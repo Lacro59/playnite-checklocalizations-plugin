@@ -1,0 +1,167 @@
+﻿<controls:PluginUserControlExtend
+        xmlns:controls="clr-namespace:CommonPluginsShared.Controls"
+        x:Class="CheckLocalizations.Controls.PluginListLanguages"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        mc:Ignorable="d" 
+        MinHeight="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MinHeight}"
+        Height="{Binding ListLanguagesHeight}"
+        MaxHeight="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=MaxHeight}">
+
+    <controls:PluginUserControlExtend.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </controls:PluginUserControlExtend.Resources>
+
+    <Grid Name="PART_GridContener" Loaded="PART_GridContener_Loaded" SizeChanged="PART_GridContener_SizeChanged">
+        <controls:ListViewExtend x:Name="PART_ListViewLanguages" Style="{StaticResource {x:Type ListView}}"
+                                 ItemsSource="{Binding ItemsSource}"
+                                 SortingEnable="True" SortingDefaultDataName="DisplayName" SortingSortDirection="Descending"
+                                 BubblingScrollEvents="True" HeightStretch="True" WidthStretch="True">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150" x:Name="PART_Name">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}" />
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="0" DisplayMemberBinding="{Binding Ui}">
+                        <GridViewColumnHeader IsHitTestVisible="False" />
+                    </GridViewColumn>
+                    <GridViewColumn Width="80" x:Name="PART_Ui">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsUi}" Tag="Ui" />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" 
+                                           Visibility="{Binding UiStylePcGamingWiki, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           Source="{Binding UiIcon, IsAsync=True}" />
+                                    <Label FontFamily="{DynamicResource CommonFont}" Content="" FontSize="24" HorizontalAlignment="Center">
+                                        <Label.Style>
+                                            <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
+                                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Label}">
+                                                            <ContentPresenter RecognizesAccessKey="True"
+                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding UiStyleSteam}" Value="True" />
+                                                            <Condition Binding="{Binding IsOkUi}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="0" DisplayMemberBinding="{Binding Audio}">
+                        <GridViewColumnHeader IsHitTestVisible="False" />
+                    </GridViewColumn>
+                    <GridViewColumn Width="80" x:Name="PART_Audio">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsAudio}" Tag="Audio" />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" 
+                                           Visibility="{Binding UiStylePcGamingWiki, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           Source="{Binding AudioIcon, IsAsync=True}" />
+                                    <Label FontFamily="{DynamicResource CommonFont}" Content="" FontSize="24" HorizontalAlignment="Center">
+                                        <Label.Style>
+                                            <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
+                                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Label}">
+                                                            <ContentPresenter RecognizesAccessKey="True"
+                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding UiStyleSteam}" Value="True" />
+                                                            <Condition Binding="{Binding IsOkAudio}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="0" DisplayMemberBinding="{Binding Sub}">
+                        <GridViewColumnHeader IsHitTestVisible="False" />
+                    </GridViewColumn>
+                    <GridViewColumn Width="80" x:Name="PART_Sub">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsSub}" Tag="Sub" />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Width="24" 
+                                           Visibility="{Binding UiStylePcGamingWiki, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                           Source="{Binding SubIcon, IsAsync=True}" />
+                                    <Label FontFamily="{DynamicResource CommonFont}" Content="" FontSize="24" HorizontalAlignment="Center">
+                                        <Label.Style>
+                                            <Style TargetType="Label" BasedOn="{StaticResource BaseStyle}">
+                                                <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type Label}">
+                                                            <ContentPresenter RecognizesAccessKey="True"
+                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <MultiDataTrigger>
+                                                        <MultiDataTrigger.Conditions>
+                                                            <Condition Binding="{Binding UiStyleSteam}" Value="True" />
+                                                            <Condition Binding="{Binding IsOkSub}" Value="True" />
+                                                        </MultiDataTrigger.Conditions>
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </MultiDataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Notes}" Width="100" x:Name="PART_ColNotes">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsNotes}"></GridViewColumnHeader>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </controls:ListViewExtend>
+    </Grid>
+</controls:PluginUserControlExtend>
