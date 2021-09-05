@@ -6,9 +6,9 @@ Module: CheckLocalizations.dll
 Type: GenericPlugin
 Icon: icon.png
 Links:
-  - Name: Plugin forum
+  - Name: Forum
     Url: https://playnite.link/forum/thread-384.html
-  - Name: Plugin Github
+  - Name: Github
     Url: https://github.com/Lacro59/playnite-checklocalizations-plugin
-  - Name: Plugin translations
+  - Name: Translations
     Url: https://crowdin.com/project/playnite-extensions
