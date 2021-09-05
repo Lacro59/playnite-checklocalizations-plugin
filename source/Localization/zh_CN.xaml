@@ -4,18 +4,26 @@
     <!-- MainView -->
 
     <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">本地化</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">检查本地化</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">手动编辑语言</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Add a new language supported</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">添加新语言</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: find {0} - not find {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Action in progress...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">界面风格</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">使用可用语言显示列表</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">显示 &quot;备注&quot; 列</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">显示可用的语言标签列表</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">仅显示来自标记语言的标签</sys:String>
+    
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">游戏语言：已找到 {0} - 未找到 {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">正在处理，请稍候...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
@@ -25,10 +33,10 @@
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">语言</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">音频</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">字幕</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">备注</sys:String>
 
 </ResourceDictionary>

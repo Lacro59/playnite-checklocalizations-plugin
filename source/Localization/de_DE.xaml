@@ -3,32 +3,40 @@
 
     <!-- MainView -->
 
-    <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizations">Lokalisierungen prüfen</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Lokalisierungen</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Überprüfe Lokalisierung</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Manuell eine unterstützte Sprache bearbeiten</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Add a new language supported</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Füge eine neue unterstützte Sprache hinzu</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: find {0} - not find {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Action in progress...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Interface-Stil</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Zeige verfügbare Sprachen an</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Zeige die Spalte &quot;Notizen&quot; an</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Zeige die Liste der verfügbaren Sprachflaggen an</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Nur Flaggen anzeigen, deren Sprache markiert ist</sys:String>
+    
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Spielsprachen: {0} gefunden - nicht gefunden {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">In Arbeit, bitte warten...</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Markiere mit ausgewählter Sprache</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Ist eine Muttersprache</sys:String>
 
     <!-- ClButtonAdvanced -->
 
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Muttersprache</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Unterstützte Sprachen</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">Sprache</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Ton</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Untertitel</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">Anmerkungen</sys:String>
 
 </ResourceDictionary>
