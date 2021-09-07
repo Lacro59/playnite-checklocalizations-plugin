@@ -4,31 +4,39 @@
     <!-- MainView -->
 
     <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Локалізації</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Перевірити локалізацію</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Редагувати вручну підтримувану мову</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Add a new language supported</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Додати нову підтримувану мову</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: find {0} - not find {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Action in progress...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Стиль інтерфейсу</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Показати список з доступними мовами</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Відображати стовпчик &quot;Примітки&quot;</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
+    
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Ігрові мови: знайдено {0} - не знайдено {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Обробка, зачекайте будь ласка...</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Тег з вибраними мовами</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Це рідна мова</sys:String>
 
     <!-- ClButtonAdvanced -->
 
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Рідна мова</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Доступна мова</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">Мова</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">Інтерфейс</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Аудіо</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Субтитри</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">Примітки</sys:String>
 
 </ResourceDictionary>
