@@ -34,7 +34,7 @@
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Unterstützte Sprachen</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsLanguage">Sprache</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">Benutzeroberfläche</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsAudio">Ton</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsSub">Untertitel</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsNotes">Anmerkungen</sys:String>
