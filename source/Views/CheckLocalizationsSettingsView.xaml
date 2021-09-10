@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:playnitecontrols="clr-namespace:CommonPluginsControls.PlayniteControls"
              xmlns:AttachedProperties="clr-namespace:CommonPluginsShared.Controls"
-             mc:Ignorable="d" d:DesignWidth="600"
+             xmlns:pcmd="clr-namespace:CommonPluginsShared"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
              Background="{DynamicResource WindowBackgourndBrush}">
 
     <TabControl Margin="20">
@@ -17,7 +18,9 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <CheckBox Grid.Row="0" IsChecked="{Binding Settings.MenuInExtensions}" VerticalAlignment="Center">
+                <CheckBox Grid.Row="0" IsChecked="{Binding Settings.MenuInExtensions}" VerticalAlignment="Center"
+                          Command="{x:Static pcmd:Commands.RestartRequired}" 
+                          CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                     <Label Content="{DynamicResource LOCCommonMenuInExtensions}" />
                 </CheckBox>
 
@@ -30,8 +33,9 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="10" />
-                        <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
                     <CheckBox Grid.Row="0" Name="cbTag" IsChecked="{Binding Settings.EnableTag}" Grid.Column="0" VerticalAlignment="Center">
@@ -43,40 +47,42 @@
                         <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click" />
                     </StackPanel>
 
-                    <ListView Margin="0,5" ItemsSource="{Binding Settings.GameLanguages}"
-                                     Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" MinHeight="150" MaxHeight="300"
-                                     Name="lbGameLanguages">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="{DynamicResource LOCNameLabel}" Width="150" DisplayMemberBinding="{Binding Name}" />
+                    <Grid Name="PART_GridContener" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" >
+                        <ListView ItemsSource="{Binding Settings.GameLanguages}"
+                                  Height="{Binding ElementName=PART_GridContener, Path=ActualHeight}"
+                                  Name="lbGameLanguages">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="{DynamicResource LOCNameLabel}" Width="150" DisplayMemberBinding="{Binding Name}" />
                                 
-                                <GridViewColumn Header="{DynamicResource LOCNameLabel}" Width="150" DisplayMemberBinding="{Binding DisplayName}" />
+                                    <GridViewColumn Header="{DynamicResource LOCNameLabel}" Width="150" DisplayMemberBinding="{Binding DisplayName}" />
 
-                                <GridViewColumn Header="{DynamicResource LOCTagLabel}" Width="50">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox IsChecked="{Binding IsTag}" 
-                                                      VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                      IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}">
-                                            </CheckBox>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
+                                    <GridViewColumn Header="{DynamicResource LOCTagLabel}" Width="50">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding IsTag}" 
+                                                          VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                          IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}">
+                                                </CheckBox>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
 
-                                <GridViewColumn Header="{DynamicResource LOCCheckLocalizationIsNative}" Width="150">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <CheckBox IsChecked="{Binding IsNative}"
-                                                      VerticalAlignment="Center" HorizontalAlignment="Center">
-                                            </CheckBox>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                                    <GridViewColumn Header="{DynamicResource LOCCheckLocalizationIsNative}" Width="150">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox IsChecked="{Binding IsNative}"
+                                                          VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                </CheckBox>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
 
-                    <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5">
+                    <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="10" />
