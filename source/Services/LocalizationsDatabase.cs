@@ -100,7 +100,7 @@ namespace CheckLocalizations.Services
 
             IsGetWeb = false;
             
-            return data;reworked
+            return data;
         }
 
 
