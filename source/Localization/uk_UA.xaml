@@ -7,15 +7,15 @@
     <sys:String x:Key="LOCCheckLocalizationsLocalizations">Локалізації</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Перевірити локалізацію</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Редагувати вручну підтримувану мову</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Редагувати вручну підтримувану мов</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Додати нову підтримувану мову</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Додати нову підтримувану мов</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Стиль інтерфейсу</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Стиль інтерфейс</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Показати список з доступними мовами</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Відображати стовпчик &quot;Примітки&quot;</sys:String>
@@ -34,7 +34,7 @@
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Доступна мова</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsLanguage">Мова</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsUi">Інтерфейс</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">Інтерфей</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsAudio">Аудіо</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsSub">Субтитри</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsNotes">Примітки</sys:String>

@@ -7,19 +7,19 @@
     <sys:String x:Key="LOCCheckLocalizationsLocalizations">本地化</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">检查本地化</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">手动编辑语言</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">手动编辑语</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">添加新语言</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">添加新语</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
     <sys:String x:Key="LOCCheckLocalizationsStyleUI">界面风格</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">使用可用语言显示列表</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">使用可用语言显示列</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">显示 &quot;备注&quot; 列</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">显示可用的语言标签列表</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">显示可用的语言标签列</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">仅显示来自标记语言的标签</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">游戏语言：已找到 {0} - 未找到 {1}</sys:String>
@@ -33,10 +33,10 @@
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">语言</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">语</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsAudio">音频</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsSub">字幕</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">备注</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">备</sys:String>
 
 </ResourceDictionary>
