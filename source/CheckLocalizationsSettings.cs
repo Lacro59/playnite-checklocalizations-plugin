@@ -23,7 +23,7 @@ namespace CheckLocalizations
         public bool UiStylePcGamingWiki { get; set; } = true;
 
 
-        private bool _EnableIntegrationViewItem { get; set; } = false;
+        private bool _EnableIntegrationViewItem { get; set; } = true;
         public bool EnableIntegrationViewItem
         {
             get => _EnableIntegrationViewItem;
@@ -34,7 +34,7 @@ namespace CheckLocalizations
             }
         }
 
-        private bool _EnableIntegrationButton { get; set; } = false;
+        private bool _EnableIntegrationButton { get; set; } = true;
         public bool EnableIntegrationButton
         {
             get => _EnableIntegrationButton;
@@ -45,7 +45,7 @@ namespace CheckLocalizations
             }
         }
 
-        private bool _EnableIntegrationButtonDetails { get; set; } = false;
+        private bool _EnableIntegrationButtonDetails { get; set; } = true;
         public bool EnableIntegrationButtonDetails
         {
             get => _EnableIntegrationButtonDetails;
@@ -59,7 +59,7 @@ namespace CheckLocalizations
         public bool EnableIntegrationButtonContextMenu { get; set; } = false;
 
 
-        private bool _EnableIntegrationListLanguages { get; set; } = false;
+        private bool _EnableIntegrationListLanguages { get; set; } = true;
         public bool EnableIntegrationListLanguages
         {
             get => _EnableIntegrationListLanguages;
@@ -71,7 +71,7 @@ namespace CheckLocalizations
         }
 
 
-        private bool _EnableIntegrationFlags { get; set; } = false;
+        private bool _EnableIntegrationFlags { get; set; } = true;
         public bool EnableIntegrationFlags
         {
             get => _EnableIntegrationFlags;
