@@ -233,16 +233,20 @@ namespace CheckLocalizations
                     {
                         PluginDatabase.GetSelectData();
                     }
-                },
+                }
+            };
 
-                new MainMenuItem
+
+            if (PluginDatabase.PluginSettings.Settings.EnableTag)
+            {
+                mainMenuItems.Add(new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
                     Description = "-"
-                },
+                });
 
                 // Add tag for selected game in database if data exists
-                new MainMenuItem
+                mainMenuItems.Add(new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCommonAddTPlugin"),
@@ -250,10 +254,19 @@ namespace CheckLocalizations
                     {
                         PluginDatabase.AddTagSelectData();
                     }
-                },
-
+                });
+                // Add tag for all games
+                mainMenuItems.Add(new MainMenuItem
+                {
+                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    Description = resources.GetString("LOCCommonAddAllTags"),
+                    Action = (mainMenuItem) =>
+                    {
+                        PluginDatabase.AddTagAllGame();
+                    }
+                });
                 // Remove tag for all game in database
-                new MainMenuItem
+                mainMenuItems.Add(new MainMenuItem
                 {
                     MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
                     Description = resources.GetString("LOCCommonRemoveAllTags"),
@@ -261,32 +274,33 @@ namespace CheckLocalizations
                     {
                         PluginDatabase.RemoveTagAllGame();
                     }
-                },
+                });
+            }
 
-                new MainMenuItem
-                {
-                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = "-"
-                },
 
-                // Delete all data of plugin
-                new MainMenuItem
+            mainMenuItems.Add(new MainMenuItem
+            {
+                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                Description = "-"
+            });
+
+            // Delete all data of plugin
+            mainMenuItems.Add(new MainMenuItem
+            {
+                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                Description = resources.GetString("LOCCommonDeletePluginData"),
+                Action = (mainMenuItem) =>
                 {
-                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonDeletePluginData"),
-                    Action = (mainMenuItem) =>
+                    if (PluginDatabase.ClearDatabase())
                     {
-                        if (PluginDatabase.ClearDatabase())
-                        {
-                            PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
-                        }
-                        else
-                        {
-                            PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
-                        }
+                        PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
+                    }
+                    else
+                    {
+                        PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
                     }
                 }
-            };
+            });
 
 #if DEBUG
             mainMenuItems.Add(new MainMenuItem

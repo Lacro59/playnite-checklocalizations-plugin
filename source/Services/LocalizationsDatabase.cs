@@ -24,7 +24,7 @@ namespace CheckLocalizations.Services
 
         public LocalizationsDatabase(IPlayniteAPI PlayniteApi, CheckLocalizationsSettingsViewModel PluginSettings, string PluginUserDataPath) : base(PlayniteApi, PluginSettings, "CheckLocalizations", PluginUserDataPath)
         {
-
+            TagBefore = "[CL]";
         }
         
 
@@ -267,48 +267,7 @@ namespace CheckLocalizations.Services
         }
 
 
-        protected override void GetPluginTags()
-        {
-            try
-            {
-                // Get tags in playnite database
-                PluginTags = new List<Tag>();
-                foreach (Tag tag in PlayniteApi.Database.Tags)
-                {
-                    if (tag.Name.IndexOf("[CL] ") > -1)
-                    {
-                        PluginTags.Add(tag);
-                    }
-                }
-
-                // Add missing tags
-                if (PluginTags.Count < PluginSettings.Settings.GameLanguages.Count)
-                {
-                    foreach (GameLanguage gameLanguage in PluginSettings.Settings.GameLanguages)
-                    {
-                        if (PluginTags.Find(x => x.Name == $"[CL] {gameLanguage.DisplayName}") == null)
-                        {
-                            PlayniteApi.Database.Tags.Add(new Tag { Name = $"[CL] {gameLanguage.DisplayName}" });
-                        }
-                    }
-
-                    foreach (Tag tag in PlayniteApi.Database.Tags)
-                    {
-                        if (tag.Name.IndexOf("[CL] ") > -1)
-                        {
-                            PluginTags.Add(tag);
-                        }
-                    }
-                }
-
-                Common.LogDebug(true, $"PluginTags: {Serialization.ToJson(PluginTags)}");
-            }
-            catch (Exception ex)
-            {
-                Common.LogError(ex, false);
-            }
-        }
-
+        #region Tag
         public override void AddTag(Game game, bool noUpdate = false)
         {
             GetPluginTags();
@@ -320,7 +279,7 @@ namespace CheckLocalizations.Services
                 {
                     foreach (GameLanguage gameLanguage in PluginSettings.Settings.GameLanguages.FindAll(x => x.IsTag && gameLocalizations.Items.Any(y => x.Name.ToLower() == y.Language.ToLower())))
                     {
-                        Guid? TagId = FindGoodPluginTags($"[CL] { gameLanguage.DisplayName}");
+                        Guid? TagId = FindGoodPluginTags(gameLanguage.DisplayName);
                         if (TagId != null)
                         {
                             if (game.TagIds != null)
@@ -359,6 +318,7 @@ namespace CheckLocalizations.Services
                 }
             }
         }
+        #endregion
 
 
         public override void SetThemesResources(Game game)
