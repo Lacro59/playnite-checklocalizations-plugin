@@ -18,6 +18,7 @@ using CommonPluginsShared.PlayniteExtended;
 using System.Windows.Media;
 using System.Diagnostics;
 using CheckLocalizations.Controls;
+using CommonPluginsControls.Views;
 
 namespace CheckLocalizations
 {
@@ -276,6 +277,31 @@ namespace CheckLocalizations
                     }
                 });
             }
+
+
+            mainMenuItems.Add(new MainMenuItem
+            {
+                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                Description = "-"
+            });
+            mainMenuItems.Add(new MainMenuItem
+            {
+                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                Description = "LOCCommonViewNoData",
+                Action = (mainMenuItem) =>
+                {
+                    var windowOptions = new WindowOptions
+                    {
+                        ShowMinimizeButton = false,
+                        ShowMaximizeButton = false,
+                        ShowCloseButton = true
+                    };
+
+                    var ViewExtension = new ListWithNoData(PlayniteApi, PluginDatabase.GetGamesWithNoData());
+                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, resources.GetString("LOCCheckLocalizations"), ViewExtension, windowOptions);
+                    windowExtension.ShowDialog();
+                }
+            });
 
 
             mainMenuItems.Add(new MainMenuItem
