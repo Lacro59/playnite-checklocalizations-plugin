@@ -327,6 +327,10 @@ namespace CheckLocalizations.Services
 
             if (gameLocalizations == null)
             {
+                PluginSettings.Settings.HasData = false;
+                PluginSettings.Settings.HasNativeSupport = false;
+                PluginSettings.Settings.ListNativeSupport = new List<Models.Localization>();
+
                 return;
             }
 
