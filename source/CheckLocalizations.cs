@@ -297,7 +297,7 @@ namespace CheckLocalizations
                         ShowCloseButton = true
                     };
 
-                    var ViewExtension = new ListWithNoData(PlayniteApi, PluginDatabase.GetGamesWithNoData());
+                    var ViewExtension = new ListWithNoData(PlayniteApi, PluginDatabase);
                     Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, resources.GetString("LOCCheckLocalizations"), ViewExtension, windowOptions);
                     windowExtension.ShowDialog();
                 }
