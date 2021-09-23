@@ -37,6 +37,6 @@
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsAudio">音频</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsSub">字幕</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">备</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes"></sys:String>
 
 </ResourceDictionary>
