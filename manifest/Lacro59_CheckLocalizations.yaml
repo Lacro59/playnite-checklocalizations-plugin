@@ -15,3 +15,9 @@ Packages:
     Changelog:
       - Playnite 9 beta version (not compatible with Playnite 8)
       - Fixed failed to load properly
+  - Version: 2.0.2
+    RequiredApiVersion: 6.1.0
+    ReleaseDate: 2021-10-31
+    PackageUrl: https://github.com/Lacro59/playnite-checklocalizations-plugin/releases/download/v2.0.2/playnite-checklocalizations-plugin_2_0_2.pext
+    Changelog:
+      - Updated localizations
