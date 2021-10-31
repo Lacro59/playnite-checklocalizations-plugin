@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CheckLocalizations.Views"
              xmlns:controls="clr-namespace:CheckLocalizations.Controls"
-             xmlns:converters="clr-namespace:CommonPluginsPlaynite.Converters"
+             xmlns:converters="clr-namespace:CommonPlayniteShared.Converters"
              mc:Ignorable="d" Background="{DynamicResource WindowBackgourndBrush}"            
              Width="650" Height="250">
 
