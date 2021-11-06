@@ -9,18 +9,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace CheckLocalizations.Controls
 {
@@ -42,7 +32,7 @@ namespace CheckLocalizations.Controls
             }
         }
 
-        private PluginFlagsDataContext ControlDataContext;
+        private PluginFlagsDataContext ControlDataContext = new PluginFlagsDataContext();
         internal override IDataContext _ControlDataContext
         {
             get
@@ -58,6 +48,7 @@ namespace CheckLocalizations.Controls
         public PluginFlags()
         {
             InitializeComponent();
+            this.DataContext = ControlDataContext;
 
             Task.Run(() =>
             {
@@ -80,57 +71,48 @@ namespace CheckLocalizations.Controls
 
         public override void SetDefaultDataContext()
         {
-            ControlDataContext = new PluginFlagsDataContext
-            {
-                IsActivated = PluginDatabase.PluginSettings.Settings.EnableIntegrationFlags,
+            ControlDataContext.IsActivated = PluginDatabase.PluginSettings.Settings.EnableIntegrationFlags;
 
-                CountItems = 0,
-                ItemsSource = new ObservableCollection<ItemList>()
-            };
+            ControlDataContext.CountItems = 0;
+            ControlDataContext.ItemsSource = new ObservableCollection<ItemList>();
         }
 
 
-        public override Task<bool> SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
+        public override void SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
         {
-            return Task.Run(() =>
+            GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
+
+            ObservableCollection<ItemList> itemLists = new ObservableCollection<ItemList>();
+            if (PluginDatabase.PluginSettings.Settings.OnlyDisplaySelectedFlags)
             {
-                GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
+                var TaggedLanguage = PluginDatabase.PluginSettings.Settings.GameLanguages
+                    .FindAll(x => x.IsTag && gameLocalization.Items.Any(y => x.Name.ToLower() == y.Language.ToLower()));
 
-                ObservableCollection<ItemList> itemLists = new ObservableCollection<ItemList>();
-                if (PluginDatabase.PluginSettings.Settings.OnlyDisplaySelectedFlags)
-                {
-                    var TaggedLanguage = PluginDatabase.PluginSettings.Settings.GameLanguages
-                        .FindAll(x => x.IsTag && gameLocalization.Items.Any(y => x.Name.ToLower() == y.Language.ToLower()));
+                itemLists = gameLocalization.Items
+                    .Where(x => TaggedLanguage.Any(y => x.Language.ToLower() == y.Name.ToLower()))
+                    .Select(x => new ItemList { Name = x.DisplayName, Icon = x.FlagIcon }).ToObservable();
+            }
+            else
+            {
+                itemLists = gameLocalization.Items.Select(x => new ItemList { Name = x.DisplayName, Icon = x.FlagIcon }).ToObservable();
+            }
 
-                    itemLists = gameLocalization.Items
-                        .Where(x => TaggedLanguage.Any(y => x.Language.ToLower() == y.Name.ToLower()))
-                        .Select(x => new ItemList { Name = x.DisplayName, Icon = x.FlagIcon }).ToObservable();
-                }
-                else
-                {
-                    itemLists = gameLocalization.Items.Select(x => new ItemList { Name = x.DisplayName, Icon = x.FlagIcon }).ToObservable();
-                }
-
-                ControlDataContext.CountItems = itemLists.Count;
-                ControlDataContext.ItemsSource = itemLists;
-
-                this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
-                {
-                    this.DataContext = ControlDataContext;
-                }));
-
-                return true;
-            });
+            ControlDataContext.CountItems = itemLists.Count;
+            ControlDataContext.ItemsSource = itemLists;
         }
     }
 
 
-    public class PluginFlagsDataContext : IDataContext
+    public class PluginFlagsDataContext : ObservableObject, IDataContext
     {
-        public bool IsActivated { get; set; }
+        private bool _IsActivated;
+        public bool IsActivated { get => _IsActivated; set => SetValue(ref _IsActivated, value); }
 
-        public int CountItems { get; set; }
-        public ObservableCollection<ItemList> ItemsSource { get; set; }
+        public int _CountItems;
+        public int CountItems { get => _CountItems; set => SetValue(ref _CountItems, value); }
+
+        public ObservableCollection<ItemList> _ItemsSource;
+        public ObservableCollection<ItemList> ItemsSource { get => _ItemsSource; set => SetValue(ref _ItemsSource, value); }
     }
 
     public class ItemList

@@ -5,26 +5,16 @@ using CommonPluginsShared;
 using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
 using CommonPluginsShared.Interfaces;
-using Playnite.SDK;
-using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace CheckLocalizations.Controls
 {
@@ -46,7 +36,7 @@ namespace CheckLocalizations.Controls
             }
         }
 
-        private PluginButtonDataContext ControlDataContext;
+        private PluginButtonDataContext ControlDataContext = new PluginButtonDataContext();
         internal override IDataContext _ControlDataContext
         {
             get
@@ -73,6 +63,7 @@ namespace CheckLocalizations.Controls
             AlwaysShow = true;
 
             InitializeComponent();
+            this.DataContext = ControlDataContext;
 
             Task.Run(() =>
             {
@@ -95,53 +86,40 @@ namespace CheckLocalizations.Controls
 
         public override void SetDefaultDataContext()
         {
-            ControlDataContext = new PluginButtonDataContext
-            {
-                IsActivated = PluginDatabase.PluginSettings.Settings.EnableIntegrationButton,
-                DisplayDetails = PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonDetails,
-                ButtonContextMenu = PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonContextMenu,
+            ControlDataContext.IsActivated = PluginDatabase.PluginSettings.Settings.EnableIntegrationButton;
+            ControlDataContext.DisplayDetails = PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonDetails;
+            ControlDataContext.ButtonContextMenu = PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonContextMenu;
 
-                Text = string.Empty
-            };
+            ControlDataContext.Text = string.Empty;
         }
 
 
-        public override Task<bool> SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
+        public override void SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
         {
-            return Task.Run(() =>
-            {
-                GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
+            GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
-                if (ControlDataContext.DisplayDetails)
+            if (ControlDataContext.DisplayDetails)
+            {
+                if (gameLocalization.Items.Count == 0)
                 {
-                    if (gameLocalization.Items.Count == 0)
-                    {
-                        ControlDataContext.Text = IconNone;
-                    }
-                    else
-                    {
-                        if (gameLocalization.HasNativeSupport())
-                        {
-                            ControlDataContext.Text = IconOk;
-                        }
-                        else
-                        {
-                            ControlDataContext.Text = IconKo;
-                        }
-                    }
+                    ControlDataContext.Text = IconNone;
                 }
                 else
                 {
-                    ControlDataContext.Text = IconDefault;
+                    if (gameLocalization.HasNativeSupport())
+                    {
+                        ControlDataContext.Text = IconOk;
+                    }
+                    else
+                    {
+                        ControlDataContext.Text = IconKo;
+                    }
                 }
-
-                this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
-                {
-                    this.DataContext = ControlDataContext;
-                }));
-
-                return true;
-            });
+            }
+            else
+            {
+                ControlDataContext.Text = IconDefault;
+            }
         }
 
 
@@ -215,12 +193,18 @@ namespace CheckLocalizations.Controls
     }
 
 
-    public class PluginButtonDataContext : IDataContext
+    public class PluginButtonDataContext : ObservableObject, IDataContext
     {
-        public bool IsActivated { get; set; }
-        public bool DisplayDetails { get; set; }
-        public bool ButtonContextMenu { get; set; }
+        private bool _IsActivated;
+        public bool IsActivated { get => _IsActivated; set => SetValue(ref _IsActivated, value); }
 
-        public string Text { get; set; }
+        public bool _DisplayDetails;
+        public bool DisplayDetails { get => _DisplayDetails; set => SetValue(ref _DisplayDetails, value); }
+
+        public bool _ButtonContextMenu;
+        public bool ButtonContextMenu { get => _ButtonContextMenu; set => SetValue(ref _ButtonContextMenu, value); }
+
+        public string _Text;
+        public string Text { get => _Text; set => SetValue(ref _Text, value); }
     }
 }

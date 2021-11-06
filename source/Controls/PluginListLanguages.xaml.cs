@@ -1,30 +1,16 @@
 ﻿using CheckLocalizations.Models;
 using CheckLocalizations.Services;
-using CommonPluginsShared;
 using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
 using CommonPluginsShared.Interfaces;
-using Playnite.SDK;
-using Playnite.SDK.Controls;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace CheckLocalizations.Controls
 {
@@ -46,7 +32,7 @@ namespace CheckLocalizations.Controls
             }
         }
 
-        private PluginListLanguagesDataContext ControlDataContext;
+        private PluginListLanguagesDataContext ControlDataContext = new PluginListLanguagesDataContext();
         internal override IDataContext _ControlDataContext
         {
             get
@@ -71,6 +57,7 @@ namespace CheckLocalizations.Controls
             AlwaysShow = true;
 
             InitializeComponent();
+            this.DataContext = ControlDataContext;
 
             Task.Run(() =>
             {
@@ -102,51 +89,34 @@ namespace CheckLocalizations.Controls
             }
 
 
-            ControlDataContext = new PluginListLanguagesDataContext
-            {
-                IsActivated = IsActivated,
-                ListLanguagesHeight = ListLanguagesHeight,
-                ListLanguagesVisibleEmpty = PluginDatabase.PluginSettings.Settings.ListLanguagesVisibleEmpty,
+            ControlDataContext.IsActivated = IsActivated;
+            ControlDataContext.ListLanguagesHeight = ListLanguagesHeight;
+            ControlDataContext.ListLanguagesVisibleEmpty = PluginDatabase.PluginSettings.Settings.ListLanguagesVisibleEmpty;
 
-                ItemsSource = new ObservableCollection<Models.Localization>()
-            };
+            ControlDataContext.ItemsSource = new ObservableCollection<Models.Localization>();
 
 
             PART_GridContener_SizeChanged(null, null);
         }
 
 
-        public override Task<bool> SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
+        public override void SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
         {
-            bool IgnoreSettings = this.IgnoreSettings;
-            bool MustDisplay = this.MustDisplay;
+            GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
-            return Task.Run(() =>
+            if (!IgnoreSettings && !ControlDataContext.ListLanguagesVisibleEmpty)
             {
-                GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
+                MustDisplay = gameLocalization.HasData;
+            }
+            else
+            {
+                MustDisplay = true;
+            }
 
-                if (!IgnoreSettings && !ControlDataContext.ListLanguagesVisibleEmpty)
-                {
-                    MustDisplay = gameLocalization.HasData;
-                }
-                else
-                {
-                    MustDisplay = true;
-                }
-
-                if (MustDisplay)
-                {
-                    ControlDataContext.ItemsSource = gameLocalization.Items.ToObservable();
-                }
-
-                this.Dispatcher.BeginInvoke(DispatcherPriority.Loaded, new ThreadStart(delegate
-                {
-                    this.MustDisplay = MustDisplay;
-                    this.DataContext = ControlDataContext;
-                }));
-
-                return true;
-            });
+            if (MustDisplay)
+            {
+                ControlDataContext.ItemsSource = gameLocalization.Items.ToObservable();
+            }
         }
 
 
@@ -196,12 +166,18 @@ namespace CheckLocalizations.Controls
     }
 
 
-    public class PluginListLanguagesDataContext : IDataContext
+    public class PluginListLanguagesDataContext : ObservableObject, IDataContext
     {
-        public bool IsActivated { get; set; }
-        public double ListLanguagesHeight { get; set; }
-        public bool ListLanguagesVisibleEmpty { get; set; }
+        private bool _IsActivated;
+        public bool IsActivated { get => _IsActivated; set => SetValue(ref _IsActivated, value); }
 
-        public ObservableCollection<Models.Localization> ItemsSource { get; set; }
+        private double _ListLanguagesHeight;
+        public double ListLanguagesHeight { get => _ListLanguagesHeight; set => SetValue(ref _ListLanguagesHeight, value); }
+
+        private bool _ListLanguagesVisibleEmpty;
+        public bool ListLanguagesVisibleEmpty { get => _ListLanguagesVisibleEmpty; set => SetValue(ref _ListLanguagesVisibleEmpty, value); }
+
+        private ObservableCollection<Models.Localization> _ItemsSource;
+        public ObservableCollection<Models.Localization> ItemsSource { get => _ItemsSource; set => SetValue(ref _ItemsSource, value); }
     }
 }
