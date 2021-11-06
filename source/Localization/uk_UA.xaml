@@ -15,12 +15,12 @@
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Стиль інтерфей</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Стиль інтерфейcу</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Показати список з доступними мовами</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Відображати стовпчик &quot;Примітки&quot;</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Показати список доступних прапорців мов</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Показувати лише прапорці, мову яких помічено</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Ігрові мови: знайдено {0} - не знайдено {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Обробка, зачекайте будь ласка...</sys:String>
@@ -34,7 +34,7 @@
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Доступна мова</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsLanguage">Мова</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsUi">Інтерфей</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">Інтерфейс</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsAudio">Аудіо</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsSub">Субтитри</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsNotes">Примітки</sys:String>

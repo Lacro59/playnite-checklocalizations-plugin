@@ -19,8 +19,8 @@
 
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Показать список с доступными языками</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Показывать столбец «Примечания»</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Показать список с доступными языками</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Показать только метки, чьи языки отмечены</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Игровой язык: {0} - не найден {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Обработка, пожалуйста подождите...</sys:String>
