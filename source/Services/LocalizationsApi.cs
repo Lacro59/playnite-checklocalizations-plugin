@@ -68,7 +68,16 @@ namespace CheckLocalizations.Services
             }
             else
             {
-                Localizations = LocalizationsSteam;
+                // Merged PCGamingWikiLocalizations with SteamLocalizations
+                Localizations = LocalizationsSteam.Select(x => new Localization
+                {
+                    Language = x.Language,
+                    Audio = LocalizationsGamingWiki.Find(y => y.Language.IsListEqual(x.Language)) != null ? LocalizationsGamingWiki.Find(y => y.Language.IsListEqual(x.Language)).Audio : x.Audio,
+                    Notes = LocalizationsGamingWiki.Find(y => y.Language.IsListEqual(x.Language)) != null ? LocalizationsGamingWiki.Find(y => y.Language.IsListEqual(x.Language)).Notes : x.Notes,
+                    Sub = LocalizationsGamingWiki.Find(y => y.Language.IsListEqual(x.Language)) != null ? LocalizationsGamingWiki.Find(y => y.Language.IsListEqual(x.Language)).Sub : x.Sub,
+                    Ui = LocalizationsGamingWiki.Find(y => y.Language.IsListEqual(x.Language)) != null ? LocalizationsGamingWiki.Find(y => y.Language.IsListEqual(x.Language)).Ui : x.Ui,
+                    IsManual = x.IsManual
+                }).ToList();
                 Common.LogDebug(true, $"Used Steam for {game.Name} - {Serialization.ToJson(Localizations)}");
 
                 gameLocalizations.SourcesLink = new SourceLink { Name = "Steam", GameName = steamLocalizations.GetGameName(), Url = steamLocalizations.GetUrl() };
