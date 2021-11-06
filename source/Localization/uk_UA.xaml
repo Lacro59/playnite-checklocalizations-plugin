@@ -15,7 +15,7 @@
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Стиль інтерфей</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Стиль інтерфейcу</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Показати список з доступними мовами</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Відображати стовпчик &quot;Примітки&quot;</sys:String>
@@ -34,7 +34,7 @@
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Доступна мова</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsLanguage">Мова</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsUi">Інтерфей</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">Інтерфейс</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsAudio">Аудіо</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsSub">Субтитри</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsNotes">Примітки</sys:String>
