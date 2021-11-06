@@ -95,7 +95,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false);
+                Common.LogError(ex, false, true, "CheckLocalizations");
             }
 
             return Localizations;
@@ -112,7 +112,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, $"Failed to download {url}");
+                Common.LogError(ex, false, $"Failed to download {url}", true, "CheckLocalizations");
                 return string.Empty;
             }
         }

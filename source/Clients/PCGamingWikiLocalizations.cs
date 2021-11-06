@@ -65,7 +65,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false);
+                Common.LogError(ex, false, true, "CheckLocalizations");
             }
 
             return url;
@@ -295,7 +295,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false);
+                Common.LogError(ex, false, true, "CheckLocalizations");
             }
 
             return Localizations;

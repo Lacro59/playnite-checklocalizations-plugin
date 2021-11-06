@@ -69,7 +69,7 @@ namespace CheckLocalizations
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false);
+                Common.LogError(ex, false, true, "CheckLocalizations");
             }
         }
         #endregion
@@ -368,7 +368,7 @@ namespace CheckLocalizations
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false);
+                Common.LogError(ex, false, true, "CheckLocalizations");
             }
         }
 
