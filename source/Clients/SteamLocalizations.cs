@@ -1,5 +1,5 @@
 ﻿using CheckLocalizations.Models;
-using CommonPluginsPlaynite.PluginLibrary.SteamLibrary.SteamShared;
+using CommonPlayniteShared.PluginLibrary.SteamLibrary.SteamShared;
 using CommonPluginsShared;
 using CommonPluginsStores;
 using Playnite.SDK;
