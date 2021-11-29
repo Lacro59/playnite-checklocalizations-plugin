@@ -7,11 +7,11 @@
     <sys:String x:Key="LOCCheckLocalizationsLocalizations">Локалізації</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Перевірити локалізацію</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Редагувати вручну підтримувану мов</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Редагувати вручну підтримувану мову</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Додати нову підтримувану мов</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Додати нову підтримувану мову</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
