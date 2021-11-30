@@ -1,11 +1,8 @@
 ﻿using CheckLocalizations.Models;
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Windows.Controls;
 using CheckLocalizations.Controls;
 using CheckLocalizations.Services;
-using System.Windows;
 using System.Diagnostics;
 using System.Windows.Documents;
 

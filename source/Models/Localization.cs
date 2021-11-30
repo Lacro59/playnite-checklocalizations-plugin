@@ -1,6 +1,5 @@
 ﻿using CheckLocalizations.Services;
 using Playnite.SDK.Data;
-using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
@@ -17,6 +16,7 @@ namespace CheckLocalizations.Models
         NotApplicable,
         Unknown
     }
+
 
     public class Localization : ObservableObject
     {

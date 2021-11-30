@@ -1,15 +1,8 @@
-﻿using CheckLocalizations.Models;
-using CheckLocalizations.Services;
-using Playnite.SDK;
-using Playnite.SDK.Models;
+﻿using Playnite.SDK;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
