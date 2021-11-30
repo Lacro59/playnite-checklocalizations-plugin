@@ -29,3 +29,9 @@ Packages:
       - Improved performances
       - Merged (when possible) PCGamingWiki data with Steam data
       - Updated localizations
+  - Version: 2.0.4
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-11-30
+    PackageUrl: https://github.com/Lacro59/playnite-checklocalizations-plugin/releases/download/v2.0.4/playnite-checklocalizations-plugin_2_0_4.pext
+    Changelog:
+      - Fixed minors bugs
