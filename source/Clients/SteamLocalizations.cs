@@ -44,6 +44,14 @@ namespace CheckLocalizations.Clients
                 if (SteamId != 0)
                 {
                     string data = GetSteamData(SteamId);
+                    if (data.Contains("\"success\":false", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        string message = string.Format(ResourceProvider.GetString("LOCCommonErrorGetStoreData") + Environment.NewLine + $"{game.Name} - {SteamId}", "Steam");
+                        Exception ex = new Exception(message);
+                        Common.LogError(ex, false, true, "CheckLocalizations");
+                        return Localizations;
+                    }
+
                     var parsedData = Serialization.FromJson<Dictionary<string, StoreAppDetailsResult>>(data);
 
                     if (parsedData[SteamId.ToString()].data != null)
@@ -95,7 +103,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, true, "CheckLocalizations");
+                Common.LogError(ex, false, $"Error with {game.Name} - {SteamId}", true, "CheckLocalizations");
             }
 
             return Localizations;
