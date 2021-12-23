@@ -35,3 +35,9 @@ Packages:
     PackageUrl: https://github.com/Lacro59/playnite-checklocalizations-plugin/releases/download/v2.0.4/playnite-checklocalizations-plugin_2_0_4.pext
     Changelog:
       - Fixed minors bugs
+  - Version: 2.1
+    RequiredApiVersion: 6.2.0
+    ReleaseDate: 2021-12-23
+    PackageUrl: https://github.com/Lacro59/playnite-checklocalizations-plugin/releases/download/v2.1/playnite-checklocalizations-plugin_2_1.pext
+    Changelog:
+      - Added auto import option
