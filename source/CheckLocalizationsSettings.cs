@@ -14,6 +14,9 @@ namespace CheckLocalizations
     {
         #region Settings variables
         public bool MenuInExtensions { get; set; } = true;
+        public DateTime LastAutoLibUpdateAssetsDownload { get; set; } = DateTime.Now;
+
+        public bool AutoImport { get; set; } = true;
 
         public bool EnableTag { get; set; } = false;
         public List<GameLanguage> GameLanguages { get; set; } = new List<GameLanguage>();

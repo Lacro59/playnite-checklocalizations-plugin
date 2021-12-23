@@ -14,6 +14,8 @@ using CommonPluginsShared;
 using CommonPluginsShared.PlayniteExtended;
 using CheckLocalizations.Controls;
 using CommonPluginsControls.Views;
+using System.Diagnostics;
+using System.Threading;
 
 namespace CheckLocalizations
 {
@@ -417,7 +419,56 @@ namespace CheckLocalizations
         // Add code to be executed when library is updated.
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
+            if (PluginSettings.Settings.AutoImport)
+            {
+                var PlayniteDb = PlayniteApi.Database.Games
+                        .Where(x => x.Added != null && x.Added > PluginSettings.Settings.LastAutoLibUpdateAssetsDownload)
+                        .ToList();
 
+                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
+                    $"CheckLocalizations - {resources.GetString("LOCCommonGettingData")}",
+                    true
+                );
+                globalProgressOptions.IsIndeterminate = false;
+
+                PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
+                {
+                    try
+                    {
+                        Stopwatch stopWatch = new Stopwatch();
+                        stopWatch.Start();
+
+                        activateGlobalProgress.ProgressMaxValue = (double)PlayniteDb.Count();
+
+                        string CancelText = string.Empty;
+
+                        foreach (Game game in PlayniteDb)
+                        {
+                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
+                            {
+                                CancelText = " canceled";
+                                break;
+                            }
+
+                            Thread.Sleep(10);
+                            PluginDatabase.RefreshNoLoader(game.Id);
+
+                            activateGlobalProgress.CurrentProgressValue++;
+                        }
+
+                        stopWatch.Stop();
+                        TimeSpan ts = stopWatch.Elapsed;
+                        logger.Info($"Task OnLibraryUpdated(){CancelText} - {string.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)} for {activateGlobalProgress.CurrentProgressValue}/{(double)PlayniteDb.Count()} items");
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.LogError(ex, false, true, "HowLongToBeat");
+                    }
+                }, globalProgressOptions);
+
+                PluginSettings.Settings.LastAutoLibUpdateAssetsDownload = DateTime.Now;
+                SavePluginSettings(PluginSettings.Settings);
+            }
         }
 
 
