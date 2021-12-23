@@ -29,8 +29,23 @@ namespace CheckLocalizations.Services
 
         protected override bool LoadDatabase()
         {
-            Database = new GameLocalizationsCollection(Paths.PluginDatabasePath);
-            Database.SetGameInfo<Models.Localization>(PlayniteApi);
+            try
+            {
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                Database = new GameLocalizationsCollection(Paths.PluginDatabasePath);
+                Database.SetGameInfo<Models.Localization>(PlayniteApi);
+
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                logger.Info($"LoadDatabase with {Database.Count} items - {string.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)}");
+            }
+            catch (Exception ex)
+            {
+                Common.LogError(ex, false, true, "CheckLocalizations");
+                return false;
+            }
 
             return true;
         }
