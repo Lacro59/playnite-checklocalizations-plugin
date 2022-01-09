@@ -7,11 +7,11 @@
     <sys:String x:Key="LOCCheckLocalizationsLocalizations">Локализации</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Проверить локализацию</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Редактировать язык</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Вручную редактировать язык</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Добавить новый язык</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Добавить новый поддерживаемый язык</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
@@ -31,11 +31,11 @@
     <!-- ClButtonAdvanced -->
 
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Родной язык</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Поддерживаемые языки</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Поддерживаемый язык</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsLanguage">Язык</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsUi">Интерфей</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAudio">Аудио</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">Интерфейс</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Звук</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsSub">Подзаголовок</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsNotes">Примечания</sys:String>
 
