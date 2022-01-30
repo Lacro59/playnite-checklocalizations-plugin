@@ -3,7 +3,7 @@
 
     <!-- MainView -->
 
-    <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations-检查本地化</sys:String>
+    <sys:String x:Key="LOCCheckLocalizations">检查本地化-CheckLocalizations</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsLocalizations">本地化</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">检查本地化</sys:String>
