@@ -1,6 +1,8 @@
-﻿using AngleSharp.Dom.Html;
+﻿using AngleSharp.Dom;
+using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 using CheckLocalizations.Models;
+using CheckLocalizations.Services;
 using CommonPluginsShared;
 using CommonPluginsStores;
 using Playnite.SDK;
@@ -17,6 +19,8 @@ namespace CheckLocalizations.Clients
     public class PCGamingWikiLocalizations
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+
+        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
 
         private SteamApi steamApi;
         private readonly string urlSteamId = "https://pcgamingwiki.com/api/appid.php?appid={0}";
@@ -46,7 +50,7 @@ namespace CheckLocalizations.Clients
 
                     if (HtmlDocument.QuerySelectorAll("ul.mw-search-results")?.Count() == 2)
                     {
-                        var TitleMatches = HtmlDocument.QuerySelectorAll("ul.mw-search-results")[0].QuerySelectorAll("li");
+                        IHtmlCollection<IElement> TitleMatches = HtmlDocument.QuerySelectorAll("ul.mw-search-results")[0].QuerySelectorAll("li");
                         if (TitleMatches?.Count() == 1)
                         {
                             url = UrlPCGamingWiki + TitleMatches[0].QuerySelector("a").GetAttribute("href");
@@ -56,7 +60,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, true, "CheckLocalizations");
+                Common.LogError(ex, false, true, PluginDatabase.PluginName);
             }
 
             return url;
@@ -282,7 +286,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, true, "CheckLocalizations");
+                Common.LogError(ex, false, true, PluginDatabase.PluginName);
             }
 
             return Localizations;

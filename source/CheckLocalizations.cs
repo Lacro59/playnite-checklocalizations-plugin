@@ -38,13 +38,13 @@ namespace CheckLocalizations
             AddCustomElementSupport(new AddCustomElementSupportArgs
             {
                 ElementList = new List<string> { "PluginButton", "PluginViewItem", "PluginListLanguages", "PluginFlags" },
-                SourceName = "CheckLocalizations"
+                SourceName = PluginDatabase.PluginName
             });
 
             // Settings integration
             AddSettingsSupport(new AddSettingsSupportArgs
             {
-                SourceName = "CheckLocalizations",
+                SourceName = PluginDatabase.PluginName,
                 SettingsRoot = $"{nameof(PluginSettings)}.{nameof(PluginSettings.Settings)}"
             });
         }
@@ -59,14 +59,14 @@ namespace CheckLocalizations
                 ButtonName = ((Button)sender).Name;
                 if (ButtonName == "PART_CustomCheckLocButton")
                 {
-                    var ViewExtension = new CheckLocalizationsView();
-                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
+                    CheckLocalizationsView ViewExtension = new CheckLocalizationsView();
+                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, PluginDatabase.PluginName, ViewExtension);
                     windowExtension.ShowDialog();
                 }
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, true, "CheckLocalizations");
+                Common.LogError(ex, false, true, PluginDatabase.PluginName);
             }
         }
         #endregion
@@ -126,7 +126,7 @@ namespace CheckLocalizations
                     Action = (gameMenuItem) =>
                     {
                         var ViewExtension = new CheckLocalizationsView();
-                        Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
+                        Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, PluginDatabase.PluginName, ViewExtension);
                         windowExtension.ShowDialog();
                     }
                 });
@@ -165,7 +165,7 @@ namespace CheckLocalizations
                 Action = (mainMenuItem) =>
                 {
                     var ViewExtension = new CheckLocalizationsEditManual(GameMenu);
-                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, "CheckLocalizations", ViewExtension);
+                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, PluginDatabase.PluginName, ViewExtension);
                     windowExtension.ShowDialog();
                 }
             });
@@ -316,11 +316,11 @@ namespace CheckLocalizations
                 {
                     if (PluginDatabase.ClearDatabase())
                     {
-                        PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
+                        PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), PluginDatabase.PluginName);
                     }
                     else
                     {
-                        PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
+                        PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), PluginDatabase.PluginName);
                     }
                 }
             });
@@ -365,7 +365,7 @@ namespace CheckLocalizations
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, true, "CheckLocalizations");
+                Common.LogError(ex, false, true, PluginDatabase.PluginName);
             }
         }
 
@@ -421,12 +421,12 @@ namespace CheckLocalizations
         {
             if (PluginSettings.Settings.AutoImport)
             {
-                var PlayniteDb = PlayniteApi.Database.Games
+                List<Game> PlayniteDb = PlayniteApi.Database.Games
                         .Where(x => x.Added != null && x.Added > PluginSettings.Settings.LastAutoLibUpdateAssetsDownload)
                         .ToList();
 
                 GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    $"CheckLocalizations - {resources.GetString("LOCCommonGettingData")}",
+                    $"{PluginDatabase.PluginName} - {resources.GetString("LOCCommonGettingData")}",
                     true
                 );
                 globalProgressOptions.IsIndeterminate = false;
@@ -480,7 +480,7 @@ namespace CheckLocalizations
 
         public override UserControl GetSettingsView(bool firstRunSettings)
         {
-            return new CheckLocalizationsSettingsView(PlayniteApi, PluginSettings.Settings, this.GetPluginUserDataPath());
+            return new CheckLocalizationsSettingsView(PluginSettings.Settings);
         }
         #endregion
     }

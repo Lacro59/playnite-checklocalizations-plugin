@@ -135,8 +135,8 @@ namespace CheckLocalizations.Controls
         {
             if (!PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonContextMenu)
             {
-                var ViewExtension = new CheckLocalizationsView();
-                Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PlayniteApi, "CheckLocalizations", ViewExtension);
+                CheckLocalizationsView ViewExtension = new CheckLocalizationsView();
+                Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PlayniteApi, PluginDatabase.PluginName, ViewExtension);
                 windowExtension.ShowDialog();
             }
         }

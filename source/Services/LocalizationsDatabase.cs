@@ -43,7 +43,7 @@ namespace CheckLocalizations.Services
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, true, "CheckLocalizations");
+                Common.LogError(ex, false, true, PluginName);
                 return false;
             }
 
@@ -230,7 +230,7 @@ namespace CheckLocalizations.Services
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, true, "CheckLocalizations");
+                Common.LogError(ex, false, true, PluginName);
             }
 
             return false;
@@ -273,7 +273,7 @@ namespace CheckLocalizations.Services
                 }
                 catch (Exception ex)
                 {
-                    Common.LogError(ex, false, true, "CheckLocalizations");
+                    Common.LogError(ex, false, true, PluginName);
                 }
             }
 

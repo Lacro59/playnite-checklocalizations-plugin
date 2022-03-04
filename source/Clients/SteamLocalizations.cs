@@ -8,12 +8,15 @@ using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CheckLocalizations.Services;
 
 namespace CheckLocalizations.Clients
 {
     public class SteamLocalizations
     {
         private static readonly ILogger logger = LogManager.GetLogger();
+
+        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
 
         private SteamApi steamApi;
         private int SteamId;
@@ -40,7 +43,7 @@ namespace CheckLocalizations.Clients
                     {
                         string message = string.Format(ResourceProvider.GetString("LOCCommonErrorGetStoreData") + Environment.NewLine + $"{game.Name} - {SteamId}", "Steam");
                         Exception ex = new Exception(message);
-                        Common.LogError(ex, false, true, "CheckLocalizations");
+                        Common.LogError(ex, false, true, PluginDatabase.PluginName);
                         return Localizations;
                     }
 
@@ -95,7 +98,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, $"Error with {game.Name} - {SteamId}", true, "CheckLocalizations");
+                Common.LogError(ex, false, $"Error with {game.Name} - {SteamId}", true, PluginDatabase.PluginName);
             }
 
             return Localizations;
@@ -112,7 +115,7 @@ namespace CheckLocalizations.Clients
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, $"Failed to download {url}", true, "CheckLocalizations");
+                Common.LogError(ex, false, $"Failed to download {url}", true, PluginDatabase.PluginName);
                 return string.Empty;
             }
         }

@@ -14,17 +14,9 @@ namespace CheckLocalizations.Views
         private static readonly ILogger logger = LogManager.GetLogger();
         private static IResourceProvider resources = new ResourceProvider();
 
-        private IPlayniteAPI PlayniteApi { get; set; }
-        private CheckLocalizationsSettings settings { get; set; }
-        private string PluginUserDataPath { get; set; }
 
-
-        public CheckLocalizationsSettingsView(IPlayniteAPI PlayniteApi, CheckLocalizationsSettings settings, string PluginUserDataPath)
+        public CheckLocalizationsSettingsView(CheckLocalizationsSettings settings)
         {
-            this.PlayniteApi = PlayniteApi;
-            this.settings = settings;
-            this.PluginUserDataPath = PluginUserDataPath;
-
             InitializeComponent();
 
             lbGameLanguages.ItemsSource = settings.GameLanguages.OrderBy(x => x.Name).ToList();
@@ -77,11 +69,11 @@ namespace CheckLocalizations.Views
         {
             if (CheckLocalizations.PluginDatabase.ClearDatabase())
             {
-                PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
+                API.Instance.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
             }
             else
             {
-                PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
+                API.Instance.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
             }
         }
 
