@@ -14,19 +14,13 @@ namespace CheckLocalizations.Clients
     public class SteamLocalizations
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly IPlayniteAPI _PlayniteApi;
-
-        private readonly string _PluginUserDataPath;
 
         private SteamApi steamApi;
         private int SteamId;
 
 
-        public SteamLocalizations(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
+        public SteamLocalizations()
         {
-            _PlayniteApi = PlayniteApi;
-            _PluginUserDataPath = PluginUserDataPath;
-
             steamApi = new SteamApi();
         }
 

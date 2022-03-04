@@ -22,27 +22,15 @@ namespace CheckLocalizations.Controls
         private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
         internal override IPluginDatabase _PluginDatabase
         {
-            get
-            {
-                return PluginDatabase;
-            }
-            set
-            {
-                PluginDatabase = (LocalizationsDatabase)_PluginDatabase;
-            }
+            get => PluginDatabase;
+            set => PluginDatabase = (LocalizationsDatabase)_PluginDatabase;
         }
 
         private PluginListLanguagesDataContext ControlDataContext = new PluginListLanguagesDataContext();
         internal override IDataContext _ControlDataContext
         {
-            get
-            {
-                return ControlDataContext;
-            }
-            set
-            {
-                ControlDataContext = (PluginListLanguagesDataContext)_ControlDataContext;
-            }
+            get => ControlDataContext;
+            set => ControlDataContext = (PluginListLanguagesDataContext)_ControlDataContext;
         }
 
 

@@ -95,10 +95,10 @@ namespace CheckLocalizations.Services
 
             if (localizationsApi == null)
             {
-                localizationsApi = new LocalizationsApi(PlayniteApi, Paths.PluginUserDataPath);
+                localizationsApi = new LocalizationsApi();
             }
 
-            var data = localizationsApi.GetLocalizations(Id);
+            GameLocalizations data = localizationsApi.GetLocalizations(Id);
 
             Task.Run(() =>
             {

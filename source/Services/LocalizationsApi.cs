@@ -17,27 +17,21 @@ namespace CheckLocalizations.Services
     {
         private static readonly ILogger logger = LogManager.GetLogger();
         private static IResourceProvider resources = new ResourceProvider();
-        private IPlayniteAPI _PlayniteApi;
-
-        private readonly string _PluginUserDataPath;
 
         private PCGamingWikiLocalizations pCGamingWikiLocalizations;
         private SteamLocalizations steamLocalizations;
 
 
-        public LocalizationsApi(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
+        public LocalizationsApi()
         {
-            _PlayniteApi = PlayniteApi;
-            _PluginUserDataPath = PluginUserDataPath;
-
-            pCGamingWikiLocalizations = new PCGamingWikiLocalizations(_PlayniteApi, _PluginUserDataPath);
-            steamLocalizations = new SteamLocalizations(_PlayniteApi, _PluginUserDataPath);
+            pCGamingWikiLocalizations = new PCGamingWikiLocalizations();
+            steamLocalizations = new SteamLocalizations();
         }
 
 
         public GameLocalizations GetLocalizations(Guid Id)
         {
-            return GetLocalizations(_PlayniteApi.Database.Games.Get(Id));
+            return GetLocalizations(API.Instance.Database.Games.Get(Id));
         }
 
         public GameLocalizations GetLocalizations(Game game)

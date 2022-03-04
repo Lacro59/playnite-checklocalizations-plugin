@@ -17,9 +17,6 @@ namespace CheckLocalizations.Clients
     public class PCGamingWikiLocalizations
     {
         private static readonly ILogger logger = LogManager.GetLogger();
-        private readonly IPlayniteAPI _PlayniteApi;
-
-        private readonly string _PluginUserDataPath;
 
         private SteamApi steamApi;
         private readonly string urlSteamId = "https://pcgamingwiki.com/api/appid.php?appid={0}";
@@ -30,11 +27,8 @@ namespace CheckLocalizations.Clients
         private string urlPCGamingWiki = string.Empty;
 
 
-        public PCGamingWikiLocalizations(IPlayniteAPI PlayniteApi, string PluginUserDataPath)
+        public PCGamingWikiLocalizations()
         {
-            _PlayniteApi = PlayniteApi;
-            _PluginUserDataPath = PluginUserDataPath;
-
             steamApi = new SteamApi();
         }
 
@@ -74,8 +68,6 @@ namespace CheckLocalizations.Clients
             string urlMatch = string.Empty;
             string WebResponse = string.Empty;
 
-
-            url = string.Empty;
             if (SteamId != 0)
             {
                 url = string.Format(urlSteamId, SteamId);
@@ -133,7 +125,6 @@ namespace CheckLocalizations.Clients
             Name = Regex.Replace(Name, @"(demo[ ])", string.Empty, RegexOptions.IgnoreCase);
             Name = CommonPluginsShared.PlayniteTools.NormalizeGameName(Name);
 
-            url = string.Empty;
             url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(Name);
 
             Thread.Sleep(1000);
@@ -152,7 +143,6 @@ namespace CheckLocalizations.Clients
             }
 
 
-            url = string.Empty;
             url = UrlPCGamingWikiSearch + WebUtility.UrlEncode(game.Name);
 
             Thread.Sleep(1000);
