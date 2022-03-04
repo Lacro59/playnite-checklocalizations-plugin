@@ -15,7 +15,7 @@ using System.Windows.Threading;
 
 namespace CheckLocalizations.Services
 {
-    public class LocalizationsDatabase : PluginDatabaseObject<CheckLocalizationsSettingsViewModel, GameLocalizationsCollection, GameLocalizations>
+    public class LocalizationsDatabase : PluginDatabaseObject<CheckLocalizationsSettingsViewModel, GameLocalizationsCollection, GameLocalizations, Models.Localization>
     {
         private LocalizationsApi localizationsApi;
         private bool IsGetWeb = false;
