@@ -1,0 +1,42 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- MainView -->
+
+    <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">التعريب</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">التحقق من التعبيرات</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">تعديل لغة مدعومة يدوياً</sys:String>
+
+    <!-- CheckLocalizationsEditManual -->
+
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">إضافة لغة جديدة مدعومة</sys:String>
+
+    <!-- CheckLocalizationsSettingsView -->
+
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">نمط الواجهة</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">عرض القائمة باللغات المتاحة</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">عرض عمود &quot;الملاحظات&quot;</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">عرض قائمة أعلام اللغات المتاحة</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">إظهار فقط الأعلام التي تم وضع علامة لغتها</sys:String>
+    
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">لغات اللعبة: تم العثور على {0} - لم يتم العثور على {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">جارٍ، الرجاء الانتظار...</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">ضع علامة عليها باللغات المحددة</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">هي اللغة الأم</sys:String>
+
+    <!-- ClButtonAdvanced -->
+
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">اللغة الام</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">اللغات المدعومة</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">اللّغة</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">الصوت</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">الترجمة</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">ملاحظات</sys:String>
+
+</ResourceDictionary>
