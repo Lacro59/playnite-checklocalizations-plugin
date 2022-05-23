@@ -7,20 +7,20 @@
     <sys:String x:Key="LOCCheckLocalizationsLocalizations">本地化</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">检查本地化</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">手动编辑支持的语言</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">手动编辑支持的语</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">添加支持的新语言</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">添加支持的新语</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
     <sys:String x:Key="LOCCheckLocalizationsStyleUI">界面风格</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">使用可用语言显示列表</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">使用可用语言显示列</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">显示“备注”列</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">显示可用的语言标识列表</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">仅显示语言已有标签的标识</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">显示可用的语言标识列</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">仅显示语言已有标签的标</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">游戏语言：已找到 {0} - 未找到 {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">正在处理，请稍候...</sys:String>
@@ -31,12 +31,12 @@
     <!-- ClButtonAdvanced -->
 
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">母语</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">支持的语言</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">支持的语</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">语言</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">语</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsAudio">音频</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsSub">字幕</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">备注</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">备</sys:String>
 
 </ResourceDictionary>
