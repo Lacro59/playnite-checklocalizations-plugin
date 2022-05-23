@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using CheckLocalizations.Services;
+using CommonPluginsStores.Steam;
+using CommonPluginsStores.Models;
 
 namespace CheckLocalizations.Clients
 {
@@ -24,7 +26,7 @@ namespace CheckLocalizations.Clients
 
         public SteamLocalizations()
         {
-            steamApi = new SteamApi();
+            steamApi = new SteamApi(PluginDatabase.PluginName);
         }
 
 
@@ -34,7 +36,7 @@ namespace CheckLocalizations.Clients
 
             try
             {
-                SteamId = steamApi.GetSteamId(game.Name);
+                SteamId = steamApi.GetAppId(game.Name);
 
                 if (SteamId != 0)
                 {

@@ -4,7 +4,7 @@ using AngleSharp.Parser.Html;
 using CheckLocalizations.Models;
 using CheckLocalizations.Services;
 using CommonPluginsShared;
-using CommonPluginsStores;
+using CommonPluginsStores.Steam;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
@@ -33,7 +33,7 @@ namespace CheckLocalizations.Clients
 
         public PCGamingWikiLocalizations()
         {
-            steamApi = new SteamApi();
+            steamApi = new SteamApi(PluginDatabase.PluginName);
         }
 
 
@@ -194,7 +194,7 @@ namespace CheckLocalizations.Clients
             }
             if (SteamId == 0)
             {
-                SteamId = steamApi.GetSteamId(game.Name);
+                SteamId = steamApi.GetAppId(game.Name);
             }
 
             urlPCGamingWiki = FindGoodUrl(game, SteamId);
