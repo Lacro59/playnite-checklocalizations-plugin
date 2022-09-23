@@ -84,7 +84,7 @@ namespace CheckLocalizations.Services
                 }
             }
 
-            gameLocalizations.Items.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
+            gameLocalizations?.Items?.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
 
             return gameLocalizations;
         }
