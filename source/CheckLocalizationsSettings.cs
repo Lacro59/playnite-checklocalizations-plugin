@@ -141,15 +141,7 @@ namespace CheckLocalizations
         private CheckLocalizationsSettings EditingClone { get; set; }
 
         private CheckLocalizationsSettings _Settings;
-        public CheckLocalizationsSettings Settings
-        {
-            get => _Settings;
-            set
-            {
-                _Settings = value;
-                OnPropertyChanged();
-            }
-        }
+        public CheckLocalizationsSettings Settings { get => _Settings; set => SetValue(ref _Settings, value); }
 
 
         public CheckLocalizationsSettingsViewModel(CheckLocalizations plugin)

@@ -23,14 +23,9 @@ namespace CheckLocalizations
     {
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
-        private OldToNew oldToNew;
-
 
         public CheckLocalizations(IPlayniteAPI api) : base(api)
         {
-            // Old database
-            oldToNew = new OldToNew(this.GetPluginUserDataPath());
-
             // Custom theme button
             EventManager.RegisterClassHandler(typeof(Button), Button.ClickEvent, new RoutedEventHandler(OnCustomThemeButtonClick));
 
@@ -349,12 +344,6 @@ namespace CheckLocalizations
         #region Game event
         public override void OnGameSelected(OnGameSelectedEventArgs args)
         {
-            // Old database
-            if (oldToNew.IsOld)
-            {
-                oldToNew.ConvertDB(PlayniteApi);
-            }
-
             try
             {
                 if (args.NewValue?.Count == 1)
