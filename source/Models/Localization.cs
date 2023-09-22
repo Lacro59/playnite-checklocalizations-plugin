@@ -1,4 +1,6 @@
 ﻿using CheckLocalizations.Services;
+using CommonPluginsShared;
+using Playnite.SDK;
 using Playnite.SDK.Data;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
@@ -20,6 +22,7 @@ namespace CheckLocalizations.Models
 
     public class Localization : ObservableObject
     {
+        private static readonly ILogger logger = LogManager.GetLogger();
         private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
 
         public string Language { get; set; }
@@ -30,29 +33,11 @@ namespace CheckLocalizations.Models
         public bool IsManual { get; set; }
 
         [DontSerialize]
-        public string UiIcon
-        {
-            get
-            {
-                return GetImage(Ui);
-            }
-        }
+        public string UiIcon => GetImage(Ui);
         [DontSerialize]
-        public string AudioIcon
-        {
-            get
-            {
-                return GetImage(Audio);
-            }
-        }
+        public string AudioIcon => GetImage(Audio);
         [DontSerialize]
-        public string SubIcon
-        {
-            get
-            {
-                return GetImage(Sub);
-            }
-        }
+        public string SubIcon => GetImage(Sub);
 
         [DontSerialize]
         public BitmapImage FlagIcon
@@ -61,172 +46,88 @@ namespace CheckLocalizations.Models
             {
                 string PathResourcesFlags = Path.Combine(PluginDatabase.Paths.PluginPath, "Resources", "Flags");
 
-                if (Language == "English")
+                switch (Language.ToLower())
                 {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "en.png"));
+                    case "english":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "en.png"));
+                    case "french":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "fr.png"));
+                    case "german":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "de.png"));
+                    case "italian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "it.png"));
+                    case "japanese":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ja.png"));
+                    case "spanish":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "es-ES.png"));
+                    case "simplified chinese":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "zh-CN.png"));
+                    case "russian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ru.png"));
+                    case "traditional chinese":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "zh-TW.png"));
+                    case "korean":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ko.png"));
+                    case "polish":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "pl.png"));
+                    case "brazilian portuguese":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "pt-BR.png"));
+                    case "arabic":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "af.png"));
+                    case "czech":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "cs.png"));
+                    case "hungarian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "hu.png"));
+                    case "turkish":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "tr.png"));
+                    case "catalan":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ca.png"));
+                    case "danish":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "da.png"));
+                    case "greek":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "el.png"));
+                    case "estonian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "et.png"));
+                    case "persian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "fa.png"));
+                    case "finnish":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "fi.png"));
+                    case "croatian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "hr.png"));
+                    case "indonesian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "id.png"));
+                    case "lithuanian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "lt.png"));
+                    case "dutch":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "nl.png"));
+                    case "norwegian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "no.png"));
+                    case "portuguese":
+                    case "portuguese - portugal":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "pt-PT.png"));
+                    case "romanian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ro.png"));
+                    case "slovenian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sk.png"));
+                    case "serbian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sr.png"));
+                    case "swedish":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sv-SE.png"));
+                    case "ukrainian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "uk.png"));
+                    case "latin american spanish":
+                    case "spanish - latin america":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "es.png"));
+                    case "thai":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "th.png"));
+                    case "vietnamese":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "vi.png"));
+                    case "hebrew":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "he.png"));
+                    default:
+                        logger.Warn($"No flag find for {Language}");
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "__.png"));
                 }
-
-                if (Language == "French")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "fr.png"));
-                }
-
-                if (Language == "German")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "de.png"));
-                }
-
-                if (Language == "Italian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "it.png"));
-                }
-
-                if (Language == "Japanese")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ja.png"));
-                }
-
-                if (Language == "Spanish")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "es-ES.png"));
-                }
-
-                if (Language == "Simplified Chinese")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "zh-CN.png"));
-                }
-
-                if (Language == "Russian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ru.png"));
-                }
-
-                if (Language == "Traditional Chinese")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "zh-TW.png"));
-                }
-
-                if (Language == "Korean")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ko.png"));
-                }
-
-                if (Language == "Polish")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "pl.png"));
-                }
-
-                if (Language == "Brazilian Portuguese")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "pt-BR.png"));
-                }
-
-                if (Language == "Arabic")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "af.png"));
-                }
-
-                if (Language == "Czech")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "cs.png"));
-                }
-
-                if (Language == "Hungarian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "hu.png"));
-                }
-
-                if (Language == "Turkish")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "tr.png"));
-                }
-
-                if (Language == "Catalan")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ca.png"));
-                }
-
-                if (Language == "Danish")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "da.png"));
-                }
-
-                if (Language == "Greek")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "el.png"));
-                }
-
-                if (Language == "Estonian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "et.png"));
-                }
-
-                if (Language == "Persian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "fa.png"));
-                }
-
-                if (Language == "Finnish")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "fi.png"));
-                }
-
-                if (Language == "Croatian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "hr.png"));
-                }
-
-                if (Language == "Indonesian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "id.png"));
-                }
-
-                if (Language == "Lithuanian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "lt.png"));
-                }
-
-                if (Language == "Dutch")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "nl.png"));
-                }
-
-                if (Language == "Norwegian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "no.png"));
-                }
-
-                if (Language == "Portuguese")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "pt-PT.png"));
-                }
-
-                if (Language == "Romanian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ro.png"));
-                }
-
-                if (Language == "Slovenian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sk.png"));
-                }
-
-                if (Language == "Serbian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sr.png"));
-                }
-
-                if (Language == "Swedish")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sv-SE.png"));
-                }
-
-                if (Language == "Ukrainian")
-                {
-                    return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "uk.png"));
-                }
-
-                return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "__.png"));
             }
         }
 
@@ -235,43 +136,19 @@ namespace CheckLocalizations.Models
         {
             get
             {
-                var gameLanguage = CheckLocalizations.PluginDatabase.PluginSettings.Settings.GameLanguages.Find(x => x.Name.ToLower() == Language.ToLower());
+                GameLanguage gameLanguage = CheckLocalizations.PluginDatabase.PluginSettings.Settings.GameLanguages
+                    .Find(x => x.Name.ToLower() == Language.ToLower());
 
-                if (gameLanguage == null)
-                {
-                    return Language;
-                }
-                else
-                {
-                    return gameLanguage.DisplayName;
-                }
+                return gameLanguage == null ? Language : gameLanguage.DisplayName;
             }
         }
 
         [DontSerialize]
-        public bool IsOkUi
-        {
-            get
-            {
-                return (Ui == SupportStatus.Native || Ui == SupportStatus.Hackable);
-            }
-        }
+        public bool IsOkUi => Ui == SupportStatus.Native || Ui == SupportStatus.Hackable;
         [DontSerialize]
-        public bool IsOkAudio
-        {
-            get
-            {
-                return (Audio == SupportStatus.Native || Audio == SupportStatus.Hackable);
-            }
-        }
+        public bool IsOkAudio => Audio == SupportStatus.Native || Audio == SupportStatus.Hackable;
         [DontSerialize]
-        public bool IsOkSub
-        {
-            get
-            {
-                return (Sub == SupportStatus.Native || Sub == SupportStatus.Hackable);
-            }
-        }
+        public bool IsOkSub => Sub == SupportStatus.Native || Sub == SupportStatus.Hackable;
 
         private string GetImage(SupportStatus supportStatus)
         {
@@ -289,27 +166,15 @@ namespace CheckLocalizations.Models
                     return $"{pluginFolder}\\Resources\\notapplicable.png";
                 case SupportStatus.Unknown:
                     return $"{pluginFolder}\\Resources\\unknown.png";
+                default:
+                    return string.Empty;
             }
-
-            return string.Empty;
         }
 
 
         [DontSerialize]
-        public bool UiStylePcGamingWiki
-        {
-            get
-            {
-                return CheckLocalizations.PluginDatabase.PluginSettings.Settings.UiStylePcGamingWiki;
-            }
-        }
+        public bool UiStylePcGamingWiki => CheckLocalizations.PluginDatabase.PluginSettings.Settings.UiStylePcGamingWiki;
         [DontSerialize]
-        public bool UiStyleSteam
-        {
-            get
-            {
-                return CheckLocalizations.PluginDatabase.PluginSettings.Settings.UiStyleSteam;
-            }
-        }
+        public bool UiStyleSteam => CheckLocalizations.PluginDatabase.PluginSettings.Settings.UiStyleSteam;
     }
 }
