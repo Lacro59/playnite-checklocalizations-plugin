@@ -39,12 +39,12 @@ namespace CheckLocalizations.Views
 
         private void PART_SourceLink_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (((Hyperlink)sender).Tag is string)
+            if (((Hyperlink)sender).Tag is string link)
             {
-                if (!((string)((Hyperlink)sender).Tag).IsNullOrEmpty())
+                if (!link.IsNullOrEmpty())
                 {
-                    Process.Start((string)((Hyperlink)sender).Tag);
-                }                
+                    Process.Start(link);
+                }
             }
         }
     }

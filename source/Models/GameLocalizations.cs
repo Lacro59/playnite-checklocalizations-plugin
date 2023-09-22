@@ -7,20 +7,8 @@ namespace CheckLocalizations.Models
     public class GameLocalizations : PluginDataBaseGame<Localization>
     {
         private List<Localization> _Items = new List<Localization>();
+        public override List<Localization> Items { get => _Items; set => SetValue(ref _Items, value); }
 
-        public override List<Localization> Items
-        {
-            get
-            {
-                return _Items;
-            }
-
-            set
-            {
-                _Items = value;
-                OnPropertyChanged();
-            }
-        }
 
         public bool HasChecked { get; set; }
 

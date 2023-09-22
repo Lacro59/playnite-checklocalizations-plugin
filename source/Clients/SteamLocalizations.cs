@@ -49,12 +49,12 @@ namespace CheckLocalizations.Clients
                         return Localizations;
                     }
 
-                    var parsedData = Serialization.FromJson<Dictionary<string, StoreAppDetailsResult>>(data);
+                    Dictionary<string, StoreAppDetailsResult> parsedData = Serialization.FromJson<Dictionary<string, StoreAppDetailsResult>>(data);
 
                     if (parsedData[SteamId.ToString()].data != null)
                     {
-                        var dataSplited = parsedData[SteamId.ToString()].data.supported_languages.Split(new string[] { "<br>" }, StringSplitOptions.None);
-                        var ListLocalizations = dataSplited[0].Split(',');
+                        string[] dataSplited = parsedData[SteamId.ToString()].data.supported_languages.Split(new string[] { "<br>" }, StringSplitOptions.None);
+                        string[] ListLocalizations = dataSplited[0].Split(',');
 
                         foreach(string Loc in ListLocalizations)
                         {
@@ -78,6 +78,8 @@ namespace CheckLocalizations.Clients
                                     break;
                                 case "Spanish - Spain":
                                     Language = "Spanish";
+                                    break;
+                                default:
                                     break;
                             }
 

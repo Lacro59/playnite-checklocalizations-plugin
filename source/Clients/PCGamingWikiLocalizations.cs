@@ -1,4 +1,5 @@
-﻿using AngleSharp.Dom.Html;
+﻿using AngleSharp.Dom;
+using AngleSharp.Dom.Html;
 using AngleSharp.Parser.Html;
 using CheckLocalizations.Models;
 using CheckLocalizations.Services;
@@ -79,7 +80,7 @@ namespace CheckLocalizations.Clients
             urlPCGamingWiki = string.Empty;
             int SteamId = 0;
 
-            if (game.SourceId != default(Guid))
+            if (game.SourceId != default)
             {
                 if (game.Source.Name.ToLower() == "steam")
                 {
@@ -120,11 +121,9 @@ namespace CheckLocalizations.Clients
                 HtmlParser parser = new HtmlParser();
                 IHtmlDocument HtmlLocalization = parser.Parse(ResultWeb);
 
-
                 gamePCGamingWiki = HtmlLocalization.QuerySelector("h1.article-title")?.InnerHtml;
 
-
-                foreach (var row in HtmlLocalization.QuerySelectorAll("tr.table-l10n-body-row"))
+                foreach (IElement row in HtmlLocalization.QuerySelectorAll("tr.table-l10n-body-row"))
                 {
                     string Language = Regex.Replace(row.QuerySelector("th").InnerHtml, "<.+?>(.*)<.+?>", "$1");
                     SupportStatus Ui = SupportStatus.Unknown;
@@ -133,7 +132,7 @@ namespace CheckLocalizations.Clients
                     string Notes = string.Empty;
 
                     int i = 1;
-                    foreach (var td in row.QuerySelectorAll("td"))
+                    foreach (IElement td in row.QuerySelectorAll("td"))
                     {
                         switch (i)
                         {
@@ -149,14 +148,14 @@ namespace CheckLocalizations.Clients
                             case 4:
                                 Notes = Regex.Replace(td.InnerHtml, "<.+?>(.*)<.+?>", "$1");
                                 break;
+                            default:
+                                break;
                         }
                         i++;
                     }
 
-
                     Notes = Regex.Replace(Notes, "(</[^>]*>)", string.Empty);
                     Notes = Regex.Replace(Notes, "(<[^>]*>)", string.Empty);
-
 
                     Localizations.Add(new Models.Localization
                     {
