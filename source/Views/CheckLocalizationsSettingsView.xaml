@@ -39,21 +39,67 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="10" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="10" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
-                    <CheckBox Grid.Row="0" Name="cbTag" IsChecked="{Binding Settings.EnableTag}" Grid.Column="0" VerticalAlignment="Center">
+                    <CheckBox Grid.Row="0" Name="cbTag" IsChecked="{Binding Settings.EnableTagSingle}" Grid.Column="0" VerticalAlignment="Center">
                         <Label Content="{DynamicResource LOCCheckLocalizationAddTagDescription}" />
                     </CheckBox>
-
-                    <StackPanel  Grid.Row="0" Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="{DynamicResource LOCAddTitle}" Margin="0,0,10,0" IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}" VerticalAlignment="Center" Click="ButtonAddTag_Click" />
-                        <Button Content="{DynamicResource LOCRemoveTitle}" IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click" />
+                    <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="{DynamicResource LOCAddTitle}" Margin="0,0,10,0" Click="ButtonAddTag_Click" VerticalAlignment="Center">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=cbTag, Path=IsChecked}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="True" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=cbTagAudio, Path=IsChecked}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="True" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        <Button Content="{DynamicResource LOCRemoveTitle}" VerticalAlignment="Center" Click="ButtonRemoveTag_Click">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                    <Setter Property="IsEnabled" Value="False" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=cbTag, Path=IsChecked}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="True" />
+                                        </MultiDataTrigger>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding ElementName=cbTagAudio, Path=IsChecked}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="True" />
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
 
-                    <Grid Name="PART_GridContener" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" >
+                    <CheckBox Grid.Row="2" Name="cbTagAudio" IsChecked="{Binding Settings.EnableTagAudio}" 
+                              Grid.Column="0" VerticalAlignment="Center">
+                        <Label Content="{DynamicResource LOCCheckLocalizationAddTagAudioDescription}" />
+                    </CheckBox>
+
+                    <Grid Name="PART_GridContener" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" >
                         <ListView ItemsSource="{Binding Settings.GameLanguages}"
                                   Height="{Binding ElementName=PART_GridContener, Path=ActualHeight}"
                                   Name="lbGameLanguages">
@@ -67,8 +113,26 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <CheckBox IsChecked="{Binding IsTag}" 
-                                                          VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                          IsEnabled="{Binding ElementName=cbTag, Path=IsChecked}">
+                                                          VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <CheckBox.Style>
+                                                        <Style TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+                                                            <Setter Property="IsEnabled" Value="False" />
+                                                            <Style.Triggers>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=cbTag, Path=IsChecked}" Value="True" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="IsEnabled" Value="True" />
+                                                                </MultiDataTrigger>
+                                                                <MultiDataTrigger>
+                                                                    <MultiDataTrigger.Conditions>
+                                                                        <Condition Binding="{Binding ElementName=cbTagAudio, Path=IsChecked}" Value="True" />
+                                                                    </MultiDataTrigger.Conditions>
+                                                                    <Setter Property="IsEnabled" Value="True" />
+                                                                </MultiDataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </CheckBox.Style>
                                                 </CheckBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -88,7 +152,7 @@
                         </ListView>
                     </Grid>
 
-                    <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4">
+                    <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="6">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="10" />

@@ -291,21 +291,47 @@ namespace CheckLocalizations.Services
             {
                 try
                 {
-                    foreach (GameLanguage gameLanguage in PluginSettings.Settings.GameLanguages.FindAll(x => x.IsTag && gameLocalizations.Items.Any(y => x.Name.ToLower() == y.Language.ToLower())))
+                    if (PluginSettings.Settings.EnableTagSingle)
                     {
-                        Guid? TagId = FindGoodPluginTags(gameLanguage.DisplayName);
-                        if (TagId != null)
+                        foreach (GameLanguage gameLanguage in PluginSettings.Settings.GameLanguages.FindAll(x => x.IsTag && gameLocalizations.Items.Any(y => x.Name.ToLower() == y.Language.ToLower())))
                         {
-                            if (game.TagIds != null)
+                            Guid? TagId = FindGoodPluginTags(gameLanguage.DisplayName);
+                            if (TagId != null)
                             {
-                                if (!game.TagIds.Contains((Guid)TagId))
+                                if (game.TagIds != null)
                                 {
-                                    game.TagIds.Add((Guid)TagId);
+                                    if (!game.TagIds.Contains((Guid)TagId))
+                                    {
+                                        game.TagIds.Add((Guid)TagId);
+                                    }
+                                }
+                                else
+                                {
+                                    game.TagIds = new List<Guid> { (Guid)TagId };
                                 }
                             }
-                            else
+                        }
+                    }
+
+                    //🔈
+                    if (PluginSettings.Settings.EnableTagAudio)
+                    {
+                        foreach (GameLanguage gameLanguage in PluginSettings.Settings.GameLanguages.FindAll(x => x.IsTag && gameLocalizations.Items.Any(y => x.Name.ToLower() == y.Language.ToLower() && y.IsOkAudio)))
+                        {
+                            Guid? TagId = FindGoodPluginTags("🔈" + gameLanguage.DisplayName);
+                            if (TagId != null)
                             {
-                                game.TagIds = new List<Guid> { (Guid)TagId };
+                                if (game.TagIds != null)
+                                {
+                                    if (!game.TagIds.Contains((Guid)TagId))
+                                    {
+                                        game.TagIds.Add((Guid)TagId);
+                                    }
+                                }
+                                else
+                                {
+                                    game.TagIds = new List<Guid> { (Guid)TagId };
+                                }
                             }
                         }
                     }

@@ -19,6 +19,8 @@ namespace CheckLocalizations
         public bool AutoImport { get; set; } = true;
 
         public bool EnableTag { get; set; } = false;
+        public bool EnableTagSingle { get; set; } = false;
+        public bool EnableTagAudio { get; set; } = false;
         public List<GameLanguage> GameLanguages { get; set; } = new List<GameLanguage>();
 
 
@@ -217,6 +219,8 @@ namespace CheckLocalizations
         // This method should save settings made to Option1 and Option2.
         public void EndEdit()
         {
+            Settings.EnableTag = Settings.EnableTagAudio || Settings.EnableTagSingle;
+
             Plugin.SavePluginSettings(Settings);
             CheckLocalizations.PluginDatabase.PluginSettings = this;
             this.OnPropertyChanged();
