@@ -3,11 +3,11 @@
 
     <!-- MainView -->
 
-    <sys:String x:Key="LOCCheckLocalizations">Check localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsLocalizations">Localizations</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Manually edit a supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
@@ -17,12 +17,12 @@
 
     <sys:String x:Key="LOCCheckLocalizationsStyleUI">Interface style</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Display available language list</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Display the list with the available languages</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Display the &quot;Notes&quot; column</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
     
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: found {0} - {1} not found</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: found {0} - not found {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Processing, please wait...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>

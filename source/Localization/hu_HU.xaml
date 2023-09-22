@@ -4,39 +4,39 @@
     <!-- MainView -->
 
     <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Lokalizációk</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Lokalizációk ellenőrzése</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Egy támogatott nyelv manuális szerkesztése</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Add a new supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Új támogatott nyelv hozzáadása</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Interface style</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Felület stílusa</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Display the list with the available languages</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Display the &quot;Notes&quot; column</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Elérhető nyelvek listázása</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">&quot;Megjegyzések&quot; oszlop megjelenítése</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Elérhető nyelvjelzők listájának megjelenítése</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Csak a meg címkézett zászlók nyelvét mutassa</sys:String>
     
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: found {0} - not found {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Processing, please wait...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Játék nyelvei: {0} talált - {1} nem található</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Feldolgozás folyamatban, kérjük várj...</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Címke a kiválasztott nyelv(ek)kel</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Anyanyelvű</sys:String>
 
     <!-- ClButtonAdvanced -->
 
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Anyanyelv</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Támogatott nyelv</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">Nyelv</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">Felhasználói felület</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Hang</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Feliratok</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">Megjegyzés</sys:String>
 
 </ResourceDictionary>

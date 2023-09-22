@@ -1,0 +1,42 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- MainView -->
+
+    <sys:String x:Key="LOCCheckLocalizations">YerelleştirmeyiDenetle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Yerelleştirmeler</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Yerelleştirmeleri denetle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Desteklenen bir dili elle düzenleyin</sys:String>
+
+    <!-- CheckLocalizationsEditManual -->
+
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Yeni bir desteklenen dil ekleyin</sys:String>
+
+    <!-- CheckLocalizationsSettingsView -->
+
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Arayüz tasarımı</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Erişilebilir dilleri içeren listeyi görüntüle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">&quot;Notlar&quot; sütununu görüntüle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Erişilebilir dillerin bayraklarını içeren listeyi görüntüle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Sadece dili etiketlenen bayrakları göster</sys:String>
+    
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Oyun dilleri: bulunan {0} - bulunamayan {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">İşleniyor, lütfen bekleyin...</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Seçili diller ile etiketle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Bir anadildir</sys:String>
+
+    <!-- ClButtonAdvanced -->
+
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Anadil</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Desteklenen dil</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">Dil</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">Arayüz</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Ses</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Altyazılar</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">Notlar</sys:String>
+
+</ResourceDictionary>

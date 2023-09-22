@@ -11,7 +11,7 @@
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">إضافة لغة جديدة مدعو</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">إضافة لغة جديدة مدع</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
@@ -31,7 +31,7 @@
     <!-- ClButtonAdvanced -->
 
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">اللغة الام</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">اللغات المدعو</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">اللغات المدع</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsLanguage">اللّغة</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
