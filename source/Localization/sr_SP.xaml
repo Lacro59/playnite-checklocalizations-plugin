@@ -1,0 +1,42 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- MainView -->
+
+    <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Localizations</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
+
+    <!-- CheckLocalizationsEditManual -->
+
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Add a new supported language</sys:String>
+
+    <!-- CheckLocalizationsSettingsView -->
+
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Interface style</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Display the list with the available languages</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Display the &quot;Notes&quot; column</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
+    
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: found {0} - not found {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Processing, please wait...</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
+
+    <!-- ClButtonAdvanced -->
+
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+
+</ResourceDictionary>
