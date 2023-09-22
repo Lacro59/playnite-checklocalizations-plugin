@@ -4,39 +4,39 @@
     <!-- MainView -->
 
     <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">ローカライズ</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">ローカライズの確認</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">対応言語を手動で編集</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Add a new supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">新しい対応言語を追加</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Interface style</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">UI スタイル</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Display the list with the available languages</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Display the &quot;Notes&quot; column</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">利用可能な言語の一覧を表示</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">備考列を表示</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">利用可能な言語フラッグの一覧を表示</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">タグ付けされた言語のフラッグのみを表示</sys:String>
     
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: found {0} - not found {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Processing, please wait...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">ゲームの言語: 見つかりました {0} - 見つかりませんでした {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">処理中です。しばらくお待ちください…</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">選択した言語にタグを追加</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">母国語ですか</sys:String>
 
     <!-- ClButtonAdvanced -->
 
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">母国語</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">対応言語</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">言語</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">音声</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">字幕</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">備考</sys:String>
 
 </ResourceDictionary>
