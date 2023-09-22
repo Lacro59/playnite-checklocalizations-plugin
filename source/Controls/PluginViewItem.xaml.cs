@@ -72,21 +72,9 @@ namespace CheckLocalizations.Controls
         {
             GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
-            if (gameLocalization.Items.Count == 0)
-            {
-                ControlDataContext.Text = IconNone;
-            }
-            else
-            {
-                if (gameLocalization.HasNativeSupport())
-                {
-                    ControlDataContext.Text = IconOk;
-                }
-                else
-                {
-                    ControlDataContext.Text = IconKo;
-                }
-            }
+            ControlDataContext.Text = gameLocalization.Items.Count == 0 
+                ? IconNone 
+                : gameLocalization.HasNativeSupport() ? IconOk : IconKo;
         }
     }
 

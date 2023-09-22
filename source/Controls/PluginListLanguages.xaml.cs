@@ -92,14 +92,7 @@ namespace CheckLocalizations.Controls
         {
             GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
-            if (!IgnoreSettings && !ControlDataContext.ListLanguagesVisibleEmpty)
-            {
-                MustDisplay = gameLocalization.HasData;
-            }
-            else
-            {
-                MustDisplay = true;
-            }
+            MustDisplay = IgnoreSettings || ControlDataContext.ListLanguagesVisibleEmpty || gameLocalization.HasData;
 
             if (MustDisplay)
             {

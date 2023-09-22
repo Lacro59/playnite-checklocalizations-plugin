@@ -73,7 +73,7 @@ namespace CheckLocalizations.Controls
             ObservableCollection<ItemList> itemLists = new ObservableCollection<ItemList>();
             if (PluginDatabase.PluginSettings.Settings.OnlyDisplaySelectedFlags)
             {
-                var TaggedLanguage = PluginDatabase.PluginSettings.Settings.GameLanguages
+                List<GameLanguage> TaggedLanguage = PluginDatabase.PluginSettings.Settings.GameLanguages
                     .FindAll(x => x.IsTag && gameLocalization.Items.Any(y => x.Name.ToLower() == y.Language.ToLower()));
 
                 itemLists = gameLocalization.Items
