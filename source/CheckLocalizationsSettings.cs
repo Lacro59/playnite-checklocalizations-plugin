@@ -28,64 +28,24 @@ namespace CheckLocalizations
         public bool UiStylePcGamingWiki { get; set; } = true;
 
 
-        private bool _EnableIntegrationViewItem { get; set; } = true;
-        public bool EnableIntegrationViewItem
-        {
-            get => _EnableIntegrationViewItem;
-            set
-            {
-                _EnableIntegrationViewItem = value;
-                OnPropertyChanged();
-            }
-        }
+        private bool _EnableIntegrationViewItem = true;
+        public bool EnableIntegrationViewItem { get => _EnableIntegrationViewItem; set => SetValue(ref _EnableIntegrationViewItem, value); }
 
-        private bool _EnableIntegrationButton { get; set; } = true;
-        public bool EnableIntegrationButton
-        {
-            get => _EnableIntegrationButton;
-            set
-            {
-                _EnableIntegrationButton = value;
-                OnPropertyChanged();
-            }
-        }
+        private bool _EnableIntegrationButton = true;
+        public bool EnableIntegrationButton { get => _EnableIntegrationButton; set => SetValue(ref _EnableIntegrationButton, value); }
 
-        private bool _EnableIntegrationButtonDetails { get; set; } = true;
-        public bool EnableIntegrationButtonDetails
-        {
-            get => _EnableIntegrationButtonDetails;
-            set
-            {
-                _EnableIntegrationButtonDetails = value;
-                OnPropertyChanged();
-            }
-        }
+        private bool _EnableIntegrationButtonDetails = true;
+        public bool EnableIntegrationButtonDetails { get => _EnableIntegrationButtonDetails; set => SetValue(ref _EnableIntegrationButtonDetails, value); }
 
         public bool EnableIntegrationButtonContextMenu { get; set; } = false;
 
 
-        private bool _EnableIntegrationListLanguages { get; set; } = true;
-        public bool EnableIntegrationListLanguages
-        {
-            get => _EnableIntegrationListLanguages;
-            set
-            {
-                _EnableIntegrationListLanguages = value;
-                OnPropertyChanged();
-            }
-        }
+        private bool _EnableIntegrationListLanguages = true;
+        public bool EnableIntegrationListLanguages { get => _EnableIntegrationListLanguages; set => SetValue(ref _EnableIntegrationListLanguages, value); }
 
 
-        private bool _EnableIntegrationFlags { get; set; } = true;
-        public bool EnableIntegrationFlags
-        {
-            get => _EnableIntegrationFlags;
-            set
-            {
-                _EnableIntegrationFlags = value;
-                OnPropertyChanged();
-            }
-        }
+        private bool _EnableIntegrationFlags = true;
+        public bool EnableIntegrationFlags { get => _EnableIntegrationFlags; set => SetValue(ref _EnableIntegrationFlags, value); }
 
         public bool OnlyDisplaySelectedFlags { get; set; } = false;
 
@@ -98,41 +58,17 @@ namespace CheckLocalizations
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         #region Variables exposed
-        private bool _HasData { get; set; } = false;
+        private bool _HasData = false;
         [DontSerialize]
-        public bool HasData
-        {
-            get => _HasData;
-            set
-            {
-                _HasData = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool HasData { get => _HasData; set => SetValue(ref _HasData, value); }
 
-        private bool _HasNativeSupport { get; set; } = false;
+        private bool _HasNativeSupport = false;
         [DontSerialize]
-        public bool HasNativeSupport
-        {
-            get => _HasNativeSupport;
-            set
-            {
-                _HasNativeSupport = value;
-                OnPropertyChanged();
-            }
-        }
+        public bool HasNativeSupport { get => _HasNativeSupport; set => SetValue(ref _HasNativeSupport, value); }
 
-        private List<Models.Localization> _ListNativeSupport { get; set; } = new List<Models.Localization>();
+        private List<Models.Localization> _ListNativeSupport = new List<Models.Localization>();
         [DontSerialize]
-        public List<Models.Localization> ListNativeSupport
-        {
-            get => _ListNativeSupport;
-            set
-            {
-                _ListNativeSupport = value;
-                OnPropertyChanged();
-            }
-        }
+        public List<Models.Localization> ListNativeSupport { get => _ListNativeSupport; set => SetValue(ref _ListNativeSupport, value); }
         #endregion  
     }
 
@@ -152,7 +88,7 @@ namespace CheckLocalizations
             Plugin = plugin;
 
             // Load saved settings.
-            var savedSettings = plugin.LoadPluginSettings<CheckLocalizationsSettings>();
+            CheckLocalizationsSettings savedSettings = plugin.LoadPluginSettings<CheckLocalizationsSettings>();
 
             // LoadPluginSettings returns null if not saved data is available.
             if (savedSettings != null)
