@@ -4,39 +4,39 @@
     <!-- MainView -->
 
     <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Lokaliseringar</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Kontrollera lokaliseringar</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Redigera språk som stöds manuellt</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Add a new supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Lägg till ett nytt språk som stöds</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Interface style</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Gränssnittsstil</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Display the list with the available languages</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Display the &quot;Notes&quot; column</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Visa lista med tillgängliga språk</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Visa kolumnen &quot;Anteckningar&quot;</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Visa lista över tillgängliga språkflaggor</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Visa endast flaggor vars språk är taggat</sys:String>
     
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: found {0} - not found {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Processing, please wait...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Spelspråk: hittade {0} - hittades inte {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Bearbetar, vänligen vänta...</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tagg med valda språk</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Är ett modersmål</sys:String>
 
     <!-- ClButtonAdvanced -->
 
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Modersmål</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Språk som stöds</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">Språk</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Ljud</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Undertexter</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">Anteckningar</sys:String>
 
 </ResourceDictionary>
