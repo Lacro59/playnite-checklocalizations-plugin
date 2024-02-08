@@ -48,8 +48,6 @@ namespace CheckLocalizations.Controls
 
         public PluginButton()
         {
-            AlwaysShow = true;
-
             InitializeComponent();
             this.DataContext = ControlDataContext;
 
@@ -86,16 +84,11 @@ namespace CheckLocalizations.Controls
         {
             GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
-            if (ControlDataContext.DisplayDetails)
-            {
-                ControlDataContext.Text = gameLocalization.Items.Count == 0 
-                    ? IconNone 
-                    : gameLocalization.HasNativeSupport() ? IconOk : IconKo;
-            }
-            else
-            {
-                ControlDataContext.Text = IconDefault;
-            }
+            ControlDataContext.Text = ControlDataContext.DisplayDetails
+                ? gameLocalization.Items.Count == 0
+                    ? IconNone
+                    : gameLocalization.HasNativeSupport() ? IconOk : IconKo
+                : IconDefault;
         }
 
 

@@ -42,8 +42,6 @@ namespace CheckLocalizations.Controls
 
         public PluginListLanguages()
         {
-            AlwaysShow = true;
-
             InitializeComponent();
             this.DataContext = ControlDataContext;
 
