@@ -1,7 +1,6 @@
 ﻿using CheckLocalizations.Models;
 using CommonPlayniteShared.PluginLibrary.SteamLibrary.SteamShared;
 using CommonPluginsShared;
-using CommonPluginsStores;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using Playnite.SDK.Data;
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CheckLocalizations.Services;
 using CommonPluginsStores.Steam;
-using CommonPluginsStores.Models;
 
 namespace CheckLocalizations.Clients
 {
@@ -37,7 +35,6 @@ namespace CheckLocalizations.Clients
             try
             {
                 SteamId = steamApi.GetAppId(game.Name);
-
                 if (SteamId != 0)
                 {
                     string data = GetSteamData(SteamId);
@@ -49,9 +46,7 @@ namespace CheckLocalizations.Clients
                         return Localizations;
                     }
 
-                    Dictionary<string, StoreAppDetailsResult> parsedData = Serialization.FromJson<Dictionary<string, StoreAppDetailsResult>>(data);
-
-                    if (parsedData[SteamId.ToString()].data != null)
+                    if (Serialization.TryFromJson(data, out Dictionary<string, StoreAppDetailsResult> parsedData) && parsedData[SteamId.ToString()].data != null)
                     {
                         string[] dataSplited = parsedData[SteamId.ToString()].data.supported_languages.Split(new string[] { "<br>" }, StringSplitOptions.None);
                         string[] ListLocalizations = dataSplited[0].Split(',');
