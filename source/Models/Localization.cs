@@ -40,6 +40,59 @@ namespace CheckLocalizations.Models
         public string SubIcon => GetImage(Sub);
 
         [DontSerialize]
+        public bool IsKnowFlag
+        {
+            get
+            {
+                switch (Language.ToLower())
+                {
+                    case "english":
+                    case "french":
+                    case "german":
+                    case "italian":
+                    case "japanese":
+                    case "spanish":
+                    case "simplified chinese":
+                    case "russian":
+                    case "traditional chinese":
+                    case "korean":
+                    case "polish":
+                    case "brazilian portuguese":
+                    case "arabic":
+                    case "czech":
+                    case "hungarian":
+                    case "turkish":
+                    case "catalan":
+                    case "danish":
+                    case "greek":
+                    case "estonian":
+                    case "persian":
+                    case "finnish":
+                    case "croatian":
+                    case "indonesian":
+                    case "lithuanian":
+                    case "dutch":
+                    case "norwegian":
+                    case "portuguese":
+                    case "portuguese - portugal":
+                    case "romanian":
+                    case "slovenian":
+                    case "serbian":
+                    case "swedish":
+                    case "ukrainian":
+                    case "latin american spanish":
+                    case "spanish - latin america":
+                    case "thai":
+                    case "vietnamese":
+                    case "hebrew":
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        }
+
+        [DontSerialize]
         public BitmapImage FlagIcon
         {
             get

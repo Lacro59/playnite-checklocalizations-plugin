@@ -48,6 +48,7 @@ namespace CheckLocalizations
         public bool EnableIntegrationFlags { get => _EnableIntegrationFlags; set => SetValue(ref _EnableIntegrationFlags, value); }
 
         public bool OnlyDisplaySelectedFlags { get; set; } = false;
+        public bool OnlyDisplayExistingFlags { get; set; } = false;
 
 
         public double ListLanguagesHeight { get; set; } = 120;

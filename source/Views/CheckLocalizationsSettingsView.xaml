@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:playnitecontrols="clr-namespace:CommonPluginsControls.PlayniteControls"
              xmlns:AttachedProperties="clr-namespace:CommonPluginsShared.Controls"
-             xmlns:pcmd="clr-namespace:CommonPluginsShared"
+             xmlns:pcmd="clr-namespace:CommonPluginsShared" 
+             xmlns:checklocalizations="clr-namespace:CheckLocalizations" 
              mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             d:DataContext="{d:DesignInstance Type=checklocalizations:CheckLocalizationsSettingsViewModel}"
              Background="{DynamicResource WindowBackgourndBrush}">
 
     <TabControl Margin="20">
@@ -353,10 +355,16 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto" />
+                                        <RowDefinition Height="10" />
+                                        <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
 
                                     <CheckBox Grid.Column="0" Grid.Row="0" IsChecked="{Binding Settings.OnlyDisplaySelectedFlags}">
                                         <Label Content="{DynamicResource LOCCheckLocalizationsOnlyDisplaySelectedFlags}" />
+                                    </CheckBox>
+
+                                    <CheckBox Grid.Column="0" Grid.Row="2" IsChecked="{Binding Settings.OnlyDisplayExistingFlags}">
+                                        <Label Content="{DynamicResource LOCCheckLocalizationsOnlyDisplayExistingFlags}" />
                                     </CheckBox>
                                 </Grid>
                             </Border>
