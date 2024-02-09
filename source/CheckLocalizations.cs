@@ -16,6 +16,7 @@ using CheckLocalizations.Controls;
 using CommonPluginsControls.Views;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace CheckLocalizations
 {
