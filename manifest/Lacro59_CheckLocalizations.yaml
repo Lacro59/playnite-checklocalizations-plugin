@@ -62,3 +62,12 @@ Packages:
       - Playnite 10 only
       - Updated localizations
       - Fixed crash
+  - Version: 3.1
+    RequiredApiVersion: 6.11.0
+    ReleaseDate: 2024-02-09
+    PackageUrl: https://github.com/Lacro59/playnite-checklocalizations-plugin/releases/download/v3.1/playnite-checklocalizations-plugin_3_1.pext
+    Changelog:
+      - Updated localizations
+      - Added the ability to tag audio localization
+      - Added an option to hide unknow flag
+      - Fixed minor bugs
