@@ -21,11 +21,13 @@
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Display the &quot;Notes&quot; column</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Show only known flags</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: found {0} - not found {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Processing, please wait...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Tag with selected language(s) (audio only)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
 
     <!-- ClButtonAdvanced -->
