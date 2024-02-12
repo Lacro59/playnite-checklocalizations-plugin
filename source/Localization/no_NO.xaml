@@ -21,11 +21,13 @@
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Vis &quot;Notater&quot;-kolonnen</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Vis listen over tilgjengelige språkflagg</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Vis bare flagg hvis språk er merket</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Show only known flags</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Spillspråk: funnet {0} - ikke funnet {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Prosesserer, vennligst vent ...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Merk med valgte språk</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Tag with selected language(s) (audio only)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Er et originalspråk</sys:String>
 
     <!-- ClButtonAdvanced -->
