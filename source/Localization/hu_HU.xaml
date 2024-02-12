@@ -21,11 +21,13 @@
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">&quot;Megjegyzések&quot; oszlop megjelenítése</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Elérhető nyelvjelzők listájának megjelenítése</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Csak a meg címkézett zászlók nyelvét mutassa</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Show only known flags</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Játék nyelvei: {0} talált - {1} nem található</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Feldolgozás folyamatban, kérjük várj...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Címke a kiválasztott nyelv(ek)kel</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Tag with selected language(s) (audio only)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Anyanyelvű</sys:String>
 
     <!-- ClButtonAdvanced -->
