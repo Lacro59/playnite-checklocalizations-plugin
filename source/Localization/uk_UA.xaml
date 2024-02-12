@@ -21,11 +21,13 @@
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Відображати стовпчик &quot;Примітки&quot;</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Показати список доступних прапорців мов</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Показувати лише прапорці, мову яких помічено</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Показувати лише відомі прапори</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Ігрові мови: знайдено {0} - не знайдено {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Обробка, зачекайте будь ласка...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Тег з вибраними мовами</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Тег з вибраними мовами (лише звук)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Це рідна мова</sys:String>
 
     <!-- ClButtonAdvanced -->
