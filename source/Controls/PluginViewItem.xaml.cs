@@ -72,8 +72,8 @@ namespace CheckLocalizations.Controls
         {
             GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
-            ControlDataContext.Text = gameLocalization.Items.Count == 0 
-                ? IconNone 
+            ControlDataContext.Text = gameLocalization.Items.Count == 0
+                ? IconNone
                 : gameLocalization.HasNativeSupport() ? IconOk : IconKo;
         }
     }
@@ -84,7 +84,7 @@ namespace CheckLocalizations.Controls
         private bool _IsActivated;
         public bool IsActivated { get => _IsActivated; set => SetValue(ref _IsActivated, value); }
 
-        public string _Text;
+        public string _Text = "\uea30";
         public string Text { get => _Text; set => SetValue(ref _Text, value); }
     }
 }

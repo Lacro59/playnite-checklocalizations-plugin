@@ -150,11 +150,11 @@ namespace CheckLocalizations.Controls
                 }
             }
 
-            foreach (var ui in UI.FindVisualChildren<Border>((ContextMenu)(sender)))
+            foreach (Border ui in UI.FindVisualChildren<Border>((ContextMenu)sender))
             {
-                if (((FrameworkElement)ui).Name == "HoverBorder")
+                if (ui.Name == "HoverBorder")
                 {
-                    ((Border)ui).Background = new SolidColorBrush(Colors.Transparent);
+                    ui.Background = new SolidColorBrush(Colors.Transparent);
                 }
             }
         }
@@ -173,7 +173,7 @@ namespace CheckLocalizations.Controls
         public bool _ButtonContextMenu;
         public bool ButtonContextMenu { get => _ButtonContextMenu; set => SetValue(ref _ButtonContextMenu, value); }
 
-        public string _Text;
+        public string _Text = "\uea2c";
         public string Text { get => _Text; set => SetValue(ref _Text, value); }
     }
 }

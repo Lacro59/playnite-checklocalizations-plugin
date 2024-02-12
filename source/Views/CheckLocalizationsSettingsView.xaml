@@ -97,7 +97,7 @@
                     </StackPanel>
 
                     <CheckBox Grid.Row="2" Name="cbTagAudio" IsChecked="{Binding Settings.EnableTagAudio}" 
-                              Grid.Column="0" VerticalAlignment="Center">
+                              Grid.Column="0" VerticalAlignment="Center" Grid.ColumnSpan="5">
                         <Label Content="{DynamicResource LOCCheckLocalizationAddTagAudioDescription}" />
                     </CheckBox>
 

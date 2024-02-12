@@ -107,16 +107,7 @@ namespace CheckLocalizations.Controls
 
         private void PART_GridContener_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            bool WithColNotes = true; ;
-            if (this.WithColNotes != null)
-            {
-                WithColNotes = (bool)this.WithColNotes;
-            }
-            else
-            {
-                WithColNotes = PluginDatabase.PluginSettings.Settings.ListLanguagesWithColNote;
-            }
-
+            bool WithColNotes = this.WithColNotes != null ? (bool)this.WithColNotes : PluginDatabase.PluginSettings.Settings.ListLanguagesWithColNote;
             if (WithColNotes)
             {
                 PART_ColNotes.Width = 100;
@@ -126,14 +117,7 @@ namespace CheckLocalizations.Controls
                         - PART_Ui.ActualWidth - PART_Audio.ActualWidth - PART_Sub.ActualWidth
                         - 30 - 25;
 
-                    if (Width > 50)
-                    {
-                        PART_ColNotes.Width = Width;
-                    }
-                    else
-                    {
-                        PART_ColNotes.Width = 50;
-                    }
+                    PART_ColNotes.Width = Width > 50 ? Width : 50;
                 }
             }
             else
@@ -150,7 +134,7 @@ namespace CheckLocalizations.Controls
         private bool _IsActivated;
         public bool IsActivated { get => _IsActivated; set => SetValue(ref _IsActivated, value); }
 
-        private double _ListLanguagesHeight;
+        private double _ListLanguagesHeight = 120;
         public double ListLanguagesHeight { get => _ListLanguagesHeight; set => SetValue(ref _ListLanguagesHeight, value); }
 
         private bool _ListLanguagesVisibleEmpty;

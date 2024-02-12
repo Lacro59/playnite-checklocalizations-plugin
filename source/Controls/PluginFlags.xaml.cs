@@ -2,6 +2,7 @@
 using CheckLocalizations.Services;
 using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
+using CommonPluginsShared.Extensions;
 using CommonPluginsShared.Interfaces;
 using Playnite.SDK.Models;
 using System;
@@ -71,12 +72,12 @@ namespace CheckLocalizations.Controls
             GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
 
             List<GameLanguage> TaggedLanguage = PluginDatabase.PluginSettings.Settings.GameLanguages
-                .FindAll(x => x.IsTag && gameLocalization.Items.Any(y => x.Name.ToLower() == y.Language.ToLower()));
+                .FindAll(x => x.IsTag && gameLocalization.Items.Any(y => x.Name.IsEqual(y.Language)));
 
             ObservableCollection<ItemList> itemLists = new ObservableCollection<ItemList>();
 
             itemLists = gameLocalization.Items
-                .Where(x => (!PluginDatabase.PluginSettings.Settings.OnlyDisplaySelectedFlags || TaggedLanguage.Any(y => x.Language.ToLower() == y.Name.ToLower()))
+                .Where(x => (!PluginDatabase.PluginSettings.Settings.OnlyDisplaySelectedFlags || TaggedLanguage.Any(y => x.Language.IsEqual(y.Name)))
                         && (!PluginDatabase.PluginSettings.Settings.OnlyDisplayExistingFlags || x.IsKnowFlag))
                 .Select(x => new ItemList { Name = x.DisplayName, Icon = x.FlagIcon }).ToObservable();
 
