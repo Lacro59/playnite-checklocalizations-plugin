@@ -21,11 +21,13 @@
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">显示“备注”列</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">显示可用的语言标识列</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">仅显示语言已有标签的标识</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Show only known flags</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">游戏语言：已找到 {0} - 未找到 {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">正在处理，请稍候...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">以所选语言的标签</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Tag with selected language(s) (audio only)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">是母语</sys:String>
 
     <!-- ClButtonAdvanced -->
