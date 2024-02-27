@@ -21,11 +21,13 @@
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">&quot;Notlar&quot; sütununu görüntüle</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Erişilebilir dillerin bayraklarını içeren listeyi görüntüle</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Sadece dili etiketlenen bayrakları göster</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Yalnızca bilinen bayrakları göster</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Oyun dilleri: bulunan {0} - bulunamayan {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">İşleniyor, lütfen bekleyin...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Seçili diller ile etiketle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Seçilen dil ile etiketleyin (yalnızca ses)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Bir anadildir</sys:String>
 
     <!-- ClButtonAdvanced -->
