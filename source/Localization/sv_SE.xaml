@@ -21,13 +21,13 @@
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Visa kolumnen &quot;Anteckningar&quot;</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Visa lista över tillgängliga språkflaggor</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Visa endast flaggor vars språk är taggat</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Show only known flags</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Visa endast kända flaggor</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Spelspråk: hittade {0} - hittades inte {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Bearbetar, vänligen vänta...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tagg med valda språk</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Tag with selected language(s) (audio only)</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Tagg med valda språk (endast ljud)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Är ett modersmål</sys:String>
 
     <!-- ClButtonAdvanced -->
