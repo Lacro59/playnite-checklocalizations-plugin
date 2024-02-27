@@ -119,7 +119,7 @@ namespace CheckLocalizations
                     new GameLanguage { DisplayName = "Türkçe", Name = "Turkish", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "عربى", Name = "Arabic", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Català", Name = "Catalan", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "dansk", Name = "Danish", IsTag = false, IsNative = false },
+                    new GameLanguage { DisplayName = "Dansk", Name = "Danish", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Ελληνικά", Name = "Greek", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "Eesti", Name = "Estonian", IsTag = false, IsNative = false },
                     new GameLanguage { DisplayName = "فارسی", Name = "Persian", IsTag = false, IsNative = false },

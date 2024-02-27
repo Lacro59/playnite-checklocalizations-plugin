@@ -85,6 +85,24 @@ namespace CheckLocalizations.Models
                     case "thai":
                     case "vietnamese":
                     case "hebrew":
+                    case "afrikaans":
+                    case "albanian":
+                    case "azerbaijani":
+                    case "basque":
+                    case "belarusian":
+                    case "bulgarian":
+                    case "canadian french":
+                    case "filipino":
+                    case "galician":
+                    case "hindu":
+                    case "kannada":
+                    case "tamil":
+                    case "islandic":
+                    case "kazakh":
+                    case "latvian":
+                    case "macedonian":
+                    case "malay":
+                    case "slovak":
                         return true;
                     default:
                         return false;
@@ -126,7 +144,7 @@ namespace CheckLocalizations.Models
                     case "brazilian portuguese":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "pt-BR.png"));
                     case "arabic":
-                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "af.png"));
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "arab.png"));
                     case "czech":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "cs.png"));
                     case "hungarian":
@@ -161,7 +179,7 @@ namespace CheckLocalizations.Models
                     case "romanian":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ro.png"));
                     case "slovenian":
-                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sk.png"));
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "si.png"));
                     case "serbian":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sr.png"));
                     case "swedish":
@@ -177,6 +195,40 @@ namespace CheckLocalizations.Models
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "vi.png"));
                     case "hebrew":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "he.png"));
+                    case "afrikaans":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "af.png"));
+                    case "albanian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "al.png"));
+                    case "azerbaijani":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "az.png"));
+                    case "basque":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "es-PV.png"));
+                    case "belarusian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "by.png"));
+                    case "bulgarian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "bg.png"));
+                    case "canadian french":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "fr-CA.png"));
+                    case "filipino":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ph.png"));
+                    case "galician":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "es-GA.png"));
+                    case "hindu":
+                    case "kannada":
+                    case "tamil":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "in.png"));
+                    case "islandic":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "is.png"));
+                    case "kazakh":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "kz.png"));
+                    case "latvian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "lv.png"));
+                    case "macedonian":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "mk.png"));
+                    case "malay":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "my.png"));
+                    case "slovak":
+                        return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sk.png"));
                     default:
                         logger.Warn($"No flag find for {Language}");
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "__.png"));
