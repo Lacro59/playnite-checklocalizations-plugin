@@ -94,10 +94,10 @@ namespace CheckLocalizations.Models
                     case "canadian french":
                     case "filipino":
                     case "galician":
-                    case "hindu":
+                    case "hindi":
                     case "kannada":
                     case "tamil":
-                    case "islandic":
+                    case "icelandic":
                     case "kazakh":
                     case "latvian":
                     case "macedonian":
@@ -213,11 +213,11 @@ namespace CheckLocalizations.Models
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "ph.png"));
                     case "galician":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "es-GA.png"));
-                    case "hindu":
+                    case "hindi":
                     case "kannada":
                     case "tamil":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "in.png"));
-                    case "islandic":
+                    case "icelandic":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "is.png"));
                     case "kazakh":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "kz.png"));
