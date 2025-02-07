@@ -11,8 +11,7 @@ namespace CheckLocalizations.Views
 {
     public partial class CheckLocalizationsSettingsView : UserControl
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private static IResourceProvider resources = new ResourceProvider();
+        private static ILogger Logger => LogManager.GetLogger();
 
 
         public CheckLocalizationsSettingsView(CheckLocalizationsSettings settings)
@@ -69,11 +68,11 @@ namespace CheckLocalizations.Views
         {
             if (CheckLocalizations.PluginDatabase.ClearDatabase())
             {
-                API.Instance.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), "CheckLocalizations");
+                _ = API.Instance.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCommonDataRemove"), "CheckLocalizations");
             }
             else
             {
-                API.Instance.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
+                _ = API.Instance.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCCommonDataErrorRemove"), "CheckLocalizations");
             }
         }
 

@@ -24,7 +24,7 @@ namespace CheckLocalizations
     {
         public override Guid Id { get; } = Guid.Parse("7ce83cfe-7894-4ad9-957d-7249c0fb3e7d");
 
-        private bool preventLibraryUpdatedOnStart { get; set; } = true;
+        private bool PreventLibraryUpdatedOnStart { get; set; } = true;
 
 
         public CheckLocalizations(IPlayniteAPI api) : base(api)
@@ -58,7 +58,7 @@ namespace CheckLocalizations
                 if (ButtonName == "PART_CustomCheckLocButton")
                 {
                     CheckLocalizationsView ViewExtension = new CheckLocalizationsView();
-                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, PluginDatabase.PluginName, ViewExtension);
+                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PluginName, ViewExtension);
                     windowExtension.ShowDialog();
                 }
             }
@@ -108,9 +108,9 @@ namespace CheckLocalizations
         // Add new game menu items override GetGameMenuItems
         public override IEnumerable<GameMenuItem> GetGameMenuItems(GetGameMenuItemsArgs args)
         {
-            Game GameMenu = args.Games.First();
-            List<Guid> Ids = args.Games.Select(x => x.Id).ToList();
-            GameLocalizations gameLocalizations = PluginDatabase.Get(GameMenu, true);
+            Game gameMenu = args.Games.First();
+            List<Guid> ids = args.Games.Select(x => x.Id).ToList();
+            GameLocalizations gameLocalizations = PluginDatabase.Get(gameMenu, true);
 
             List<GameMenuItem> gameMenuItems = new List<GameMenuItem>();
 
@@ -119,19 +119,19 @@ namespace CheckLocalizations
                 // Show list available localizations for the selected game
                 gameMenuItems.Add(new GameMenuItem
                 {
-                    MenuSection = resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCheckLocalizationsGameMenuPluginView"),
+                    MenuSection = ResourceProvider.GetString("LOCCheckLocalizations"),
+                    Description = ResourceProvider.GetString("LOCCheckLocalizationsGameMenuPluginView"),
                     Action = (gameMenuItem) =>
                     {
                         var ViewExtension = new CheckLocalizationsView();
-                        Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, PluginDatabase.PluginName, ViewExtension);
+                        Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PluginName, ViewExtension);
                         windowExtension.ShowDialog();
                     }
                 });
 
                 gameMenuItems.Add(new GameMenuItem
                 {
-                    MenuSection = resources.GetString("LOCCheckLocalizations"),
+                    MenuSection = ResourceProvider.GetString("LOCCheckLocalizations"),
                     Description = "-"
                 });
             }
@@ -140,17 +140,17 @@ namespace CheckLocalizations
             // Delete & download localizations data for the selected game
             gameMenuItems.Add(new GameMenuItem
             {
-                MenuSection = resources.GetString("LOCCheckLocalizations"),
-                Description = resources.GetString("LOCCommonRefreshGameData"),
+                MenuSection = ResourceProvider.GetString("LOCCheckLocalizations"),
+                Description = ResourceProvider.GetString("LOCCommonRefreshGameData"),
                 Action = (gameMenuItem) =>
                 {
-                    if (Ids.Count == 1)
+                    if (ids.Count == 1)
                     {
-                        PluginDatabase.Refresh(GameMenu.Id);
+                        PluginDatabase.Refresh(gameMenu.Id);
                     }
                     else
                     {
-                        PluginDatabase.Refresh(Ids);
+                        PluginDatabase.Refresh(ids);
                     }
                 }
             });
@@ -158,12 +158,12 @@ namespace CheckLocalizations
             // Open editor view to add a new supported language for the selected game
             gameMenuItems.Add(new GameMenuItem
             {
-                MenuSection = resources.GetString("LOCCheckLocalizations"),
-                Description = resources.GetString("LOCCheckLocalizationsGameMenuAddLanguage"),
+                MenuSection = ResourceProvider.GetString("LOCCheckLocalizations"),
+                Description = ResourceProvider.GetString("LOCCheckLocalizationsGameMenuAddLanguage"),
                 Action = (mainMenuItem) =>
                 {
-                    var ViewExtension = new CheckLocalizationsEditManual(GameMenu);
-                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, PluginDatabase.PluginName, ViewExtension);
+                    var ViewExtension = new CheckLocalizationsEditManual(gameMenu);
+                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PluginName, ViewExtension);
                     windowExtension.ShowDialog();
                 }
             });
@@ -173,17 +173,17 @@ namespace CheckLocalizations
             {
                 gameMenuItems.Add(new GameMenuItem
                 {
-                    MenuSection = resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonDeleteGameData"),
+                    MenuSection = ResourceProvider.GetString("LOCCheckLocalizations"),
+                    Description = ResourceProvider.GetString("LOCCommonDeleteGameData"),
                     Action = (mainMenuItem) =>
                     {
-                        if (Ids.Count == 1)
+                        if (ids.Count == 1)
                         {
-                            PluginDatabase.RemoveWithManual(GameMenu.Id);
+                            PluginDatabase.RemoveWithManual(gameMenu.Id);
                         }
                         else
                         {
-                            PluginDatabase.RemoveWithManual(Ids);
+                            PluginDatabase.RemoveWithManual(ids);
                         }
                     }
                 });
@@ -192,12 +192,12 @@ namespace CheckLocalizations
 #if DEBUG
             gameMenuItems.Add(new GameMenuItem
             {
-                MenuSection = resources.GetString("LOCCheckLocalizations"),
+                MenuSection = ResourceProvider.GetString("LOCCheckLocalizations"),
                 Description = "-"
             });
             gameMenuItems.Add(new GameMenuItem
             {
-                MenuSection = resources.GetString("LOCCheckLocalizations"),
+                MenuSection = ResourceProvider.GetString("LOCCheckLocalizations"),
                 Description = "Test",
                 Action = (mainMenuItem) =>
                 {
@@ -223,8 +223,8 @@ namespace CheckLocalizations
                 // Download missing localizations data for selected games in database
                 new MainMenuItem
                 {
-                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonDownloadPluginData"),
+                    MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
+                    Description = ResourceProvider.GetString("LOCCommonDownloadPluginData"),
                     Action = (mainMenuItem) =>
                     {
                         PluginDatabase.GetSelectData();
@@ -237,15 +237,15 @@ namespace CheckLocalizations
             {
                 mainMenuItems.Add(new MainMenuItem
                 {
-                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                    MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
                     Description = "-"
                 });
 
                 // Add tag for selected game in database if data exists
                 mainMenuItems.Add(new MainMenuItem
                 {
-                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonAddTPlugin"),
+                    MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
+                    Description = ResourceProvider.GetString("LOCCommonAddTPlugin"),
                     Action = (mainMenuItem) =>
                     {
                         PluginDatabase.AddTagSelectData();
@@ -254,8 +254,8 @@ namespace CheckLocalizations
                 // Add tag for all games
                 mainMenuItems.Add(new MainMenuItem
                 {
-                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonAddAllTags"),
+                    MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
+                    Description = ResourceProvider.GetString("LOCCommonAddAllTags"),
                     Action = (mainMenuItem) =>
                     {
                         PluginDatabase.AddTagAllGame();
@@ -264,8 +264,8 @@ namespace CheckLocalizations
                 // Remove tag for all game in database
                 mainMenuItems.Add(new MainMenuItem
                 {
-                    MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                    Description = resources.GetString("LOCCommonRemoveAllTags"),
+                    MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
+                    Description = ResourceProvider.GetString("LOCCommonRemoveAllTags"),
                     Action = (mainMenuItem) =>
                     {
                         PluginDatabase.RemoveTagAllGame();
@@ -276,12 +276,12 @@ namespace CheckLocalizations
 
             mainMenuItems.Add(new MainMenuItem
             {
-                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
                 Description = "-"
             });
             mainMenuItems.Add(new MainMenuItem
             {
-                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
                 Description = "LOCCommonViewNoData",
                 Action = (mainMenuItem) =>
                 {
@@ -292,8 +292,8 @@ namespace CheckLocalizations
                         ShowCloseButton = true
                     };
 
-                    var ViewExtension = new ListWithNoData(PlayniteApi, PluginDatabase);
-                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PlayniteApi, resources.GetString("LOCCheckLocalizations"), ViewExtension, windowOptions);
+                    var ViewExtension = new ListWithNoData(PluginDatabase);
+                    Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(ResourceProvider.GetString("LOCCheckLocalizations"), ViewExtension, windowOptions);
                     windowExtension.ShowDialog();
                 }
             });
@@ -301,24 +301,24 @@ namespace CheckLocalizations
 
             mainMenuItems.Add(new MainMenuItem
             {
-                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
                 Description = "-"
             });
 
             // Delete all data of plugin
             mainMenuItems.Add(new MainMenuItem
             {
-                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
-                Description = resources.GetString("LOCCommonDeletePluginData"),
+                MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
+                Description = ResourceProvider.GetString("LOCCommonDeletePluginData"),
                 Action = (mainMenuItem) =>
                 {
                     if (PluginDatabase.ClearDatabase())
                     {
-                        PlayniteApi.Dialogs.ShowMessage(resources.GetString("LOCCommonDataRemove"), PluginDatabase.PluginName);
+                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCommonDataRemove"), PluginDatabase.PluginName);
                     }
                     else
                     {
-                        PlayniteApi.Dialogs.ShowErrorMessage(resources.GetString("LOCCommonDataErrorRemove"), PluginDatabase.PluginName);
+                        PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCCommonDataErrorRemove"), PluginDatabase.PluginName);
                     }
                 }
             });
@@ -326,12 +326,12 @@ namespace CheckLocalizations
 #if DEBUG
             mainMenuItems.Add(new MainMenuItem
             {
-                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
                 Description = "-"
             });
             mainMenuItems.Add(new MainMenuItem
             {
-                MenuSection = MenuInExtensions + resources.GetString("LOCCheckLocalizations"),
+                MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
                 Description = "Test",
                 Action = (mainMenuItem) => 
                 {
@@ -400,7 +400,7 @@ namespace CheckLocalizations
             Task.Run(() =>
             {
                 Thread.Sleep(30000);
-                preventLibraryUpdatedOnStart = false;
+                PreventLibraryUpdatedOnStart = false;
             });
         }
 
@@ -415,14 +415,14 @@ namespace CheckLocalizations
         // Add code to be executed when library is updated.
         public override void OnLibraryUpdated(OnLibraryUpdatedEventArgs args)
         {
-            if (PluginSettings.Settings.AutoImport && !preventLibraryUpdatedOnStart)
+            if (PluginSettings.Settings.AutoImport && !PreventLibraryUpdatedOnStart)
             {
                 List<Game> PlayniteDb = PlayniteApi.Database.Games
                         .Where(x => x.Added != null && x.Added > PluginSettings.Settings.LastAutoLibUpdateAssetsDownload)
                         .ToList();
 
                 GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    $"{PluginDatabase.PluginName} - {resources.GetString("LOCCommonGettingData")}",
+                    $"{PluginDatabase.PluginName} - {ResourceProvider.GetString("LOCCommonGettingData")}",
                     true
                 );
                 globalProgressOptions.IsIndeterminate = false;
@@ -454,7 +454,7 @@ namespace CheckLocalizations
 
                         stopWatch.Stop();
                         TimeSpan ts = stopWatch.Elapsed;
-                        logger.Info($"Task OnLibraryUpdated(){CancelText} - {string.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)} for {activateGlobalProgress.CurrentProgressValue}/{(double)PlayniteDb.Count()} items");
+                        Logger.Info($"Task OnLibraryUpdated(){CancelText} - {string.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)} for {activateGlobalProgress.CurrentProgressValue}/{(double)PlayniteDb.Count()} items");
                     }
                     catch (Exception ex)
                     {

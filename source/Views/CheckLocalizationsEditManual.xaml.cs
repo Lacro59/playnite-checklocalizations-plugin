@@ -15,24 +15,24 @@ namespace CheckLocalizations.Views
     /// </summary>
     public partial class CheckLocalizationsEditManual : UserControl
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static ILogger Logger => LogManager.GetLogger();
 
-        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+        private static LocalizationsDatabase PluginDatabase => CheckLocalizations.PluginDatabase;
 
-        private List<GameLanguage> gameLanguageAvailable = new List<GameLanguage>();
-        private GameLocalizations _gameLocalizations;
+        private List<GameLanguage> GameLanguageAvailable { get; set; } = new List<GameLanguage>();
+        private GameLocalizations GameLocalizations { get; set; }
 
-        private Game _game;
+        private Game GameContext { get; set; }
 
 
         public CheckLocalizationsEditManual(Game game)
         {
             InitializeComponent();
 
-            _gameLocalizations = PluginDatabase.Get(game);
-            _game = PluginDatabase.GameContext;
+            GameLocalizations = PluginDatabase.Get(game);
+            GameContext = PluginDatabase.GameContext;
 
-            ListViewLanguages.ItemsSource = _gameLocalizations.Items.Where(x => x.IsManual).ToList();
+            ListViewLanguages.ItemsSource = GameLocalizations.Items.Where(x => x.IsManual).ToList();
 
             RefreshAvailable();
         }
@@ -40,54 +40,54 @@ namespace CheckLocalizations.Views
 
         private void RefreshAvailable()
         {
-            gameLanguageAvailable = new List<GameLanguage>();
+            GameLanguageAvailable = new List<GameLanguage>();
             foreach (GameLanguage gameLanguage in CheckLocalizations.PluginDatabase.PluginSettings.Settings.GameLanguages)
             {
-                if (_gameLocalizations.Items.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) == null)
+                if (GameLocalizations.Items.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) == null)
                 {
-                    gameLanguageAvailable.Add(gameLanguage);
+                    GameLanguageAvailable.Add(gameLanguage);
                 }
             }
 
-            gameLanguageAvailable.Sort((x, y) => x.Name.CompareTo(y.Name));
+            GameLanguageAvailable.Sort((x, y) => x.Name.CompareTo(y.Name));
 
             PART_LocalizationSelection.ItemsSource = null;
-            PART_LocalizationSelection.ItemsSource = gameLanguageAvailable;
+            PART_LocalizationSelection.ItemsSource = GameLanguageAvailable;
             PART_LocalizationSelection.SelectedIndex = -1;
         }
 
 
         private void BtAdd_Click(object sender, RoutedEventArgs e)
         {
-            string Language = ((GameLanguage)PART_LocalizationSelection.SelectedItem).Name;
-            SupportStatus Ui = ((bool)PART_LocalizationUI.IsChecked) ? SupportStatus.Native : SupportStatus.NoNative;
-            SupportStatus Audio = ((bool)PART_LocalizationAudio.IsChecked) ? SupportStatus.Native : SupportStatus.NoNative;
-            SupportStatus Sub = ((bool)PART_LocalizationSub.IsChecked) ? SupportStatus.Native : SupportStatus.NoNative;
+            string language = ((GameLanguage)PART_LocalizationSelection.SelectedItem).Name;
+            SupportStatus ui = ((bool)PART_LocalizationUI.IsChecked) ? SupportStatus.Native : SupportStatus.NoNative;
+            SupportStatus audio = ((bool)PART_LocalizationAudio.IsChecked) ? SupportStatus.Native : SupportStatus.NoNative;
+            SupportStatus sub = ((bool)PART_LocalizationSub.IsChecked) ? SupportStatus.Native : SupportStatus.NoNative;
 
             Localization localization = new Localization
             {
-                Language = Language,
-                Ui = Ui,
-                Audio = Audio,
-                Sub = Sub,
+                Language = language,
+                Ui = ui,
+                Audio = audio,
+                Sub = sub,
                 Notes = string.Empty,
                 IsManual = true,
             };
 
-            int index = _gameLocalizations.Items.FindIndex(x => x.Language == Language);
+            int index = GameLocalizations.Items.FindIndex(x => x.Language == language);
             if (index > -1)
             {
-                _gameLocalizations.Items[index] = localization;
+                GameLocalizations.Items[index] = localization;
             }
             else
             {
-                _gameLocalizations.Items.Add(localization);
+                GameLocalizations.Items.Add(localization);
             }
 
-            _gameLocalizations.Items.Sort((x, y) => x.Language.CompareTo(y.Language));
+            GameLocalizations.Items.Sort((x, y) => x.Language.CompareTo(y.Language));
 
             ListViewLanguages.ItemsSource = null;
-            ListViewLanguages.ItemsSource = _gameLocalizations.Items.Where(x => x.IsManual).ToList();
+            ListViewLanguages.ItemsSource = GameLocalizations.Items.Where(x => x.IsManual).ToList();
 
             RefreshAvailable();
         }
@@ -96,29 +96,29 @@ namespace CheckLocalizations.Views
         {
             int index = int.Parse(((Button)sender).Tag.ToString());
 
-            _gameLocalizations.Items.Remove((Localization)ListViewLanguages.Items[index]);
+            _ = GameLocalizations.Items.Remove((Localization)ListViewLanguages.Items[index]);
 
             ListViewLanguages.ItemsSource = null;
-            ListViewLanguages.ItemsSource = _gameLocalizations.Items.Where(x => x.IsManual).ToList();
+            ListViewLanguages.ItemsSource = GameLocalizations.Items.Where(x => x.IsManual).ToList();
 
             RefreshAvailable();
         }
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            GameLocalizations gameLocalizations = PluginDatabase.GetOnlyCache(_game.Id);
+            GameLocalizations gameLocalizations = PluginDatabase.GetOnlyCache(GameContext.Id);
 
             if (gameLocalizations == null)
             {
-                _gameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(_game);
-                PluginDatabase.Add(_gameLocalizations);
+                GameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(GameContext);
+                PluginDatabase.Add(GameLocalizations);
             }
             else
             {
-                PluginDatabase.Update(_gameLocalizations);
+                PluginDatabase.Update(GameLocalizations);
             }
 
-            ((Window)this.Parent).Close();
+            ((Window)Parent).Close();
         }
 
 

@@ -3,6 +3,7 @@ using CheckLocalizations.Services;
 using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
 using CommonPluginsShared.Interfaces;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -19,18 +20,14 @@ namespace CheckLocalizations.Controls
     /// </summary>
     public partial class PluginListLanguages : PluginUserControlExtend
     {
-        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
-        internal override IPluginDatabase _PluginDatabase
-        {
-            get => PluginDatabase;
-            set => PluginDatabase = (LocalizationsDatabase)_PluginDatabase;
-        }
+        private LocalizationsDatabase PluginDatabase => CheckLocalizations.PluginDatabase;
+        internal override IPluginDatabase pluginDatabase => PluginDatabase;
 
         private PluginListLanguagesDataContext ControlDataContext = new PluginListLanguagesDataContext();
-        internal override IDataContext _ControlDataContext
+        internal override IDataContext controlDataContext
         {
             get => ControlDataContext;
-            set => ControlDataContext = (PluginListLanguagesDataContext)_ControlDataContext;
+            set => ControlDataContext = (PluginListLanguagesDataContext)controlDataContext;
         }
 
 
@@ -55,7 +52,7 @@ namespace CheckLocalizations.Controls
                     PluginDatabase.PluginSettings.PropertyChanged += PluginSettings_PropertyChanged;
                     PluginDatabase.Database.ItemUpdated += Database_ItemUpdated;
                     PluginDatabase.Database.ItemCollectionChanged += Database_ItemCollectionChanged;
-                    PluginDatabase.PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                    API.Instance.Database.Games.ItemUpdated += Games_ItemUpdated;
 
                     // Apply settings
                     PluginSettings_PropertyChanged(null, null);
@@ -86,9 +83,9 @@ namespace CheckLocalizations.Controls
         }
 
 
-        public override void SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
+        public override void SetData(Game newContext, PluginDataBaseGameBase pluginGameData)
         {
-            GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
+            GameLocalizations gameLocalization = (GameLocalizations)pluginGameData;
 
             MustDisplay = IgnoreSettings || ControlDataContext.ListLanguagesVisibleEmpty || gameLocalization.HasData;
 
@@ -131,16 +128,16 @@ namespace CheckLocalizations.Controls
 
     public class PluginListLanguagesDataContext : ObservableObject, IDataContext
     {
-        private bool _IsActivated;
-        public bool IsActivated { get => _IsActivated; set => SetValue(ref _IsActivated, value); }
+        private bool _isActivated;
+        public bool IsActivated { get => _isActivated; set => SetValue(ref _isActivated, value); }
 
-        private double _ListLanguagesHeight = 120;
-        public double ListLanguagesHeight { get => _ListLanguagesHeight; set => SetValue(ref _ListLanguagesHeight, value); }
+        private double _listLanguagesHeight = 120;
+        public double ListLanguagesHeight { get => _listLanguagesHeight; set => SetValue(ref _listLanguagesHeight, value); }
 
-        private bool _ListLanguagesVisibleEmpty;
-        public bool ListLanguagesVisibleEmpty { get => _ListLanguagesVisibleEmpty; set => SetValue(ref _ListLanguagesVisibleEmpty, value); }
+        private bool _listLanguagesVisibleEmpty;
+        public bool ListLanguagesVisibleEmpty { get => _listLanguagesVisibleEmpty; set => SetValue(ref _listLanguagesVisibleEmpty, value); }
 
-        private ObservableCollection<Models.Localization> _ItemsSource;
-        public ObservableCollection<Models.Localization> ItemsSource { get => _ItemsSource; set => SetValue(ref _ItemsSource, value); }
+        private ObservableCollection<Models.Localization> _itemsSource;
+        public ObservableCollection<Models.Localization> ItemsSource { get => _itemsSource; set => SetValue(ref _itemsSource, value); }
     }
 }

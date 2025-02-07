@@ -22,8 +22,8 @@ namespace CheckLocalizations.Models
 
     public class Localization : ObservableObject
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+        private static ILogger Logger => LogManager.GetLogger();
+        private static LocalizationsDatabase PluginDatabase => CheckLocalizations.PluginDatabase;
 
         public string Language { get; set; }
         public SupportStatus Ui { get; set; }
@@ -230,7 +230,7 @@ namespace CheckLocalizations.Models
                     case "slovak":
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "sk.png"));
                     default:
-                        logger.Warn($"No flag find for {Language}");
+                        Logger.Warn($"No flag find for {Language}");
                         return BitmapExtensions.BitmapFromFile(Path.Combine(PathResourcesFlags, "__.png"));
                 }
             }

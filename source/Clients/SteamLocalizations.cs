@@ -14,44 +14,44 @@ namespace CheckLocalizations.Clients
 {
     public class SteamLocalizations
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static ILogger Logger => LogManager.GetLogger();
 
-        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+        private static LocalizationsDatabase PluginDatabase => CheckLocalizations.PluginDatabase;
 
-        private SteamApi steamApi;
-        private int SteamId;
+        private SteamApi SteamApi { get; set; }
+        private uint AppId { get; set; }
 
 
         public SteamLocalizations()
         {
-            steamApi = new SteamApi(PluginDatabase.PluginName);
+            SteamApi = new SteamApi(PluginDatabase.PluginName, PlayniteTools.ExternalPlugin.CheckLocalizations);
         }
 
 
         public List<Localization> GetLocalizations(Game game)
         {
-            List<Localization> Localizations = new List<Localization>();
+            List<Localization> localizations = new List<Localization>();
 
             try
             {
-                SteamId = steamApi.GetAppId(game.Name);
-                if (SteamId != 0)
+                AppId = SteamApi.GetAppId(game);
+                if (AppId != 0)
                 {
-                    string data = GetSteamData(SteamId);
+                    string data = GetSteamData();
                     if (data.Contains("\"success\":false", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        string message = string.Format(ResourceProvider.GetString("LOCCommonErrorGetStoreData") + Environment.NewLine + $"{game.Name} - {SteamId}", "Steam");
+                        string message = string.Format(ResourceProvider.GetString("LOCCommonErrorGetStoreData") + Environment.NewLine + $"{game.Name} - {AppId}", "Steam");
                         Exception ex = new Exception(message);
                         Common.LogError(ex, false, true, PluginDatabase.PluginName);
-                        return Localizations;
+                        return localizations;
                     }
 
-                    if (Serialization.TryFromJson(data, out Dictionary<string, StoreAppDetailsResult> parsedData) && parsedData[SteamId.ToString()].data != null)
+                    if (Serialization.TryFromJson(data, out Dictionary<string, StoreAppDetailsResult> parsedData) && parsedData[AppId.ToString()].data != null)
                     {
-                        string[] dataSplited = parsedData[SteamId.ToString()].data.supported_languages.Split(new string[] { "<br>" }, StringSplitOptions.None);
-                        string[] ListLocalizations = dataSplited[0].Split(',');
+                        string[] dataSplited = parsedData[AppId.ToString()].data.supported_languages.Split(new string[] { "<br>" }, StringSplitOptions.None);
+                        string[] listLocalizations = dataSplited[0].Split(',');
 
-                        foreach(string Loc in ListLocalizations)
+                        foreach(string Loc in listLocalizations)
                         {
                             string Language = string.Empty;
                             SupportStatus Ui = SupportStatus.Native;
@@ -78,7 +78,7 @@ namespace CheckLocalizations.Clients
                                     break;
                             }
 
-                            Localizations.Add(new Localization
+                            localizations.Add(new Localization
                             {
                                 Language = Language,
                                 Ui = Ui,
@@ -92,24 +92,24 @@ namespace CheckLocalizations.Clients
                 }
                 else
                 {
-                    logger.Warn($"Not find for {game.Name}");
+                    Logger.Warn($"Not find for {game.Name}");
                 }
             }
             catch (Exception ex)
             {
-                Common.LogError(ex, false, $"Error with {game.Name} - {SteamId}", true, PluginDatabase.PluginName);
+                Common.LogError(ex, false, $"Error with {game.Name} - {AppId}", true, PluginDatabase.PluginName);
             }
 
-            return Localizations;
+            return localizations;
         }
 
 
-        private string GetSteamData(int SteamId)
+        private string GetSteamData()
         {
             string url = string.Empty;
             try
             {
-                url = $"https://store.steampowered.com/api/appdetails?appids={SteamId}&l=english";
+                url = $"https://store.steampowered.com/api/appdetails?appids={AppId}&l=english";
                 return Web.DownloadStringData(url).GetAwaiter().GetResult();
             }
             catch (Exception ex)
@@ -122,12 +122,12 @@ namespace CheckLocalizations.Clients
 
         public string GetUrl()
         {
-            return $"https://store.steampowered.com/app/{SteamId}/";
+            return $"https://store.steampowered.com/app/{AppId}/";
         }
 
         public string GetGameName()
         {
-            return steamApi.GetGameName(SteamId);
+            return SteamApi.GetGameName(AppId);
         }
     }
 }

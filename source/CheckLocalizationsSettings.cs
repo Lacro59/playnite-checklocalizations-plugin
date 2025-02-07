@@ -1,5 +1,6 @@
 ﻿using CheckLocalizations.Models;
 using CheckLocalizations.Services;
+using CommonPluginsShared.Plugins;
 using Playnite.SDK;
 using Playnite.SDK.Data;
 using System;
@@ -10,15 +11,9 @@ using System.Threading.Tasks;
 
 namespace CheckLocalizations
 {
-    public class CheckLocalizationsSettings : ObservableObject
+    public class CheckLocalizationsSettings : PluginSettings
     {
         #region Settings variables
-        public bool MenuInExtensions { get; set; } = true;
-        public DateTime LastAutoLibUpdateAssetsDownload { get; set; } = DateTime.Now;
-
-        public bool AutoImport { get; set; } = true;
-
-        public bool EnableTag { get; set; } = false;
         public bool EnableTagSingle { get; set; } = false;
         public bool EnableTagAudio { get; set; } = false;
         public List<GameLanguage> GameLanguages { get; set; } = new List<GameLanguage>();
@@ -28,24 +23,24 @@ namespace CheckLocalizations
         public bool UiStylePcGamingWiki { get; set; } = true;
 
 
-        private bool _EnableIntegrationViewItem = true;
-        public bool EnableIntegrationViewItem { get => _EnableIntegrationViewItem; set => SetValue(ref _EnableIntegrationViewItem, value); }
+        private bool _enableIntegrationViewItem = true;
+        public bool EnableIntegrationViewItem { get => _enableIntegrationViewItem; set => SetValue(ref _enableIntegrationViewItem, value); }
 
-        private bool _EnableIntegrationButton = true;
-        public bool EnableIntegrationButton { get => _EnableIntegrationButton; set => SetValue(ref _EnableIntegrationButton, value); }
+        private bool _enableIntegrationButton = true;
+        public bool EnableIntegrationButton { get => _enableIntegrationButton; set => SetValue(ref _enableIntegrationButton, value); }
 
-        private bool _EnableIntegrationButtonDetails = true;
-        public bool EnableIntegrationButtonDetails { get => _EnableIntegrationButtonDetails; set => SetValue(ref _EnableIntegrationButtonDetails, value); }
+        private bool _enableIntegrationButtonDetails = true;
+        public bool EnableIntegrationButtonDetails { get => _enableIntegrationButtonDetails; set => SetValue(ref _enableIntegrationButtonDetails, value); }
 
         public bool EnableIntegrationButtonContextMenu { get; set; } = false;
 
 
-        private bool _EnableIntegrationListLanguages = true;
-        public bool EnableIntegrationListLanguages { get => _EnableIntegrationListLanguages; set => SetValue(ref _EnableIntegrationListLanguages, value); }
+        private bool _enableIntegrationListLanguages = true;
+        public bool EnableIntegrationListLanguages { get => _enableIntegrationListLanguages; set => SetValue(ref _enableIntegrationListLanguages, value); }
 
 
-        private bool _EnableIntegrationFlags = true;
-        public bool EnableIntegrationFlags { get => _EnableIntegrationFlags; set => SetValue(ref _EnableIntegrationFlags, value); }
+        private bool _enableIntegrationFlags = true;
+        public bool EnableIntegrationFlags { get => _enableIntegrationFlags; set => SetValue(ref _enableIntegrationFlags, value); }
 
         public bool OnlyDisplaySelectedFlags { get; set; } = false;
         public bool OnlyDisplayExistingFlags { get; set; } = false;
@@ -59,17 +54,14 @@ namespace CheckLocalizations
         // Playnite serializes settings object to a JSON object and saves it as text file.
         // If you want to exclude some property from being saved then use `JsonDontSerialize` ignore attribute.
         #region Variables exposed
-        private bool _HasData = false;
-        [DontSerialize]
-        public bool HasData { get => _HasData; set => SetValue(ref _HasData, value); }
 
-        private bool _HasNativeSupport = false;
+        private bool _hasNativeSupport = false;
         [DontSerialize]
-        public bool HasNativeSupport { get => _HasNativeSupport; set => SetValue(ref _HasNativeSupport, value); }
+        public bool HasNativeSupport { get => _hasNativeSupport; set => SetValue(ref _hasNativeSupport, value); }
 
-        private List<Models.Localization> _ListNativeSupport = new List<Models.Localization>();
+        private List<Models.Localization> _listNativeSupport = new List<Models.Localization>();
         [DontSerialize]
-        public List<Models.Localization> ListNativeSupport { get => _ListNativeSupport; set => SetValue(ref _ListNativeSupport, value); }
+        public List<Models.Localization> ListNativeSupport { get => _listNativeSupport; set => SetValue(ref _listNativeSupport, value); }
         #endregion  
     }
 
@@ -79,8 +71,8 @@ namespace CheckLocalizations
         private readonly CheckLocalizations Plugin;
         private CheckLocalizationsSettings EditingClone { get; set; }
 
-        private CheckLocalizationsSettings _Settings;
-        public CheckLocalizationsSettings Settings { get => _Settings; set => SetValue(ref _Settings, value); }
+        private CheckLocalizationsSettings _settings;
+        public CheckLocalizationsSettings Settings { get => _settings; set => SetValue(ref _settings, value); }
 
 
         public CheckLocalizationsSettingsViewModel(CheckLocalizations plugin)
@@ -98,43 +90,45 @@ namespace CheckLocalizations
             }
             else
             {
-                Settings = new CheckLocalizationsSettings();                
-                Settings.GameLanguages = new List<GameLanguage>()
+                Settings = new CheckLocalizationsSettings
                 {
-                    new GameLanguage { DisplayName = "English", Name = "English", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Français", Name = "French", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Deutsch", Name = "German", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Italiano", Name = "Italian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "日本語", Name = "Japanese", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Español", Name = "Spanish", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "简体中文", Name = "Simplified Chinese", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Русский", Name = "Russian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "繁體中文", Name = "Traditional Chinese", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "한국어", Name = "Korean", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Polski", Name = "Polish", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Português Brasileiro", Name = "Brazilian Portuguese", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "العربية", Name = "Arabic", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Čeština", Name = "Czech", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Magyar", Name = "Hungarian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Türkçe", Name = "Turkish", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "عربى", Name = "Arabic", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Català", Name = "Catalan", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Dansk", Name = "Danish", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Ελληνικά", Name = "Greek", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Eesti", Name = "Estonian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "فارسی", Name = "Persian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Suomi", Name = "Finnish", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Hrvatski", Name = "Croatian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Bahasa Indonesia", Name = "Indonesian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Lietuvių", Name = "Lithuanian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Nederlands", Name = "Dutch", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Norsk", Name = "Norwegian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Português", Name = "Portuguese", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Română", Name = "Romanian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Slovenčina", Name = "Slovenian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Српски", Name = "Serbian", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Svenska", Name = "Swedish", IsTag = false, IsNative = false },
-                    new GameLanguage { DisplayName = "Українська", Name = "Ukrainian", IsTag = false, IsNative = false }
+                    GameLanguages = new List<GameLanguage>()
+                    {
+                        new GameLanguage { DisplayName = "English", Name = "English", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Français", Name = "French", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Deutsch", Name = "German", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Italiano", Name = "Italian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "日本語", Name = "Japanese", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Español", Name = "Spanish", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "简体中文", Name = "Simplified Chinese", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Русский", Name = "Russian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "繁體中文", Name = "Traditional Chinese", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "한국어", Name = "Korean", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Polski", Name = "Polish", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Português Brasileiro", Name = "Brazilian Portuguese", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "العربية", Name = "Arabic", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Čeština", Name = "Czech", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Magyar", Name = "Hungarian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Türkçe", Name = "Turkish", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "عربى", Name = "Arabic", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Català", Name = "Catalan", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Dansk", Name = "Danish", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Ελληνικά", Name = "Greek", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Eesti", Name = "Estonian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "فارسی", Name = "Persian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Suomi", Name = "Finnish", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Hrvatski", Name = "Croatian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Bahasa Indonesia", Name = "Indonesian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Lietuvių", Name = "Lithuanian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Nederlands", Name = "Dutch", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Norsk", Name = "Norwegian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Português", Name = "Portuguese", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Română", Name = "Romanian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Slovenčina", Name = "Slovenian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Српски", Name = "Serbian", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Svenska", Name = "Swedish", IsTag = false, IsNative = false },
+                        new GameLanguage { DisplayName = "Українська", Name = "Ukrainian", IsTag = false, IsNative = false }
+                    }
                 };
             }
         }

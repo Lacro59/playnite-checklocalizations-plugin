@@ -15,17 +15,16 @@ namespace CheckLocalizations.Services
 {
     public class LocalizationsApi : IDisposable
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
-        private static IResourceProvider resources = new ResourceProvider();
+        private static ILogger Logger => LogManager.GetLogger();
 
-        private PCGamingWikiLocalizations pCGamingWikiLocalizations;
-        private SteamLocalizations steamLocalizations;
+        private PCGamingWikiLocalizations PCGamingWikiLocalizations { get; set; }
+        private SteamLocalizations SteamLocalizations { get; set; }
 
 
         public LocalizationsApi()
         {
-            pCGamingWikiLocalizations = new PCGamingWikiLocalizations();
-            steamLocalizations = new SteamLocalizations();
+            PCGamingWikiLocalizations = new PCGamingWikiLocalizations();
+            SteamLocalizations = new SteamLocalizations();
         }
 
 
@@ -44,8 +43,8 @@ namespace CheckLocalizations.Services
             List<Localization> LocalizationsSteam = new List<Localization>();
 
             Task[] tasks = new Task[2];
-            tasks[0] = Task.Run(() => { LocalizationsGamingWiki = pCGamingWikiLocalizations.GetLocalizations(game); });
-            tasks[1] = Task.Run(() => { LocalizationsSteam = steamLocalizations.GetLocalizations(game); });
+            tasks[0] = Task.Run(() => { LocalizationsGamingWiki = PCGamingWikiLocalizations.GetLocalizations(game); });
+            tasks[1] = Task.Run(() => { LocalizationsSteam = SteamLocalizations.GetLocalizations(game); });
 
             Task.WaitAll(tasks);
 
@@ -55,7 +54,7 @@ namespace CheckLocalizations.Services
                 Localizations = LocalizationsGamingWiki;
                 Common.LogDebug(true, $"Used PCGamingWikiLocalizations for {game.Name} - {Serialization.ToJson(Localizations)}");
 
-                gameLocalizations.SourcesLink = new SourceLink { Name = "PCGamingWiki", GameName = pCGamingWikiLocalizations.GetGameName(), Url = pCGamingWikiLocalizations.GetUrl() };
+                gameLocalizations.SourcesLink = new SourceLink { Name = "PCGamingWiki", GameName = PCGamingWikiLocalizations.GetGameName(), Url = PCGamingWikiLocalizations.GetUrl() };
             }
             else
             {
@@ -71,7 +70,7 @@ namespace CheckLocalizations.Services
                 }).ToList();
                 Common.LogDebug(true, $"Used Steam for {game.Name} - {Serialization.ToJson(Localizations)}");
 
-                gameLocalizations.SourcesLink = new SourceLink { Name = "Steam", GameName = steamLocalizations.GetGameName(), Url = steamLocalizations.GetUrl() };
+                gameLocalizations.SourcesLink = new SourceLink { Name = "Steam", GameName = SteamLocalizations.GetGameName(), Url = SteamLocalizations.GetUrl() };
             }
 
             gameLocalizations.Items = Localizations;
@@ -82,8 +81,8 @@ namespace CheckLocalizations.Services
 
         public void Dispose()
         {
-            pCGamingWikiLocalizations = null;
-            steamLocalizations = null;
+            PCGamingWikiLocalizations = null;
+            SteamLocalizations = null;
         }
     }
 }

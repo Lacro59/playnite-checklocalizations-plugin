@@ -29,7 +29,7 @@ namespace CheckLocalizations.Clients
             {
                 if (_steamApi == null)
                 {
-                    _steamApi = new SteamApi(PluginDatabase.PluginName);
+                    _steamApi = new SteamApi(PluginDatabase.PluginName, PlayniteTools.ExternalPlugin.CheckDlc);
                 }
                 return _steamApi;
             }
@@ -78,21 +78,21 @@ namespace CheckLocalizations.Clients
         public List<Localization> GetLocalizations(Game game)
         {
             urlPCGamingWiki = string.Empty;
-            int SteamId = 0;
+            uint AppId = 0;
 
             if (game.SourceId != default)
             {
                 if (game.Source.Name.ToLower() == "steam")
                 {
-                    SteamId = int.Parse(game.GameId);
+                    AppId = uint.Parse(game.GameId);
                 }
             }
-            if (SteamId == 0)
+            if (AppId == 0)
             {
-                SteamId = steamApi.GetAppId(game.Name);
+                AppId = steamApi.GetAppId(game);
             }
 
-            urlPCGamingWiki = pcGamingWikiApi.FindGoodUrl(game, SteamId);
+            urlPCGamingWiki = pcGamingWikiApi.FindGoodUrl(game, AppId);
 
             List<Localization> Localizations = new List<Localization>();
             if (!urlPCGamingWiki.IsNullOrEmpty())

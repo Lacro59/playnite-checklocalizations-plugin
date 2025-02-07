@@ -3,6 +3,7 @@ using CheckLocalizations.Services;
 using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
 using CommonPluginsShared.Interfaces;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -17,18 +18,14 @@ namespace CheckLocalizations.Controls
     /// </summary>
     public partial class PluginViewItem : PluginUserControlExtend
     {
-        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
-        internal override IPluginDatabase _PluginDatabase
-        {
-            get => PluginDatabase;
-            set => PluginDatabase = (LocalizationsDatabase)_PluginDatabase;
-        }
+        private LocalizationsDatabase PluginDatabase => CheckLocalizations.PluginDatabase;
+        internal override IPluginDatabase pluginDatabase => PluginDatabase;
 
-        private PluginViewItemDataContext ControlDataContext =new PluginViewItemDataContext();
-        internal override IDataContext _ControlDataContext
+        private PluginViewItemDataContext ControlDataContext = new PluginViewItemDataContext();
+        internal override IDataContext controlDataContext
         {
             get => ControlDataContext;
-            set => ControlDataContext = (PluginViewItemDataContext)_ControlDataContext;
+            set => ControlDataContext = (PluginViewItemDataContext)controlDataContext;
         }
 
 
@@ -52,7 +49,7 @@ namespace CheckLocalizations.Controls
                     PluginDatabase.PluginSettings.PropertyChanged += PluginSettings_PropertyChanged;
                     PluginDatabase.Database.ItemUpdated += Database_ItemUpdated;
                     PluginDatabase.Database.ItemCollectionChanged += Database_ItemCollectionChanged;
-                    PluginDatabase.PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                    API.Instance.Database.Games.ItemUpdated += Games_ItemUpdated;
 
                     // Apply settings
                     PluginSettings_PropertyChanged(null, null);
@@ -81,10 +78,10 @@ namespace CheckLocalizations.Controls
 
     public class PluginViewItemDataContext : ObservableObject, IDataContext
     {
-        private bool _IsActivated;
-        public bool IsActivated { get => _IsActivated; set => SetValue(ref _IsActivated, value); }
+        private bool _isActivated;
+        public bool IsActivated { get => _isActivated; set => SetValue(ref _isActivated, value); }
 
-        public string _Text = "\uea30";
-        public string Text { get => _Text; set => SetValue(ref _Text, value); }
+        public string _text = "\uea30";
+        public string Text { get => _text; set => SetValue(ref _text, value); }
     }
 }

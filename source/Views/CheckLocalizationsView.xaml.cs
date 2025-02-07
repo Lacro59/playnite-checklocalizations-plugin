@@ -13,7 +13,7 @@ namespace CheckLocalizations.Views
     /// </summary>
     public partial class CheckLocalizationsView : UserControl
     {
-        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+        private LocalizationsDatabase PluginDatabase => CheckLocalizations.PluginDatabase;
 
 
         public CheckLocalizationsView()
@@ -24,7 +24,7 @@ namespace CheckLocalizations.Views
             PART_ListViewLanguages.WithColNotes = true;
             PART_ListViewLanguages.IgnoreSettings = true;
             PART_ListViewLanguages.GameContext = PluginDatabase.GameContext;
-            PART_Contener.Children.Add(PART_ListViewLanguages);
+            _ = PART_Contener.Children.Add(PART_ListViewLanguages);
 
 
             GameLocalizations gameLocalizations = PluginDatabase.Get(PluginDatabase.GameContext, true);
@@ -43,7 +43,7 @@ namespace CheckLocalizations.Views
             {
                 if (!link.IsNullOrEmpty())
                 {
-                    Process.Start(link);
+                    _ = Process.Start(link);
                 }
             }
         }

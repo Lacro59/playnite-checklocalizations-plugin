@@ -5,6 +5,7 @@ using CommonPluginsShared;
 using CommonPluginsShared.Collections;
 using CommonPluginsShared.Controls;
 using CommonPluginsShared.Interfaces;
+using Playnite.SDK;
 using Playnite.SDK.Models;
 using System;
 using System.Collections.Generic;
@@ -23,18 +24,14 @@ namespace CheckLocalizations.Controls
     /// </summary>
     public partial class PluginButton : PluginUserControlExtend
     {
-        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
-        internal override IPluginDatabase _PluginDatabase
-        {
-            get => PluginDatabase;
-            set => PluginDatabase = (LocalizationsDatabase)_PluginDatabase;
-        }
+        private LocalizationsDatabase PluginDatabase => CheckLocalizations.PluginDatabase;
+        internal override IPluginDatabase pluginDatabase => PluginDatabase;
 
         private PluginButtonDataContext ControlDataContext = new PluginButtonDataContext();
-        internal override IDataContext _ControlDataContext
+        internal override IDataContext controlDataContext
         {
             get => ControlDataContext;
-            set => ControlDataContext = (PluginButtonDataContext)_ControlDataContext;
+            set => ControlDataContext = (PluginButtonDataContext)controlDataContext;
         }
 
 
@@ -61,7 +58,7 @@ namespace CheckLocalizations.Controls
                     PluginDatabase.PluginSettings.PropertyChanged += PluginSettings_PropertyChanged;
                     PluginDatabase.Database.ItemUpdated += Database_ItemUpdated;
                     PluginDatabase.Database.ItemCollectionChanged += Database_ItemCollectionChanged;
-                    PluginDatabase.PlayniteApi.Database.Games.ItemUpdated += Games_ItemUpdated;
+                    API.Instance.Database.Games.ItemUpdated += Games_ItemUpdated;
 
                     // Apply settings
                     PluginSettings_PropertyChanged(null, null);
@@ -80,9 +77,9 @@ namespace CheckLocalizations.Controls
         }
 
 
-        public override void SetData(Game newContext, PluginDataBaseGameBase PluginGameData)
+        public override void SetData(Game newContext, PluginDataBaseGameBase pluginGameData)
         {
-            GameLocalizations gameLocalization = (GameLocalizations)PluginGameData;
+            GameLocalizations gameLocalization = (GameLocalizations)pluginGameData;
 
             ControlDataContext.Text = ControlDataContext.DisplayDetails
                 ? gameLocalization.Items.Count == 0
@@ -117,7 +114,7 @@ namespace CheckLocalizations.Controls
             if (!PluginDatabase.PluginSettings.Settings.EnableIntegrationButtonContextMenu)
             {
                 CheckLocalizationsView ViewExtension = new CheckLocalizationsView();
-                Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PlayniteApi, PluginDatabase.PluginName, ViewExtension);
+                Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PluginName, ViewExtension);
                 windowExtension.ShowDialog();
             }
         }
@@ -164,16 +161,16 @@ namespace CheckLocalizations.Controls
 
     public class PluginButtonDataContext : ObservableObject, IDataContext
     {
-        private bool _IsActivated;
-        public bool IsActivated { get => _IsActivated; set => SetValue(ref _IsActivated, value); }
+        private bool _isActivated;
+        public bool IsActivated { get => _isActivated; set => SetValue(ref _isActivated, value); }
 
-        public bool _DisplayDetails;
-        public bool DisplayDetails { get => _DisplayDetails; set => SetValue(ref _DisplayDetails, value); }
+        public bool _displayDetails;
+        public bool DisplayDetails { get => _displayDetails; set => SetValue(ref _displayDetails, value); }
 
-        public bool _ButtonContextMenu;
-        public bool ButtonContextMenu { get => _ButtonContextMenu; set => SetValue(ref _ButtonContextMenu, value); }
+        public bool _buttonContextMenu;
+        public bool ButtonContextMenu { get => _buttonContextMenu; set => SetValue(ref _buttonContextMenu, value); }
 
-        public string _Text = "\uea2c";
-        public string Text { get => _Text; set => SetValue(ref _Text, value); }
+        public string _text = "\uea2c";
+        public string Text { get => _text; set => SetValue(ref _text, value); }
     }
 }
