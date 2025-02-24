@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CheckLocalizations.Services;
 using CommonPluginsStores.Steam;
+using CommonPluginsStores.Models;
 
 namespace CheckLocalizations.Clients
 {
@@ -37,8 +38,8 @@ namespace CheckLocalizations.Clients
                 AppId = SteamApi.GetAppId(game);
                 if (AppId != 0)
                 {
-                    string data = GetSteamData();
-                    if (data.Contains("\"success\":false", StringComparison.InvariantCultureIgnoreCase))
+                    GameInfos gameInfos = SteamApi.GetGameInfos(AppId.ToString(), null);
+                    if (gameInfos == null)
                     {
                         string message = string.Format(ResourceProvider.GetString("LOCCommonErrorGetStoreData") + Environment.NewLine + $"{game.Name} - {AppId}", "Steam");
                         Exception ex = new Exception(message);
@@ -46,48 +47,44 @@ namespace CheckLocalizations.Clients
                         return localizations;
                     }
 
-                    if (Serialization.TryFromJson(data, out Dictionary<string, StoreAppDetailsResult> parsedData) && parsedData[AppId.ToString()].data != null)
+                    string[] dataSplited = gameInfos.Languages.Split(new string[] { "<br>" }, StringSplitOptions.None);
+                    string[] listLocalizations = dataSplited[0].Split(',');
+
+                    foreach(string localization in listLocalizations)
                     {
-                        string[] dataSplited = parsedData[AppId.ToString()].data.supported_languages.Split(new string[] { "<br>" }, StringSplitOptions.None);
-                        string[] listLocalizations = dataSplited[0].Split(',');
+                        string language = string.Empty;
+                        SupportStatus ui = SupportStatus.Native;
+                        SupportStatus audio = SupportStatus.Unknown;
+                        SupportStatus sub = SupportStatus.Unknown;
 
-                        foreach(string Loc in listLocalizations)
+                        if (localization.Contains("<strong>*</strong>"))
                         {
-                            string Language = string.Empty;
-                            SupportStatus Ui = SupportStatus.Native;
-                            SupportStatus Audio = SupportStatus.Unknown;
-                            SupportStatus Sub = SupportStatus.Unknown;
-
-                            if (Loc.Contains("<strong>*</strong>"))
-                            {
-                                Audio = SupportStatus.Native;
-                                Sub = SupportStatus.Native;
-                            }
-                            
-                            Language = Loc.Replace("<strong>*</strong>", string.Empty).Trim();
-
-                            switch (Language)
-                            {
-                                case "Portuguese - Brazil":
-                                    Language = "Brazilian Portuguese";
-                                    break;
-                                case "Spanish - Spain":
-                                    Language = "Spanish";
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                            localizations.Add(new Localization
-                            {
-                                Language = Language,
-                                Ui = Ui,
-                                Audio = Audio,
-                                Sub = Sub,
-                                Notes = string.Empty,
-                                IsManual = false
-                            });
+                            audio = SupportStatus.Native;
+                            sub = SupportStatus.Native;
                         }
+                            
+                        language = localization.Replace("<strong>*</strong>", string.Empty).Trim();
+                        switch (language)
+                        {
+                            case "Portuguese - Brazil":
+                                language = "Brazilian Portuguese";
+                                break;
+                            case "Spanish - Spain":
+                                language = "Spanish";
+                                break;
+                            default:
+                                break;
+                        }
+
+                        localizations.Add(new Localization
+                        {
+                            Language = language,
+                            Ui = ui,
+                            Audio = audio,
+                            Sub = sub,
+                            Notes = string.Empty,
+                            IsManual = false
+                        });
                     }
                 }
                 else
@@ -101,22 +98,6 @@ namespace CheckLocalizations.Clients
             }
 
             return localizations;
-        }
-
-
-        private string GetSteamData()
-        {
-            string url = string.Empty;
-            try
-            {
-                url = $"https://store.steampowered.com/api/appdetails?appids={AppId}&l=english";
-                return Web.DownloadStringData(url).GetAwaiter().GetResult();
-            }
-            catch (Exception ex)
-            {
-                Common.LogError(ex, false, $"Failed to download {url}", true, PluginDatabase.PluginName);
-                return string.Empty;
-            }
         }
 
 

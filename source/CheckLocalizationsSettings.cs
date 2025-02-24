@@ -84,52 +84,56 @@ namespace CheckLocalizations
             CheckLocalizationsSettings savedSettings = plugin.LoadPluginSettings<CheckLocalizationsSettings>();
 
             // LoadPluginSettings returns null if not saved data is available.
-            if (savedSettings != null)
+            List<GameLanguage> gameLanguages = new List<GameLanguage>()
             {
-                Settings = savedSettings;
-            }
-            else
+                new GameLanguage { DisplayName = "العربية", Name = "Arabic", SteamCode = "ar", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "български", Name = "Bulgarian", SteamCode = "bg", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Català", Name = "Catalan", SteamCode = "", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Hrvatski", Name = "Croatian", SteamCode = "", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Čeština", Name = "Czech", SteamCode = "cs", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Dansk", Name = "Danish", SteamCode = "da", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Deutsch", Name = "German", SteamCode = "de", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Ελληνικά", Name = "Greek", SteamCode = "el", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "English", Name = "English", SteamCode = "en", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Español", Name = "Spanish", SteamCode = "es", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Español (Latinoamérica)", Name = "Latam", SteamCode = "es-419", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Eesti", Name = "Estonian", SteamCode = "", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "فارسی", Name = "Persian", SteamCode = "", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Suomi", Name = "Finnish", SteamCode = "fi", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Français", Name = "French", SteamCode = "fr", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Magyar", Name = "Hungarian", SteamCode = "hu", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Bahasa Indonesia", Name = "Indonesian", SteamCode = "id", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Italiano", Name = "Italian", SteamCode = "it", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "日本語", Name = "Japanese", SteamCode = "ja", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "한국어", Name = "Korean", SteamCode = "ko", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Lietuvių", Name = "Lithuanian", SteamCode = "", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Nederlands", Name = "Dutch", SteamCode = "nl", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Norsk", Name = "Norwegian", SteamCode = "no", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Polski", Name = "Polish", SteamCode = "pl", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Português", Name = "Portuguese", SteamCode = "pt", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Português Brasileiro", Name = "Brazilian Portuguese", SteamCode = "pt-BR", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Română", Name = "Romanian", SteamCode = "ro", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Русский", Name = "Russian", SteamCode = "ru", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Slovenčina", Name = "Slovenian", SteamCode = "", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Српски", Name = "Serbian", SteamCode = "", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Svenska", Name = "Swedish", SteamCode = "sv", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "ไทย", Name = "Thai", SteamCode = "th", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Türkçe", Name = "Turkish", SteamCode = "tr", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Українська", Name = "Ukrainian", SteamCode = "uk", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "Tiếng Việt", Name = "Vietnamese", SteamCode = "vi", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "简体中文", Name = "Simplified Chinese", SteamCode = "zh-CN", IsTag = false, IsNative = false },
+                new GameLanguage { DisplayName = "繁體中文", Name = "Traditional Chinese", SteamCode = "zh-TW", IsTag = false, IsNative = false }
+            };
+
+            Settings = savedSettings ?? new CheckLocalizationsSettings { GameLanguages = gameLanguages };
+
+            List<GameLanguage> missingLanguages = gameLanguages
+                .Where(fl => !Settings.GameLanguages.Any(gl => gl.Name == fl.Name))
+                .ToList();
+            Settings.GameLanguages.AddRange(missingLanguages);
+            foreach(GameLanguage gameLanguage in Settings.GameLanguages)
             {
-                Settings = new CheckLocalizationsSettings
-                {
-                    GameLanguages = new List<GameLanguage>()
-                    {
-                        new GameLanguage { DisplayName = "English", Name = "English", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Français", Name = "French", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Deutsch", Name = "German", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Italiano", Name = "Italian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "日本語", Name = "Japanese", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Español", Name = "Spanish", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "简体中文", Name = "Simplified Chinese", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Русский", Name = "Russian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "繁體中文", Name = "Traditional Chinese", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "한국어", Name = "Korean", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Polski", Name = "Polish", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Português Brasileiro", Name = "Brazilian Portuguese", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "العربية", Name = "Arabic", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Čeština", Name = "Czech", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Magyar", Name = "Hungarian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Türkçe", Name = "Turkish", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "عربى", Name = "Arabic", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Català", Name = "Catalan", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Dansk", Name = "Danish", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Ελληνικά", Name = "Greek", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Eesti", Name = "Estonian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "فارسی", Name = "Persian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Suomi", Name = "Finnish", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Hrvatski", Name = "Croatian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Bahasa Indonesia", Name = "Indonesian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Lietuvių", Name = "Lithuanian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Nederlands", Name = "Dutch", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Norsk", Name = "Norwegian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Português", Name = "Portuguese", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Română", Name = "Romanian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Slovenčina", Name = "Slovenian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Српски", Name = "Serbian", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Svenska", Name = "Swedish", IsTag = false, IsNative = false },
-                        new GameLanguage { DisplayName = "Українська", Name = "Ukrainian", IsTag = false, IsNative = false }
-                    }
-                };
+                gameLanguage.SteamCode = gameLanguages.FirstOrDefault(x => x.Name == gameLanguage.Name)?.SteamCode ?? string.Empty;
             }
         }
 
