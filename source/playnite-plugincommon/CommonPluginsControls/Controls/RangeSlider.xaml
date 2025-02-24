@@ -1,0 +1,67 @@
+﻿<UserControl x:Class="CommonPluginsControls.Controls.RangeSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CommonPluginsControls.Controls"
+             mc:Ignorable="d" d:DesignWidth="200" 
+             x:Name="root">
+
+    <UserControl.Resources>
+        <ControlTemplate x:Key="simpleSlider" TargetType="{x:Type Slider}">
+            <Grid x:Name="GridRoot">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <TickBar x:Name="TopTick" Visibility="Collapsed" Height="4" Placement="Top"
+                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"  Fill="{DynamicResource GlyphBrush}" />
+      
+                <Track Grid.Row="1" x:Name="PART_Track">
+                    <Track.Thumb>
+                        <Thumb Width="25" />
+                    </Track.Thumb>
+                    
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderTrackButton}" Command="Slider.DecreaseLarge" />
+                    </Track.DecreaseRepeatButton>
+                    
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Style="{StaticResource SliderTrackButton}" Command="Slider.IncreaseLarge" />
+                    </Track.IncreaseRepeatButton>
+                </Track>
+                
+                <TickBar x:Name="BottomTick" Visibility="Collapsed" Grid.Row="2" Height="4" Placement="Bottom"
+                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Fill="{TemplateBinding Foreground}" />
+            </Grid>
+        </ControlTemplate>
+    </UserControl.Resources>
+    
+    <Grid VerticalAlignment="Top">
+        <Border x:Name="Border" Grid.Row="1" Margin="0" Height="6" CornerRadius="{DynamicResource ControlCornerRadius}"
+                BorderBrush="{DynamicResource NormalBorderBrush}"
+                BorderThickness="{DynamicResource ControlBorderThickness}" />
+
+        <Slider x:Name="UpperSlider"
+                IsSnapToTickEnabled="{Binding ElementName=root, Path=IsSnapToTickEnabled}"
+                TickFrequency="{Binding ElementName=root, Path=TickFrequency}"
+                AutoToolTipPlacement="{Binding ElementName=root, Path=AutoToolTipPlacement}"
+                Minimum="{Binding ElementName=root, Path=Minimum}"
+                Maximum="{Binding ElementName=root, Path=Maximum}"
+                Value="{Binding ElementName=root, Path=UpperValue, Mode=TwoWay}"
+                Template="{StaticResource simpleSlider}"
+                Margin="10,0,0,0" />
+
+        <Slider x:Name="LowerSlider"
+                IsSnapToTickEnabled="{Binding ElementName=root, Path=IsSnapToTickEnabled}"
+                TickFrequency="{Binding ElementName=root, Path=TickFrequency}"
+                AutoToolTipPlacement="{Binding ElementName=root, Path=AutoToolTipPlacement}"
+                Minimum="{Binding ElementName=root, Path=Minimum}"
+                Maximum="{Binding ElementName=root, Path=Maximum}"
+                Value="{Binding ElementName=root, Path=LowerValue, Mode=TwoWay}"
+                Template="{StaticResource simpleSlider}"
+                Margin="0,0,10,0" />
+    </Grid>
+</UserControl>

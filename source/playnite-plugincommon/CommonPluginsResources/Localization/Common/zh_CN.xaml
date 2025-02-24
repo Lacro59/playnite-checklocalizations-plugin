@@ -1,0 +1,277 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="LOCCommonYear">年</sys:String>
+    <sys:String x:Key="LOCCommonMonth">Month</sys:String>
+    <sys:String x:Key="LOCCommonMonths">Month(s)</sys:String>
+    <sys:String x:Key="LOCCommonDateData">数据日</sys:String>
+    
+    <sys:String x:Key="LOCCommonStartDate">Start date</sys:String>
+    <sys:String x:Key="LOCCommonLastUpdate">最近更新</sys:String>
+
+    <sys:String x:Key="LOCCommonAddFolder">添加文件夹</sys:String>
+    <sys:String x:Key="LOCCommonRemoveFolder">移除文件夹</sys:String>
+    <sys:String x:Key="LOCCommonAddFilePattern">添加文件模式</sys:String>
+
+    <sys:String x:Key="LOCCommonMargin">Margin</sys:String>
+
+    <sys:String x:Key="LOCCommonExtractToCsv">Extract plugin data to CSV</sys:String>
+    <sys:String x:Key="LOCCommonExtractAllToCsv">Extract all plugin data to CSV (very long)</sys:String>
+    <sys:String x:Key="LOCCommonExtracting">Extracting...</sys:String>
+
+    <!-- Filters -->
+
+    <sys:String x:Key="LOCCommonUsedFilteredGames">当前已使用筛选游戏</sys:String>
+    <sys:String x:Key="LOCCommonDefaultFilters">Restore default filters</sys:String>
+    <sys:String x:Key="LOCCommonSaveFilters">Save current filters</sys:String>
+
+    <!-- Update -->
+
+    <sys:String x:Key="LOCCommonUpdate">Update</sys:String>
+    <sys:String x:Key="LOCCommonUpdateOnStart">Update on application startup</sys:String>
+    <sys:String x:Key="LOCCommonUpdateEvery">Update on</sys:String>
+    <sys:String x:Key="LOCCommonHours">Hours</sys:String>
+
+    <!-- Transfer plugin data -->
+
+    <sys:String x:Key="LOCCommonTransfer">转移</sys:String>
+    <sys:String x:Key="LOCCommonTransferPluginData">转移插件数据</sys:String>
+    <sys:String x:Key="LOCCommonSelectTransferData">选择要转移的数据</sys:String>
+    <sys:String x:Key="LOCCommonMergedOrErased">Merged instead of clearing</sys:String>
+    <sys:String x:Key="LOCCommonErasedWarning">Be careful, the target data will be overwritten!</sys:String>
+
+
+    <!-- Remove plugin data -->
+
+    <sys:String x:Key="LOCCommonIsolatedPluginData">隔离插件数据</sys:String>
+    
+    
+    <!-- Common Stores -->
+
+    <sys:String x:Key="LOCCommonAuthenticateLabel">身份验</sys:String>
+    <sys:String x:Key="LOCCommonNotLoggedIn">需要身份验</sys:String>
+    <sys:String x:Key="LOCCommonLoggedIn">用户已通过身份验</sys:String>
+    <sys:String x:Key="LOCCommonAccountName">账户名称</sys:String>
+    <sys:String x:Key="LOCCommonLoginChecking">正在检查身份验证状态…</sys:String>
+    <sys:String x:Key="LOCCommonPrivateChecking">Checking private status…</sys:String>
+    <sys:String x:Key="LOCCommonNotLoggedInError">Failed to authenticate user</sys:String>
+
+    <sys:String x:Key="LOCCommonAccountConfiguration">Account configuration</sys:String>
+    <sys:String x:Key="LOCCommonIsPrivate">Is private</sys:String>
+    <sys:String x:Key="LOCCommonHasApiKey">Has api key</sys:String>
+    <sys:String x:Key="LOCCommonControlConfiguration">Control configuration</sys:String>
+    <sys:String x:Key="LOCCommonGetAccountID">Get account ID</sys:String>
+
+    <sys:String x:Key="LOCCommonStoresNoAuthenticate">{0}：用户未身份验</sys:String>
+    <sys:String x:Key="LOCCommonStoreNoApiKey">{0}：没有 API 密钥</sys:String>
+    <sys:String x:Key="LOCCommonStoreBadConfiguration">{0}: Bad configuration</sys:String>
+    <sys:String x:Key="LOCCommonStoreNoConfiguration">{0}: No configuration found</sys:String>
+
+    <sys:String x:Key="LOCCommonIgnoredItems">已忽略项目</sys:String>
+    <sys:String x:Key="LOCCommonNotIgnoredItems">Not ignored items</sys:String>
+    <sys:String x:Key="LOCCommonInputItemIgnore">输入要忽略的项目</sys:String>
+    
+    <sys:String x:Key="LOCCommonProgression">进度</sys:String>
+    <sys:String x:Key="LOCCommonCompleted">已完成</sys:String>
+
+    <sys:String x:Key="LOCCommonGameTime">游戏时间</sys:String>
+    
+    <sys:String x:Key="LOCCommonSelectFilters">选择筛</sys:String>
+    <sys:String x:Key="LOCCommonOldData">旧日期</sys:String>
+    <sys:String x:Key="LOCCommonRecentlyAdded">Recently added</sys:String>
+    <sys:String x:Key="LOCCommonOnlyMissing">Only missing</sys:String>
+    <sys:String x:Key="LOCCommonMissingData">Tag games missing data</sys:String>
+    <sys:String x:Key="LOCCommonSince">Since</sys:String>
+
+    <sys:String x:Key="LOCCommonTotal">总计</sys:String>
+    <sys:String x:Key="LOCCommonCut">裁剪</sys:String>
+
+    <sys:String x:Key="LOCCommon0to1">00 至 01 时</sys:String>
+    <sys:String x:Key="LOCCommon1to5">01 至 05 时</sys:String>
+    <sys:String x:Key="LOCCommon5to10">05 至 10 时</sys:String>
+    <sys:String x:Key="LOCCommon10to20">10 至 20 小时</sys:String>
+    <sys:String x:Key="LOCCommon20to30">20 至 30 小时</sys:String>
+    <sys:String x:Key="LOCCommon30to40">30 至 40 小时</sys:String>
+    <sys:String x:Key="LOCCommon40to50">40 至 50 小时</sys:String>
+    <sys:String x:Key="LOCCommon50to60">50 至 60 小时</sys:String>
+    <sys:String x:Key="LOCCommon60to70">60 至 70 小时</sys:String>
+    <sys:String x:Key="LOCCommon70to80">70 至 80 小时</sys:String>
+    <sys:String x:Key="LOCCommon80to90">80 至 90 小时</sys:String>
+    <sys:String x:Key="LOCCommon90to100">90 至 100 小时</sys:String>
+    <sys:String x:Key="LOCCommon100plus">100 小时以</sys:String>
+    <sys:String x:Key="LOCCommonNoData">无日期</sys:String>
+
+    <sys:String x:Key="LOCCommonDefaultSorting">默认的游戏列表排序</sys:String>
+
+    <sys:String x:Key="LOCCommonAutoImport">Automatically import data when library is updated (only new)</sys:String>
+    <sys:String x:Key="LOCCommonAutoImportOnInstalled">Automatically import for installed games</sys:String>
+
+    <sys:String x:Key="LOCCommonChartHideOptions">在控制中隐藏图表选项</sys:String>
+    <sys:String x:Key="LOCCommonChartAllPeriod">默认在图表上显示所有数据</sys:String>
+    <sys:String x:Key="LOCCommonChartCutPeriod">默认仅显示有值的数据</sys:String>
+    
+    <sys:String x:Key="LOCCommonExportData">导出数据</sys:String>
+    <sys:String x:Key="LOCCommonExportDataResult" xml:space="preserve">{0} 数据已导出。
+您想要打开目录吗</sys:String>
+
+    <sys:String x:Key="LOCCommonErrorDeleteCache" xml:space="preserve">无法删除缓存文件夹：
+{0}</sys:String>
+
+    <!-- CommonMenus -->
+
+    <sys:String x:Key="LOCCommonTotalFound">已找到总计</sys:String>
+
+    <!-- CommonSettingsView -->
+
+    <sys:String x:Key="LOCCommonMenuInExtensions">在扩展子菜单中显示插件菜单 *</sys:String>
+    <sys:String x:Key="LOCCommonIconStore">显示商店图</sys:String>
+    
+    <sys:String x:Key="LOCCommonSaveColumOrder">保存列顺序</sys:String>
+
+    <sys:String x:Key="LOCCommonIntegrationFullScreen">全屏</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationFullScreenEnable">启用全屏集成</sys:String>
+
+    <sys:String x:Key="LOCCommonIntegration">外</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationInCustomTheme">启用自定义主题集成（仅当集成于自定义主题时）</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButtonHeader">在窗口标题栏中显示插件按钮</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButtonSide">在侧边栏显示插件按钮</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButton">在游戏详情中显示插件按钮</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationInDescription">在游戏详情中显示插件按钮</sys:String>
+
+    <sys:String x:Key="LOCCommonIntegrationSelectElements">详情视图组件</sys:String>
+
+    <sys:String x:Key="LOCCommonIntegrationButtonOptions">按钮选项</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButtonOnlyIcon">仅显示图</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButtonDetails">带详情的按钮</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationButtonIsToggle">用切换按钮</sys:String>
+
+    <sys:String x:Key="LOCCommonIntegrationViewItemOptions">查看项目选项</sys:String>
+    
+    <sys:String x:Key="LOCCommonIntegrationListOptions">列表选项</sys:String>
+
+    <sys:String x:Key="LOCCommonIntegrationChartOptions">图表选项</sys:String>
+    
+    <sys:String x:Key="LOCGameActivityIntegrationDescriptionOptions">描述集成选项</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationShowTitle">显示标题</sys:String>
+    <sys:String x:Key="LOCCommonIntegrationTopGameDetails">显示游戏上方的描述</sys:String>
+
+    <sys:String x:Key="LOCCommonAddTagAuto">随数据添加自动添加标签</sys:String>
+    
+    <sys:String x:Key="LOCCommonDatabase">数据库</sys:String>
+
+    <sys:String x:Key="LOCCommonControlsAvailable">主题支持的可用项目</sys:String>
+    <sys:String x:Key="LOCCommonControlsPluginButtonShow">显示插件按钮</sys:String>
+    <sys:String x:Key="LOCCommonControlsPluginButtonShowInContextMenu">在上下文菜单中显示数据</sys:String>
+    <sys:String x:Key="LOCCommonControlsPluginViewItemShow">在游戏列表中显示数据</sys:String>
+
+    <sys:String x:Key="LOCCommonControlsVisibleNoData">当没有数据时显示</sys:String>
+
+    <!-- CommonMenus -->
+
+    <sys:String x:Key="LOCCommonViewNoData">查看没有插件数据的游戏</sys:String>
+    
+    <sys:String x:Key="LOCCommonRefreshGameData">刷新数据</sys:String>
+    <sys:String x:Key="LOCCommonRefreshAllData">刷新所有数据</sys:String>
+    <sys:String x:Key="LOCCommonDeleteGameData">删除数据</sys:String>
+
+    <sys:String x:Key="LOCCommonSelectGames">选择游戏</sys:String>
+    <sys:String x:Key="LOCCommonAddAllTags">为所有游戏添加标签</sys:String>
+    <sys:String x:Key="LOCCommonAddTPlugin">添加插件标签...</sys:String>
+    <sys:String x:Key="LOCCommonSelectData">为所选游戏下载数据</sys:String>
+    <sys:String x:Key="LOCCommonDownloadPluginData">下载插件数据...</sys:String>
+    <sys:String x:Key="LOCCommonGetAllDatas">为所有游戏下载数据</sys:String>
+    <sys:String x:Key="LOCCommonDeletePluginData">删除插件数据</sys:String>
+    <sys:String x:Key="LOCCommonClearAllDatas">从所有游戏中删除数据</sys:String>
+    <sys:String x:Key="LOCCommonRemoveAllTags">移除插件标签</sys:String>
+
+    <!-- CommonGlobalProgress -->
+
+    <sys:String x:Key="LOCCommonGettingData">正在下载数据...</sys:String>
+    <sys:String x:Key="LOCCommonGettingAllDatas">Downloading data for all games...</sys:String>
+    <sys:String x:Key="LOCCommonGettingInstalledDatas">Downloading data from installed games...</sys:String>
+    <sys:String x:Key="LOCCommonGettingNewDatas">Downloading data from new games...</sys:String>
+    <sys:String x:Key="LOCCommonAddingAllTag">为所有游戏添加标签...</sys:String>
+    <sys:String x:Key="LOCCommonRemovingAllTag">正在从所有游戏中移除标签...</sys:String>
+    <sys:String x:Key="LOCCommonClearingAllTag">清除数据库...</sys:String>
+    <sys:String x:Key="LOCCommonProcessing">正在处理，请稍候...</sys:String>
+    <sys:String x:Key="LOCCommonConverting">正在转换，请稍候...</sys:String>
+
+    <!-- CommonNotificationsErrors -->
+
+    <sys:String x:Key="LOCCommonPluginNoAuthenticate">{0} 用户未身份验</sys:String>
+    
+    <!-- CommonNotifications -->
+
+    <sys:String x:Key="LOCCommonErrorGetStoreData" xml:space="preserve">从 {0} 检索数据时出错。
+请再试一次。</sys:String>
+    
+    <sys:String x:Key="LOCCommonCreateLog">您想要创建一个日志包吗</sys:String>
+    
+    <sys:String x:Key="LOCCommonDataRemove">插件数据已被移除。</sys:String>
+    <sys:String x:Key="LOCCommonDataErrorRemove">移除插件数据时出错。请重试。</sys:String>
+
+    <sys:String x:Key="LOCCommonNotificationTagError" xml:space="preserve">以 {0} 添加标签时出错。
+请清除插件菜单中的所有标签。</sys:String>
+
+    <sys:String x:Key="LOCCommonNotificationOldData" xml:space="preserve">为 {0} 使用旧的存档数据 [{1}]
+您必须进行身份验</sys:String>
+
+    <sys:String x:Key="LOCCommonNotificationTooMuchData" xml:space="preserve">More than 1 data found for {0}.
+Please check the plugin settings.</sys:String>
+
+
+    <sys:String x:Key="LOCCommonDimensions">尺寸</sys:String>
+    <sys:String x:Key="LOCCommonStyles">样式</sys:String>
+    <sys:String x:Key="LOCCommonTypes">类型</sys:String>
+    <sys:String x:Key="LOCCommonSortByDate">按日期排序</sys:String>
+    <sys:String x:Key="LOCCommonSortByScore">按评分排序</sys:String>
+
+
+    <sys:String x:Key="LOCCommonMisc">杂项</sys:String>
+    <sys:String x:Key="LOCCommonSelectVariable">选择变量</sys:String>
+
+
+    <sys:String x:Key="LOCGameVariablesTooltip" xml:space="preserve">可用于动态字符串的特殊变量：
+{InstallDir} - 游戏安装目录
+{InstallDirName} - 安装文件夹名称
+{ImagePath} - 游戏 ISO/ROM 路径（若已设置）
+{ImageName} -  游戏 ISO/ROM 文件名
+{ImageNameNoExt} - 游戏 ISO/ROM 文件名（无扩展名）
+{PlayniteDir} - Playnite 安装目录
+{Name} - 游戏名称
+
+可用于动态字符串的云服务变量：
+{DropboxFolder}
+{OneDriveFolder}
+
+可用于动态字符串的 Steam 变量：
+{SteamId} - Steam 用户 ID
+{SteamAccountId} - Steam 账户 ID
+{SteamInstallDir} - Steam 安装目录
+{SteamScreenshotsDir} - Steam 截图目录
+
+可用于动态字符串的 Ubisoft Connect 变量：
+{UbisoftInstallDir} - Ubisoft 安装目录
+{UbisoftScreenshotsDir} - Ubisoft 截图目录
+
+{RetroArchScreenshotsDir}
+
+可用于动态字符串的 Windows 变量：
+{WinDir}
+{AllUsersProfile}
+{AppData}
+{HomePath}
+{UserName}
+{ComputerName}
+{UserProfile}
+{HomeDrive}
+{SystemDrive}
+{SystemRoot}
+{Public}
+{CommonProgramW6432}
+{CommonProgramFiles}
+{ProgramFiles}
+{CommonProgramFiles(x86)}
+{ProgramFiles(x86)}</sys:String>
+
+</ResourceDictionary>

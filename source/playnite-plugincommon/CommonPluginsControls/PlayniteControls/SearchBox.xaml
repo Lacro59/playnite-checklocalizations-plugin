@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="CommonPluginsControls.PlayniteControls.SearchBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" d:DesignWidth="300"
+             MinHeight="24" 
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch">
+
+    <Grid>
+        <TextBox x:Name="PART_TextInpuText" VerticalContentAlignment="Center" Padding="5,0,25,0" />
+        <TextBlock Name="PART_ClearTextIcon" Text="&#xef00;" FontFamily="{DynamicResource FontIcoFont}"
+                   FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,5,0" 
+                   Foreground="{DynamicResource TextBrushDarker}" />
+        <TextBlock Name="PART_SeachIcon" Text="&#xed11;" FontFamily="{DynamicResource FontIcoFont}"
+                   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"
+                   Foreground="{DynamicResource TextBrushDarker}" />
+    </Grid>
+</UserControl>

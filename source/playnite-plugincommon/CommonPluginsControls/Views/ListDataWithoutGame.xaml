@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="CommonPluginsControls.Views.ListDataWithoutGame"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CommonPluginsControls.Views"
+             xmlns:converters="clr-namespace:CommonPluginsShared.Converters"
+             mc:Ignorable="d" 
+             Height="600" Width="600">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Name="PART_GridContener">
+            <ListBox Name="PART_Lb" SelectionChanged="PART_Lb_SelectionChanged"
+                     Height="{Binding ElementName=PART_GridContener, Path=ActualHeight}">
+                
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <TextBlock VerticalAlignment="Center">
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0} [{1}]">
+                                        <Binding Path="Name" />
+                                        <Binding Path="CountData" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <Border BorderThickness="0,1,0,0" BorderBrush="{StaticResource NormalBorderBrush}"
+                Margin="0,10,0,0" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
+            <DockPanel KeyboardNavigation.TabNavigation="Local" LastChildFill="False" Margin="0,5">
+                <Button TabIndex="1" Name="PART_BtClose" Content="{DynamicResource LOCCloseLabel}" 
+                        DockPanel.Dock="Right"
+                        Style="{StaticResource BottomButton}" Click="PART_BtClose_Click" />
+
+                <Button TabIndex="0" Name="PART_BtTransfer" Content="{DynamicResource LOCCommonTransfer}" 
+                        DockPanel.Dock="Right" IsEnabled="False"
+                        Style="{StaticResource BottomButton}" Click="PART_BtTransfer_Click" />
+
+                <Button TabIndex="0" Name="PART_BtRemove" Content="{DynamicResource LOCRemoveTitle}" 
+                        DockPanel.Dock="Right" IsEnabled="False"
+                        Style="{StaticResource BottomButton}" Click="PART_BtRemove_Click" />
+
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" DockPanel.Dock="Left">
+                    <Label Content="{DynamicResource LOCCommonTotalFound}" />
+                    <Label Margin="20,0,0,0" Content="xxxx" Name="PART_Count" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>
