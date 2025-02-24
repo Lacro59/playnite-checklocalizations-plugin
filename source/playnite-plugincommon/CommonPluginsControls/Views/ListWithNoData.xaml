@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="CommonPluginsControls.Views.ListWithNoData"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CommonPluginsControls.Views"
+             xmlns:controlsShared="clr-namespace:CommonPluginsShared.Controls"
+             xmlns:converters="clr-namespace:CommonPlayniteShared.Converters"
+             mc:Ignorable="d" Height="600" Width="600">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Name="PART_LvContener" Grid.ColumnSpan="2">
+            <controlsShared:ListViewExtend x:Name="ListViewGames" FontSize="24" Height="{Binding ElementName=PART_LvContener, Path=ActualHeight}"
+                                           Style="{StaticResource {x:Type ListView}}"
+                                           SortingSortDirection="Ascending" SortingDefaultDataName="Name" SortingEnable="True">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="0" DisplayMemberBinding="{Binding Name}">
+                            <controlsShared:GridViewColumnHeaderExtend Style="{StaticResource {x:Type GridViewColumnHeader}}" IsHitTestVisible="False" RefIndex="1" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="500">
+                            <GridViewColumnHeader Content="{DynamicResource LOCGameNameTitle}" Tag="Name" />
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock>
+                                            <Hyperlink Command="{Binding GoToGame}" CommandParameter="{Binding Id}">
+                                                <TextBlock Text="{Binding Name}" Style="{DynamicResource ListExtendStyleTextBlock}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </controlsShared:ListViewExtend>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Label Content="{DynamicResource LOCCommonTotalFound}" />
+            <Label Margin="20,0,0,0" Content="xxxx" Name="PART_Count" />
+        </StackPanel>
+
+        <Button Grid.Row="2" Grid.Column="2" Content="{DynamicResource LOCCommonRefreshAllData}" HorizontalAlignment="Right"
+                Click="Button_Click" />
+    </Grid>
+</UserControl>
