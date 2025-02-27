@@ -1,6 +1,8 @@
 ﻿using CommonPluginsShared.Collections;
 using System.Collections.Generic;
 using CommonPluginsShared.Models;
+using System.Linq;
+using System;
 
 namespace CheckLocalizations.Models
 {
@@ -20,18 +22,10 @@ namespace CheckLocalizations.Models
         /// <returns></returns>
         public bool HasNativeSupport()
         {
-            foreach (GameLanguage gameLanguage in CheckLocalizations.PluginDatabase.PluginSettings.Settings.GameLanguages)
-            {
-                if (gameLanguage.IsNative)
-                {
-                    if (Items.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) != null)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return CheckLocalizations.PluginDatabase.PluginSettings.Settings.GameLanguages
+                .Where(gameLanguage => gameLanguage.IsNative)
+                .Any(gameLanguage => Items
+                    .Any(item => string.Equals(item.Language, gameLanguage.Name, StringComparison.OrdinalIgnoreCase)));
         }
     }
 }

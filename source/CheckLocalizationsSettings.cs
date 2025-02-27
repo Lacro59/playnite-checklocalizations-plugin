@@ -127,6 +127,7 @@ namespace CheckLocalizations
 
             Settings = savedSettings ?? new CheckLocalizationsSettings { GameLanguages = gameLanguages };
 
+            // TODO TEMP
             List<GameLanguage> missingLanguages = gameLanguages
                 .Where(fl => !Settings.GameLanguages.Any(gl => gl.Name == fl.Name))
                 .ToList();

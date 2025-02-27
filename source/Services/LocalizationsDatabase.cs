@@ -236,47 +236,50 @@ namespace CheckLocalizations.Services
                 {
                     if (PluginSettings.Settings.EnableTagSingle)
                     {
-                        foreach (GameLanguage gameLanguage in PluginSettings.Settings.GameLanguages.FindAll(x => x.IsTag && item.Items.Any(y => x.Name.ToLower() == y.Language.ToLower())))
-                        {
-                            Guid? TagId = FindGoodPluginTags(gameLanguage.DisplayName);
-                            if (TagId != null)
+                        PluginSettings.Settings.GameLanguages
+                            .Where(x => x.IsTag && item.Items.Any(y => x.Name.Equals(y.Language, StringComparison.OrdinalIgnoreCase)))
+                            .ForEach(x =>
                             {
-                                if (game.TagIds != null)
+                                Guid? TagId = FindGoodPluginTags(x.DisplayName);
+                                if (TagId != null)
                                 {
-                                    if (!game.TagIds.Contains((Guid)TagId))
+                                    if (game.TagIds != null)
                                     {
-                                        game.TagIds.Add((Guid)TagId);
+                                        if (!game.TagIds.Contains((Guid)TagId))
+                                        {
+                                            game.TagIds.Add((Guid)TagId);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        game.TagIds = new List<Guid> { (Guid)TagId };
                                     }
                                 }
-                                else
-                                {
-                                    game.TagIds = new List<Guid> { (Guid)TagId };
-                                }
-                            }
-                        }
+                            });
                     }
 
-                    //🔈
                     if (PluginSettings.Settings.EnableTagAudio)
                     {
-                        foreach (GameLanguage gameLanguage in PluginSettings.Settings.GameLanguages.FindAll(x => x.IsTag && item.Items.Any(y => x.Name.ToLower() == y.Language.ToLower() && y.IsOkAudio)))
-                        {
-                            Guid? TagId = FindGoodPluginTags("🔈" + gameLanguage.DisplayName);
-                            if (TagId != null)
+                        PluginSettings.Settings.GameLanguages
+                            .Where(x => x.IsTag && item.Items.Any(y => x.Name.Equals(y.Language, StringComparison.OrdinalIgnoreCase) && y.IsOkAudio))
+                            .ForEach(x =>
                             {
-                                if (game.TagIds != null)
+                                Guid? TagId = FindGoodPluginTags("🔈" + x.DisplayName);
+                                if (TagId != null)
                                 {
-                                    if (!game.TagIds.Contains((Guid)TagId))
+                                    if (game.TagIds != null)
                                     {
-                                        game.TagIds.Add((Guid)TagId);
+                                        if (!game.TagIds.Contains((Guid)TagId))
+                                        {
+                                            game.TagIds.Add((Guid)TagId);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        game.TagIds = new List<Guid> { (Guid)TagId };
                                     }
                                 }
-                                else
-                                {
-                                    game.TagIds = new List<Guid> { (Guid)TagId };
-                                }
-                            }
-                        }
+                            });
                     }
                 }
                 catch (Exception ex)
@@ -315,13 +318,13 @@ namespace CheckLocalizations.Services
                 PluginSettings.Settings.HasData = false;
                 PluginSettings.Settings.HasNativeSupport = false;
                 PluginSettings.Settings.ListNativeSupport = new List<Models.Localization>();
-
-                return;
             }
-
-            PluginSettings.Settings.HasData = gameLocalizations.HasData;
-            PluginSettings.Settings.HasNativeSupport = gameLocalizations.HasNativeSupport();
-            PluginSettings.Settings.ListNativeSupport = gameLocalizations.Items;
+            else
+            {
+                PluginSettings.Settings.HasData = gameLocalizations.HasData;
+                PluginSettings.Settings.HasNativeSupport = gameLocalizations.HasNativeSupport();
+                PluginSettings.Settings.ListNativeSupport = gameLocalizations.Items;
+            }
         }
     }
 }

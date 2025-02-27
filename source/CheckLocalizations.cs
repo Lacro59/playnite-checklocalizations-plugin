@@ -51,10 +51,9 @@ namespace CheckLocalizations
         #region Custom event
         public void OnCustomThemeButtonClick(object sender, RoutedEventArgs e)
         {
-            string ButtonName = string.Empty;
             try
             {
-                ButtonName = ((Button)sender).Name;
+                string ButtonName = ((Button)sender).Name;
                 if (ButtonName == "PART_CustomCheckLocButton")
                 {
                     CheckLocalizationsView ViewExtension = new CheckLocalizationsView();
