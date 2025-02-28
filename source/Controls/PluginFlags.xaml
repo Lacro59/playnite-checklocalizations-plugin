@@ -9,16 +9,16 @@
     mc:Ignorable="d"
     d:DataContext="{d:DesignInstance Type=local:PluginFlagsDataContext, IsDesignTimeCreatable=True}">
 
-    <ItemsControl ItemsSource="{Binding ItemsSource}">
+    <ItemsControl ItemsSource="{Binding ItemsSource}" Tag="{Binding CountItems}">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Columns="{Binding CountItems}" />
+                <UniformGrid Columns="{Binding Tag, RelativeSource={RelativeSource AncestorType=ItemsControl}}" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
 
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Image Source="{Binding Icon, IsAsync=True}" StretchDirection="Both" Stretch="Uniform" ToolTip="{Binding Name}" />
+                <Image Source="{Binding Icon, IsAsync=True}" ToolTip="{Binding Name}" Stretch="Fill" Margin="5" />
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>

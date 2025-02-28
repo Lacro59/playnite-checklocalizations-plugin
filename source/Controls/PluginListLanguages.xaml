@@ -23,6 +23,15 @@
                                  BubblingScrollEvents="True" HeightStretch="True" WidthStretch="True">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Width="100" x:Name="PART_Flag">
+                        <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsFlag}" />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image HorizontalAlignment="Center" Height="24" VerticalAlignment="Center" Source="{Binding FlagIconPath, IsAsync=True}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
                     <GridViewColumn DisplayMemberBinding="{Binding DisplayName}" Width="150" x:Name="PART_Name">
                         <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsLanguage}" />
                     </GridViewColumn>

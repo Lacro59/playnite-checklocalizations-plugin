@@ -20,10 +20,12 @@ namespace CheckLocalizations.Views
         {
             InitializeComponent();
 
-            PluginListLanguages PART_ListViewLanguages = new PluginListLanguages();
-            PART_ListViewLanguages.WithColNotes = true;
-            PART_ListViewLanguages.IgnoreSettings = true;
-            PART_ListViewLanguages.GameContext = PluginDatabase.GameContext;
+            PluginListLanguages PART_ListViewLanguages = new PluginListLanguages
+            {
+                WithColNotes = true,
+                IgnoreSettings = true,
+                GameContext = PluginDatabase.GameContext
+            };
             _ = PART_Contener.Children.Add(PART_ListViewLanguages);
 
 
