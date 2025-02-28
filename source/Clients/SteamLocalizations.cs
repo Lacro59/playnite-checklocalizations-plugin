@@ -51,9 +51,7 @@ namespace CheckLocalizations.Clients
                     GameInfos gameInfos = SteamApi.GetGameInfos(AppId.ToString(), null);
                     if (gameInfos == null)
                     {
-                        string message = string.Format(ResourceProvider.GetString("LOCCommonErrorGetStoreData") + Environment.NewLine + $"{game.Name} - {AppId}", "Steam");
-                        Exception ex = new Exception(message);
-                        Common.LogError(ex, false, true, PluginDatabase.PluginName);
+                        Logger.Warn($"Error retrieving Steam data from {game.Name} - {AppId}");
                         return localizations;
                     }
 
