@@ -100,7 +100,7 @@ namespace CheckLocalizations.Services
 
             GameLocalizations data = LocalizationsApi.GetLocalizations(id);
 
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
                 Thread.Sleep(2000);
 
@@ -129,7 +129,7 @@ namespace CheckLocalizations.Services
             if (webItem != null)
             {
                 // Add manual items
-                foreach (var item in loadedItem.Items.FindAll(x => x.IsManual))
+                foreach (Models.Localization item in loadedItem.Items.FindAll(x => x.IsManual))
                 {
                     webItem.Items.Add(item);
                 }
@@ -146,39 +146,7 @@ namespace CheckLocalizations.Services
 
         public bool RemoveWithManual(Guid id)
         {
-            try
-            {
-                GameLocalizations gameLocalizations = GetOnlyCache(id);
-
-                if (gameLocalizations.Items == null)
-                {
-                    gameLocalizations.Items = new List<Models.Localization>();
-                }
-
-
-                if (gameLocalizations.Items.Where(x => x.IsManual).Count() == 0)
-                {
-                    return Remove(id);
-                }
-                else
-                {
-                    List<Models.Localization> itemsManual = gameLocalizations.Items.Where(x => x.IsManual).ToList();
-                    gameLocalizations.Items = null;
-                    gameLocalizations.Items = itemsManual;
-                    gameLocalizations.HasChecked = false;
-
-                    Common.LogDebug(true, $"RemoveWithoutManual({id}) - gameLocalizations: {Serialization.ToJson(gameLocalizations)}");
-
-                    Update(gameLocalizations);
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                Common.LogError(ex, false, true, PluginName);
-            }
-
-            return false;
+            return RemoveWithManual(new List<Guid> { id });
         }
 
         public bool RemoveWithManual(List<Guid> ids)
@@ -202,7 +170,7 @@ namespace CheckLocalizations.Services
 
                     if (gameLocalizations.Items.Where(x => x.IsManual).Count() == 0)
                     {
-                        Remove(id);
+                        _ = Remove(id);
                     }
                     else
                     {
