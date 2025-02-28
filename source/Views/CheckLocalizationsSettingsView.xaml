@@ -7,32 +7,32 @@
              xmlns:AttachedProperties="clr-namespace:CommonPluginsShared.Controls"
              xmlns:pcmd="clr-namespace:CommonPluginsShared" 
              xmlns:checklocalizations="clr-namespace:CheckLocalizations" 
-             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             mc:Ignorable="d" d:DesignWidth="600"
              d:DataContext="{d:DesignInstance Type=checklocalizations:CheckLocalizationsSettingsViewModel}"
              Background="{DynamicResource WindowBackgourndBrush}">
 
     <TabControl Margin="20">
         <TabItem Header="{DynamicResource LOCCheckLocalizations}">
-            <Grid Name="spSettings" Margin="0,10,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="10" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <CheckBox Grid.Row="0" IsChecked="{Binding Settings.MenuInExtensions}" VerticalAlignment="Center"
+            <StackPanel Name="spSettings" Margin="0,10,0,0">
+                <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.MenuInExtensions}" VerticalAlignment="Center"
                           Command="{x:Static pcmd:Commands.RestartRequired}" 
                           CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                     <Label Content="{DynamicResource LOCCommonMenuInExtensions}" />
                 </CheckBox>
 
-                <CheckBox Name="cbAutoImport" Grid.Row="2" IsChecked="{Binding Settings.AutoImport}">
+                <CheckBox Name="cbAutoImport" Margin="0,0,0,10" IsChecked="{Binding Settings.AutoImport}">
                     <Label Content="{DynamicResource LOCCommonAutoImport}" />
                 </CheckBox>
 
-                <Grid Grid.Row="4">
+                <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.UpdateWhenHasManual}">
+                    <Label Content="{DynamicResource LOCCheckLocalizationUpdateWhenHasManual}" />
+                </CheckBox>
+
+                <CheckBox  Margin="0,0,0,10" IsChecked="{Binding Settings.AddedSimilarWhenManual}">
+                    <Label Content="{DynamicResource LOCCheckLocalizationAddedSimilarWhenManual}" />
+                </CheckBox>
+
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
@@ -175,7 +175,7 @@
                                  Grid.Row="1" Width="150" VerticalAlignment="Center" />
                     </Grid>
                 </Grid>
-            </Grid>
+            </StackPanel>
         </TabItem>
 
         <TabItem Header="{DynamicResource LOCCommonIntegration}">

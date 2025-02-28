@@ -27,5 +27,10 @@ namespace CheckLocalizations.Models
                 .Any(gameLanguage => Items
                     .Any(item => string.Equals(item.Language, gameLanguage.Name, StringComparison.OrdinalIgnoreCase)));
         }
+
+        public bool HasManual()
+        {
+            return Items?.Count(x => x.IsManual) > 0;
+        }
     }
 }

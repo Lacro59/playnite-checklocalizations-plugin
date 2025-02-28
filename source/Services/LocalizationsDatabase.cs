@@ -60,13 +60,11 @@ namespace CheckLocalizations.Services
                 gameLocalizations = GetWeb(id);
                 AddOrUpdate(gameLocalizations);
             }
-            else if (gameLocalizations != null && !onlyCache
-                && gameLocalizations.Items.Where(x => x.IsManual == true).Count() != 0
-                && gameLocalizations.Items.Where(x => x.IsManual == false).Count() == 0)
+            else if (gameLocalizations != null && !onlyCache && gameLocalizations.Items.Count(x => x.IsManual) != 0 && gameLocalizations.Items.Count(x => !x.IsManual) == 0)
             {
                 if (!gameLocalizations.HasChecked)
                 {
-                    var dataWeb = GetWeb(id);
+                    GameLocalizations dataWeb = GetWeb(id);
 
                     gameLocalizations.Items = gameLocalizations.Items.Concat(dataWeb.Items).ToList();
                     gameLocalizations.HasChecked = true;
@@ -124,14 +122,27 @@ namespace CheckLocalizations.Services
             Logger.Info($"RefreshNoLoader({game?.Name} - {game?.Id})");
 
             GameLocalizations loadedItem = Get(id, true);
+            if (!PluginSettings.Settings.UpdateWhenHasManual && (loadedItem?.HasManual() ?? false))
+            {
+                return;
+            }
+
             GameLocalizations webItem = GetWeb(id);
 
             if (webItem != null)
             {
                 // Add manual items
-                foreach (Models.Localization item in loadedItem.Items.FindAll(x => x.IsManual))
+                foreach (Models.Localization item in loadedItem.Items.Where(x => x.IsManual))
                 {
                     webItem.Items.Add(item);
+                    if (!PluginSettings.Settings.AddedSimilarWhenManual)
+                    {
+                        int idx = webItem.Items.FindIndex(x => x.Language == item.Language);
+                        if (idx > -1)
+                        {
+                            webItem.Items.RemoveAt(idx);
+                        }
+                    }
                 }
 
                 if (!ReferenceEquals(loadedItem, webItem))

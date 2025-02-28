@@ -136,23 +136,26 @@ namespace CheckLocalizations
             }
 
 
-            // Delete & download localizations data for the selected game
-            gameMenuItems.Add(new GameMenuItem
+            // Download localizations data for the selected game
+            if (PluginSettings.Settings.UpdateWhenHasManual || !gameLocalizations.HasManual())
             {
-                MenuSection = ResourceProvider.GetString("LOCCheckLocalizations"),
-                Description = ResourceProvider.GetString("LOCCommonRefreshGameData"),
-                Action = (gameMenuItem) =>
+                gameMenuItems.Add(new GameMenuItem
                 {
-                    if (ids.Count == 1)
+                    MenuSection = ResourceProvider.GetString("LOCCheckLocalizations"),
+                    Description = ResourceProvider.GetString("LOCCommonRefreshGameData"),
+                    Action = (gameMenuItem) =>
                     {
-                        PluginDatabase.Refresh(gameMenu.Id);
+                        if (ids.Count == 1)
+                        {
+                            PluginDatabase.Refresh(gameMenu.Id);
+                        }
+                        else
+                        {
+                            PluginDatabase.Refresh(ids);
+                        }
                     }
-                    else
-                    {
-                        PluginDatabase.Refresh(ids);
-                    }
-                }
-            });
+                });
+            }
 
             // Open editor view to add a new supported language for the selected game
             gameMenuItems.Add(new GameMenuItem

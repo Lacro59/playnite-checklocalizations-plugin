@@ -49,6 +49,10 @@ namespace CheckLocalizations
         public double ListLanguagesHeight { get; set; } = 120;
         public bool ListLanguagesWithColNote { get; set; } = false;
         public bool ListLanguagesVisibleEmpty { get; set; } = false;
+
+        public bool UpdateWhenHasManual { get; set; } = true;
+        public bool AddedSimilarWhenManual { get; set; } = true;
+
         #endregion
 
         // Playnite serializes settings object to a JSON object and saves it as text file.

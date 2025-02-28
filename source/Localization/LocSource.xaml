@@ -30,6 +30,9 @@
     <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Tag with selected language(s) (audio only)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
 
+    <sys:String x:Key="LOCCheckLocalizationUpdateWhenHasManual">Can update plugin data when there are manual entries</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddedSimilarWhenManual">Can have plugin data with the same language entered manually</sys:String>
+
     <!-- ClButtonAdvanced -->
 
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
