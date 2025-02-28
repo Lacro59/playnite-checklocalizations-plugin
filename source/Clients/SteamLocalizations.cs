@@ -1,15 +1,14 @@
 ﻿using CheckLocalizations.Models;
-using CommonPlayniteShared.PluginLibrary.SteamLibrary.SteamShared;
 using CommonPluginsShared;
 using Playnite.SDK;
 using Playnite.SDK.Models;
-using Playnite.SDK.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using CheckLocalizations.Services;
 using CommonPluginsStores.Steam;
 using CommonPluginsStores.Models;
+using static CommonPluginsShared.PlayniteTools;
 
 namespace CheckLocalizations.Clients
 {
@@ -25,7 +24,18 @@ namespace CheckLocalizations.Clients
 
         public SteamLocalizations()
         {
-            SteamApi = new SteamApi(PluginDatabase.PluginName, PlayniteTools.ExternalPlugin.CheckLocalizations);
+            SteamApi = new SteamApi(PluginDatabase.PluginName, ExternalPlugin.CheckLocalizations);
+        }
+
+
+        public string GetUrl()
+        {
+            return $"https://store.steampowered.com/app/{AppId}/";
+        }
+
+        public string GetGameName()
+        {
+            return SteamApi.GetGameName(AppId);
         }
 
 
@@ -98,17 +108,6 @@ namespace CheckLocalizations.Clients
             }
 
             return localizations;
-        }
-
-
-        public string GetUrl()
-        {
-            return $"https://store.steampowered.com/app/{AppId}/";
-        }
-
-        public string GetGameName()
-        {
-            return SteamApi.GetGameName(AppId);
         }
     }
 }

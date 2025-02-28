@@ -17,34 +17,19 @@ namespace CheckLocalizations.Clients
 {
     public class PCGamingWikiLocalizations
     {
-        private static readonly ILogger logger = LogManager.GetLogger();
+        private static ILogger Logger => LogManager.GetLogger();
 
-        private LocalizationsDatabase PluginDatabase = CheckLocalizations.PluginDatabase;
+        private static LocalizationsDatabase PluginDatabase => CheckLocalizations.PluginDatabase;
 
-
-        private SteamApi _steamApi;
-        internal SteamApi steamApi
-        {
-            get
-            {
-                if (_steamApi == null)
-                {
-                    _steamApi = new SteamApi(PluginDatabase.PluginName, PlayniteTools.ExternalPlugin.CheckDlc);
-                }
-                return _steamApi;
-            }
-
-            set => _steamApi = value;
-        }
 
         private PCGamingWikiApi _pcGamingWikiApi;
-        internal PCGamingWikiApi pcGamingWikiApi
+        internal PCGamingWikiApi PCGamingWikiApi
         {
             get
             {
                 if (_pcGamingWikiApi == null)
                 {
-                    _pcGamingWikiApi = new PCGamingWikiApi(PluginDatabase.PluginName);
+                    _pcGamingWikiApi = new PCGamingWikiApi(PluginDatabase.PluginName, PlayniteTools.ExternalPlugin.CheckDlc);
                 }
                 return _pcGamingWikiApi;
             }
@@ -53,8 +38,17 @@ namespace CheckLocalizations.Clients
         }
 
 
-        private string gamePCGamingWiki = string.Empty;
-        private string urlPCGamingWiki = string.Empty;
+        private string GamePCGamingWiki { get; set; } = string.Empty;
+        private string UrlPCGamingWiki { get; set; } = string.Empty;
+
+
+        private static Dictionary<string, SupportStatus> SupportStatusMap => new Dictionary<string, SupportStatus>
+        {
+            { "native support", SupportStatus.Native },
+            { "no native support", SupportStatus.NoNative },
+            { "hackable", SupportStatus.Hackable },
+            { "not applicable", SupportStatus.NotApplicable }
+        };
 
 
         public PCGamingWikiLocalizations()
@@ -66,45 +60,30 @@ namespace CheckLocalizations.Clients
 
         public string GetUrl()
         {
-            return urlPCGamingWiki;
+            return UrlPCGamingWiki;
         }
 
         public string GetGameName()
         {
-            return gamePCGamingWiki;
+            return GamePCGamingWiki;
         }
 
 
         public List<Localization> GetLocalizations(Game game)
         {
-            urlPCGamingWiki = string.Empty;
-            uint AppId = 0;
-
-            if (game.SourceId != default)
-            {
-                if (game.Source.Name.ToLower() == "steam")
-                {
-                    AppId = uint.Parse(game.GameId);
-                }
-            }
-            if (AppId == 0)
-            {
-                AppId = steamApi.GetAppId(game);
-            }
-
-            urlPCGamingWiki = pcGamingWikiApi.FindGoodUrl(game, AppId);
-
             List<Localization> Localizations = new List<Localization>();
-            if (!urlPCGamingWiki.IsNullOrEmpty())
+            UrlPCGamingWiki = PCGamingWikiApi.FindGoodUrl(game);
+
+            if (!UrlPCGamingWiki.IsNullOrEmpty())
             {
-                Localizations = GetLocalizations(urlPCGamingWiki);
+                Localizations = GetLocalizations(UrlPCGamingWiki);
                 if (Localizations.Count > 0)
                 {
                     return Localizations;
                 }
             }
 
-            logger.Warn($"Not find localizations for {game.Name}");
+            Logger.Warn($"Not find localizations for {game.Name}");
             return Localizations;
         }
 
@@ -114,22 +93,19 @@ namespace CheckLocalizations.Clients
 
             try
             {
-                Common.LogDebug(true, $"url {url}");
-
-                // Get data & parse
-                string ResultWeb = Web.DownloadStringData(url).GetAwaiter().GetResult();
+                string response = Web.DownloadStringData(url).GetAwaiter().GetResult();
                 HtmlParser parser = new HtmlParser();
-                IHtmlDocument HtmlLocalization = parser.Parse(ResultWeb);
+                IHtmlDocument htmlLocalization = parser.Parse(response);
 
-                gamePCGamingWiki = HtmlLocalization.QuerySelector("h1.article-title")?.InnerHtml;
+                GamePCGamingWiki = htmlLocalization.QuerySelector("h1.article-title")?.InnerHtml;
 
-                foreach (IElement row in HtmlLocalization.QuerySelectorAll("tr.table-l10n-body-row"))
+                foreach (IElement row in htmlLocalization.QuerySelectorAll("tr.table-l10n-body-row"))
                 {
-                    string Language = Regex.Replace(row.QuerySelector("th").InnerHtml, "<.+?>(.*)<.+?>", "$1");
-                    SupportStatus Ui = SupportStatus.Unknown;
-                    SupportStatus Audio = SupportStatus.Unknown;
-                    SupportStatus Sub = SupportStatus.Unknown;
-                    string Notes = string.Empty;
+                    string language = Regex.Replace(row.QuerySelector("th").InnerHtml, "<.+?>(.*)<.+?>", "$1");
+                    SupportStatus ui = SupportStatus.Unknown;
+                    SupportStatus audio = SupportStatus.Unknown;
+                    SupportStatus sub = SupportStatus.Unknown;
+                    string notes = string.Empty;
 
                     int i = 1;
                     foreach (IElement td in row.QuerySelectorAll("td"))
@@ -137,16 +113,16 @@ namespace CheckLocalizations.Clients
                         switch (i)
                         {
                             case 1:
-                                Ui = GetSupportStatus(td.QuerySelector("div").GetAttribute("title"));
+                                ui = GetSupportStatus(td.QuerySelector("div").GetAttribute("title"));
                                 break;
                             case 2:
-                                Audio = GetSupportStatus(td.QuerySelector("div").GetAttribute("title"));
+                                audio = GetSupportStatus(td.QuerySelector("div").GetAttribute("title"));
                                 break;
                             case 3:
-                                Sub = GetSupportStatus(td.QuerySelector("div").GetAttribute("title"));
+                                sub = GetSupportStatus(td.QuerySelector("div").GetAttribute("title"));
                                 break;
                             case 4:
-                                Notes = Regex.Replace(td.InnerHtml, "<.+?>(.*)<.+?>", "$1");
+                                notes = Regex.Replace(td.InnerHtml, "<.+?>(.*)<.+?>", "$1");
                                 break;
                             default:
                                 break;
@@ -154,16 +130,16 @@ namespace CheckLocalizations.Clients
                         i++;
                     }
 
-                    Notes = Regex.Replace(Notes, "(</[^>]*>)", string.Empty);
-                    Notes = Regex.Replace(Notes, "(<[^>]*>)", string.Empty);
+                    notes = Regex.Replace(notes, "(</[^>]*>)", string.Empty);
+                    notes = Regex.Replace(notes, "(<[^>]*>)", string.Empty);
 
-                    Localizations.Add(new Models.Localization
+                    Localizations.Add(new Localization
                     {
-                        Language = Language,
-                        Ui = Ui,
-                        Audio = Audio,
-                        Sub = Sub,
-                        Notes = WebUtility.HtmlDecode(Notes),
+                        Language = language,
+                        Ui = ui,
+                        Audio = audio,
+                        Sub = sub,
+                        Notes = WebUtility.HtmlDecode(notes),
                         IsManual = false
                     });
                 }
@@ -179,19 +155,7 @@ namespace CheckLocalizations.Clients
 
         private SupportStatus GetSupportStatus(string title)
         {
-            switch (title.ToLower())
-            {
-                case "native support":
-                    return SupportStatus.Native;
-                case "no native support":
-                    return SupportStatus.NoNative;
-                case "hackable":
-                    return SupportStatus.Hackable;
-                case "not applicable":
-                    return SupportStatus.NotApplicable;
-                default:
-                    return SupportStatus.Unknown;
-            }
+            return SupportStatusMap.TryGetValue(title.ToLower(), out SupportStatus status) ? status : SupportStatus.Unknown;
         }
     }
 }
