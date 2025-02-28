@@ -122,7 +122,7 @@ namespace CheckLocalizations
                     Description = ResourceProvider.GetString("LOCCheckLocalizationsGameMenuPluginView"),
                     Action = (gameMenuItem) =>
                     {
-                        var ViewExtension = new CheckLocalizationsView();
+                        CheckLocalizationsView ViewExtension = new CheckLocalizationsView();
                         Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PluginName, ViewExtension);
                         windowExtension.ShowDialog();
                     }
@@ -161,7 +161,7 @@ namespace CheckLocalizations
                 Description = ResourceProvider.GetString("LOCCheckLocalizationsGameMenuAddLanguage"),
                 Action = (mainMenuItem) =>
                 {
-                    var ViewExtension = new CheckLocalizationsEditManual(gameMenu);
+                    CheckLocalizationsEditManual ViewExtension = new CheckLocalizationsEditManual(gameMenu);
                     Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PluginName, ViewExtension);
                     windowExtension.ShowDialog();
                 }
@@ -176,14 +176,7 @@ namespace CheckLocalizations
                     Description = ResourceProvider.GetString("LOCCommonDeleteGameData"),
                     Action = (mainMenuItem) =>
                     {
-                        if (ids.Count == 1)
-                        {
-                            PluginDatabase.RemoveWithManual(gameMenu.Id);
-                        }
-                        else
-                        {
-                            PluginDatabase.RemoveWithManual(ids);
-                        }
+                        _ = ids.Count == 1 ? PluginDatabase.RemoveWithManual(gameMenu.Id) : PluginDatabase.RemoveWithManual(ids);
                     }
                 });
             }
@@ -284,14 +277,14 @@ namespace CheckLocalizations
                 Description = "LOCCommonViewNoData",
                 Action = (mainMenuItem) =>
                 {
-                    var windowOptions = new WindowOptions
+                    WindowOptions windowOptions = new WindowOptions
                     {
                         ShowMinimizeButton = false,
                         ShowMaximizeButton = false,
                         ShowCloseButton = true
                     };
 
-                    var ViewExtension = new ListWithNoData(PluginDatabase);
+                    ListWithNoData ViewExtension = new ListWithNoData(PluginDatabase);
                     Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(ResourceProvider.GetString("LOCCheckLocalizations"), ViewExtension, windowOptions);
                     windowExtension.ShowDialog();
                 }
@@ -311,14 +304,9 @@ namespace CheckLocalizations
                 Description = ResourceProvider.GetString("LOCCommonDeletePluginData"),
                 Action = (mainMenuItem) =>
                 {
-                    if (PluginDatabase.ClearDatabase())
-                    {
-                        PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCommonDataRemove"), PluginDatabase.PluginName);
-                    }
-                    else
-                    {
-                        PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCCommonDataErrorRemove"), PluginDatabase.PluginName);
-                    }
+                    _ = PluginDatabase.ClearDatabase()
+                        ? PlayniteApi.Dialogs.ShowMessage(ResourceProvider.GetString("LOCCommonDataRemove"), PluginDatabase.PluginName)
+                        : PlayniteApi.Dialogs.ShowErrorMessage(ResourceProvider.GetString("LOCCommonDataErrorRemove"), PluginDatabase.PluginName);
                 }
             });
 
@@ -332,7 +320,7 @@ namespace CheckLocalizations
             {
                 MenuSection = MenuInExtensions + ResourceProvider.GetString("LOCCheckLocalizations"),
                 Description = "Test",
-                Action = (mainMenuItem) => 
+                Action = (mainMenuItem) =>
                 {
                 }
             });
@@ -396,9 +384,9 @@ namespace CheckLocalizations
         // Add code to be executed when Playnite is initialized.
         public override void OnApplicationStarted(OnApplicationStartedEventArgs args)
         {
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
-                Thread.Sleep(30000);
+                Thread.Sleep(10000);
                 PreventLibraryUpdatedOnStart = false;
             });
         }
@@ -416,51 +404,7 @@ namespace CheckLocalizations
         {
             if (PluginSettings.Settings.AutoImport && !PreventLibraryUpdatedOnStart)
             {
-                List<Game> PlayniteDb = PlayniteApi.Database.Games
-                        .Where(x => x.Added != null && x.Added > PluginSettings.Settings.LastAutoLibUpdateAssetsDownload)
-                        .ToList();
-
-                GlobalProgressOptions globalProgressOptions = new GlobalProgressOptions(
-                    $"{PluginDatabase.PluginName} - {ResourceProvider.GetString("LOCCommonGettingData")}",
-                    true
-                );
-                globalProgressOptions.IsIndeterminate = false;
-
-                PlayniteApi.Dialogs.ActivateGlobalProgress((activateGlobalProgress) =>
-                {
-                    try
-                    {
-                        Stopwatch stopWatch = new Stopwatch();
-                        stopWatch.Start();
-
-                        activateGlobalProgress.ProgressMaxValue = (double)PlayniteDb.Count();
-
-                        string CancelText = string.Empty;
-
-                        foreach (Game game in PlayniteDb)
-                        {
-                            if (activateGlobalProgress.CancelToken.IsCancellationRequested)
-                            {
-                                CancelText = " canceled";
-                                break;
-                            }
-
-                            Thread.Sleep(10);
-                            PluginDatabase.RefreshNoLoader(game.Id);
-
-                            activateGlobalProgress.CurrentProgressValue++;
-                        }
-
-                        stopWatch.Stop();
-                        TimeSpan ts = stopWatch.Elapsed;
-                        Logger.Info($"Task OnLibraryUpdated(){CancelText} - {string.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10)} for {activateGlobalProgress.CurrentProgressValue}/{(double)PlayniteDb.Count()} items");
-                    }
-                    catch (Exception ex)
-                    {
-                        Common.LogError(ex, false, true, "HowLongToBeat");
-                    }
-                }, globalProgressOptions);
-
+                PluginDatabase.RefreshRecent();
                 PluginSettings.Settings.LastAutoLibUpdateAssetsDownload = DateTime.Now;
                 SavePluginSettings(PluginSettings.Settings);
             }
