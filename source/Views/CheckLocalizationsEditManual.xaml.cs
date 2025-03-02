@@ -1,5 +1,6 @@
 ﻿using CheckLocalizations.Models;
 using CheckLocalizations.Services;
+using CommonPluginsShared.Extensions;
 using Playnite.SDK;
 using Playnite.SDK.Models;
 using System.Collections.Generic;
@@ -41,15 +42,19 @@ namespace CheckLocalizations.Views
         private void RefreshAvailable()
         {
             GameLanguageAvailable = new List<GameLanguage>();
-            foreach (GameLanguage gameLanguage in CheckLocalizations.PluginDatabase.PluginSettings.Settings.GameLanguages)
+            foreach (GameLanguage gameLanguage in PluginDatabase.PluginSettings.Settings.GameLanguages)
             {
-                if (GameLocalizations.Items.Find(x => x.Language.ToLower() == gameLanguage.Name.ToLower()) == null)
+                if (GameLanguageAvailable.FirstOrDefault(x => x.Name.IsEqual(gameLanguage.Name)) == null)
                 {
-                    GameLanguageAvailable.Add(gameLanguage);
+                    if (!GameLocalizations.Items.Where(x => x.IsManual).Any(s => s.DisplayName.IsEqual(gameLanguage.DisplayName)))
+                    {
+                        GameLanguageAvailable.Add(gameLanguage);
+                    }
                 }
             }
 
-            GameLanguageAvailable.Sort((x, y) => x.Name.CompareTo(y.Name));
+
+            GameLanguageAvailable.Sort((x, y) => x.DisplayName.CompareTo(y.DisplayName));
 
             PART_LocalizationSelection.ItemsSource = null;
             PART_LocalizationSelection.ItemsSource = GameLanguageAvailable;
@@ -74,16 +79,7 @@ namespace CheckLocalizations.Views
                 IsManual = true,
             };
 
-            int index = GameLocalizations.Items.FindIndex(x => x.Language == language);
-            if (index > -1)
-            {
-                GameLocalizations.Items[index] = localization;
-            }
-            else
-            {
-                GameLocalizations.Items.Add(localization);
-            }
-
+            GameLocalizations.Items.Add(localization);
             GameLocalizations.Items.Sort((x, y) => x.Language.CompareTo(y.Language));
 
             ListViewLanguages.ItemsSource = null;
@@ -95,7 +91,6 @@ namespace CheckLocalizations.Views
         private void BtRemove_Click(object sender, RoutedEventArgs e)
         {
             int index = int.Parse(((Button)sender).Tag.ToString());
-
             _ = GameLocalizations.Items.Remove((Localization)ListViewLanguages.Items[index]);
 
             ListViewLanguages.ItemsSource = null;
@@ -106,18 +101,7 @@ namespace CheckLocalizations.Views
 
         private void BtSave_Click(object sender, RoutedEventArgs e)
         {
-            GameLocalizations gameLocalizations = PluginDatabase.GetOnlyCache(GameContext.Id);
-
-            if (gameLocalizations == null)
-            {
-                GameLocalizations = CheckLocalizations.PluginDatabase.GetDefault(GameContext);
-                PluginDatabase.Add(GameLocalizations);
-            }
-            else
-            {
-                PluginDatabase.Update(GameLocalizations);
-            }
-
+            PluginDatabase.AddOrUpdate(GameLocalizations);
             ((Window)Parent).Close();
         }
 

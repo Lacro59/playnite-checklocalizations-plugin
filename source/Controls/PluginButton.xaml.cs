@@ -115,7 +115,7 @@ namespace CheckLocalizations.Controls
             {
                 CheckLocalizationsView ViewExtension = new CheckLocalizationsView();
                 Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PluginName, ViewExtension);
-                windowExtension.ShowDialog();
+                _ = windowExtension.ShowDialog();
             }
         }
 
@@ -133,11 +133,11 @@ namespace CheckLocalizations.Controls
                     {
                         WithColNotes = false,
                         IgnoreSettings = true,
-                        Width = 450,
+                        Width = 600,
                         Height = 150
                     };
                     PART_ListViewLanguages.Margin = new Thickness(0, 5, 0, 5);
-                    PART_ContextMenu.Items.Add(PART_ListViewLanguages);
+                    _ = PART_ContextMenu.Items.Add(PART_ListViewLanguages);
                 }
 
                 PART_ContextMenu.Visibility = Visibility.Visible;

@@ -119,10 +119,6 @@ namespace CheckLocalizations.Models
             {
                 string pathResourcesFlags = Path.Combine(PluginDatabase.Paths.PluginPath, "Resources", "Flags");
                 string alpha2 = PluginDatabase.PluginSettings.Settings.GameLanguages.FirstOrDefault(x => x.Name.IsEqual(Language))?.Alpha2;
-                if (alpha2.IsEqual("en"))
-                {
-                    alpha2 = "us";
-                }
                 string finalPath = Path.Combine(pathResourcesFlags, $"{alpha2?.ToUpper()}@3x.png");
 
                 if (File.Exists(finalPath))

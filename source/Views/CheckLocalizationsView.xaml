@@ -7,7 +7,7 @@
              xmlns:controls="clr-namespace:CheckLocalizations.Controls"
              xmlns:converters="clr-namespace:CommonPlayniteShared.Converters"
              mc:Ignorable="d" Background="{DynamicResource WindowBackgourndBrush}"            
-             Width="650" Height="250">
+             Width="750" Height="300">
 
     <UserControl.Resources>
         <converters:StringNullOrEmptyToVisibilityConverter x:Key="StringNullOrEmptyToVisibilityConverter" />

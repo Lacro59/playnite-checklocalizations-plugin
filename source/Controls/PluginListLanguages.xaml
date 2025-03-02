@@ -168,6 +168,16 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
+
+                    <GridViewColumn Width="80" x:Name="PART_IsManual">
+                        <GridViewColumnHeader Content="{DynamicResource LOCGameManualTitle}" Tag="Sub" />
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsManual}" IsEnabled="False" HorizontalAlignment="Center" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                     <GridViewColumn DisplayMemberBinding="{Binding Notes}" Width="100" x:Name="PART_ColNotes">
                         <GridViewColumnHeader Content="{DynamicResource LOCCheckLocalizationsNotes}"></GridViewColumnHeader>
                     </GridViewColumn>

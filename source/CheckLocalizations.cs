@@ -58,7 +58,7 @@ namespace CheckLocalizations
                 {
                     CheckLocalizationsView ViewExtension = new CheckLocalizationsView();
                     Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PluginName, ViewExtension);
-                    windowExtension.ShowDialog();
+                    _ = windowExtension.ShowDialog();
                 }
             }
             catch (Exception ex)
@@ -124,7 +124,7 @@ namespace CheckLocalizations
                     {
                         CheckLocalizationsView ViewExtension = new CheckLocalizationsView();
                         Window windowExtension = PlayniteUiHelper.CreateExtensionWindow(PluginDatabase.PluginName, ViewExtension);
-                        windowExtension.ShowDialog();
+                        _ = windowExtension.ShowDialog();
                     }
                 });
 
