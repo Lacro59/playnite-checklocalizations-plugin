@@ -2,6 +2,7 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/Lacro59/playnite-checklocalizations-plugin?cacheSeconds=5000&logo=github)](https://github.com/Lacro59/playnite-checklocalizations-plugin/releases/latest)
 [![GitHub Release Date](https://img.shields.io/github/release-date/Lacro59/playnite-checklocalizations-plugin?cacheSeconds=5000)](https://github.com/Lacro59/playnite-checklocalizations-plugin/releases/latest)
 [![Github Lastest Releases](https://img.shields.io/github/downloads/Lacro59/playnite-checklocalizations-plugin/latest/total.svg)]()
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/Lacro59/playnite-checkdlc-plugin/total)](https://github.com/Lacro59/playnite-checkdlc-plugin/releases)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Lacro59/playnite-checklocalizations-plugin)](https://github.com/Lacro59/playnite-checklocalizations-plugin/graphs/commit-activity)
 [![GitHub contributors](https://img.shields.io/github/contributors/Lacro59/playnite-checklocalizations-plugin?cacheSeconds=5000)](https://github.com/Lacro59/playnite-checklocalizations-plugin/graphs/contributors)
 [![GitHub](https://img.shields.io/github/license/Lacro59/playnite-checklocalizations-plugin?cacheSeconds=50000)](https://github.com/Lacro59/playnite-checklocalizations-plugin/blob/master/LICENSE)
