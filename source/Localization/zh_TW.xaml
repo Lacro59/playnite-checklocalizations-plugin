@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <sys:String x:Key="LOCCheckLocalizationsFlag">Flag</sys:String>
+
     <!-- MainView -->
 
     <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
@@ -15,7 +17,7 @@
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Interface style</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">介面樣式</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Display the list with the available languages</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Display the &quot;Notes&quot; column</sys:String>
@@ -24,21 +26,24 @@
     <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Show only known flags</sys:String>
     
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: found {0} - not found {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Processing, please wait...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">處理中，請稍候...</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Tag with selected language(s) (audio only)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
 
+    <sys:String x:Key="LOCCheckLocalizationUpdateWhenHasManual">Can update plugin data when there are manual entries</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddedSimilarWhenManual">Can have plugin data with the same language entered manually</sys:String>
+
     <!-- ClButtonAdvanced -->
 
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">母語</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">語言</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">音頻</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">備註</sys:String>
 
 </ResourceDictionary>
