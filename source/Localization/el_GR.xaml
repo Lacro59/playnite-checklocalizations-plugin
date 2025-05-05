@@ -1,44 +1,49 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <sys:String x:Key="LOCCheckLocalizationsFlag">Flag</sys:String>
+
     <!-- MainView -->
 
-    <sys:String x:Key="LOCCheckLocalizations">CheckLocalizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Localizations</sys:String>
+    <sys:String x:Key="LOCCheckLocalizations">Έλεγχος μεταφράσεων</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLocalizations">Μεταφράσεις</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Check localizations</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Edit manually a supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Έλεγχος μεταφράσεων</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Χειροκίνητη επεξεργασία μιας υποστηριζόμενης γλώσσας</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Add a new supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Προσθήκη νέας υποστηριζόμενης γλώσσας</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
-    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Interface style</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsStyleUI">Στυλ διεπαφής</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Display the list with the available languages</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Display the &quot;Notes&quot; column</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Display the list of available language flags</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Show only flags whose language is tagged</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Show only known flags</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguages">Εμφάνιση της λίστας με τις διαθέσιμες γλώσσες</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationListLanguagesWithColNote">Εμφάνιση της στήλης &quot;Σημειώσεις&quot;</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsIntegrationFlags">Εμφάνιση της λίστας με τις διαθέσιμες σημαίες</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplaySelectedFlags">Εμφάνιση μόνο σημαιών των οποίων η γλώσσα έχει ετικέτα</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsOnlyDisplayExistingFlags">Εμφάνιση μόνο γνωστών σημαιών</sys:String>
     
-    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Game languages: found {0} - not found {1}</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Processing, please wait...</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBar">Γλώσσες Παιχνιδιού: Βρέθηκαν{0} - Δεν Βρέθηκαν {1}</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">Γίνεται επεξεργασία, παρακαλώ περιμένετε...</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Tag with selected language(s)</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Tag with selected language(s) (audio only)</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationIsNative">Is a native language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Χρήση ετικέτας με επιλεγμένη γλώσσα(ες)</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Χρήση ετικέτας με επιλεγμένη γλώσσα(ες) (μόνο ήχος)</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationIsNative">Είναι μία εγγενής γλώσσα</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationUpdateWhenHasManual">Can update plugin data when there are manual entries</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddedSimilarWhenManual">Can have plugin data with the same language entered manually</sys:String>
 
     <!-- ClButtonAdvanced -->
 
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Native language</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Supported language</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportNative">Εγγενής γλώσσα</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsBtAdvancedSupportLanguages">Υποστηριζόμενη γλώσσα</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationsLanguage">Language</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsUi">UI</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsAudio">Audio</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsSub">Subtitles</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsNotes">Notes</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsLanguage">Γλώσσα</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsUi">Διεπαφή Χρήστη</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAudio">Ήχος</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsSub">Υπότιτλοι</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsNotes">Σημειώσεις</sys:String>
 
 </ResourceDictionary>
