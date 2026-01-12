@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <sys:String x:Key="LOCCheckLocalizationsFlag">Flag</sys:String>
+
     <!-- MainView -->
 
     <sys:String x:Key="LOCCheckLocalizations">YerelleştirmeyiDenetle</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsLocalizations">Yerelleştirmeler</sys:String>
 
     <sys:String x:Key="LOCCheckLocalizationsGameMenuPluginView">Yerelleştirmeleri denetle</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Desteklenen bir dili elle düzenleyin</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsGameMenuAddLanguage">Desteklenen bir dili elle düzenle</sys:String>
 
     <!-- CheckLocalizationsEditManual -->
 
-    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Yeni bir desteklenen dil ekleyin</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationsAddNewLanguage">Yeni bir desteklenen dil ekle</sys:String>
 
     <!-- CheckLocalizationsSettingsView -->
 
@@ -26,9 +28,12 @@
     <sys:String x:Key="LOCCheckLocalizationsProgressBar">Oyun dilleri: bulunan {0} - bulunamayan {1}</sys:String>
     <sys:String x:Key="LOCCheckLocalizationsProgressBarTag">İşleniyor, lütfen bekleyin...</sys:String>
 
-    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Seçili diller ile etiketle</sys:String>
-    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Seçilen dil ile etiketleyin (yalnızca ses)</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagDescription">Seçili dil(ler) ile etiketle</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddTagAudioDescription">Seçilen dil(ler) ile etiketle (yalnızca ses)</sys:String>
     <sys:String x:Key="LOCCheckLocalizationIsNative">Bir anadildir</sys:String>
+
+    <sys:String x:Key="LOCCheckLocalizationUpdateWhenHasManual">Can update plugin data when there are manual entries</sys:String>
+    <sys:String x:Key="LOCCheckLocalizationAddedSimilarWhenManual">Can have plugin data with the same language entered manually</sys:String>
 
     <!-- ClButtonAdvanced -->
 
