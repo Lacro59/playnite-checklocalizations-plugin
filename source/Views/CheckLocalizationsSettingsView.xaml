@@ -13,26 +13,40 @@
 
     <TabControl Margin="20">
         <TabItem Header="{DynamicResource LOCCheckLocalizations}">
-            <StackPanel Name="spSettings" Margin="0,10,0,0">
-                <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.MenuInExtensions}" VerticalAlignment="Center"
+            <!-- IMPORTANT: avoid StackPanel here; it measures children with infinite height and breaks Grid * rows/ListView sizing.
+                 This caused the language list to collapse in v3.2 (issue #40: unable to select languages). -->
+            <Grid Name="spSettings" Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <CheckBox Grid.Row="0" IsChecked="{Binding Settings.MenuInExtensions}" VerticalAlignment="Center"
                           Command="{x:Static pcmd:Commands.RestartRequired}" 
                           CommandParameter="{Binding RelativeSource={RelativeSource Self}}">
                     <Label Content="{DynamicResource LOCCommonMenuInExtensions}" />
                 </CheckBox>
 
-                <CheckBox Name="cbAutoImport" Margin="0,0,0,10" IsChecked="{Binding Settings.AutoImport}">
+                <CheckBox Grid.Row="2" Name="cbAutoImport" IsChecked="{Binding Settings.AutoImport}">
                     <Label Content="{DynamicResource LOCCommonAutoImport}" />
                 </CheckBox>
 
-                <CheckBox Margin="0,0,0,10" IsChecked="{Binding Settings.UpdateWhenHasManual}">
+                <CheckBox Grid.Row="4" IsChecked="{Binding Settings.UpdateWhenHasManual}">
                     <Label Content="{DynamicResource LOCCheckLocalizationUpdateWhenHasManual}" />
                 </CheckBox>
 
-                <CheckBox  Margin="0,0,0,10" IsChecked="{Binding Settings.AddedSimilarWhenManual}">
+                <CheckBox Grid.Row="6" IsChecked="{Binding Settings.AddedSimilarWhenManual}">
                     <Label Content="{DynamicResource LOCCheckLocalizationAddedSimilarWhenManual}" />
                 </CheckBox>
 
-                <Grid>
+                <Grid Grid.Row="8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="10" />
@@ -103,7 +117,6 @@
 
                     <Grid Name="PART_GridContener" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="3" >
                         <ListView ItemsSource="{Binding Settings.GameLanguages}"
-                                  Height="{Binding ElementName=PART_GridContener, Path=ActualHeight}"
                                   Name="lbGameLanguages">
                             <ListView.View>
                                 <GridView>
@@ -175,7 +188,7 @@
                                  Grid.Row="1" Width="150" VerticalAlignment="Center" />
                     </Grid>
                 </Grid>
-            </StackPanel>
+            </Grid>
         </TabItem>
 
         <TabItem Header="{DynamicResource LOCCommonIntegration}">
